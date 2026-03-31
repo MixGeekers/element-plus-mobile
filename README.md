@@ -3,129 +3,102 @@
 </p>
 
 <p align="center">
-  <a href="https://npmx.dev/package/element-plus">
-    <img src="https://npmx.dev/api/registry/badge/version/element-plus" />
-  </a>
   <a href="https://github.com/element-plus/element-plus">
     <img src="https://img.shields.io/badge/node-%20%3E%3D%2020-47c219" />
   </a>
-  <a href="https://npmcharts.com/compare/element-plus?minimal=true">
-    <img src="https://img.shields.io/npm/dm/element-plus.svg" />
+  <a href="https://github.com/element-plus/element-plus">
+    <img src="https://img.shields.io/badge/vue-%5E3.0-42b883" />
   </a>
-  <a href="https://codecov.io/gh/element-plus/element-plus">
-    <img src="https://codecov.io/gh/element-plus/element-plus/branch/dev/graph/badge.svg?token=BKSBO2GLZI"/>
+  <a href="https://github.com/element-plus/element-plus/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue" />
   </a>
-  <br>
 </p>
 
-<p align="center">Element Plus，一个基于 Vue 3 的 UI 组件库</p>
+<p align="center">Element Plus Mobile —— 基于 Element Plus 二次开发的移动端 Vue 3 组件库（内部使用）</p>
+
+## 项目简介
+
+本项目 Fork 自 [Element Plus](https://github.com/element-plus/element-plus)，目标是在其基础上构建一套**适配移动端（H5）场景**的 UI 组件库。
+
+主要差异和目标：
+
+- 针对触控交互进行组件适配与重新设计
+- 样式风格向移动端靠拢（更大的点击区域、适配小屏幕的布局）
+- 保留 Element Plus 的 TypeScript + Vue 3 Composition API 技术栈
+
+## 技术栈
 
 - Vue 3 Composition API
-- TypeScript 编写
+- TypeScript
+- Vite
+- pnpm Workspace（Monorepo）
 
-## 快速开始
+## 本地开发
 
-如果你的目标是参与这个仓库的开发，请继续阅读本文件。
-如果你只是想在业务项目中使用 Element Plus，请访问 [Getting Started](https://element-plus.org/)。
+### 环境要求
 
-- 中国大陆加速镜像站点：[https://cn.element-plus.org/zh-CN/](https://cn.element-plus.org/zh-CN/)
-- 仓库结构中文说明：[STRUCTURE.zh-CN.md](./STRUCTURE.zh-CN.md)
+- Node.js >= 20
+- pnpm >= 10
 
-## 破坏性变更列表
+### 安装依赖
 
-Element Plus 的首个可用于生产环境的稳定版于 2022 年 2 月 7 日发布。当前 API 已基本稳定，如果你需要从 [Element UI](https://element.eleme.io) 升级到 Element Plus，可以参考完整的升级说明：
+```bash
+pnpm install
+```
 
-[Breaking Change List](https://github.com/element-plus/element-plus/discussions/5658)
+### 启动开发预览
 
-### 迁移工具
+```bash
+pnpm dev
+```
 
-官方提供了从 [Element UI](https://element.eleme.io) 迁移到 Element Plus 的工具：
+### 构建组件库
 
-- [gogocode migration tool](https://github.com/thx/gogocode/tree/main/packages/gogocode-plugin-element)
+```bash
+pnpm build
+```
 
-该工具已经在 [Vue Element Admin](https://github.com/PanJiaChen/vue-element-admin) 上做过验证，转换后的示例代码见：
+### 运行单元测试
 
-- [gogocodeio/vue-element-admin](https://github.com/gogocodeio/vue-element-admin)
+```bash
+pnpm test
+```
 
-### Playground
+## 仓库结构
 
-你可以通过内置 Playground 快速试用组件：
+详见 [STRUCTURE.zh-CN.md](./STRUCTURE.zh-CN.md)，核心目录如下：
 
-- [Playground](https://element-plus.run/)
-- [CodeSandbox Demo](https://codesandbox.io/p/github/element-plus/element-plus-demo/main)
+```
+packages/
+  components/     # 组件源码
+  theme-chalk/    # 样式（CSS/SCSS）
+  utils/          # 工具函数
+  locale/         # 国际化
+play/             # 本地组件调试环境
+docs/             # 组件文档（VitePress）
+internal/         # 构建工具脚本
+```
 
-<p align="center">
-  <b>特别感谢赞助者的支持：</b>
-</p>
-<br/>
-<p align="center">
-  <b>白金赞助</b>
-</p>
-<table align="center" cellspacing="0" cellpadding="0">
-  <tbody>
-    <tr>
-      <td align="center" valign="middle">
-        <a href="https://www.jnpfsoft.com/index.html?from=elementUI" target="_blank">
-          <img width="150px" src="https://github.com/element-plus/element-plus/assets/17680888/6a044d82-c393-48ab-90b8-de0d3aad1624">
-        </a>
-      </td>
-      <td align="center" valign="middle">
-        <a href="http://github.crmeb.net/u/Element?from=element-plus" target="_blank">
-          <img width="150px" src="https://github.com/user-attachments/assets/18079452-986c-4c6e-84ec-fb6175c26567">
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<p align="center">
-  <b>黄金赞助</b>
-</p>
-<table align="center" cellspacing="0" cellpadding="0">
-  <tbody>
-    <tr>
-      <td align="center" valign="middle">
-        <a href="https://bit.dev/?from=element-ui" target="_blank">
-          <img width="130px" src="https://user-images.githubusercontent.com/10095631/41342907-e44e7196-6f2f-11e8-92f2-47702dc8f059.png">
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+## 开发规范
 
----
+参与组件开发前请阅读以下文档：
 
-## 文档翻译
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — 贡献指南
+- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) — 行为准则
+- [STRUCTURE.zh-CN.md](./STRUCTURE.zh-CN.md) — 项目结构说明
 
-Element Plus 支持多语言翻译。你可以通过 [Crowdin](https://crowdin.com/project/element-plus) 参与翻译或申请成为校对者。
+## 与上游同步
 
-当前官方主要提供英文和中文版本。如果你希望补充更多语言，可以前往上面的链接留言或直接参与翻译。
+本项目基于 Element Plus `dev` 分支 Fork。如需同步上游变更：
 
-### 如何参与翻译
+```bash
+git remote add upstream https://github.com/element-plus/element-plus.git
+git fetch upstream
+git merge upstream/dev
+```
 
-参见 [Translating Element Plus](https://element-plus.org/en-US/guide/translation.html)。
-
-## 开发与协作
-
-如果你打算修复问题、补文档或开发组件，建议优先阅读：
-
-- [CONTRIBUTING.md](./CONTRIBUTING.md)
-- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
-- [STRUCTURE.zh-CN.md](./STRUCTURE.zh-CN.md)
-
-## 贡献者
-
-这个项目能够持续演进，离不开所有贡献者。
-
-<a href="https://openomy.app/github/element-plus/element-plus" target="_blank" style="display: block; width: 100%;" align="center">
-  <img src="https://openomy.app/svg?repo=element-plus/element-plus&chart=bubble&latestMonth=3" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />
-</a>
-
-<hr />
-
-<a href="https://github.com/element-plus/element-plus/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=element-plus/element-plus" />
-</a>
+> 合并前请注意处理移动端适配相关的代码冲突。
 
 ## 许可证
 
-Element Plus 基于 [MIT](https://github.com/element-plus/element-plus/blob/master/LICENSE) 开源。
+本项目基于 Element Plus，遵循 [MIT License](https://github.com/element-plus/element-plus/blob/master/LICENSE)。
