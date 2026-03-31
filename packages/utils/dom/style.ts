@@ -76,6 +76,9 @@ export const removeStyle = (
   }
 }
 
+const formatRemValue = (value: number) =>
+  `${Number.parseFloat(value.toFixed(4))}rem`
+
 export function addUnit(value?: string | number, defaultUnit = 'px') {
   if (!value && value !== 0) return ''
   if (isNumber(value) || isStringNumber(value)) {
@@ -84,4 +87,23 @@ export function addUnit(value?: string | number, defaultUnit = 'px') {
     return value
   }
   debugWarn(SCOPE, 'binding value must be a string or number')
+}
+
+export function pxToRem(value?: string | number, base = 16) {
+  if (!value && value !== 0) return ''
+
+  if (isNumber(value) || isStringNumber(value)) {
+    return formatRemValue(Number(value) / base)
+  }
+
+  if (isString(value)) {
+    const trimmed = value.trim()
+    if (trimmed.endsWith('px')) {
+      return formatRemValue(Number.parseFloat(trimmed) / base)
+    }
+    return value
+  }
+
+  debugWarn(SCOPE, 'binding value must be a string or number')
+  return ''
 }

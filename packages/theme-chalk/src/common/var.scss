@@ -153,9 +153,9 @@ $border-color-hover: getCssVar('text-color', 'disabled') !default;
 $border-radius: () !default;
 $border-radius: map.merge(
   (
-    'base': 4px,
-    'small': 2px,
-    'round': 20px,
+    'base': to-rem(4px),
+    'small': to-rem(2px),
+    'round': to-rem(20px),
     'circle': 100%,
   ),
   $border-radius
@@ -198,12 +198,12 @@ $font-family: map.merge(
 $font-size: () !default;
 $font-size: map.merge(
   (
-    'extra-large': 20px,
-    'large': 18px,
-    'medium': 16px,
-    'base': 14px,
-    'small': 13px,
-    'extra-small': 12px,
+    'extra-large': to-rem(20px),
+    'large': to-rem(18px),
+    'medium': to-rem(16px),
+    'base': to-rem(14px),
+    'small': to-rem(13px),
+    'extra-small': to-rem(12px),
   ),
   $font-size
 );
@@ -233,9 +233,9 @@ $disabled: map.merge(
 $common-component-size: () !default;
 $common-component-size: map.merge(
   (
-    'large': 40px,
-    'default': 32px,
-    'small': 24px,
+    'large': to-rem(40px),
+    'default': to-rem(32px),
+    'small': to-rem(24px),
   ),
   $common-component-size
 );
@@ -783,9 +783,9 @@ $button-text-color: () !default;
 $button-font-size: () !default;
 $button-font-size: map.merge(
   (
-    'large': getCssVar('font-size', 'base'),
-    'default': getCssVar('font-size', 'base'),
-    'small': 12px,
+    'large': getCssVar('font-size', 'medium'),
+    'default': getCssVar('font-size', 'medium'),
+    'small': getCssVar('font-size', 'base'),
   ),
   $button-font-size
 );
@@ -795,7 +795,7 @@ $button-border-radius: map.merge(
   (
     'large': getCssVar('border-radius', 'base'),
     'default': getCssVar('border-radius', 'base'),
-    'small': calc(#{getCssVar('border-radius', 'base')} - 1px),
+    'small': calc(#{getCssVar('border-radius', 'base')} - #{to-rem(1px)}),
   ),
   $button-border-radius
 );
@@ -803,9 +803,9 @@ $button-border-radius: map.merge(
 $button-padding-vertical: () !default;
 $button-padding-vertical: map.merge(
   (
-    'large': 13px,
-    'default': 9px,
-    'small': 6px,
+    'large': 12px,
+    'default': 10px,
+    'small': 8px,
   ),
   $button-padding-vertical
 );
@@ -814,8 +814,8 @@ $button-padding-horizontal: () !default;
 $button-padding-horizontal: map.merge(
   (
     'large': 20px,
-    'default': 16px,
-    'small': 12px,
+    'default': 18px,
+    'small': 16px,
   ),
   $button-padding-horizontal
 );
@@ -1644,8 +1644,8 @@ $transition-function: map.merge(
 $header: () !default;
 $header: map.merge(
   (
-    'padding': 0 20px,
-    'height': 60px,
+    'padding': to-rem(12px) to-rem(16px),
+    'height': to-rem(56px),
   ),
   $header
 );
@@ -1653,7 +1653,7 @@ $header: map.merge(
 $main: () !default;
 $main: map.merge(
   (
-    'padding': 20px,
+    'padding': to-rem(16px),
   ),
   $main
 );
@@ -1661,17 +1661,17 @@ $main: map.merge(
 $footer: () !default;
 $footer: map.merge(
   (
-    'padding': 0 20px,
-    'height': 60px,
+    'padding': to-rem(12px) to-rem(16px),
+    'height': to-rem(56px),
   ),
   $footer
 );
 
 // Break-point
-$sm: 768px !default;
-$md: 992px !default;
-$lg: 1200px !default;
-$xl: 1920px !default;
+$sm: 480px !default;
+$md: 768px !default;
+$lg: 992px !default;
+$xl: 1200px !default;
 
 $breakpoints: (
   'xs': '(max-width: #{$sm - 1})',

@@ -1,5 +1,9 @@
 <template>
-  <el-container class="layout-container-demo" style="height: 500px">
+  <el-container
+    class="layout-container-demo"
+    direction="horizontal"
+    style="height: 31.25rem"
+  >
     <el-aside width="200px">
       <el-scrollbar>
         <el-menu :default-openeds="['1', '3']">
@@ -59,10 +63,10 @@
     </el-aside>
 
     <el-container>
-      <el-header style="text-align: right; font-size: 12px">
+      <el-header style="text-align: right; font-size: 0.75rem">
         <div class="toolbar">
           <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px">
+            <el-icon style="margin-right: 0.5rem; margin-top: 0.0625rem">
               <setting />
             </el-icon>
             <template #dropdown>
@@ -123,6 +127,6 @@ const tableData = ref(Array.from({ length: 20 }).fill(item))
   align-items: center;
   justify-content: center;
   height: 100%;
-  right: 20px;
+  right: 1.25rem;
 }
 </style>

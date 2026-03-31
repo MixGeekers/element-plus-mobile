@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :sm="12" :lg="6">
+    <el-col :sm="12" :md="6">
       <el-result
         icon="success"
         title="Success Tip"
@@ -11,7 +11,7 @@
         </template>
       </el-result>
     </el-col>
-    <el-col :sm="12" :lg="6">
+    <el-col :sm="12" :md="6">
       <el-result
         icon="warning"
         title="Warning Tip"
@@ -22,7 +22,7 @@
         </template>
       </el-result>
     </el-col>
-    <el-col :sm="12" :lg="6">
+    <el-col :sm="12" :md="6">
       <el-result
         icon="error"
         title="Error Tip"
@@ -33,7 +33,7 @@
         </template>
       </el-result>
     </el-col>
-    <el-col :sm="12" :lg="6">
+    <el-col :sm="12" :md="6">
       <el-result icon="info" title="Info Tip">
         <template #sub-title>
           <p>Using slot as subtitle</p>

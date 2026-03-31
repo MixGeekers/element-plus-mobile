@@ -6,6 +6,7 @@
 
 <script lang="ts" setup>
 import { computed, provide } from 'vue'
+import { pxToRem } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
 import { rowContextKey } from './constants'
 
@@ -35,7 +36,7 @@ const style = computed(() => {
     return styles
   }
 
-  styles.marginRight = styles.marginLeft = `-${props.gutter / 2}px`
+  styles.marginRight = styles.marginLeft = pxToRem((props.gutter / 2) * -1)
   return styles
 })
 

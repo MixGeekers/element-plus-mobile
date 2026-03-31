@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container>
       <el-header>Header</el-header>
-      <el-container>
+      <el-container direction="horizontal">
         <el-aside width="200px">Aside</el-aside>
         <el-container>
           <el-main>Main</el-main>

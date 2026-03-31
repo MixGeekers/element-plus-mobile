@@ -33,25 +33,17 @@ export interface ColProps {
    */
   push?: number
   /**
-   * @description `<768px` Responsive columns or column props object
+   * @description `<480px` Responsive columns or column props object
    */
   xs?: ColSize
   /**
-   * @description `≥768px` Responsive columns or column props object
+   * @description `≥480px` Responsive columns or column props object
    */
   sm?: ColSize
   /**
-   * @description `≥992px` Responsive columns or column props object
+   * @description `≥768px` Responsive columns or column props object
    */
   md?: ColSize
-  /**
-   * @description `≥1200px` Responsive columns or column props object
-   */
-  lg?: ColSize
-  /**
-   * @description `≥1920px` Responsive columns or column props object
-   */
-  xl?: ColSize
 }
 
 /**
@@ -94,37 +86,23 @@ export const colProps = buildProps({
     default: 0,
   },
   /**
-   * @description `<768px` Responsive columns or column props object
+   * @description `<480px` Responsive columns or column props object
    */
   xs: {
     type: definePropType<ColSize>([Number, Object]),
     default: () => mutable({} as const),
   },
   /**
-   * @description `≥768px` Responsive columns or column props object
+   * @description `≥480px` Responsive columns or column props object
    */
   sm: {
     type: definePropType<ColSize>([Number, Object]),
     default: () => mutable({} as const),
   },
   /**
-   * @description `≥992px` Responsive columns or column props object
+   * @description `≥768px` Responsive columns or column props object
    */
   md: {
-    type: definePropType<ColSize>([Number, Object]),
-    default: () => mutable({} as const),
-  },
-  /**
-   * @description `≥1200px` Responsive columns or column props object
-   */
-  lg: {
-    type: definePropType<ColSize>([Number, Object]),
-    default: () => mutable({} as const),
-  },
-  /**
-   * @description `≥1920px` Responsive columns or column props object
-   */
-  xl: {
     type: definePropType<ColSize>([Number, Object]),
     default: () => mutable({} as const),
   },

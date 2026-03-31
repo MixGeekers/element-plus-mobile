@@ -30,8 +30,9 @@
     display: block;
     width: 0;
     height: 0;
-    cursor: pointer;
+    cursor: grab;
     border-radius: inherit;
+    @include touch-feedback(none);
     background-color: var(
       #{getCssVarName('scrollbar-bg-color')},
       map.get($scrollbar, 'bg-color')
@@ -42,7 +43,8 @@
       map.get($scrollbar, 'opacity')
     );
 
-    &:hover {
+    &:active {
+      cursor: grabbing;
       background-color: var(
         #{getCssVarName('scrollbar-hover-bg-color')},
         map.get($scrollbar, 'hover-bg-color')
@@ -56,14 +58,14 @@
 
   @include e(bar) {
     position: absolute;
-    right: 2px;
-    bottom: 2px;
+    right: to-rem(2px);
+    bottom: to-rem(2px);
     z-index: 1;
-    border-radius: 4px;
+    border-radius: to-rem(4px);
 
     @include when(vertical) {
-      width: 6px;
-      top: 2px;
+      width: to-rem(8px);
+      top: to-rem(2px);
 
       > div {
         width: 100%;
@@ -71,8 +73,8 @@
     }
 
     @include when(horizontal) {
-      height: 6px;
-      left: 2px;
+      height: to-rem(8px);
+      left: to-rem(2px);
 
       > div {
         height: 100%;

@@ -1,14 +1,14 @@
 import { computed, ref, watchEffect } from 'vue'
-import { isArray, isNumber } from '@element-plus/utils'
+import { isArray, isNumber, pxToRem } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
 
 import type { SpaceProps } from './space'
 import type { CSSProperties, StyleValue } from 'vue'
 
 const SIZE_MAP = {
-  small: 8,
-  default: 12,
-  large: 16,
+  small: 12,
+  default: 16,
+  large: 20,
 } as const
 
 export function useSpace(props: SpaceProps) {
@@ -26,8 +26,8 @@ export function useSpace(props: SpaceProps) {
       alignItems: props.alignment,
     }
     const gap: CSSProperties = {
-      rowGap: `${verticalSize.value}px`,
-      columnGap: `${horizontalSize.value}px`,
+      rowGap: pxToRem(verticalSize.value),
+      columnGap: pxToRem(horizontalSize.value),
     }
     return [wrapKls, alignment, gap, props.style]
   })

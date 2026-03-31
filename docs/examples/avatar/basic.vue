@@ -1,6 +1,6 @@
 <template>
   <el-row class="demo-avatar demo-basic">
-    <el-col :lg="12" :md="12">
+    <el-col :sm="24" :md="12">
       <div class="sub-title">circle</div>
       <div class="demo-basic--circle">
         <div class="block">
@@ -11,7 +11,7 @@
         </div>
       </div>
     </el-col>
-    <el-col :lg="12" :md="12">
+    <el-col :sm="24" :md="12">
       <div class="sub-title">square</div>
       <div class="demo-basic--circle">
         <div class="block">
@@ -44,8 +44,8 @@ const { circleUrl, squareUrl, sizeList } = toRefs(state)
   text-align: center;
 }
 .demo-basic .sub-title {
-  margin-bottom: 10px;
-  font-size: 14px;
+  margin-bottom: 0.625rem;
+  font-size: 0.875rem;
   color: var(--el-text-color-secondary);
 }
 .demo-basic .demo-basic--circle,
@@ -55,15 +55,15 @@ const { circleUrl, squareUrl, sizeList } = toRefs(state)
   align-items: center;
 }
 .demo-basic .block:not(:last-child) {
-  border-right: 1px solid var(--el-border-color);
+  border-right: 0.0625rem solid var(--el-border-color);
 }
 .demo-basic .block {
   flex: 1;
 }
 .demo-basic .el-col:not(:last-child) {
-  border-right: 1px solid var(--el-border-color);
+  border-right: 0.0625rem solid var(--el-border-color);
 }
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 768px) {
   .demo-basic .el-col:not(:last-child) {
     border-right: none;
   }

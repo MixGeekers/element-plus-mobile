@@ -31,11 +31,11 @@ describe('ScrollBar', () => {
 
     await makeScroll(scrollDom, 'scrollTop', 100)
     expect(wrapper.find('.is-vertical div').attributes('style')).toContain(
-      'transform: translateY(50%); height: 80px;'
+      'transform: translateY(50%); height: 5rem;'
     )
     await makeScroll(scrollDom, 'scrollTop', 300)
     expect(wrapper.find('.is-vertical div').attributes('style')).toContain(
-      'transform: translateY(150%); height: 80px;'
+      'transform: translateY(150%); height: 5rem;'
     )
     offsetHeightRestore()
     scrollHeightRestore()
@@ -65,11 +65,11 @@ describe('ScrollBar', () => {
 
     await makeScroll(scrollDom, 'scrollLeft', 100)
     expect(wrapper.find('.is-horizontal div').attributes('style')).toContain(
-      'transform: translateX(50%); width: 80px;'
+      'transform: translateX(50%); width: 5rem;'
     )
     await makeScroll(scrollDom, 'scrollLeft', 300)
     expect(wrapper.find('.is-horizontal div').attributes('style')).toContain(
-      'transform: translateX(150%); width: 80px;'
+      'transform: translateX(150%); width: 5rem;'
     )
     offsetWidthRestore()
     scrollWidthRestore()
@@ -112,24 +112,101 @@ describe('ScrollBar', () => {
     await makeScroll(scrollDom, 'scrollTop', 100)
     await makeScroll(scrollDom, 'scrollLeft', 100)
     expect(wrapper.find('.is-vertical div').attributes('style')).toContain(
-      'transform: translateY(50%); height: 80px;'
+      'transform: translateY(50%); height: 5rem;'
     )
     expect(wrapper.find('.is-horizontal div').attributes('style')).toContain(
-      'transform: translateX(50%); width: 80px;'
+      'transform: translateX(50%); width: 5rem;'
     )
     await makeScroll(scrollDom, 'scrollTop', 300)
     await makeScroll(scrollDom, 'scrollLeft', 300)
     expect(wrapper.find('.is-vertical div').attributes('style')).toContain(
-      'transform: translateY(150%); height: 80px;'
+      'transform: translateY(150%); height: 5rem;'
     )
     expect(wrapper.find('.is-horizontal div').attributes('style')).toContain(
-      'transform: translateX(150%); width: 80px;'
+      'transform: translateX(150%); width: 5rem;'
     )
 
     offsetHeightRestore()
     scrollHeightRestore()
     offsetWidthRestore()
     scrollWidthRestore()
+  })
+
+  test('should support touch dragging on thumb', async () => {
+    const outerHeight = 204
+    const innerHeight = 500
+    const wrapper = mount(() => (
+      <Scrollbar style={`height: ${outerHeight}px;`}>
+        <div style={`height: ${innerHeight}px;`}></div>
+      </Scrollbar>
+    ))
+
+    const scrollDom = wrapper.find('.el-scrollbar__wrap').element as HTMLElement
+    const bar = wrapper.find('.el-scrollbar__bar.is-vertical')
+      .element as HTMLElement
+    const thumb = wrapper.find(
+      '.el-scrollbar__bar.is-vertical .el-scrollbar__thumb'
+    ).element as HTMLElement
+
+    const offsetHeightRestore = defineGetter(
+      scrollDom,
+      'offsetHeight',
+      outerHeight
+    )
+    const scrollHeightRestore = defineGetter(
+      scrollDom,
+      'scrollHeight',
+      innerHeight
+    )
+    const barHeightRestore = defineGetter(bar, 'offsetHeight', outerHeight - 4)
+    const thumbHeightRestore = defineGetter(thumb, 'offsetHeight', 80)
+
+    await nextTick()
+    wrapper.find('.el-scrollbar__wrap').trigger('scroll')
+    await nextTick()
+
+    const touchStart = new Event('touchstart', {
+      bubbles: true,
+      cancelable: true,
+    })
+    Object.defineProperty(touchStart, 'touches', {
+      value: [{ pageY: 40, clientY: 40 }],
+    })
+    Object.defineProperty(touchStart, 'changedTouches', {
+      value: [{ pageY: 40, clientY: 40 }],
+    })
+    thumb.dispatchEvent(touchStart)
+
+    const touchMove = new Event('touchmove', {
+      bubbles: true,
+      cancelable: true,
+    })
+    Object.defineProperty(touchMove, 'touches', {
+      value: [{ pageY: 120, clientY: 120 }],
+    })
+    Object.defineProperty(touchMove, 'changedTouches', {
+      value: [{ pageY: 120, clientY: 120 }],
+    })
+    document.dispatchEvent(touchMove)
+
+    const touchEnd = new Event('touchend', {
+      bubbles: true,
+      cancelable: true,
+    })
+    Object.defineProperty(touchEnd, 'touches', {
+      value: [],
+    })
+    Object.defineProperty(touchEnd, 'changedTouches', {
+      value: [{ pageY: 120, clientY: 120 }],
+    })
+    document.dispatchEvent(touchEnd)
+
+    expect(scrollDom.scrollTop).toBeGreaterThan(0)
+
+    offsetHeightRestore()
+    scrollHeightRestore()
+    barHeightRestore()
+    thumbHeightRestore()
   })
 
   test('should render height props', async () => {
@@ -223,7 +300,7 @@ describe('ScrollBar', () => {
     scrollWrap.trigger('scroll')
     await nextTick()
     expect(wrapper.find('.is-vertical div').attributes('style')).toContain(
-      'transform: translateY(50%); height: 80px;'
+      'transform: translateY(50%); height: 5rem;'
     )
 
     scrollbar.setScrollLeft(100)
@@ -231,7 +308,7 @@ describe('ScrollBar', () => {
     scrollWrap.trigger('scroll')
     await nextTick()
     expect(wrapper.find('.is-horizontal div').attributes('style')).toContain(
-      'transform: translateX(50%); width: 80px;'
+      'transform: translateX(50%); width: 5rem;'
     )
 
     offsetHeightRestore()
@@ -264,7 +341,7 @@ describe('ScrollBar', () => {
 
     await makeScroll(scrollDom, 'scrollTop', 0)
     expect(wrapper.find('.is-vertical div').attributes('style')).toContain(
-      'transform: translateY(0%); height: 20px;'
+      'transform: translateY(0%); height: 1.5rem;'
     )
     offsetHeightRestore()
     scrollHeightRestore()

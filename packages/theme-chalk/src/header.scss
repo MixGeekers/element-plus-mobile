@@ -5,8 +5,11 @@
 @include b(header) {
   @include set-component-css-var('header', $header);
 
+  display: flex;
+  align-items: center;
   padding: getCssVar('header-padding');
+  padding-top: calc(env(safe-area-inset-top) + to-rem(12px));
   box-sizing: border-box;
   flex-shrink: 0;
-  height: getCssVar('header-height');
+  min-height: getCssVar('header-height');
 }

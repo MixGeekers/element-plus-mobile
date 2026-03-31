@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { pxToRem } from '@element-plus/utils'
 import {
   ArrowDown,
   ArrowLeft,
@@ -46,8 +47,8 @@ const barWrapStyles = computed(() => {
 
 const draggerStyles = computed(() => {
   return {
-    width: isHorizontal.value ? '16px' : '100%',
-    height: isHorizontal.value ? '100%' : '16px',
+    width: isHorizontal.value ? pxToRem(24) : '100%',
+    height: isHorizontal.value ? '100%' : pxToRem(24),
     cursor: !props.resizable
       ? 'auto'
       : isHorizontal.value
@@ -135,7 +136,10 @@ const EndIcon = computed(() => (isHorizontal.value ? ArrowRight : ArrowDown))
       @click="emit('collapse', index, 'start')"
     >
       <slot name="start-collapsible">
-        <component :is="StartIcon" style="width: 12px; height: 12px" />
+        <component
+          :is="StartIcon"
+          :style="{ width: pxToRem(14), height: pxToRem(14) }"
+        />
       </slot>
     </div>
 
@@ -156,7 +160,10 @@ const EndIcon = computed(() => (isHorizontal.value ? ArrowRight : ArrowDown))
       @click="emit('collapse', index, 'end')"
     >
       <slot name="end-collapsible">
-        <component :is="EndIcon" style="width: 12px; height: 12px" />
+        <component
+          :is="EndIcon"
+          :style="{ width: pxToRem(14), height: pxToRem(14) }"
+        />
       </slot>
     </div>
   </div>

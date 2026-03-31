@@ -140,6 +140,52 @@ describe('Splitter', () => {
     expect(panels[0].attributes('style')).toContain('flex-basis: 200px;')
   })
 
+  it('should support touch dragging', async () => {
+    const wrapper = mount(() => (
+      <div style={{ width: '400px', height: '400px' }}>
+        <ElSplitter>
+          <ElSplitterPanel>Left Panel</ElSplitterPanel>
+          <ElSplitterPanel>Right Panel</ElSplitterPanel>
+        </ElSplitter>
+      </div>
+    ))
+
+    await nextTick()
+    const panels = wrapper.findAll('.el-splitter-panel')
+    const splitBar = wrapper.find('.el-splitter-bar__dragger')
+
+    const touchStart = new Event('touchstart', {
+      bubbles: true,
+      cancelable: true,
+    })
+    Object.defineProperty(touchStart, 'touches', {
+      value: [{ pageX: 200, pageY: 0 }],
+    })
+    splitBar.element.dispatchEvent(touchStart)
+
+    const touchMove = new Event('touchmove', {
+      bubbles: true,
+      cancelable: true,
+    })
+    Object.defineProperty(touchMove, 'touches', {
+      value: [{ pageX: 100, pageY: 0 }],
+    })
+    window.dispatchEvent(touchMove)
+    await nextTick()
+
+    const touchEnd = new Event('touchend', {
+      bubbles: true,
+      cancelable: true,
+    })
+    Object.defineProperty(touchEnd, 'changedTouches', {
+      value: [{ pageX: 100, pageY: 0 }],
+    })
+    window.dispatchEvent(touchEnd)
+    await nextTick()
+
+    expect(panels[0].attributes('style')).toContain('flex-basis: 100px;')
+  })
+
   it('should handle collapse', async () => {
     const wrapper = mount(() => (
       <div style={{ width: '400px', height: '400px' }}>

@@ -37,6 +37,7 @@
   flex: none;
   position: relative;
   user-select: none;
+  @include touch-feedback(none);
 
   @include e(dragger) {
     z-index: 1;
@@ -45,6 +46,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    @include touch-feedback(none);
     &::before,
     &::after {
       content: '';
@@ -63,7 +65,7 @@
       opacity: 0.4;
     }
 
-    &:hover {
+    &:active {
       &:not(.is-disabled)::before {
         background-color: getCssVar('color-primary-light-5');
       }
@@ -73,13 +75,13 @@
     &::before,
     &::after {
       height: 100%;
-      width: 2px;
+      width: to-rem(2px);
     }
   }
   @include e(dragger-vertical) {
     &::before,
     &::after {
-      height: 2px;
+      height: to-rem(2px);
       width: 100%;
     }
   }
@@ -97,52 +99,48 @@
       transform: translate(-50%, calc(-50% + getCssVar('splitter-bar-offset')));
     }
   }
-  &:hover {
-    @include e(collapse-icon) {
-      opacity: 1;
-    }
-  }
   @include e(collapse-icon) {
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
     background: getCssVar('border-color-light');
-    border-radius: 2px;
+    border-radius: to-rem(6px);
     cursor: pointer;
-    opacity: 0;
+    opacity: 0.92;
     z-index: 9;
-    &:hover {
+    @include touch-feedback;
+    &:active {
       opacity: 1;
       background-color: getCssVar('color-primary-light-5');
     }
   }
   @include e(horizontal-collapse-icon-start) {
-    left: -12px;
+    left: to-rem(-16px);
     top: 50%;
-    height: 24px;
-    width: 16px;
+    height: to-rem(32px);
+    width: to-rem(24px);
     transform: translate(-50%, -50%);
   }
   @include e(horizontal-collapse-icon-end) {
-    left: 12px;
+    left: to-rem(16px);
     top: 50%;
-    height: 24px;
-    width: 16px;
+    height: to-rem(32px);
+    width: to-rem(24px);
     transform: translate(-50%, -50%);
   }
   @include e(vertical-collapse-icon-start) {
-    top: -12px;
+    top: to-rem(-16px);
     right: 50%;
-    height: 16px;
-    width: 24px;
+    height: to-rem(24px);
+    width: to-rem(32px);
     transform: translate(50%, -50%);
   }
   @include e(vertical-collapse-icon-end) {
-    top: 12px;
+    top: to-rem(16px);
     right: 50%;
-    height: 16px;
-    width: 24px;
+    height: to-rem(24px);
+    width: to-rem(32px);
     transform: translate(50%, -50%);
   }
 }

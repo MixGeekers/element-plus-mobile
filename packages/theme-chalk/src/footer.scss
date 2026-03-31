@@ -5,8 +5,11 @@
 @include b(footer) {
   @include set-component-css-var('footer', $footer);
 
+  display: flex;
+  align-items: center;
   padding: getCssVar('footer-padding');
+  padding-bottom: calc(env(safe-area-inset-bottom) + to-rem(12px));
   box-sizing: border-box;
   flex-shrink: 0;
-  height: getCssVar('footer-height');
+  min-height: getCssVar('footer-height');
 }

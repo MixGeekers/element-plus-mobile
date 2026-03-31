@@ -5,6 +5,7 @@
       ref="instance"
       :class="[ns.e('bar'), ns.is(bar.key)]"
       @mousedown="clickTrackHandler"
+      @touchstart.prevent="clickTrackTouchHandler"
       @click.stop
     >
       <div
@@ -12,6 +13,7 @@
         :class="ns.e('thumb')"
         :style="thumbStyle"
         @mousedown="clickThumbHandler"
+        @touchstart.stop.prevent="clickThumbTouchHandler"
       />
     </div>
   </transition>
@@ -40,6 +42,7 @@ const thumb = ref<HTMLDivElement>()
 
 const thumbState = ref<Partial<Record<'X' | 'Y', number>>>({})
 const visible = ref(false)
+const HIDE_DELAY = 600
 
 let cursorDown = false
 let cursorLeave = false
@@ -48,6 +51,7 @@ let baseScrollWidth = 0
 let originalOnSelectStart:
   | ((this: GlobalEventHandlers, ev: Event) => any)
   | null = isClient ? document.onselectstart : null
+let hideTimer: ReturnType<typeof setTimeout> | undefined
 
 const bar = computed(() => BAR_MAP[props.vertical ? 'vertical' : 'horizontal'])
 
@@ -58,6 +62,37 @@ const thumbStyle = computed(() =>
     bar: bar.value,
   })
 )
+
+const getClientOffset = (event: MouseEvent | TouchEvent) => {
+  if ('touches' in event) {
+    const touch = event.touches[0] ?? event.changedTouches[0]
+    if (!touch) return undefined
+    return touch[bar.value.client]
+  }
+
+  return event[bar.value.client]
+}
+
+const clearHideTimer = () => {
+  if (!hideTimer) return
+  clearTimeout(hideTimer)
+  hideTimer = undefined
+}
+
+const showScrollbar = () => {
+  clearHideTimer()
+  cursorLeave = false
+  visible.value = !!props.size
+}
+
+const queueHideScrollbar = () => {
+  clearHideTimer()
+  if (props.always || cursorDown) return
+
+  hideTimer = setTimeout(() => {
+    visible.value = false
+  }, HIDE_DELAY)
+}
 
 const offsetRatio = computed(
   () =>
@@ -85,6 +120,17 @@ const clickThumbHandler = (e: MouseEvent) => {
     (e[bar.value.client] - el.getBoundingClientRect()[bar.value.direction])
 }
 
+const clickThumbTouchHandler = (e: TouchEvent) => {
+  const clientOffset = getClientOffset(e)
+  const el = e.currentTarget as HTMLDivElement
+  if (!el || clientOffset === undefined) return
+
+  startDrag(e)
+  thumbState.value[bar.value.axis] =
+    el[bar.value.offset] -
+    (clientOffset - el.getBoundingClientRect()[bar.value.direction])
+}
+
 const clickTrackHandler = (e: MouseEvent) => {
   if (!thumb.value || !instance.value || !scrollbar.wrapElement) return
 
@@ -102,18 +148,48 @@ const clickTrackHandler = (e: MouseEvent) => {
     100
 }
 
-const startDrag = (e: MouseEvent) => {
+const clickTrackTouchHandler = (e: TouchEvent) => {
+  if (!thumb.value || !instance.value || !scrollbar.wrapElement) return
+
+  const clientOffset = getClientOffset(e)
+  if (clientOffset === undefined) return
+
+  const offset = Math.abs(
+    (e.currentTarget as HTMLElement).getBoundingClientRect()[
+      bar.value.direction
+    ] - clientOffset
+  )
+  const thumbHalf = thumb.value[bar.value.offset] / 2
+  const thumbPositionPercentage =
+    ((offset - thumbHalf) * 100 * offsetRatio.value) /
+    instance.value[bar.value.offset]
+
+  scrollbar.wrapElement[bar.value.scroll] =
+    (thumbPositionPercentage * scrollbar.wrapElement[bar.value.scrollSize]) /
+    100
+  showScrollbar()
+  queueHideScrollbar()
+}
+
+const startDrag = (e: MouseEvent | TouchEvent) => {
   e.stopImmediatePropagation()
+  if ('touches' in e) e.preventDefault()
   cursorDown = true
+  showScrollbar()
   baseScrollHeight = scrollbar.wrapElement!.scrollHeight
   baseScrollWidth = scrollbar.wrapElement!.scrollWidth
   document.addEventListener('mousemove', mouseMoveDocumentHandler)
   document.addEventListener('mouseup', mouseUpDocumentHandler)
+  document.addEventListener('touchmove', touchMoveDocumentHandler, {
+    passive: false,
+  })
+  document.addEventListener('touchend', touchEndDocumentHandler)
+  document.addEventListener('touchcancel', touchEndDocumentHandler)
   originalOnSelectStart = document.onselectstart
   document.onselectstart = () => false
 }
 
-const mouseMoveDocumentHandler = (e: MouseEvent) => {
+const updateScrollPosition = (clientOffset: number) => {
   if (!instance.value || !thumb.value) return
   if (cursorDown === false) return
 
@@ -122,7 +198,7 @@ const mouseMoveDocumentHandler = (e: MouseEvent) => {
 
   const offset =
     (instance.value.getBoundingClientRect()[bar.value.direction] -
-      e[bar.value.client]) *
+      clientOffset) *
     -1
   const thumbClickPosition = thumb.value[bar.value.offset] - prevPage
   const thumbPositionPercentage =
@@ -138,28 +214,66 @@ const mouseMoveDocumentHandler = (e: MouseEvent) => {
   }
 }
 
-const mouseUpDocumentHandler = () => {
+const mouseMoveDocumentHandler = (e: MouseEvent) => {
+  updateScrollPosition(e[bar.value.client])
+}
+
+const touchMoveDocumentHandler = (e: TouchEvent) => {
+  const clientOffset = getClientOffset(e)
+  if (clientOffset === undefined) return
+  e.preventDefault()
+  updateScrollPosition(clientOffset)
+}
+
+const endDrag = () => {
   cursorDown = false
   thumbState.value[bar.value.axis] = 0
   document.removeEventListener('mousemove', mouseMoveDocumentHandler)
   document.removeEventListener('mouseup', mouseUpDocumentHandler)
+  document.removeEventListener('touchmove', touchMoveDocumentHandler)
+  document.removeEventListener('touchend', touchEndDocumentHandler)
+  document.removeEventListener('touchcancel', touchEndDocumentHandler)
   restoreOnselectstart()
-  if (cursorLeave) visible.value = false
+
+  if (cursorLeave) {
+    queueHideScrollbar()
+  }
+}
+
+const mouseUpDocumentHandler = () => {
+  endDrag()
+}
+
+const touchEndDocumentHandler = () => {
+  endDrag()
 }
 
 const mouseMoveScrollbarHandler = () => {
-  cursorLeave = false
-  visible.value = !!props.size
+  showScrollbar()
 }
 
 const mouseLeaveScrollbarHandler = () => {
   cursorLeave = true
-  visible.value = cursorDown
+  if (cursorDown) {
+    visible.value = true
+    return
+  }
+  queueHideScrollbar()
+}
+
+const scrollHandler = () => {
+  showScrollbar()
+  queueHideScrollbar()
 }
 
 onBeforeUnmount(() => {
+  clearHideTimer()
   restoreOnselectstart()
   document.removeEventListener('mouseup', mouseUpDocumentHandler)
+  document.removeEventListener('mousemove', mouseMoveDocumentHandler)
+  document.removeEventListener('touchmove', touchMoveDocumentHandler)
+  document.removeEventListener('touchend', touchEndDocumentHandler)
+  document.removeEventListener('touchcancel', touchEndDocumentHandler)
 })
 
 const restoreOnselectstart = () => {
@@ -176,5 +290,16 @@ useEventListener(
   toRef(scrollbar, 'scrollbarElement'),
   'mouseleave',
   mouseLeaveScrollbarHandler
+)
+useEventListener(toRef(scrollbar, 'wrapElement'), 'scroll', scrollHandler)
+useEventListener(
+  toRef(scrollbar, 'scrollbarElement'),
+  'touchstart',
+  showScrollbar
+)
+useEventListener(
+  toRef(scrollbar, 'scrollbarElement'),
+  'touchend',
+  queueHideScrollbar
 )
 </script>

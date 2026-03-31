@@ -37,8 +37,8 @@ describe('Col', () => {
     })
 
     const colElm = wrapper.findComponent({ ref: 'col' }).element as HTMLElement
-    expect(colElm.style.paddingLeft === '10px').toBe(true)
-    expect(colElm.style.paddingRight === '10px').toBe(true)
+    expect(colElm.style.paddingLeft === '0.625rem').toBe(true)
+    expect(colElm.style.paddingRight === '0.625rem').toBe(true)
   })
 
   it('change gutter value', async () => {
@@ -56,17 +56,17 @@ describe('Col', () => {
 
     const rowElm = wrapper.findComponent({ ref: 'row' }).element as HTMLElement
     const colElm = wrapper.findComponent({ ref: 'col' }).element as HTMLElement
-    expect(rowElm.style.marginLeft === '-10px').toBe(true)
-    expect(rowElm.style.marginRight === '-10px').toBe(true)
-    expect(colElm.style.paddingLeft === '10px').toBe(true)
-    expect(colElm.style.paddingRight === '10px').toBe(true)
+    expect(rowElm.style.marginLeft === '-0.625rem').toBe(true)
+    expect(rowElm.style.marginRight === '-0.625rem').toBe(true)
+    expect(colElm.style.paddingLeft === '0.625rem').toBe(true)
+    expect(colElm.style.paddingRight === '0.625rem').toBe(true)
 
     outer.value = 40 // change gutter value
     await nextTick()
-    expect(rowElm.style.marginLeft === '-20px').toBe(true)
-    expect(rowElm.style.marginRight === '-20px').toBe(true)
-    expect(colElm.style.paddingLeft === '20px').toBe(true)
-    expect(colElm.style.paddingRight === '20px').toBe(true)
+    expect(rowElm.style.marginLeft === '-1.25rem').toBe(true)
+    expect(rowElm.style.marginRight === '-1.25rem').toBe(true)
+    expect(colElm.style.paddingLeft === '1.25rem').toBe(true)
+    expect(colElm.style.paddingRight === '1.25rem').toBe(true)
   })
 
   it('responsive', () => {
@@ -74,12 +74,7 @@ describe('Col', () => {
       setup() {
         return () => (
           <Row gutter={20}>
-            <Col
-              ref="col"
-              sm={{ span: 4, offset: 2 }}
-              md={8}
-              lg={{ span: 6, offset: 3 }}
-            />
+            <Col ref="col" sm={{ span: 4, offset: 2 }} md={8} />
           </Row>
         )
       },
@@ -89,8 +84,6 @@ describe('Col', () => {
     expect(colElmClass.includes('el-col-sm-4')).toBe(true)
     expect(colElmClass.includes('el-col-sm-4')).toBe(true)
     expect(colElmClass.includes('el-col-sm-offset-2')).toBe(true)
-    expect(colElmClass.includes('el-col-lg-6')).toBe(true)
-    expect(colElmClass.includes('el-col-lg-offset-3')).toBe(true)
     expect(colElmClass.includes('el-col-md-8')).toBe(true)
   })
 })
@@ -104,8 +97,8 @@ describe('Row', () => {
   test('gutter', () => {
     const wrapper = mount(() => <Row gutter={20} />)
     const rowElm = wrapper.element as HTMLElement
-    expect(rowElm.style.marginLeft).toEqual('-10px')
-    expect(rowElm.style.marginRight).toEqual('-10px')
+    expect(rowElm.style.marginLeft).toEqual('-0.625rem')
+    expect(rowElm.style.marginRight).toEqual('-0.625rem')
   })
   test('justify', () => {
     const wrapper = mount(() => <Row justify="end" />)

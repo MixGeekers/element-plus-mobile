@@ -1,14 +1,18 @@
 <template>
-  <section :class="[ns.b(), ns.is('vertical', isVertical)]">
+  <section
+    :class="[
+      ns.b(),
+      ns.is('vertical', isVertical),
+      ns.is('horizontal', !isVertical),
+    ]"
+  >
     <slot />
   </section>
 </template>
 
 <script lang="ts" setup>
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
 import { useNamespace } from '@element-plus/hooks'
-
-import type { Component, VNode } from 'vue'
 
 interface ContainerProps {
   /**
@@ -22,24 +26,8 @@ defineOptions({
 })
 
 const props = defineProps<ContainerProps>()
-const slots = useSlots()
 
 const ns = useNamespace('container')
 
-const isVertical = computed(() => {
-  if (props.direction === 'vertical') {
-    return true
-  } else if (props.direction === 'horizontal') {
-    return false
-  }
-  if (slots && slots.default) {
-    const vNodes: VNode[] = slots.default()
-    return vNodes.some((vNode) => {
-      const tag = (vNode.type as Component).name
-      return tag === 'ElHeader' || tag === 'ElFooter'
-    })
-  } else {
-    return false
-  }
-})
+const isVertical = computed(() => props.direction !== 'horizontal')
 </script>

@@ -73,6 +73,18 @@
   @return var(#{joinVarName($args)}, #{$default});
 }
 
+@function to-rem($value, $base: 16px) {
+  @if meta.type-of($value) == 'number' and math.is-unitless($value) {
+    $value: $value * 1px;
+  }
+
+  @if meta.type-of($value) == 'number' and math.unit($value) == 'px' {
+    @return math.div($value, $base) * 1rem;
+  }
+
+  @return $value;
+}
+
 // bem('block', 'element', 'modifier') => 'el-block__element--modifier'
 @function bem($block, $element: '', $modifier: '') {
   $name: config.$namespace + config.$common-separator + $block;

@@ -4,6 +4,7 @@
 @include b(space) {
   display: inline-flex;
   vertical-align: top;
+  max-width: 100%;
 
   @include e(item) {
     display: flex;

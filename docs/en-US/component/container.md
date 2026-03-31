@@ -7,7 +7,7 @@ lang: en-US
 
 Container components for scaffolding basic structure of the page:
 
-`<el-container>`: wrapper container. When nested with a `<el-header>` or `<el-footer>`, all its child elements will be vertically arranged. Otherwise horizontally.
+`<el-container>`: wrapper container. It arranges children vertically by default for mobile layouts. Set `direction="horizontal"` when a side-by-side layout is needed.
 
 `<el-header>`: container for headers.
 
@@ -83,9 +83,9 @@ container/example
 
 ### Container Attributes
 
-| Name      | Description                         | Type                                | Default                                                                    |
-| --------- | ----------------------------------- | ----------------------------------- | -------------------------------------------------------------------------- |
-| direction | layout direction for child elements | ^[enum]`'horizontal' \| 'vertical'` | vertical when nested with `el-header` or `el-footer`; horizontal otherwise |
+| Name      | Description                         | Type                                | Default  |
+| --------- | ----------------------------------- | ----------------------------------- | -------- |
+| direction | layout direction for child elements | ^[enum]`'horizontal' \| 'vertical'` | vertical |
 
 ### Container Slots
 
@@ -99,7 +99,7 @@ container/example
 
 | Name   | Description          | Type      | Default |
 | ------ | -------------------- | --------- | ------- |
-| height | height of the header | ^[string] | 60px    |
+| height | height of the header | ^[string] | 3.5rem  |
 
 ### Header Slots
 
@@ -113,7 +113,7 @@ container/example
 
 | Name  | Description               | Type      | Default |
 | ----- | ------------------------- | --------- | ------- |
-| width | width of the side section | ^[string] | 300px   |
+| width | width of the side section | ^[string] | 100%    |
 
 ### Aside Slots
 
@@ -135,7 +135,7 @@ container/example
 
 | Name   | Description          | Type      | Default |
 | ------ | -------------------- | --------- | ------- |
-| height | height of the footer | ^[string] | 60px    |
+| height | height of the footer | ^[string] | 3.5rem  |
 
 ### Footer Slots
 

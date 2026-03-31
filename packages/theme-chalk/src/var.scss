@@ -9,6 +9,9 @@
 
 // common
 :root {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+
   @include set-css-var-value('color-white', $color-white);
   @include set-css-var-value('color-black', $color-black);
 
@@ -22,7 +25,7 @@
   @include set-component-css-var('font-family', $font-family);
 
   @include set-css-var-value('font-weight-primary', 500);
-  @include set-css-var-value('font-line-height-primary', 24px);
+  @include set-css-var-value('font-line-height-primary', to-rem(24px));
 
   // z-index --el-index-#{$type}
   @include set-component-css-var('index', $z-index);

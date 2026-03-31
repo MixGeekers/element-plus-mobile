@@ -2,10 +2,10 @@
 @use 'common/var' as *;
 
 .#{$namespace}-icon--right {
-  margin-left: 5px;
+  margin-left: to-rem(6px);
 }
 .#{$namespace}-icon--left {
-  margin-right: 5px;
+  margin-right: to-rem(6px);
 }
 
 @keyframes rotating {

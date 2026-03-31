@@ -1,5 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { addClass, addUnit, debugWarn, hasClass, removeClass } from '../..'
+import {
+  addClass,
+  addUnit,
+  debugWarn,
+  hasClass,
+  pxToRem,
+  removeClass,
+} from '../..'
 
 vi.mock('@element-plus/utils/error', () => ({
   debugWarn: vi.fn(),
@@ -226,6 +233,41 @@ describe('dom style', () => {
 
     it('should warn if value is not string or number', () => {
       addUnit({} as any)
+      expect(debugWarn).toHaveBeenCalled()
+    })
+  })
+
+  describe('pxToRem', () => {
+    it('should return empty string when value is undefined or empty string', () => {
+      expect(pxToRem()).toBe('')
+      expect(pxToRem('')).toBe('')
+      expect(pxToRem(undefined)).toBe('')
+    })
+
+    it('should convert number values to rem', () => {
+      expect(pxToRem(16)).toBe('1rem')
+      expect(pxToRem(0)).toBe('0rem')
+      expect(pxToRem(-8)).toBe('-0.5rem')
+    })
+
+    it('should convert numeric strings to rem', () => {
+      expect(pxToRem('16')).toBe('1rem')
+      expect(pxToRem('24')).toBe('1.5rem')
+    })
+
+    it('should convert px strings to rem', () => {
+      expect(pxToRem('16px')).toBe('1rem')
+      expect(pxToRem('12px')).toBe('0.75rem')
+    })
+
+    it('should preserve non-px strings', () => {
+      expect(pxToRem('auto')).toBe('auto')
+      expect(pxToRem('100%')).toBe('100%')
+      expect(pxToRem('1.5rem')).toBe('1.5rem')
+    })
+
+    it('should warn if value is not string or number', () => {
+      pxToRem({} as any)
       expect(debugWarn).toHaveBeenCalled()
     })
   })

@@ -8,11 +8,21 @@
 $button-icon-span-gap: () !default;
 $button-icon-span-gap: map.merge(
   (
-    'large': 8px,
-    'default': 6px,
-    'small': 4px,
+    'large': to-rem(8px),
+    'default': to-rem(6px),
+    'small': to-rem(4px),
   ),
   $button-icon-span-gap
+);
+
+$button-height: () !default;
+$button-height: map.merge(
+  (
+    'large': to-rem(48px),
+    'default': to-rem(44px),
+    'small': to-rem(40px),
+  ),
+  $button-height
 );
 
 @include b(button) {
@@ -23,17 +33,26 @@ $button-icon-span-gap: map.merge(
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  @include touch-feedback;
+  @include set-css-var-value(
+    ('button', 'size'),
+    map.get($button-height, 'default')
+  );
 
   line-height: 1;
   // min-height will expand when in flex
-  height: map.get($input-height, 'default');
+  min-height: getCssVar('button', 'size');
+  height: auto;
   white-space: nowrap;
   cursor: pointer;
   color: getCssVar('button', 'text-color');
   text-align: center;
   box-sizing: border-box;
   outline: none;
-  transition: 0.1s;
+  transition:
+    background-color getCssVar('transition-duration-fast'),
+    border-color getCssVar('transition-duration-fast'),
+    color getCssVar('transition-duration-fast');
   font-weight: getCssVar('button', 'font-weight');
   user-select: none;
   vertical-align: middle;
@@ -41,13 +60,6 @@ $button-icon-span-gap: map.merge(
   background-color: getCssVar('button', 'bg-color');
   border: getCssVar('border');
   border-color: getCssVar('button', 'border-color');
-
-  &:hover {
-    color: getCssVar('button', 'hover', 'text-color');
-    border-color: getCssVar('button', 'hover', 'border-color');
-    background-color: getCssVar('button', 'hover', 'bg-color');
-    outline: none;
-  }
 
   &:active {
     color: getCssVar('button', 'active', 'text-color');
@@ -58,7 +70,7 @@ $button-icon-span-gap: map.merge(
 
   &:focus-visible {
     outline: 2px solid getCssVar('button', 'outline-color');
-    outline-offset: 1px;
+    outline-offset: to-rem(1px);
     transition:
       outline-offset 0s,
       outline 0s;
@@ -70,13 +82,17 @@ $button-icon-span-gap: map.merge(
   }
 
   & + & {
-    margin-left: 12px;
+    margin-left: to-rem(12px);
   }
 
   & {
     @include button-size(
-      map.get($button-padding-vertical, 'default') - $button-border-width,
-      map.get($button-padding-horizontal, 'default') - $button-border-width,
+      to-rem(
+        map.get($button-padding-vertical, 'default') - $button-border-width
+      ),
+      to-rem(
+        map.get($button-padding-horizontal, 'default') - $button-border-width
+      ),
       map.get($button-font-size, 'default'),
       map.get($button-border-radius, 'default')
     );
@@ -119,7 +135,7 @@ $button-icon-span-gap: map.merge(
 
   @include when(disabled) {
     &,
-    &:hover {
+    &:active {
       color: getCssVar('button', 'disabled', 'text-color');
       cursor: not-allowed;
       background-image: none;
@@ -138,10 +154,10 @@ $button-icon-span-gap: map.merge(
       pointer-events: none;
       content: '';
       position: absolute;
-      left: -1px;
-      top: -1px;
-      right: -1px;
-      bottom: -1px;
+      left: to-rem(-1px);
+      top: to-rem(-1px);
+      right: to-rem(-1px);
+      bottom: to-rem(-1px);
       border-radius: inherit;
       background-color: getCssVar('mask-color', 'extra-light');
     }
@@ -167,9 +183,11 @@ $button-icon-span-gap: map.merge(
   }
 
   @include when(circle) {
-    width: map.get($input-height, 'default');
+    width: getCssVar('button', 'size');
+    height: getCssVar('button', 'size');
+    min-height: getCssVar('button', 'size');
     border-radius: 50%;
-    padding: map.get($button-padding-vertical, 'default') - $button-border-width;
+    padding: 0;
   }
 
   @include when(text) {
@@ -183,13 +201,9 @@ $button-icon-span-gap: map.merge(
     }
 
     &:not(.is-disabled) {
-      &:hover {
-        background-color: getCssVar('fill-color', 'light');
-      }
-
       &:focus-visible {
         outline: 2px solid getCssVar('button', 'outline-color');
-        outline-offset: 1px;
+        outline-offset: to-rem(1px);
         transition:
           outline-offset 0s,
           outline 0s;
@@ -201,10 +215,6 @@ $button-icon-span-gap: map.merge(
 
       @include when(has-bg) {
         background-color: getCssVar('fill-color', 'light');
-
-        &:hover {
-          background-color: getCssVar('fill-color');
-        }
 
         &:active {
           background-color: getCssVar('fill-color', 'dark');
@@ -224,12 +234,8 @@ $button-icon-span-gap: map.merge(
     border-color: transparent;
     color: getCssVar('button', 'text-color');
     background: transparent;
-    padding: 2px;
-    height: auto;
-
-    &:hover {
-      color: getCssVar('button', 'hover', 'link-text-color');
-    }
+    padding: to-rem(8px) 0;
+    min-height: getCssVar('button', 'size');
 
     @include when(disabled) {
       color: getCssVar('button', 'disabled', 'text-color');
@@ -238,11 +244,6 @@ $button-icon-span-gap: map.merge(
     }
 
     &:not(.is-disabled) {
-      &:hover {
-        border-color: transparent;
-        background-color: transparent;
-      }
-
       &:active {
         color: getCssVar('button', 'active-color');
         border-color: transparent;
@@ -255,8 +256,7 @@ $button-icon-span-gap: map.merge(
     border-color: transparent;
     background: transparent;
     color: getCssVar('color', 'primary');
-    padding-left: 0;
-    padding-right: 0;
+    padding: to-rem(8px) 0;
     @include when(disabled) {
       color: getCssVar('button', 'disabled', 'text-color');
       background-color: transparent !important;
@@ -264,12 +264,6 @@ $button-icon-span-gap: map.merge(
     }
 
     &:not(.is-disabled) {
-      &:hover {
-        color: getCssVar('color', 'primary', 'light-3');
-        border-color: transparent;
-        background-color: transparent;
-      }
-
       &:active {
         color: getCssVar('color', 'primary', 'dark-2');
         border-color: transparent;
@@ -295,10 +289,10 @@ $button-icon-span-gap: map.merge(
     @include m($size) {
       @include set-css-var-value(
         ('button', 'size'),
-        map.get($input-height, $size)
+        map.get($button-height, $size)
       );
 
-      height: getCssVar('button', 'size');
+      min-height: getCssVar('button', 'size');
 
       & [class*='#{$namespace}-icon'] {
         & + span {
@@ -308,8 +302,12 @@ $button-icon-span-gap: map.merge(
 
       & {
         @include button-size(
-          map.get($button-padding-vertical, $size) - $button-border-width,
-          map.get($button-padding-horizontal, $size) - $button-border-width,
+          to-rem(
+            map.get($button-padding-vertical, $size) - $button-border-width
+          ),
+          to-rem(
+            map.get($button-padding-horizontal, $size) - $button-border-width
+          ),
           map.get($button-font-size, $size),
           map.get($button-border-radius, $size)
         );
@@ -317,7 +315,9 @@ $button-icon-span-gap: map.merge(
 
       @include when(circle) {
         width: getCssVar('button', 'size');
-        padding: map.get($button-padding-vertical, $size) - $button-border-width;
+        height: getCssVar('button', 'size');
+        min-height: getCssVar('button', 'size');
+        padding: 0;
       }
     }
   }

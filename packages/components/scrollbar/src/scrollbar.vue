@@ -64,7 +64,7 @@ const props = withDefaults(defineProps<ScrollbarProps>(), {
   viewStyle: '',
   viewClass: '',
   tag: 'div',
-  minSize: 20,
+  minSize: 24,
   tabindex: undefined,
 })
 const emit = defineEmits(scrollbarEmits)

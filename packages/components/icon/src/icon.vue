@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { addUnit } from '@element-plus/utils'
+import { pxToRem } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
 
 import type { CSSProperties } from 'vue'
@@ -21,7 +21,7 @@ const ns = useNamespace('icon')
 
 const style = computed<CSSProperties>(() => {
   const { size, color } = props
-  const fontSize = addUnit(size)
+  const fontSize = pxToRem(size)
   if (!fontSize && !color) return {}
 
   return {

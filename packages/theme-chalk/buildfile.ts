@@ -7,9 +7,45 @@ import { transform } from 'lightningcss'
 import { glob } from 'tinyglobby'
 import { compileAsync } from 'sass-embedded'
 import { chunk } from 'lodash-unified'
+import postcss from 'postcss'
+import pxtorem from 'postcss-pxtorem'
 
 const distFolder = path.resolve(__dirname, 'dist')
 const distBundle = path.resolve(epOutput, 'theme-chalk')
+const mobileRemTargets = new Set([
+  'aside',
+  'button',
+  'button-group',
+  'col',
+  'container',
+  'footer',
+  'header',
+  'icon',
+  'link',
+  'main',
+  'row',
+  'scrollbar',
+  'space',
+  'splitter',
+  'splitter-panel',
+  'text',
+])
+
+async function convertPxToRem(filename: string, css: string) {
+  if (!mobileRemTargets.has(filename)) return css
+
+  const result = await postcss([
+    pxtorem({
+      rootValue: 16,
+      propList: ['*'],
+      minPixelValue: 0,
+    }),
+  ]).process(css, {
+    from: `${filename}.css`,
+  })
+
+  return result.css
+}
 
 async function compress(filename: string, css: string) {
   const result = transform({
@@ -35,7 +71,8 @@ const processfiles = async (scssFiles: string[]) => {
     const baseName = path.basename(scssFile, '.scss')
 
     const cssResult = await compileAsync(fullPath)
-    const compressed = await compress(baseName, cssResult.css)
+    const mobileCss = await convertPxToRem(baseName, cssResult.css)
+    const compressed = await compress(baseName, mobileCss)
 
     const outputName = noElPrefixFile.test(baseName)
       ? `${baseName}.css`
@@ -47,7 +84,7 @@ const processfiles = async (scssFiles: string[]) => {
     consola.success(
       `${styleText('cyan', outputName)}: ${styleText(
         'yellow',
-        `${cssResult.css.length / 1000}`
+        `${mobileCss.length / 1000}`
       )} KB -> ${styleText('green', `${compressed.length / 1000}`)} KB`
     )
   }

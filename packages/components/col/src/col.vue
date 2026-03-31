@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
-import { isNumber, isObject } from '@element-plus/utils'
+import { isNumber, isObject, pxToRem } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
 import { rowContextKey } from '@element-plus/components/row'
 
@@ -26,8 +26,6 @@ const props = withDefaults(defineProps<ColProps>(), {
   xs: () => ({}),
   sm: () => ({}),
   md: () => ({}),
-  lg: () => ({}),
-  xl: () => ({}),
 })
 
 const { gutter } = inject(rowContextKey, { gutter: computed(() => 0) })
@@ -36,7 +34,7 @@ const ns = useNamespace('col')
 const style = computed(() => {
   const styles: CSSProperties = {}
   if (gutter.value) {
-    styles.paddingLeft = styles.paddingRight = `${gutter.value / 2}px`
+    styles.paddingLeft = styles.paddingRight = pxToRem(gutter.value / 2)
   }
   return styles
 })
@@ -53,7 +51,7 @@ const colKls = computed(() => {
     }
   })
 
-  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
+  const sizes = ['xs', 'sm', 'md'] as const
   sizes.forEach((size) => {
     if (isNumber(props[size])) {
       classes.push(ns.b(`${size}-${props[size]}`))

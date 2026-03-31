@@ -57,6 +57,16 @@ $E: null;
   }
 }
 
+@mixin touch-feedback($touch-action: manipulation) {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: $touch-action;
+}
+
+@mixin touch-target($min-size: 44px) {
+  min-width: to-rem($min-size);
+  min-height: to-rem($min-size);
+}
+
 // BEM
 @mixin b($block) {
   $B: $namespace + $common-separator + $block !global;

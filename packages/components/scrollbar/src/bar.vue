@@ -11,6 +11,7 @@
 
 <script lang="ts" setup>
 import { inject, ref } from 'vue'
+import { pxToRem } from '@element-plus/utils'
 import { GAP } from './util'
 import Thumb from './thumb.vue'
 import { scrollbarContextKey } from './constants'
@@ -60,8 +61,8 @@ const update = () => {
     (offsetWidth - originalWidth) /
     (width / (offsetWidth - width))
 
-  sizeHeight.value = height + GAP < offsetHeight ? `${height}px` : ''
-  sizeWidth.value = width + GAP < offsetWidth ? `${width}px` : ''
+  sizeHeight.value = height + GAP < offsetHeight ? pxToRem(height) : ''
+  sizeWidth.value = width + GAP < offsetWidth ? pxToRem(width) : ''
 }
 
 defineExpose({

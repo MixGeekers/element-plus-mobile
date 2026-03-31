@@ -40,24 +40,28 @@ describe('Space.vue', () => {
     )
 
     await nextTick()
-    expect(wrapper.find('.el-space').attributes('style')).toContain('gap: 16px')
+    expect(wrapper.find('.el-space').attributes('style')).toContain(
+      'gap: 1.25rem'
+    )
 
     await wrapper.setProps({
       size: 30,
     })
 
     await nextTick()
-    expect(wrapper.find('.el-space').attributes('style')).toContain('gap: 30px')
+    expect(wrapper.find('.el-space').attributes('style')).toContain(
+      'gap: 1.875rem'
+    )
 
     await wrapper.setProps({
       size: [10, 20],
     })
 
     expect(wrapper.find('.el-space').attributes('style')).toContain(
-      'column-gap: 10px'
+      'column-gap: 0.625rem'
     )
     expect(wrapper.find('.el-space').attributes('style')).toContain(
-      'row-gap: 20px'
+      'row-gap: 1.25rem'
     )
     await wrapper.setProps({
       size: 'unknown',
@@ -65,7 +69,9 @@ describe('Space.vue', () => {
 
     expect(warnHandler).toHaveBeenCalled()
 
-    expect(wrapper.find('.el-space').attributes('style')).toContain('gap: 8px')
+    expect(wrapper.find('.el-space').attributes('style')).toContain(
+      'gap: 0.75rem'
+    )
   })
 
   it('should render with spacer', async () => {
