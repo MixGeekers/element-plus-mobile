@@ -53,7 +53,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { CollapseIconPositionType } from 'element-plus'
+import type { CollapseIconPositionType } from 'element-plus-mobile'
 
 const position = ref<CollapseIconPositionType>('left')
 </script>

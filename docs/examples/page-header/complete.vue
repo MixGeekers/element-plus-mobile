@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElNotification as notify } from 'element-plus'
+import { ElNotification as notify } from 'element-plus-mobile'
 
 const onBack = () => {
   notify('Back')

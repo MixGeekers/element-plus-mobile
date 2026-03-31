@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { h } from 'vue'
-import { ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus-mobile'
 
 const open1 = () => {
   ElNotification({

@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Tag } from 'element-plus'
+import type { Tag } from 'element-plus-mobile'
 
 const props = { multiple: true }
 const options = [

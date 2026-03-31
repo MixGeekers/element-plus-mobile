@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus-mobile'
 
-import type { Action } from 'element-plus'
+import type { Action } from 'element-plus-mobile'
 
 const open = () => {
   ElMessageBox.alert('This is a message', 'Title', {

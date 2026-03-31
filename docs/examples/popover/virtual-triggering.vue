@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ClickOutside as vClickOutside } from 'element-plus'
+import { ClickOutside as vClickOutside } from 'element-plus-mobile'
 
-import type { PopoverInstance } from 'element-plus'
+import type { PopoverInstance } from 'element-plus-mobile'
 
 const buttonRef = ref()
 const popoverRef = ref<PopoverInstance>()

@@ -45,13 +45,13 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElButton } from 'element-plus'
+import { ElButton } from 'element-plus-mobile'
 
 import type {
   RenderContentContext,
   RenderContentFunction,
   TreeInstance,
-} from 'element-plus'
+} from 'element-plus-mobile'
 
 interface Tree {
   id: number

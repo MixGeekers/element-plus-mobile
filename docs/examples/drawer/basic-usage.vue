@@ -46,9 +46,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus-mobile'
 
-import type { DrawerProps } from 'element-plus'
+import type { DrawerProps } from 'element-plus-mobile'
 
 const drawer = ref(false)
 const drawer2 = ref(false)

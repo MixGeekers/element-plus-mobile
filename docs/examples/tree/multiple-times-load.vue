@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { LoadFunction } from 'element-plus'
+import type { LoadFunction } from 'element-plus-mobile'
 
 const props = {
   label: 'name',

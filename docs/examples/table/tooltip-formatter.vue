@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { h } from 'vue'
-import { ElLink, type TableTooltipData } from 'element-plus'
+import { ElLink, type TableTooltipData } from 'element-plus-mobile'
 
 type TableData = {
   address: string

@@ -9,7 +9,7 @@ Displays a global notification message at a corner of the page.
 
 ## Basic usage
 
-:::demo Element Plus has registered the `$notify` method and it receives an object as its parameter. In the simplest case, you can set the `title` field and the` message` field for the title and body of the notification. By default, the notification automatically closes after 4500ms, but by setting `duration` you can control its duration. Specifically, if set to `0`, it will not close automatically. Note that `duration` receives a `Number` in milliseconds.
+:::demo Element Plus Mobile has registered the `$notify` method and it receives an object as its parameter. In the simplest case, you can set the `title` field and the` message` field for the title and body of the notification. By default, the notification automatically closes after 4500ms, but by setting `duration` you can control its duration. Specifically, if set to `0`, it will not close automatically. Note that `duration` receives a `Number` in milliseconds.
 
 notification/basic
 
@@ -19,7 +19,7 @@ notification/basic
 
 We provide four types: success, warning, info and error.
 
-:::demo Element Plus provides four notification types: `primary`, `success`, `warning`, `info` and `error`. They are set by the `type` field, and other values will be ignored. We also registered methods for these types that can be invoked directly like `open3` and `open4` without passing a `type` field. `primary` has been added in ^(2.9.11).
+:::demo Element Plus Mobile provides four notification types: `primary`, `success`, `warning`, `info` and `error`. They are set by the `type` field, and other values will be ignored. We also registered methods for these types that can be invoked directly like `open3` and `open4` without passing a `type` field. `primary` has been added in ^(2.9.11).
 
 notification/different-types
 
@@ -85,12 +85,12 @@ notification/no-close
 
 ## Global method
 
-Element Plus has added a global method `$notify` for `app.config.globalProperties`. So in a vue instance you can call `Notification` like what we did in this page.
+Element Plus Mobile has added a global method `$notify` for `app.config.globalProperties`. So in a vue instance you can call `Notification` like what we did in this page.
 
 ## Local import
 
 ```javascript
-import { ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus-mobile'
 import { CloseBold } from '@element-plus/icons-vue'
 
 ElNotification({
@@ -116,7 +116,7 @@ If you globally registered ElNotification component, it will automatically inher
 
 ```ts
 import { getCurrentInstance } from 'vue'
-import { ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus-mobile'
 
 // in your setup method
 const { appContext } = getCurrentInstance()!

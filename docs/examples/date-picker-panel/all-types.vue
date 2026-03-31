@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 
-import type { DatePickerType } from 'element-plus'
+import type { DatePickerType } from 'element-plus-mobile'
 
 const date = ref()
 const type = ref<DatePickerType>('date')

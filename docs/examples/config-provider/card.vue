@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 
-import type { CardConfigContext } from 'element-plus'
+import type { CardConfigContext } from 'element-plus-mobile'
 
 const config = reactive<CardConfigContext>({
   shadow: 'always',

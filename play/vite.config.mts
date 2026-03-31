@@ -40,12 +40,12 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     resolve: {
       alias: [
         {
-          find: /^element-plus(\/(es|lib))?$/,
+          find: /^(element-plus-mobile|element-plus)(\/(es|lib))?$/,
           replacement: path.resolve(epRoot, 'index.ts'),
         },
         {
-          find: /^element-plus\/(es|lib)\/(.*)$/,
-          replacement: `${pkgRoot}/$2`,
+          find: /^(element-plus-mobile|element-plus)\/(es|lib)\/(.*)$/,
+          replacement: `${pkgRoot}/$3`,
         },
       ],
     },

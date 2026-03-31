@@ -5,7 +5,7 @@ lang: en-US
 
 # Custom theme
 
-Element Plus uses BEM-styled CSS so that you can override styles easily. But if
+Element Plus Mobile uses BEM-styled CSS so that you can override styles easily. But if
 you need to replace styles at a large scale, e.g. change the theme color from
 blue to orange or green, maybe overriding them one by one is not a good idea.
 
@@ -68,7 +68,7 @@ $colors: map.deep-merge(
 
 ### How to override it?
 
-If your project also uses SCSS, you can directly change Element Plus style variables. Create a new style file, e.g. `styles/element/index.scss`:
+If your project also uses SCSS, you can directly change Element Plus Mobile style variables. Create a new style file, e.g. `styles/element/index.scss`:
 
 :::warning
 
@@ -82,7 +82,7 @@ Because the sass team said they will remove `@import` eventually.
 
 ```scss [styles/element/index.scss]
 /* just override what you need */
-@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+@forward 'element-plus-mobile/theme-chalk/src/common/var.scss' with (
   $colors: (
     'primary': (
       'base': green,
@@ -92,34 +92,34 @@ Because the sass team said they will remove `@import` eventually.
 
 // If you just import on demand, you can ignore the following content.
 // if you want to import all styles:
-// @use "element-plus/theme-chalk/src/index.scss" as *;
+// @use "element-plus-mobile/theme-chalk/src/index.scss" as *;
 ```
 
 Then in the entry file of your project, import this style file instead of Element's built CSS:
 
 :::tip
 
-Import `element/index.scss` before scss of element-plus to avoid the problem of sass mixed variables, because we need generate light-x by your custom variables.
+Import `element/index.scss` before scss of element-plus-mobile to avoid the problem of sass mixed variables, because we need generate light-x by your custom variables.
 
 :::
 
-Create a `element/index.scss` to combine your variables and variables of element-plus. (If you import them in ts, they will not be combined.)
+Create a `element/index.scss` to combine your variables and variables of element-plus-mobile. (If you import them in ts, they will not be combined.)
 
 :::tip
 
 In addition, you should distinguish your scss from the element variable scss.
-If they are mixed together, each hot update of `element-plus` needs to compile a large number of scss files, resulting in slow speed.
+If they are mixed together, each hot update of `element-plus-mobile` needs to compile a large number of scss files, resulting in slow speed.
 
 :::
 
 ```ts [main.ts]
 import { createApp } from 'vue'
 import './styles/element/index.scss'
-import ElementPlus from 'element-plus'
+import ElementPlusMobile from 'element-plus-mobile'
 import App from './App.vue'
 
 const app = createApp(App)
-app.use(ElementPlus)
+app.use(ElementPlusMobile)
 ```
 
 If you are using vite, and you want to custom theme when importing on demand.

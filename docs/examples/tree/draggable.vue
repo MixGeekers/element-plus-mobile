@@ -21,7 +21,7 @@ import type {
   AllowDropType,
   NodeDropType,
   RenderContentContext,
-} from 'element-plus'
+} from 'element-plus-mobile'
 
 type Node = RenderContentContext['node']
 

@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 
-import type { CheckboxValueType } from 'element-plus'
+import type { CheckboxValueType } from 'element-plus-mobile'
 
 const initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 const checkAll = ref(false)

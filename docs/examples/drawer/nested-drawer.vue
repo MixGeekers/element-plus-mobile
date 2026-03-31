@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus-mobile'
 
 const drawer = ref(false)
 const innerDrawer = ref(false)

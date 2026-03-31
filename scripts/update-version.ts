@@ -7,6 +7,7 @@ import type { Project } from '@pnpm/find-workspace-packages'
 async function main() {
   const tagVersion = process.env.TAG_VERSION
   const gitHead = process.env.GIT_HEAD
+  const packageName = 'element-plus-mobile'
   if (!tagVersion || !gitHead) {
     errorAndExit(
       new Error(
@@ -19,14 +20,16 @@ async function main() {
   consola.log(styleText('cyan', `$TAG_VERSION: ${tagVersion}`))
   consola.log(styleText('cyan', `$GIT_HEAD: ${gitHead}`))
 
-  consola.debug(styleText('yellow', `Updating package.json for element-plus`))
+  consola.debug(styleText('yellow', `Updating package.json for ${packageName}`))
 
   const pkgs = Object.fromEntries(
     (await getWorkspacePackages()).map((pkg) => [pkg.manifest.name!, pkg])
   )
-  const elementPlus = pkgs['element-plus'] || pkgs['@element-plus/nightly']
-  const eslintConfig = pkgs['@element-plus/eslint-config']
-  const metadata = pkgs['@element-plus/metadata']
+  const elementPlus = pkgs[packageName]
+
+  if (!elementPlus) {
+    errorAndExit(new Error(`Package "${packageName}" was not found`))
+  }
 
   const writeVersion = async (project: Project) => {
     await project.writeProjectManifest({
@@ -38,8 +41,6 @@ async function main() {
 
   try {
     await writeVersion(elementPlus)
-    await writeVersion(eslintConfig)
-    await writeVersion(metadata)
   } catch (err: any) {
     errorAndExit(err)
   }

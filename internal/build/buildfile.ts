@@ -4,6 +4,7 @@ import {
   buildOutput,
   epOutput,
   epPackage,
+  epRoot,
   execCommand,
   projRoot,
 } from '@element-plus/build-utils'
@@ -22,7 +23,7 @@ const copyFiles = () =>
   Promise.all([
     copyFile(epPackage, path.join(epOutput, 'package.json')),
     copyFile(
-      path.resolve(projRoot, 'README.md'),
+      path.resolve(epRoot, 'README.md'),
       path.resolve(epOutput, 'README.md')
     ),
     copyFile(

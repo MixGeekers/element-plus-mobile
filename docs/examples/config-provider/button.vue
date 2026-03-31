@@ -25,9 +25,9 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { buttonTypes } from 'element-plus'
+import { buttonTypes } from 'element-plus-mobile'
 
-import type { ButtonConfigContext } from 'element-plus'
+import type { ButtonConfigContext } from 'element-plus-mobile'
 
 const config = reactive<ButtonConfigContext>({
   autoInsertSpace: true,

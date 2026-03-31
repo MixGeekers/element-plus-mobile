@@ -39,7 +39,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 
-import type { TableConfigContext } from 'element-plus'
+import type { TableConfigContext } from 'element-plus-mobile'
 
 const config = reactive<TableConfigContext>({
   showOverflowTooltip: true,

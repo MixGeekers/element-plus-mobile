@@ -11,7 +11,7 @@ Used to show feedback after an activity. The difference with Notification is tha
 
 Displays at the top by default, and disappears after 3 seconds. You can control the position using the `placement` property.
 
-:::demo The setup of Message is very similar to notification, so parts of the options won't be explained in detail here. You can check the options table below combined with notification doc to understand it. Element Plus has registered a `$message` method for invoking. Message can take a string or a VNode as parameter, and it will be shown as the main body.
+:::demo The setup of Message is very similar to notification, so parts of the options won't be explained in detail here. You can check the options table below combined with notification doc to understand it. Element Plus Mobile has registered a `$message` method for invoking. Message can take a string or a VNode as parameter, and it will be shown as the main body.
 
 message/basic
 
@@ -85,12 +85,12 @@ message/placement
 
 ## Global method
 
-Element Plus has added a global method `$message` for `app.config.globalProperties`. So in a vue instance you can call `Message` like what we did in this page.
+Element Plus Mobile has added a global method `$message` for `app.config.globalProperties`. So in a vue instance you can call `Message` like what we did in this page.
 
 ## Local import
 
 ```ts
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus-mobile'
 ```
 
 In this case you should call `ElMessage(options)`. We have also registered methods for different types, e.g. `ElMessage.success(options)`. You can call `ElMessage.closeAll()` to manually close all the instances.
@@ -109,7 +109,7 @@ If you globally registered ElMessage component, it will automatically inherit yo
 
 ```ts
 import { getCurrentInstance } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus-mobile'
 
 // in your setup method
 const { appContext } = getCurrentInstance()!

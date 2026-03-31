@@ -18,9 +18,9 @@ import {
   ElTag,
   TableV2FixedDir,
   TableV2SortOrder,
-} from 'element-plus'
+} from 'element-plus-mobile'
 
-import type { Column, SortBy } from 'element-plus'
+import type { Column, SortBy } from 'element-plus-mobile'
 
 const longText =
   'Quaerat ipsam necessitatibus eum quibusdam est id voluptatem cumque mollitia.'

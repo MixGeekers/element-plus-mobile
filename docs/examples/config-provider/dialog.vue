@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, ref, shallowReactive } from 'vue'
 
-import type { ButtonInstance, DialogTransition } from 'element-plus'
+import type { ButtonInstance, DialogTransition } from 'element-plus-mobile'
 
 type GlobalConfig = {
   alignCenter: boolean

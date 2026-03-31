@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 
-import type { FormInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus-mobile'
 
 const formRef = ref<FormInstance>()
 

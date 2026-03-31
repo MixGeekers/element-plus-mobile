@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, shallowRef } from 'vue'
 import clipboardCopy from 'clipboard-copy'
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus-mobile'
 import * as Icons from '@element-plus/icons-vue'
 import { useLang } from '../../composables/lang'
 import localeData from '../../../i18n/component/icons.json'

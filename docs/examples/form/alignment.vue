@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 
-import type { FormItemProps, FormProps } from 'element-plus'
+import type { FormItemProps, FormProps } from 'element-plus-mobile'
 
 const labelPosition = ref<FormProps['labelPosition']>('right')
 const itemLabelPosition = ref<FormItemProps['labelPosition']>('')

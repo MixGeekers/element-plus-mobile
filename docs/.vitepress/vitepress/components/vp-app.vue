@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-// import { ElMessageBox } from 'element-plus'
+// import { ElMessageBox } from 'element-plus-mobile'
 // import dayjs from 'dayjs'
 import { isClient, useEventListener, useToggle } from '@vueuse/core'
-import { EVENT_CODE } from 'element-plus'
+import { EVENT_CODE } from 'element-plus-mobile'
 import { useSidebar } from '../composables/sidebar'
 import { useToggleWidgets } from '../composables/toggle-widgets'
 // import { useLang } from '../composables/lang'

@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 
-import type { LinkConfigContext } from 'element-plus'
+import type { LinkConfigContext } from 'element-plus-mobile'
 
 const linkTypes = ['primary', 'success', 'warning', 'info', 'danger', 'default']
 const underlineOptions = ['always', 'never', 'hover']

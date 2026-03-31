@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { TabsPaneContext } from 'element-plus'
+import type { TabsPaneContext } from 'element-plus-mobile'
 
 const tabs = ref([
   { label: 'User', name: 'first' },

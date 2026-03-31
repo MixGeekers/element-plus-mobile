@@ -12,9 +12,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { TableV2SortOrder } from 'element-plus'
+import { TableV2SortOrder } from 'element-plus-mobile'
 
-import type { SortBy } from 'element-plus'
+import type { SortBy } from 'element-plus-mobile'
 
 const generateColumns = (length = 10, prefix = 'column-', props?: any) =>
   Array.from({ length }).map((_, columnIndex) => ({

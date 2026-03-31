@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { TagProps } from 'element-plus'
+import type { TagProps } from 'element-plus-mobile'
 
 interface TagsItem {
   name: string

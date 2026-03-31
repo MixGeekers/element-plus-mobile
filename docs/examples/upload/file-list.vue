@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { UploadProps, UploadUserFile } from 'element-plus'
+import type { UploadProps, UploadUserFile } from 'element-plus-mobile'
 
 const fileList = ref<UploadUserFile[]>([
   {

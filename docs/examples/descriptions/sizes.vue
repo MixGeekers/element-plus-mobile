@@ -104,7 +104,7 @@ import {
   User,
 } from '@element-plus/icons-vue'
 
-import type { ComponentSize } from 'element-plus'
+import type { ComponentSize } from 'element-plus-mobile'
 
 const size = ref<ComponentSize>('default')
 

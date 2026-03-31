@@ -4,7 +4,7 @@ import { isDark, toggleDark } from '../../composables/dark'
 import DarkIcon from '../icons/dark.vue'
 import LightIcon from '../icons/light.vue'
 
-import type { SwitchInstance } from 'element-plus'
+import type { SwitchInstance } from 'element-plus-mobile'
 
 defineOptions({ inheritAttrs: false })
 

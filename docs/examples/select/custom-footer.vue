@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { CheckboxValueType } from 'element-plus'
+import type { CheckboxValueType } from 'element-plus-mobile'
 
 const isAdding = ref(false)
 const value = ref<CheckboxValueType[]>([])

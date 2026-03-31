@@ -18,7 +18,7 @@
 import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 
-import type { UploadProps, UploadUserFile } from 'element-plus'
+import type { UploadProps, UploadUserFile } from 'element-plus-mobile'
 
 const fileList = ref<UploadUserFile[]>([
   {

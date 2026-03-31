@@ -20,9 +20,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus-mobile'
 
-import type { MessagePlacement, MessageType } from 'element-plus'
+import type { MessagePlacement, MessageType } from 'element-plus-mobile'
 
 let topCount = 0
 let bottomCount = 0

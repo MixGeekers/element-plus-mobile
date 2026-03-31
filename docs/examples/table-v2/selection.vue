@@ -16,10 +16,10 @@
 
 <script lang="tsx" setup>
 import { ref, unref } from 'vue'
-import { ElCheckbox, useLocale } from 'element-plus'
+import { ElCheckbox, useLocale } from 'element-plus-mobile'
 
 import type { FunctionalComponent } from 'vue'
-import type { CheckboxValueType, Column } from 'element-plus'
+import type { CheckboxValueType, Column } from 'element-plus-mobile'
 
 type SelectionCellProps = {
   value: boolean

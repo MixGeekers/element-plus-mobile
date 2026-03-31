@@ -27,7 +27,7 @@
 import { h } from 'vue'
 
 import type { VNode } from 'vue'
-import type { TableColumnCtx } from 'element-plus'
+import type { TableColumnCtx } from 'element-plus-mobile'
 
 interface Product {
   id: string

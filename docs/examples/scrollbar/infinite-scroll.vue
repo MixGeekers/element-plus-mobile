@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { ScrollbarDirection } from 'element-plus'
+import type { ScrollbarDirection } from 'element-plus-mobile'
 
 const num = ref(30)
 

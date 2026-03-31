@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { CalendarDateType, CalendarInstance } from 'element-plus'
+import type { CalendarDateType, CalendarInstance } from 'element-plus-mobile'
 
 const calendar = ref<CalendarInstance>()
 const selectDate = (val: CalendarDateType) => {

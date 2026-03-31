@@ -13,10 +13,10 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus-mobile'
 import { Plus } from '@element-plus/icons-vue'
 
-import type { UploadProps } from 'element-plus'
+import type { UploadProps } from 'element-plus-mobile'
 
 const imageUrl = ref('')
 

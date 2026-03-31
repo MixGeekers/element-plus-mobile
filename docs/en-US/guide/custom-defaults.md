@@ -24,7 +24,7 @@ Once the component is rendered for the first time, the defaults become immutable
 :::
 
 ```ts [main.ts]
-import { ElButton } from 'element-plus'
+import { ElButton } from 'element-plus-mobile'
 
 ElButton.setPropsDefaults({
   type: 'primary',

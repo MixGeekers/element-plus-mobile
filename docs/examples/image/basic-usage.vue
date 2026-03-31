@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ImageProps } from 'element-plus'
+import type { ImageProps } from 'element-plus-mobile'
 
 const fits = [
   'fill',

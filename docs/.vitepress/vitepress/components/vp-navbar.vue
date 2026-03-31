@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { inBrowser, useData, withBase } from 'vitepress'
-import { version as epVersion } from 'element-plus'
+import { version as epVersion } from 'element-plus-mobile'
 import VPNavbarSearch from './navbar/vp-search.vue'
 import VPNavbarMenu from './navbar/vp-menu.vue'
 import VPNavbarThemeToggler from './navbar/vp-theme-toggler.vue'

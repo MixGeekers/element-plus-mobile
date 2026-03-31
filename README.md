@@ -3,18 +3,18 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/element-plus/element-plus">
+  <a href="https://github.com/MixGeekers/element-plus-mobile">
     <img src="https://img.shields.io/badge/node-%20%3E%3D%2020-47c219" />
   </a>
-  <a href="https://github.com/element-plus/element-plus">
+  <a href="https://github.com/MixGeekers/element-plus-mobile">
     <img src="https://img.shields.io/badge/vue-%5E3.0-42b883" />
   </a>
-  <a href="https://github.com/element-plus/element-plus/blob/master/LICENSE">
+  <a href="https://github.com/MixGeekers/element-plus-mobile/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue" />
   </a>
 </p>
 
-<p align="center">Element Plus Mobile —— 基于 Element Plus 二次开发的移动端 Vue 3 组件库（内部使用）</p>
+<p align="center">Element Plus Mobile —— 基于 Element Plus 二次开发的移动端 Vue 3 组件库</p>
 
 ## 项目简介
 
@@ -44,6 +44,12 @@
 
 ```bash
 pnpm install
+```
+
+### 安装主包
+
+```bash
+npm install element-plus-mobile
 ```
 
 ### 启动开发预览
@@ -101,4 +107,4 @@ git merge upstream/dev
 
 ## 许可证
 
-本项目基于 Element Plus，遵循 [MIT License](https://github.com/element-plus/element-plus/blob/master/LICENSE)。
+本项目基于 Element Plus，遵循 [MIT License](https://github.com/MixGeekers/element-plus-mobile/blob/main/LICENSE)。

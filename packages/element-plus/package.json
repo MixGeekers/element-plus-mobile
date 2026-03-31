@@ -1,18 +1,22 @@
 {
-  "name": "element-plus",
+  "name": "element-plus-mobile",
   "version": "0.0.0-dev.1",
-  "description": "A Component Library for Vue 3",
+  "description": "A mobile-first Vue 3 component library based on Element Plus.",
   "keywords": [
+    "element-plus-mobile",
     "element-plus",
     "element",
+    "mobile",
+    "h5",
+    "vue3",
     "component library",
     "ui framework",
     "ui",
     "vue"
   ],
-  "homepage": "https://element-plus.org/",
+  "homepage": "https://github.com/MixGeekers/element-plus-mobile",
   "bugs": {
-    "url": "https://github.com/element-plus/element-plus/issues"
+    "url": "https://github.com/MixGeekers/element-plus-mobile/issues"
   },
   "license": "MIT",
   "main": "lib/index.js",
@@ -63,7 +67,7 @@
   "jsdelivr": "dist/index.full.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/element-plus/element-plus.git"
+    "url": "git+https://github.com/MixGeekers/element-plus-mobile.git"
   },
   "publishConfig": {
     "access": "public"

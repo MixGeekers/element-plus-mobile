@@ -49,7 +49,7 @@ import {
   Watermelon,
 } from '@element-plus/icons-vue'
 
-import type { SegmentedProps } from 'element-plus'
+import type { SegmentedProps } from 'element-plus-mobile'
 
 const value = ref('Apple')
 const direction = ref<SegmentedProps['direction']>('horizontal')

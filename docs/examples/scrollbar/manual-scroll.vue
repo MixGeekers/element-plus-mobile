@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
-import type { ScrollbarInstance } from 'element-plus'
+import type { ScrollbarInstance } from 'element-plus-mobile'
 
 type Arrayable<T> = T | T[]
 

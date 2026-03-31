@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus-mobile'
 
 const open1 = () => {
   ElNotification({

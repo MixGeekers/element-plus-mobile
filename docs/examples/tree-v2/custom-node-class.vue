@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { TreeNode, TreeNodeData } from 'element-plus'
+import type { TreeNode, TreeNodeData } from 'element-plus-mobile'
 
 interface Tree {
   id?: string

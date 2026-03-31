@@ -19,7 +19,10 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 
-import type { FilterNodeMethodFunction, TreeInstance } from 'element-plus'
+import type {
+  FilterNodeMethodFunction,
+  TreeInstance,
+} from 'element-plus-mobile'
 
 interface Tree {
   [key: string]: any

@@ -66,7 +66,7 @@ import type {
   TransferDirection,
   TransferKey,
   renderContent,
-} from 'element-plus'
+} from 'element-plus-mobile'
 
 interface Option {
   key: number

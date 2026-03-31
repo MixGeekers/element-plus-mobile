@@ -35,7 +35,9 @@ const { dependencies: docsDeps } = getPackageDependencies(docPackage)
 const optimizeDeps = [...new Set([...epDeps, ...docsDeps])].filter(
   (dep) =>
     !dep.startsWith('@types/') &&
-    !['@element-plus/metadata', 'element-plus'].includes(dep) &&
+    !['@element-plus/metadata', 'element-plus', 'element-plus-mobile'].includes(
+      dep
+    ) &&
     !IGNORED_DEPENDENCIES.includes(dep)
 )
 optimizeDeps.push(
@@ -54,12 +56,12 @@ const alias: AliasOptions = [
     ? []
     : [
         {
-          find: /^element-plus(\/(es|lib))?$/,
+          find: /^(element-plus-mobile|element-plus)(\/(es|lib))?$/,
           replacement: path.resolve(projRoot, 'packages/element-plus/index.ts'),
         },
         {
-          find: /^element-plus\/(es|lib)\/(.*)$/,
-          replacement: `${path.resolve(projRoot, 'packages')}/$2`,
+          find: /^(element-plus-mobile|element-plus)\/(es|lib)\/(.*)$/,
+          replacement: `${path.resolve(projRoot, 'packages')}/$3`,
         },
       ]),
 ]

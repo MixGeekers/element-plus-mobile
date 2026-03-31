@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 
-import type { DialogTransition } from 'element-plus'
+import type { DialogTransition } from 'element-plus-mobile'
 
 const dialogVisible = ref(false)
 const currentAnimation = ref('fade')

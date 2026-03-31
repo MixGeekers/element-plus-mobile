@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { RenderContentContext, TreeInstance } from 'element-plus'
+import type { RenderContentContext, TreeInstance } from 'element-plus-mobile'
 
 interface Tree {
   id: number

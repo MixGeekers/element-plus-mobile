@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { TimelineProps } from 'element-plus'
+import type { TimelineProps } from 'element-plus-mobile'
 
 const activities = [
   {

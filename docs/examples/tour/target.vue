@@ -28,7 +28,7 @@
 import { ref } from 'vue'
 import { MoreFilled } from '@element-plus/icons-vue'
 
-import type { ButtonInstance } from 'element-plus'
+import type { ButtonInstance } from 'element-plus-mobile'
 
 const el = () => document.querySelector<HTMLElement>('#btn2')
 const btnRef = ref<ButtonInstance>()

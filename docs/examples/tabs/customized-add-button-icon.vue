@@ -25,7 +25,7 @@ addIcon
 import { ref } from 'vue'
 import { Select } from '@element-plus/icons-vue'
 
-import type { TabPaneName } from 'element-plus'
+import type { TabPaneName } from 'element-plus-mobile'
 
 let tabIndex = 2
 const editableTabsValue = ref('2')

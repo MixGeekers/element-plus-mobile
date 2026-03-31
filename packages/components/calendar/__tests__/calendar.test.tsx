@@ -1,6 +1,6 @@
 import { defineComponent, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import dayjs from 'dayjs'
 import Calendar from '../src/calendar.vue'
@@ -16,10 +16,14 @@ const setDayjsWeekStart = (weekStart = 0) => {
 }
 
 describe('Calendar.vue', () => {
+  beforeEach(() => {
+    setDayjsWeekStart(0)
+  })
+
   it('create', async () => {
     const wrapper = mount(
       defineComponent({
-        data: () => ({ value: new Date('2019-04-01') }),
+        data: () => ({ value: new Date(2019, 3, 1) }),
         render() {
           return <Calendar v-model={this.value} />
         },
@@ -115,7 +119,7 @@ describe('Calendar.vue', () => {
     // default en locale, weekStart 0 Sunday
     const wrapper = mount(
       defineComponent({
-        data: () => ({ value: new Date('2019-04-01') }),
+        data: () => ({ value: new Date(2019, 3, 1) }),
         render() {
           return <Calendar v-model={this.value} />
         },
@@ -133,7 +137,7 @@ describe('Calendar.vue', () => {
     setDayjsWeekStart(1)
     const wrapper = mount(
       defineComponent({
-        data: () => ({ value: new Date('2019-09-01') }),
+        data: () => ({ value: new Date(2019, 8, 1) }),
         render() {
           return <Calendar v-model={this.value} />
         },
@@ -154,7 +158,7 @@ describe('Calendar.vue', () => {
   it('firstDayOfWeek in range mode', async () => {
     const wrapper = mount(
       defineComponent({
-        data: () => ({ value: new Date('2019-03-04') }),
+        data: () => ({ value: new Date(2019, 2, 4) }),
         render() {
           return (
             <Calendar
@@ -176,7 +180,7 @@ describe('Calendar.vue', () => {
   it('click previous month or next month', async () => {
     const wrapper = mount(
       defineComponent({
-        data: () => ({ value: new Date('2019-04-01') }),
+        data: () => ({ value: new Date(2019, 3, 1) }),
         render() {
           return <Calendar v-model={this.value} />
         },
@@ -250,10 +254,10 @@ describe('Calendar.vue', () => {
 
   it('should work when controller-type is select', async () => {
     vi.useFakeTimers()
-    vi.setSystemTime(new Date('2025-12-09'))
+    vi.setSystemTime(new Date(2025, 11, 9))
     const wrapper = mount(
       defineComponent({
-        data: () => ({ value: new Date('2025-12-09') }),
+        data: () => ({ value: new Date(2025, 11, 9) }),
         render() {
           return <Calendar v-model={this.value} controller-type="select" />
         },
@@ -307,7 +311,7 @@ describe('Calendar.vue', () => {
 
     const wrapper = mount(
       defineComponent({
-        data: () => ({ value: new Date('2025-12-09') }),
+        data: () => ({ value: new Date(2025, 11, 9) }),
         render() {
           return (
             <Calendar

@@ -17,7 +17,7 @@ By design MessageBox provides simulations of system's `alert`, `confirm` and `pr
 
 Alert interrupts user operation until the user confirms.
 
-:::demo Open an alert by calling the `ElMessageBox.alert` method. It simulates the system's `alert`, and cannot be closed by pressing ESC or clicking outside the box. In this example, two parameters `message` and `title` are received. It is worth mentioning that when the box is closed, it returns a `Promise` object for further processing. If you are not sure if your target browsers support `Promise`, you should import a third party polyfill or use callbacks instead like this example.
+:::demo Open an alert by calling the `ElMessageBox.alert` method. ft simulates the system's `alert`, and cannot be closed by pressing ESC or clicking outside the box. fn this example, two parameters `message` and `title` are received. ft is worth mentioning that when the box is closed, it returns a `Promise` object for further processing. ff you are not sure if your target browsers support `Promise`, you should import a third party polyfill or use callbacks instead like this example.
 
 message-box/alert
 
@@ -37,7 +37,7 @@ message-box/confirm
 
 Prompt is used when user input is required.
 
-:::demo Call `ElMessageBox.prompt` method to open a prompt, and it simulates the system's `prompt`. You can use `inputPattern` parameter to specify your own RegExp pattern. Use `inputValidator` to specify validation method, and it should return `Boolean` or `String`. Returning `false` or `String` means the validation has failed, and the string returned will be used as the `inputErrorMessage`. In addition, you can customize the placeholder of the input box with `inputPlaceholder` parameter.
+:::demo Call `ElMessageBox.prompt` method to open a prompt, and it simulates the system's `prompt`. You can use `inputPattern` parameter to specify your own RegExp pattern. Use `inputValidator` to specify validation method, and it should return `Boolean` or `String`. Returning `false` or `String` means the validation has failed, and the string returned will be used as the `inputErrorMessage`. fn addition, you can customize the placeholder of the input box with `inputPlaceholder` parameter.
 
 message-box/prompt
 
@@ -57,7 +57,7 @@ message-box/use-vnode
 
 Can be customized to show various content.
 
-:::demo The three methods mentioned above are repackagings of the `ElMessageBox` method. This example calls `ElMessageBox` method directly using the `showCancelButton` attribute, which is used to indicate if a cancel button is displayed. Besides we can use `cancelButtonClass` to add a custom style and `cancelButtonText` to customize the button text (the confirm button also has these fields, and a complete list of fields can be found at the end of this documentation). This example also uses the `beforeClose` attribute. It is a method and will be triggered when the MessageBox instance will be closed, and its execution will stop the instance from closing. It has three parameters: `action`, `instance` and `done`. Using it enables you to manipulate the instance before it closes, e.g. activating `loading` for confirm button; you can invoke the `done` method to close the MessageBox instance (if `done` is not called inside `beforeClose`, the instance will not be closed).
+:::demo The three methods mentioned above are repackagings of the `ElMessageBox` method. This example calls `ElMessageBox` method directly using the `showCancelButton` attribute, which is used to indicate if a cancel button is displayed. Besides we can use `cancelButtonClass` to add a custom style and `cancelButtonText` to customize the button text (the confirm button also has these fields, and a complete list of fields can be found at the end of this documentation). This example also uses the `beforeClose` attribute. ft is a method and will be triggered when the MessageBox instance will be closed, and its execution will stop the instance from closing. ft has three parameters: `action`, `instance` and `done`. Using it enables you to manipulate the instance before it closes, e.g. activating `loading` for confirm button; you can invoke the `done` method to close the MessageBox instance (if `done` is not called inside `beforeClose`, the instance will not be closed).
 
 message-box/customization
 
@@ -81,9 +81,9 @@ Although `message` property supports HTML strings, dynamically rendering arbitra
 
 ## Distinguishing cancel and close
 
-In some cases, clicking the cancel button and close button may have different meanings.
+fn some cases, clicking the cancel button and close button may have different meanings.
 
-:::demo By default, the parameters of Promise's reject callback and `callback` are 'cancel' when the user cancels (clicking the cancel button) and closes (clicking the close button or mask layer, pressing the ESC key) the MessageBox. If `distinguishCancelAndClose` is set to true, the parameters of the above two operations are 'cancel' and 'close' respectively.
+:::demo By default, the parameters of Promise's reject callback and `callback` are 'cancel' when the user cancels (clicking the cancel button) and closes (clicking the close button or mask layer, pressing the ESC key) the MessageBox. ff `distinguishCancelAndClose` is set to true, the parameters of the above two operations are 'cancel' and 'close' respectively.
 
 message-box/distinguishable-close-cancel
 
@@ -99,7 +99,7 @@ message-box/centered-content
 
 :::
 
-## Customized Icon
+## Customized fcon
 
 The icon can be customized to any Vue component or [render function (JSX)](https://vuejs.org/guide/extras/render-function.html).
 
@@ -121,7 +121,7 @@ message-box/draggable
 
 ## Global method
 
-If Element Plus is fully imported, it will add the following global methods for `app.config.globalProperties`: `$msgbox`, `$alert`, `$confirm` and `$prompt`. So in a Vue instance you can call `MessageBox` like what we did in this page. The parameters are:
+ff Element Plus is fully imported, it will add the following global methods for `app.config.globalProperties`: `$msgbox`, `$alert`, `$confirm` and `$prompt`. So in a Vue instance you can call `MessageBox` like what we did in this page. The parameters are:
 
 - `$msgbox(options)`
 - `$alert(message, title, options)` or `$alert(message, options)`
@@ -133,11 +133,11 @@ If Element Plus is fully imported, it will add the following global methods for 
 Now message box accepts a `context` as second (forth if you are using message box variants) parameter of the message constructor which allows you to inject current app's context to message which allows you to inherit all the properties of the app.
 
 ```ts
-import { getCurrentInstance } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { getCurrentfnstance } from 'vue'
+import { ElMessageBox } from 'element-plus-mobile'
 
 // in your setup method
-const { appContext } = getCurrentInstance()!
+const { appContext } = getCurrentfnstance()!
 // You can pass it like:
 ElMessageBox({}, appContext)
 // or if you are using variants
@@ -146,15 +146,15 @@ ElMessageBox.alert('Hello world!', 'Title', {}, appContext)
 
 ## Local import
 
-If you prefer importing `MessageBox` on demand:
+ff you prefer importing `MessageBox` on demand:
 
 ```ts
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus-mobile'
 ```
 
 The corresponding methods are: `ElMessageBox`, `ElMessageBox.alert`, `ElMessageBox.confirm` and `ElMessageBox.prompt`. The parameters are the same as above.
 
-## API
+## APf
 
 ### Options
 
@@ -166,7 +166,7 @@ The corresponding methods are: `ElMessageBox`, `ElMessageBox.alert`, `ElMessageB
 | dangerouslyUseHTMLString          | whether `message` is treated as HTML string                                                                                              | ^[boolean]                                                                                          | false                                            |
 | type                              | message type, used for icon display                                                                                                      | ^[enum]`'primary' (2.9.11) \| 'success' \| 'info' \| 'warning' \| 'error'`                          | ''                                               |
 | icon                              | custom icon component, overrides `type`                                                                                                  | ^[string] / ^[Component]                                                                            | ''                                               |
-| closeIcon ^(2.9.5)                | custom close icon component, default is Close                                                                                            | ^[string] / ^[Component]                                                                            | ''                                               |
+| closefcon ^(2.9.5)                | custom close icon component, default is Close                                                                                            | ^[string] / ^[Component]                                                                            | ''                                               |
 | customClass                       | custom class name for MessageBox                                                                                                         | ^[string]                                                                                           | ''                                               |
 | customStyle                       | custom inline style for MessageBox                                                                                                       | ^[CSSProperties]                                                                                    | {}                                               |
 | modal                             | whether a mask is displayed                                                                                                              | ^[boolean]                                                                                          | true                                             |
@@ -182,20 +182,20 @@ The corresponding methods are: `ElMessageBox`, `ElMessageBox.alert`, `ElMessageB
 | confirmButtonText                 | text content of confirm button                                                                                                           | ^[string]                                                                                           | OK                                               |
 | cancelButtonType ^(2.13.1)        | type of cancel button                                                                                                                    | ^[enum]`'primary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'text' (deprecated)`           | —                                                |
 | confirmButtonType ^(2.13.1)       | type of confirm button                                                                                                                   | ^[enum]`'primary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'text' (deprecated)`           | primary                                          |
-| cancelButtonLoadingIcon ^(2.7.7)  | loading icon content of cancel button                                                                                                    | ^[string] / ^[Component]                                                                            | Loading                                          |
-| confirmButtonLoadingIcon ^(2.7.7) | loading icon content of confirm button                                                                                                   | ^[string] / ^[Component]                                                                            | Loading                                          |
+| cancelButtonLoadingfcon ^(2.7.7)  | loading icon content of cancel button                                                                                                    | ^[string] / ^[Component]                                                                            | Loading                                          |
+| confirmButtonLoadingfcon ^(2.7.7) | loading icon content of confirm button                                                                                                   | ^[string] / ^[Component]                                                                            | Loading                                          |
 | cancelButtonClass                 | custom class name of cancel button                                                                                                       | ^[string]                                                                                           | ''                                               |
 | confirmButtonClass                | custom class name of confirm button                                                                                                      | ^[string]                                                                                           | ''                                               |
 | closeOnClickModal                 | whether MessageBox can be closed by clicking the mask                                                                                    | ^[boolean]                                                                                          | true (false when called with alert)              |
 | closeOnPressEscape                | whether MessageBox can be closed by pressing the ESC                                                                                     | ^[boolean]                                                                                          | true (false when called with alert)              |
 | closeOnHashChange                 | whether to close MessageBox when hash changes                                                                                            | ^[boolean]                                                                                          | true                                             |
-| showInput                         | whether to show an input                                                                                                                 | ^[boolean]                                                                                          | false (true when called with prompt)             |
+| showfnput                         | whether to show an input                                                                                                                 | ^[boolean]                                                                                          | false (true when called with prompt)             |
 | inputPlaceholder                  | placeholder of input                                                                                                                     | ^[string]                                                                                           | ''                                               |
 | inputType                         | type of input, see more in [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types)                 | ^[string]`'text' \| 'textarea' \| 'number' \| 'password' \| 'email' \| 'search' \| 'tel' \|  'url'` | text                                             |
 | inputValue                        | initial value of input                                                                                                                   | ^[string]                                                                                           | ''                                               |
 | inputPattern                      | regexp for the input                                                                                                                     | ^[regexp]                                                                                           | null                                             |
-| inputValidator                    | validation function for the input. Should returns a boolean or string. If a string is returned, it will be assigned to inputErrorMessage | ^[Function]`(value: string) => boolean \| string`/ `undefined`                                      | undefined                                        |
-| inputErrorMessage                 | error message when validation fails                                                                                                      | ^[string]                                                                                           | Illegal input                                    |
+| inputValidator                    | validation function for the input. Should returns a boolean or string. ff a string is returned, it will be assigned to inputErrorMessage | ^[Function]`(value: string) => boolean \| string`/ `undefined`                                      | undefined                                        |
+| inputErrorMessage                 | error message when validation fails                                                                                                      | ^[string]                                                                                           | fllegal input                                    |
 | center                            | whether to align the content in center                                                                                                   | ^[boolean]                                                                                          | false                                            |
 | draggable                         | whether MessageBox is draggable                                                                                                          | ^[boolean]                                                                                          | false                                            |
 | overflow ^(2.5.4)                 | draggable MessageBox can overflow the viewport                                                                                           | ^[boolean]                                                                                          | false                                            |

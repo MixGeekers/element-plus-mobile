@@ -17,10 +17,10 @@ import {
   ElTag,
   ElTooltip,
   TableV2FixedDir,
-} from 'element-plus'
+} from 'element-plus-mobile'
 import { Timer } from '@element-plus/icons-vue'
 
-import type { Column } from 'element-plus'
+import type { Column } from 'element-plus-mobile'
 
 let id = 0
 

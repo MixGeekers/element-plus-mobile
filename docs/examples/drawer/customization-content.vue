@@ -52,7 +52,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus-mobile'
 
 const formLabelWidth = '80px'
 let timer

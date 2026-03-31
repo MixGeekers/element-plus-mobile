@@ -5,7 +5,7 @@ lang: en-US
 
 # Quick Start
 
-This section describes how to use Element Plus in your project.
+This section describes how to use Element Plus Mobile in your project.
 
 ## Usage
 
@@ -15,13 +15,13 @@ If you don’t care about the bundle size so much, it’s more convenient to use
 
 ```ts [main.ts]
 import { createApp } from 'vue'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
+import ElementPlusMobile from 'element-plus-mobile'
+import 'element-plus-mobile/dist/index.css'
 import App from './App.vue'
 
 const app = createApp(App)
 
-app.use(ElementPlus)
+app.use(ElementPlusMobile)
 app.mount('#app')
 ```
 
@@ -33,7 +33,7 @@ If you use volar, please add the global component type definition to `compilerOp
 {
   "compilerOptions": {
     // ...
-    "types": ["element-plus/global"]
+    "types": ["element-plus-mobile/global"]
   }
 }
 ```
@@ -140,7 +140,7 @@ Refer to the [docs](https://github.com/element-plus/element-plus-nuxt#readme) fo
 
 ### Manually import
 
-Element Plus provides out of box [Tree Shaking](https://webpack.js.org/guides/tree-shaking/)
+Element Plus Mobile provides out of box [Tree Shaking](https://webpack.js.org/guides/tree-shaking/)
 functionalities based on ES Module.
 
 But you need install [unplugin-element-plus](https://github.com/element-plus/unplugin-element-plus) for style import.
@@ -152,7 +152,7 @@ And refer to the [docs](https://github.com/element-plus/unplugin-element-plus#re
 </template>
 
 <script setup lang="ts">
-import { ElButton } from 'element-plus'
+import { ElButton } from 'element-plus-mobile'
 </script>
 ```
 
@@ -176,7 +176,7 @@ For Laravel users we have a [Laravel Template](https://github.com/element-plus/e
 
 ## Global Configuration
 
-When registering Element Plus, you can pass a global config object with `size` and
+When registering Element Plus Mobile, you can pass a global config object with `size` and
 `zIndex` to set the default `size` for form components, and `zIndex` for
 popup components, the default value for `zIndex` is `2000`.
 
@@ -184,11 +184,11 @@ Full import:
 
 ```ts [main.ts]
 import { createApp } from 'vue'
-import ElementPlus from 'element-plus'
+import ElementPlusMobile from 'element-plus-mobile'
 import App from './App.vue'
 
 const app = createApp(App)
-app.use(ElementPlus, { size: 'small', zIndex: 3000 })
+app.use(ElementPlusMobile, { size: 'small', zIndex: 3000 })
 ```
 
 On-demand:
@@ -201,7 +201,7 @@ On-demand:
 </template>
 
 <script setup lang="ts">
-import { ElConfigProvider } from 'element-plus'
+import { ElConfigProvider } from 'element-plus-mobile'
 
 const zIndex = 3000
 const size = 'small'

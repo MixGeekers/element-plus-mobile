@@ -21,9 +21,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus-mobile'
 
-import type { UploadProps, UploadUserFile } from 'element-plus'
+import type { UploadProps, UploadUserFile } from 'element-plus-mobile'
 
 const fileList = ref<UploadUserFile[]>([
   {

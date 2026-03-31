@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { nextTick, ref } from 'vue'
 
-import type { InputInstance } from 'element-plus'
+import type { InputInstance } from 'element-plus-mobile'
 
 const inputValue = ref('')
 const dynamicTags = ref(['Tag 1', 'Tag 2', 'Tag 3'])

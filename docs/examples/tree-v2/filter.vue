@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { TreeNodeData, TreeV2Instance } from 'element-plus'
+import type { TreeNodeData, TreeV2Instance } from 'element-plus-mobile'
 
 interface Tree {
   id: string

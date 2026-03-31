@@ -5,7 +5,7 @@ lang: en-US
 
 # Built-in Transition
 
-You can use Element's built-in transitions directly.
+You can use Element Plus Mobile's built-in transitions directly.
 Before that, please read the [transition docs](https://vuejs.org/guide/built-ins/transition.html).
 
 ## Fade
@@ -38,9 +38,9 @@ transitions/collapse
 
 ```ts [main.ts]
 // collapse
-import { ElCollapseTransition } from 'element-plus'
+import { ElCollapseTransition } from 'element-plus-mobile'
 // fade/zoom
-import 'element-plus/theme-chalk/base.css'
+import 'element-plus-mobile/theme-chalk/base.css'
 import App from './App.vue'
 
 const app = createApp(App)

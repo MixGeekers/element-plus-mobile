@@ -7,7 +7,7 @@ import { useLocale } from '../../composables/locale'
 import changelogLocale from '../../../i18n/component/component-meta.json'
 import allChangelogs from 'virtual:component-changelog-data'
 
-import type { TimelineItemProps } from 'element-plus'
+import type { TimelineItemProps } from 'element-plus-mobile'
 import type { VersionChangelog } from '../../../utils/changelog-parser'
 
 const props = defineProps({
@@ -38,7 +38,7 @@ const changelogs = computed<VersionChangelog[]>(
 )
 const issuesUrl = computed(() => {
   const q = encodeURIComponent(`is:open is:issue in:title [${props.component}]`)
-  return `https://github.com/element-plus/element-plus/issues?q=${q}`
+  return `https://github.com/MixGeekers/element-plus-mobile/issues?q=${q}`
 })
 
 const { width: windowWidth } = useWindowSize()
@@ -115,7 +115,7 @@ const openIssues = () => {
             </span>
             <el-link
               type="primary"
-              href="https://github.com/element-plus/element-plus/releases"
+              href="https://github.com/MixGeekers/element-plus-mobile/releases"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -134,7 +134,7 @@ const openIssues = () => {
           >
             <div class="changelog-version-header">
               <el-link
-                :href="`https://github.com/element-plus/element-plus/releases/tag/${version}`"
+                :href="`https://github.com/MixGeekers/element-plus-mobile/releases/tag/${version}`"
                 class="changelog-version"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -161,7 +161,7 @@ const openIssues = () => {
                 <el-link
                   v-if="pr"
                   type="primary"
-                  :href="`https://github.com/element-plus/element-plus/pull/${pr}`"
+                  :href="`https://github.com/MixGeekers/element-plus-mobile/pull/${pr}`"
                   underline="always"
                   target="_blank"
                   rel="noopener noreferrer"

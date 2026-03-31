@@ -7,16 +7,8 @@ pnpm update:version
 
 pnpm build
 
+echo "Publishing element-plus-mobile from dist/element-plus"
 cd dist/element-plus
-pnpm publish --access public --no-git-checks
-cd -
-
-cd internal/eslint-config
-pnpm publish --access public --no-git-checks
-cd -
-
-cd internal/metadata
-pnpm build
 pnpm publish --access public --no-git-checks
 cd -
 

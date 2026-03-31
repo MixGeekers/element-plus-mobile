@@ -17,10 +17,10 @@ import {
   ElPopover,
   TableV2FixedDir,
   useLocale,
-} from 'element-plus'
+} from 'element-plus-mobile'
 import { Filter } from '@element-plus/icons-vue'
 
-import type { HeaderCellSlotProps } from 'element-plus'
+import type { HeaderCellSlotProps } from 'element-plus-mobile'
 
 const generateColumns = (length = 10, prefix = 'column-', props?: any) =>
   Array.from({ length }).map((_, columnIndex) => ({
