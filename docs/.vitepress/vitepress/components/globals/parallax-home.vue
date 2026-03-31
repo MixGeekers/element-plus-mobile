@@ -7,7 +7,7 @@ import {
   useParallax,
   useThrottleFn,
 } from '@vueuse/core'
-import { useLang } from '../../composables/lang'
+import { resolveLangPath, useLang } from '../../composables/lang'
 import homeLocale from '../../../i18n/pages/home.json'
 import HomeSponsors from '../home/home-sponsors.vue'
 import HomeCards from '../home/home-cards.vue'
@@ -27,7 +27,7 @@ const homeLang = computed(() => homeLocale[lang.value])
 function jumpTo(path: string) {
   if (!isClient) return
   // vitepress has not router
-  window.location.href = `/${lang.value}/${path}`
+  window.location.href = resolveLangPath(lang.value, `/${path}`)
 }
 
 const containerStyle: CSSProperties = {
@@ -141,7 +141,7 @@ onMounted(() => {
             :style="peopleLayer"
             alt="banner"
             class="cursor-pointer"
-            @click="jumpTo('guide/quickstart.html')"
+            @click="jumpTo('guide/quickstart')"
           />
           <left-layer-svg :style="leftLayer" alt="banner" />
           <left-bottom-layer-svg :style="leftBottomLayer" alt="banner" />

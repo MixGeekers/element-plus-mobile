@@ -1,6 +1,12 @@
 import consola from 'consola'
 import { REPO_BRANCH, REPO_PATH } from '@element-plus/build-constants'
 import { docsDirName } from '@element-plus/build-utils'
+import {
+  defaultLang,
+  getLocaleKey,
+  getLocalePath,
+  languageMap,
+} from '../shared/lang'
 import { languages } from '../utils/lang'
 import { features } from './features'
 import { head } from './head'
@@ -41,16 +47,22 @@ consola.debug(`DOC_ENV: ${process.env.DOC_ENV}`)
 
 const locales = {}
 languages.forEach((lang) => {
-  locales[`/${lang}`] = {
-    label: lang,
+  locales[getLocaleKey(lang)] = {
+    label: languageMap[lang] || lang,
     lang,
+    link: getLocalePath(lang),
+    description:
+      lang === defaultLang
+        ? '一个基于 Vue 3 的组件库，面向设计师和开发者'
+        : 'A Vue 3 based component library for designers and developers',
   }
 })
 
 const setupConfig = (configEnv) => {
   const config: UserConfig<any> = {
     title: 'Element Plus',
-    description: 'A Vue 3 based component library for designers and developers',
+    lang: defaultLang,
+    description: '一个基于 Vue 3 的组件库，面向设计师和开发者',
     lastUpdated: true,
     head,
     themeConfig: {

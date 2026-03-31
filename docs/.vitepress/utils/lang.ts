@@ -1,10 +1,23 @@
 import fs from 'fs'
 import path from 'path'
 import { docRoot } from '@element-plus/build-utils'
+import {
+  defaultLang,
+  getLangFromRelativePath,
+  isDefaultLang,
+} from '../shared/lang'
 
-export const languages = fs.readdirSync(path.resolve(__dirname, '../crowdin'))
+const crowdinRoot = path.resolve(__dirname, '../crowdin')
 
-export const ensureLang = (lang: string) => `/${lang}`
+const crowdinLanguages = fs
+  .readdirSync(crowdinRoot, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+
+export const languages = Array.from(new Set([defaultLang, ...crowdinLanguages]))
+
+export const ensureLang = (lang: string) =>
+  isDefaultLang(lang) ? '' : `/${lang}`
 
 export const getLang = (id: string) =>
-  path.relative(docRoot, id).split(path.sep)[0]
+  getLangFromRelativePath(path.relative(docRoot, id), languages)

@@ -1,50 +1,36 @@
 import { computed } from 'vue'
-import { useData, useRoute, useRouter, withBase } from 'vitepress'
+import { useData, useRouter, withBase } from 'vitepress'
 import { useStorage } from '@vueuse/core'
 import { PREFERRED_LANG_KEY } from '../constant'
 import langs from '../../i18n/lang.json'
 import translationLocale from '../../i18n/component/translation.json'
-import { useLang } from './lang'
+import { defaultLang, languageMap } from '../../shared/lang'
+import { resolveLangRoutePath, useLang } from './lang'
 
 export const useTranslation = () => {
-  const route = useRoute()
   const router = useRouter()
   const lang = useLang()
-  const { site } = useData()
-
-  const languageMap = {
-    'en-US': 'English',
-    'zh-CN': '中文',
-    'es-ES': 'Español',
-    'fr-FR': 'Français',
-    'ja-JP': '日本語',
-  }
+  const { page } = useData()
 
   const locale = computed(() => translationLocale[lang.value])
   const langsRef = computed(() => {
     const currentLang = lang.value
-
-    // When there is no zh-CN in the list, meaning this is the PR preview
-    // so we simply return the current list which contains only en-US
-    if (!langs.includes('zh-CN')) return []
     const langsCopy = langs.slice(0)
     langsCopy.splice(langsCopy.indexOf(currentLang), 1)
+    const defaultIndex = langsCopy.indexOf(defaultLang)
 
-    // if current language is not zh-CN, then zh-CN needs to be moved to the head.
-    if (currentLang !== 'zh-CN') {
-      langsCopy.splice(langsCopy.indexOf('zh-CN'), 1)
+    if (currentLang !== defaultLang && defaultIndex > -1) {
+      langsCopy.splice(defaultIndex, 1)
+      langsCopy.unshift(defaultLang)
     }
 
-    return currentLang === 'zh-CN' ? langsCopy : ['zh-CN'].concat(langsCopy)
+    return langsCopy
   })
 
-  const language = useStorage(PREFERRED_LANG_KEY, 'en-US')
+  const language = useStorage(PREFERRED_LANG_KEY, defaultLang)
 
   const getTargetUrl = (lang: string) => {
-    const firstSlash = route.path.indexOf('/', site.value.base.length)
-    return firstSlash === -1
-      ? `/${lang}/`
-      : `/${lang}/${route.path.slice(firstSlash + 1)}`
+    return resolveLangRoutePath(lang, page.value?.relativePath || 'index.md')
   }
 
   const switchLang = (targetLang: string) => {

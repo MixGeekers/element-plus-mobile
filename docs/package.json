@@ -2,11 +2,13 @@
   "name": "@element-plus/docs",
   "private": true,
   "scripts": {
-    "dev": "pnpm gen-locale && vitepress dev .",
-    "build": "pnpm gen-llms && NODE_ENV=production && vitepress build .",
+    "dev": "pnpm gen-locale && pnpm check-locale && vitepress dev .",
+    "build": "pnpm gen-locale && pnpm check-locale && pnpm gen-llms && pnpm vitepress:build",
     "serve": "NODE_ENV=production vitepress serve . --port 5001",
+    "vitepress:build": "node --max-old-space-size=8192 ./node_modules/vitepress/dist/node/cli.js build .",
     "gen-llms": "tsx .vitepress/build/generate-llms.ts",
     "gen-locale": "rimraf .vitepress/i18n && tsx .vitepress/build/crowdin-generate.ts",
+    "check-locale": "tsx .vitepress/build/check-locales.ts",
     "crowdin-credentials": "tsx .vitepress/build/crowdin-credentials.ts"
   },
   "dependencies": {

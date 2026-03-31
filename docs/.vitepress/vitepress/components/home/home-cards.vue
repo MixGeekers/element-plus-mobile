@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useLang } from '../../composables/lang'
+import { resolveLangPath, useLang } from '../../composables/lang'
 import homeLocale from '../../../i18n/pages/home.json'
 
 const lang = useLang()
@@ -15,7 +15,9 @@ const homeLang = computed(() => homeLocale[lang.value])
       <h3>{{ homeLang['3'] }}</h3>
       <p>{{ homeLang['4'] }}</p>
       <template #footer>
-        <a :href="`/${lang}/guide/design.html`">{{ homeLang['5'] }}</a>
+        <a :href="resolveLangPath(lang, '/guide/design')">{{
+          homeLang['5']
+        }}</a>
       </template>
     </el-card>
     <el-card shadow="hover">
@@ -23,7 +25,7 @@ const homeLang = computed(() => homeLocale[lang.value])
       <h3>{{ homeLang['6'] }}</h3>
       <p>{{ homeLang['7'] }}</p>
       <template #footer>
-        <a :href="`/${lang}/component/overview.html`">
+        <a :href="resolveLangPath(lang, '/component/overview')">
           {{ homeLang['5'] }}
         </a>
       </template>
@@ -33,7 +35,7 @@ const homeLang = computed(() => homeLocale[lang.value])
       <h3>{{ homeLang['8'] }}</h3>
       <p>{{ homeLang['9'] }}</p>
       <template #footer>
-        <a :href="`/${lang}/resource/index.html`"> {{ homeLang['5'] }} </a>
+        <a :href="resolveLangPath(lang, '/resource/')"> {{ homeLang['5'] }} </a>
       </template>
     </el-card>
   </div>

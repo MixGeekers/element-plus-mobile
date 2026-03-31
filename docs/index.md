@@ -1,7 +1,7 @@
 ---
-title: '一个基于 Vue 3 的 UI 框架'
-lang: zh-CN
+title: A Vue 3 UI Framework
 page: true
+lang: zh-CN
 ---
 
 <ParallaxHome />

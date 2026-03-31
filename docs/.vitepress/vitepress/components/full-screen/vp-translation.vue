@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useToggle } from '@vueuse/core'
+import { resolveLangRoutePath } from '../../composables/lang'
 import VPLink from '../common/vp-link.vue'
 import { useTranslation } from '../../composables/translation'
 import ExpandIcon from '../icons/expand.vue'
@@ -27,7 +28,7 @@ const onSwitchLang = (lang: string) => {
       @click="toggle()"
     >
       <div class="translation-toggler">
-        <span> Translations </span>
+        <span>{{ locale.title }}</span>
         <ElIcon :size="14">
           <ExpandIcon class="toggle-icon" :class="{ expanded: show }" />
         </ElIcon>
@@ -48,7 +49,7 @@ const onSwitchLang = (lang: string) => {
         {{ languageMap[l] }}
       </p>
       <p class="translation-item">
-        <VPLink :href="`/${lang}/guide/translation`">
+        <VPLink :href="resolveLangRoutePath(lang, 'guide/translation.md')">
           {{ locale.help }}
         </VPLink>
       </p>

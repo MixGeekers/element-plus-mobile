@@ -5,20 +5,20 @@ import { glob } from 'tinyglobby'
 async function generateLLms() {
   const cwd = process.cwd()
   const siteDir = path.resolve(cwd, 'public')
-  const docsDir = ['en-US', 'examples']
-
-  const matchSuffixes = ['.md', '.vue']
+  const docPatterns = [
+    'index.md',
+    '{guide,component,resource}/**/*.md',
+    'en-US/**/*.md',
+    'examples/**/*.vue',
+  ]
 
   // Ensure siteDir exists
   await fs.mkdir(siteDir, { recursive: true })
 
-  const docs = await glob(
-    `{${docsDir.join(',')}}/**/*{${matchSuffixes.join(',')}}`,
-    {
-      cwd,
-      absolute: false,
-    }
-  )
+  const docs = await glob(docPatterns, {
+    cwd,
+    absolute: false,
+  })
 
   const docsIndex: Array<{ title: string; url: string }> = []
   const docsBody: string[] = []
@@ -42,9 +42,11 @@ async function generateLLms() {
     }
 
     // URL
-    let url = `https://element-plus.org/${markdown
-      .replace(/^docs\//, '')
-      .replace(/\.(md|vue)$/, '')}`
+    const routePath = markdown.replace(/\\/g, '/').replace(/\.(md|vue)$/, '')
+    let url =
+      routePath === 'index'
+        ? 'https://element-plus.org/'
+        : `https://element-plus.org/${routePath.replace(/\/index$/, '/')}`
     if (url.includes('/examples/')) {
       url = url.replace('/index', '')
     }

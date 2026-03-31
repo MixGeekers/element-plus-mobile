@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { inBrowser, useData, withBase } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import { version as epVersion } from 'element-plus-mobile'
+import { getLangHome, useLang } from '../composables/lang'
 import VPNavbarSearch from './navbar/vp-search.vue'
 import VPNavbarMenu from './navbar/vp-menu.vue'
 import VPNavbarThemeToggler from './navbar/vp-theme-toggler.vue'
@@ -15,18 +16,12 @@ defineProps<{
 
 defineEmits(['toggle'])
 
-const { theme, page, site } = useData()
+const { theme } = useData()
+const lang = useLang()
 
-const currentLink = computed(() => {
-  if (!inBrowser) {
-    return `/${page.value?.frontmatter?.lang || ''}/`
-  }
-  const existLangIndex = theme.value.langs.findIndex((lang) =>
-    window?.location?.pathname.startsWith(`${site.value.base}${lang}`)
-  )
-
-  return existLangIndex === -1 ? '/' : `/${theme.value.langs[existLangIndex]}/`
-})
+const currentLink = computed(() =>
+  getLangHome(lang.value || theme.value.langs[0])
+)
 </script>
 
 <template>

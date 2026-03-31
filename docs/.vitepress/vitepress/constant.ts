@@ -1,4 +1,4 @@
-export const defaultLang = 'en-US'
+export { defaultLang, sourceLang } from '../shared/lang'
 
 export const PREFERRED_LANG_KEY = 'preferred_lang'
 

@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import { useData, useRoute } from 'vitepress'
 import { ensureStartingSlash } from '../utils'
+import { withLangPath } from '../../shared/lang'
 import { useLang } from './lang'
 
 export const useSidebar = () => {
@@ -61,7 +62,7 @@ export function getSidebarConfig(sidebar: Sidebar, path: string, lang: string) {
   path = ensureStartingSlash(path)
   for (const dir in sidebar) {
     // make sure the multi sidebar key starts with slash too
-    if (path.startsWith(ensureStartingSlash(`${lang}${dir}`))) {
+    if (path.startsWith(ensureStartingSlash(withLangPath(lang, dir)))) {
       return sidebar[dir][lang]
     }
   }

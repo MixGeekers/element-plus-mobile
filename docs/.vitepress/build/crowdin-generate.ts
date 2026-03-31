@@ -3,6 +3,7 @@ import path from 'path'
 import { styleText } from 'util'
 import consola from 'consola'
 import { docRoot, errorAndExit } from '@element-plus/build-utils'
+import { defaultLang } from '../shared/lang'
 
 // NB: this file is only for generating files that enables developers to develop the website.
 const componentLocaleRoot = path.resolve(docRoot, '.vitepress/crowdin')
@@ -20,8 +21,10 @@ async function main() {
   const dirs = await fs.promises.readdir(componentLocaleRoot, {
     withFileTypes: true,
   })
-  const languages = dirs.map((dir) => dir.name)
-  const langWithoutEn = languages.filter((l) => l !== 'en-US')
+  const languages = dirs
+    .filter((dir) => dir.isDirectory())
+    .map((dir) => dir.name)
+  const translatedLanguages = languages.filter((lang) => lang !== defaultLang)
 
   await fs.promises.mkdir(localeOutput)
 
@@ -32,19 +35,16 @@ async function main() {
     'utf-8'
   )
 
-  // loop through en-US
-
-  const enUS = path.resolve(componentLocaleRoot, 'en-US')
-  // we do not include en-US since we are currently using it as template
-  const languagePaths = langWithoutEn.map((l) => {
+  const sourceLocalePath = path.resolve(componentLocaleRoot, defaultLang)
+  const languagePaths = translatedLanguages.map((lang) => {
     return {
-      name: l,
-      pathname: path.resolve(componentLocaleRoot, l),
+      name: lang,
+      pathname: path.resolve(componentLocaleRoot, lang),
     }
   })
 
   consola.debug(languagePaths)
-  await traverseDir(enUS, languagePaths, localeOutput)
+  await traverseDir(sourceLocalePath, languagePaths, localeOutput)
 }
 
 async function traverseDir(
@@ -75,7 +75,7 @@ async function traverseDir(
         const content = require(path.resolve(dir, c.name))
 
         const contentToWrite = {
-          'en-US': content,
+          [defaultLang]: content,
         }
 
         await Promise.all(

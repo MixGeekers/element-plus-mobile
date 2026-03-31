@@ -36,7 +36,7 @@ export function MarkdownTransform(): Plugin {
       const append: Append = {
         headers: [],
         footers: [],
-        scriptSetups: getExampleImports(componentId),
+        scriptSetups: getExampleImports(id, componentId),
       }
 
       code = transformVpScriptSetup(code, append)
@@ -104,7 +104,8 @@ const transformComponentMarkdown = (
   append: Append
 ) => {
   const lang = getLang(id)
-  const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/en-US/component/${componentId}.md`
+  const relativeDocPath = path.relative(docRoot, id).split(path.sep).join('/')
+  const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/${relativeDocPath}`
   const componentUrl = `${GITHUB_TREE_URL}/packages/components/${componentId}`
   const styleUrl = `${GITHUB_TREE_URL}/packages/theme-chalk/src/${componentId}.scss`
 
@@ -157,20 +158,22 @@ ${linksText}`
   return code
 }
 
-const getExampleImports = (componentId: string) => {
+const getExampleImports = (id: string, componentId: string) => {
   const examplePath = path.resolve(docRoot, 'examples', componentId)
   if (!fs.existsSync(examplePath)) return []
   const files = fs.readdirSync(examplePath)
   const imports: string[] = []
+  const relativeExamplePath = path
+    .relative(path.dirname(id), examplePath)
+    .split(path.sep)
+    .join('/')
 
   for (const item of files) {
     if (!/\.vue$/.test(item)) continue
     const file = item.replace(/\.vue$/, '')
     const name = camelize(`Ep-${componentId}-${file}`)
 
-    imports.push(
-      `import ${name} from '../../examples/${componentId}/${file}.vue'`
-    )
+    imports.push(`import ${name} from '${relativeExamplePath}/${file}.vue'`)
   }
 
   return imports

@@ -6,7 +6,7 @@
         v-model="query"
         :prefix-icon="Search"
         size="large"
-        placeholder="Search Components"
+        :placeholder="locale['search-placeholder']"
         clearable
       />
     </div>
@@ -57,7 +57,7 @@
       />
 
       <p class="designed-by">
-        Icons designed by
+        {{ locale['icons-designed-by'] }}
         <el-link
           type="primary"
           underline="never"

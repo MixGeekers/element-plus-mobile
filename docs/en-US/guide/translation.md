@@ -5,35 +5,38 @@ lang: en-US
 
 # Translation
 
-## Documentation
+## How The Docs Are Maintained
 
-In this chapter, we will discuss how to help translating the documentation of Element Plus.
+The docs site now uses a Chinese-first workflow.
 
-### Background
+- `docs/index.md`, `docs/guide/*`, `docs/component/*`, and `docs/resource/*` are the Chinese source files.
+- `docs/en-US/*` is the English mirror used for the English site and search indexing.
+- `.vitepress/crowdin/zh-CN/*` contains the source UI copy for the docs app.
+- English and other locales are synchronized through Crowdin.
 
-Before we did the upgrade of the documentation architecture, each documentation update needs 5 languages,
-which most of the contributors use online translator for their non-native languages,
-sometimes it would be not only inaccurate but also stressful to them.
+This keeps the default site experience in Chinese while still preserving a complete English build.
 
-So we decided to give the documentation site an upgrade.
+## How To Contribute Chinese Docs
 
-- From webpack to Vite
-- From manually maintained to automated
+If you want to improve the source documentation, submit a GitHub pull request directly.
 
-We took [Crowdin](https://crowdin.com) as our first step to make the documentation site more automated.
+1. Fork the repository and create a branch.
+2. Update the Chinese markdown files or `.vitepress/crowdin/zh-CN` UI copy.
+3. Open a PR and describe the affected pages.
+4. After merge, translations can be synchronized on top of the updated Chinese source.
 
-### How do I translate the documentation?
+## How To Contribute English Or Other Translations
 
-1. Create an account on [Crowdin](https://crowdin.com), it is recommended that you use your GitHub account to authorize Crowdin.
-2. Go to [Element Plus](https://crowdin.com/project/element-plus) project.
-3. Choose the language you want to contribute to.
-4. Find the file you want to translate.
-5. Do the translation.
+If you want to help with English or other translated locales, use Crowdin.
 
-That simple, and the UI is very intuitive to use, you should have no trouble using it.
-After you submit your work, it would be online once the translation is approved by proofreader.
+1. Create an account on [Crowdin](https://crowdin.com), preferably with GitHub sign-in.
+2. Open the [Element Plus](https://crowdin.com/project/element-plus) project.
+3. Choose the target language you want to help with.
+4. Find the relevant file and submit the translation.
 
-### How can I become a proofreader?
+Once a translation is approved by a proofreader, it can be synchronized back into the docs workflow.
 
-You can [raise an issue](https://crowdin.com/project/element-plus/discussions) on Crowdin to us for
-becoming a proofreader of the language you wish to be.
+## How To Become A Proofreader
+
+If you want to become a proofreader for a language, open a request in Crowdin Discussions:
+[Crowdin Discussions](https://crowdin.com/project/element-plus/discussions)
