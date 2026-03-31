@@ -18,50 +18,48 @@
   <br>
 </p>
 
-<p align="center">Element Plus - A Vue.js 3 UI library</p>
+<p align="center">Element Plus，一个基于 Vue 3 的 UI 组件库</p>
 
-- 💪 Vue 3 Composition API
-- 🔥 Written in TypeScript
+- Vue 3 Composition API
+- TypeScript 编写
 
-## Getting Started
+## 快速开始
 
-Alright, if you're looking to make Element Plus better, keep reading.
-For developers using Element Plus to build websites, please visit [Getting Started](https://element-plus.org/).
+如果你的目标是参与这个仓库的开发，请继续阅读本文件。
+如果你只是想在业务项目中使用 Element Plus，请访问 [Getting Started](https://element-plus.org/)。
 
-- 中国大陆[加速镜像站点](https://cn.element-plus.org/zh-CN/)
+- 中国大陆加速镜像站点：[https://cn.element-plus.org/zh-CN/](https://cn.element-plus.org/zh-CN/)
+- 仓库结构中文说明：[STRUCTURE.zh-CN.md](./STRUCTURE.zh-CN.md)
 
-## Breaking Change List
+## 破坏性变更列表
 
-The first stable release of Element Plus, suitable for production use, was released on February 7, 2022. The API is stable now, and here's a full list on how to upgrade from [Element UI](https://element.eleme.io) to Element Plus.
+Element Plus 的首个可用于生产环境的稳定版于 2022 年 2 月 7 日发布。当前 API 已基本稳定，如果你需要从 [Element UI](https://element.eleme.io) 升级到 Element Plus，可以参考完整的升级说明：
 
-You can find the breaking change list here: [Breaking Change List](https://github.com/element-plus/element-plus/discussions/5658).
+[Breaking Change List](https://github.com/element-plus/element-plus/discussions/5658)
 
-### Migration Tool :hammer_and_wrench:
+### 迁移工具
 
-We have made a migration tool for you to migrate your project from [Element UI](https://element.eleme.io) to Element Plus.
+官方提供了从 [Element UI](https://element.eleme.io) 迁移到 Element Plus 的工具：
 
-You can find the [gogocode migration tool](https://github.com/thx/gogocode/tree/main/packages/gogocode-plugin-element) here.
+- [gogocode migration tool](https://github.com/thx/gogocode/tree/main/packages/gogocode-plugin-element)
 
-We have tested this on [Vue Element Admin](https://github.com/PanJiaChen/vue-element-admin). You can find the transpiled code [here](https://github.com/gogocodeio/vue-element-admin).
+该工具已经在 [Vue Element Admin](https://github.com/PanJiaChen/vue-element-admin) 上做过验证，转换后的示例代码见：
+
+- [gogocodeio/vue-element-admin](https://github.com/gogocodeio/vue-element-admin)
 
 ### Playground
 
-You can also try out Element Plus with its built-in component playground.
+你可以通过内置 Playground 快速试用组件：
 
-#### Try it with our built-in playground
-
-[Playground](https://element-plus.run/)
-
-#### Try it with CodeSandbox
-
-[![Edit element-plus](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/github/element-plus/element-plus-demo/main)
+- [Playground](https://element-plus.run/)
+- [CodeSandbox Demo](https://codesandbox.io/p/github/element-plus/element-plus-demo/main)
 
 <p align="center">
-  <b>Special thanks to our generous sponsors:</b>
+  <b>特别感谢赞助者的支持：</b>
 </p>
 <br/>
 <p align="center">
-  <b>Platinum Sponsors</b>
+  <b>白金赞助</b>
 </p>
 <table align="center" cellspacing="0" cellpadding="0">
   <tbody>
@@ -77,10 +75,10 @@ You can also try out Element Plus with its built-in component playground.
         </a>
       </td>
     </tr>
-    </tbody>
+  </tbody>
 </table>
 <p align="center">
-  <b>Gold Sponsors</b>
+  <b>黄金赞助</b>
 </p>
 <table align="center" cellspacing="0" cellpadding="0">
   <tbody>
@@ -96,40 +94,27 @@ You can also try out Element Plus with its built-in component playground.
 
 ---
 
-## Translations
+## 文档翻译
 
-Element Plus has been translated into multiple languages. You can click [here](https://crowdin.com/project/element-plus) to help us update the translations or apply to become a proofreader.
+Element Plus 支持多语言翻译。你可以通过 [Crowdin](https://crowdin.com/project/element-plus) 参与翻译或申请成为校对者。
 
-For now, we are only providing English and Chinese versions due to limited resources, but we are looking forward to translating it into more languages. Please visit the link
-above and leave a message if you would like to help translate Element Plus into your preferred language.
+当前官方主要提供英文和中文版本。如果你希望补充更多语言，可以前往上面的链接留言或直接参与翻译。
 
-### How to help translate
+### 如何参与翻译
 
-See how to help translate in [Translating Element Plus](https://element-plus.org/en-US/guide/translation.html).
+参见 [Translating Element Plus](https://element-plus.org/en-US/guide/translation.html)。
 
-## Stay tuned :eyes:
+## 开发与协作
 
-Join our [Discord](https://discord.com/invite/gXK9XNzW3X) to start communicating with everybody.
+如果你打算修复问题、补文档或开发组件，建议优先阅读：
 
-## This thing is broken, I should help improve it!
+- [CONTRIBUTING.md](./CONTRIBUTING.md)
+- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- [STRUCTURE.zh-CN.md](./STRUCTURE.zh-CN.md)
 
-Awesommmmmmee. Everything you need is down below. You can also refer to
-[CONTRIBUTING](https://github.com/element-plus/element-plus/blob/dev/CONTRIBUTING.md) and
-[Code of Conduct](https://github.com/element-plus/element-plus/blob/dev/CODE_OF_CONDUCT.md)
-where you'll find the same information listed below.
+## 贡献者
 
-## I would like to become a part of the development team!
-
-Welcome :star_struck:! We are looking for talented developers to join us and make Element Plus better! If you're interested in joining the development team, please
-reach out to us -- you're more than welcome to join us! :heart:
-
-We are now looking for experts in `Testing`, `GitHub Actions` and `PM`. If you feel like you can and are willing to help, please don't hesitate to reach out to us. :pray:
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
-
-And thank you to all our backers! 🙏
+这个项目能够持续演进，离不开所有贡献者。
 
 <a href="https://openomy.app/github/element-plus/element-plus" target="_blank" style="display: block; width: 100%;" align="center">
   <img src="https://openomy.app/svg?repo=element-plus/element-plus&chart=bubble&latestMonth=3" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />
@@ -141,7 +126,6 @@ And thank you to all our backers! 🙏
   <img src="https://contrib.rocks/image?repo=element-plus/element-plus" />
 </a>
 
-## License
+## 许可证
 
-Element Plus is open source software licensed as
-[MIT](https://github.com/element-plus/element-plus/blob/master/LICENSE).
+Element Plus 基于 [MIT](https://github.com/element-plus/element-plus/blob/master/LICENSE) 开源。

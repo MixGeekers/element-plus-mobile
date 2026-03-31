@@ -14,8 +14,8 @@
     "@docsearch/js": "^3.1.0",
     "@element-plus/icons-vue": "^2.3.2",
     "@element-plus/metadata": "workspace:*",
-    "@vue/shared": "catalog:",
-    "@vueuse/core": "catalog:",
+    "@vue/shared": "^3.5.22",
+    "@vueuse/core": "12.0.0",
     "clipboard-copy": "^4.0.1",
     "element-plus": "npm:element-plus@latest",
     "markdown-it": "^14.1.0",
@@ -30,7 +30,7 @@
     "@iconify-json/ri": "^1.1.3",
     "@mdit-vue/shared": "^2.1.3",
     "@prettier/sync": "^0.6.1",
-    "@vitejs/plugin-vue-jsx": "catalog:",
+    "@vitejs/plugin-vue-jsx": "^4.0.1",
     "consola": "^2.15.3",
     "markdown-it-container": "^4.0.0",
     "tinyglobby": "^0.2.15",
@@ -41,6 +41,6 @@
     "vite-plugin-mkcert": "^1.17.6",
     "vitepress": "^1.2.3",
     "vitepress-plugin-group-icons": "^1.7.1",
-    "vue": "catalog:"
+    "vue": "^3.5.22"
   }
 }

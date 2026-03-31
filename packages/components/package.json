@@ -7,24 +7,24 @@
   "unpkg": "index.js",
   "jsdelivr": "index.js",
   "peerDependencies": {
-    "vue": "catalog:"
+    "vue": "^3.5.22"
   },
   "dependencies": {
-    "@ctrl/tinycolor": "catalog:",
+    "@ctrl/tinycolor": "^4.2.0",
     "@element-plus/constants": "workspace:^",
     "@element-plus/directives": "workspace:^",
     "@element-plus/hooks": "workspace:^",
-    "@element-plus/icons-vue": "catalog:",
+    "@element-plus/icons-vue": "^2.3.2",
     "@element-plus/utils": "workspace:^",
-    "@popperjs/core": "catalog:",
-    "@vueuse/core": "catalog:",
-    "lodash-unified": "catalog:"
+    "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.7",
+    "@vueuse/core": "12.0.0",
+    "lodash-unified": "^1.0.3"
   },
   "devDependencies": {
     "@element-plus/test-utils": "workspace:^",
-    "@vue/test-utils": "catalog:",
-    "vue": "catalog:",
-    "vue-component-type-helpers": "catalog:"
+    "@vue/test-utils": "^2.4.6",
+    "vue": "^3.5.22",
+    "vue-component-type-helpers": "^3.2.4"
   },
   "types": "index.d.ts",
   "sideEffects": [

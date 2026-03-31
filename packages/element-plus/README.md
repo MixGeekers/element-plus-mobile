@@ -1,11 +1,11 @@
 # `element-plus`
 
-> TODO: description
+> Element Plus 的主发布包，产物会输出到 `es/`、`lib/` 与 `dist/`。
 
-## Usage
+## 用法
 
-```
-const elementPlus = require('element-plus');
+```js
+const elementPlus = require('element-plus')
 
-// TODO: DEMONSTRATE API
+// TODO: 在这里补充实际 API 示例
 ```

@@ -1,118 +1,106 @@
-# How To Contribute
+# 贡献指南
 
-## Opening Issues
+## 提交 Issue
 
-- Before opening an issue, please search for the keyword to see whether the issue you encountered has already been reported. :pray:
+- 在创建 Issue 之前，请先搜索关键字，确认同类问题是否已经被报告。
+- Issue 应通过 [Issue Template](https://issue.element-plus.org/) 提交，并尽量补充完整的复现信息，方便维护者定位和修复。
+- 信息不足、无法复现的问题会被直接关闭。
+- 功能需求请优先提交到 [RFCs](https://github.com/element-plus/rfcs/issues)，这样更方便统一管理。
 
-- Issues should be opened via [Issue Template](https://issue.element-plus.org/), and the form should be filled with sufficient information to reproduce the issue, so that our developers can help you verify and fix it.
+以下内容面向希望参与 Element Plus 开发的贡献者。
 
-**Issues with insufficient information WILL BE CLOSED directly because we cannot reproduce them.**
+## 环境要求
 
-- Issues with feature requests should be submitted to [RFCs](https://github.com/element-plus/rfcs/issues). This helps us manage feature requests more efficiently.
+建议准备以下环境：
 
-Next section is for those who wants to help develop Element Plus.
+- Node.js >= 20.19.0
+- pnpm >= 10.32.0
+- Git > 2.20
 
-## Prerequisites
+仓库中的部分构建代码依赖 Node.js 20.19.0 及以上版本，请不要使用更低版本。
 
-You should have:
+## 克隆仓库
 
-Node.js >= 20.19.0
-
-pnpm >= 11
-
-Git > 2.20
-
-Some of our compiled code relies on features introduced in Node.js >= 20.19.0, so you will need to install that version or a newer one.
-
-## Clone the Repository
-
-1. Click the fork button on the top right of [the repository homepage](https://github.com/element-plus/element-plus).
-2. Download the project to your machine.
-3. Run commands below to bootstrap this project.
+1. 在仓库主页右上角点击 Fork。
+2. 将项目下载到本地。
+3. 进入项目目录并安装依赖。
 
 ```shell
 cd $THE_PROJECT_PATH_YOU_DOWNLOADED
-# If you haven't installed yet
 pnpm install
 ```
 
-## Verify Installation
+## 验证安装
 
-Then you can run the following commands to verify your installation.
+安装完成后，可以执行以下命令确认环境是否正常：
 
 ```shell
-pnpm t
+pnpm test
 pnpm format
 ```
 
-## Getting Started Developing
+## 开始开发
 
-Now that you have installed the code correctly, you can choose:
+### 修改文档站点
 
-### Modify and update the documentation site
+如果你要修改 `https://element-plus.org` 对应的文档站点源码，可以执行：
 
 ```shell
-# If you would like to modify the website source code of https://element-plus.org
-# It is made with [VitePress](https://vitepress.vuejs.org)
-pnpm docs:gen-locale # This generates locale files for your local development
+pnpm docs:gen-locale
 pnpm docs:dev
 ```
 
-### Making Changes to the Component Instead of the Website
+`docs:gen-locale` 会在本地生成文档站开发所需的语言文件。
+
+### 修改组件代码
+
+如果你要调试组件实现，而不是网站本身，可以运行本地演示环境：
 
 ```shell
-# If you would like to run a local playground to test out your changes against
-# Some specific component
 pnpm dev
 ```
 
-You can follow the [LOCAL DEVELOPMENT GUIDE](https://element-plus.org/en-US/guide/dev-guide.html) to do development more quickly.
+更多细节可参考 [LOCAL DEVELOPMENT GUIDE](https://element-plus.org/en-US/guide/dev-guide.html)。
 
-### Compile the Source Code
+### 编译源码
 
-If you would like to compile this project locally:
+如果你要在本地编译最终发布产物，可以执行：
 
 ```shell
-# This one line code would start compiling the code which was published to https://npmjs.com
 pnpm build
 ```
 
-### Compile Documentation Website
+### 编译文档站点
 
-If you would like to compile the website code locally:
+如果你要构建文档站静态文件，可以执行：
 
 ```shell
 pnpm docs:build
 ```
 
-## Pull Requests
+## Pull Request
 
-After completing your coding tasks, please note:
+完成开发后，请至少确认以下事项：
 
-1. Update the tests to cover all cases.
-2. Update the corresponding documentation if you are making changes to the API.
-3. Write a comprehensive commit message.
-4. Push your local changes to your remote, and then submit a pull request to the upstream.
-5. In the description section, you can add more information about your changes, to help the reviewers for better
-   understanding the context here.
+1. 测试覆盖了你的改动场景。
+2. 如果修改了 API，同步更新相关文档。
+3. 提交信息清晰完整。
+4. 将本地改动推送到你的远端仓库，并向上游发起 Pull Request。
+5. 在 PR 描述中补充改动背景和上下文，方便审阅。
 
-## Commit Template
+## Commit 规范
 
-We have prepared a commit message template for you to refer to, you can also follow the instructions of the CLI tool to generate
-commit message intuitively.
-
-1. With command
+仓库提供了提交信息生成工具，你可以直接运行：
 
 ```bash
 pnpm cz
 ```
 
-2. You can also write the commit message manually, but make sure your
-   commit message follows the rules.
+也可以手写提交信息，但必须遵循仓库约定。提交示例可参考：
 
-We have a [commit template](https://element-plus.org/en-US/guide/commit-examples.html)
+- [commit template](https://element-plus.org/en-US/guide/commit-examples.html)
 
-NOTE:
-**PRs with unformatted commit messages WILL NOT BE ACCEPTED.**
+注意：
+提交信息不符合规范的 PR 不会被接受。
 
-That's all, thanks for your contribution! 🤩
+以上就是贡献流程说明。

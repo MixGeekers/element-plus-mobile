@@ -5,8 +5,8 @@
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
-    "@vue/test-utils": "catalog:",
-    "lodash-unified": "catalog:",
-    "vue": "catalog:"
+    "@vue/test-utils": "^2.4.6",
+    "lodash-unified": "^1.0.3",
+    "vue": "^3.5.22"
   }
 }
