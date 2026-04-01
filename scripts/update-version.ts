@@ -4,6 +4,10 @@ import { errorAndExit, getWorkspacePackages } from '@element-plus/build-utils'
 
 import type { Project } from '@pnpm/find-workspace-packages'
 
+const normalizeTagVersion = (version: string) => {
+  return version.startsWith('v') ? version.slice(1) : version
+}
+
 async function main() {
   const tagVersion = process.env.TAG_VERSION
   const gitHead = process.env.GIT_HEAD
@@ -20,6 +24,9 @@ async function main() {
   consola.log(styleText('cyan', `$TAG_VERSION: ${tagVersion}`))
   consola.log(styleText('cyan', `$GIT_HEAD: ${gitHead}`))
 
+  const normalizedVersion = normalizeTagVersion(tagVersion)
+  consola.log(styleText('cyan', `version: ${normalizedVersion}`))
+
   consola.debug(styleText('yellow', `Updating package.json for ${packageName}`))
 
   const pkgs = Object.fromEntries(
@@ -34,7 +41,7 @@ async function main() {
   const writeVersion = async (project: Project) => {
     await project.writeProjectManifest({
       ...project.manifest,
-      version: tagVersion,
+      version: normalizedVersion,
       gitHead,
     } as any)
   }

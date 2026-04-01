@@ -87,12 +87,18 @@
 
 1. 更新代码并合并到目标分支
 2. 创建 Git tag，例如 `v0.1.1`
-3. 在 GitHub 创建 Release
+3. 在 GitHub 发布 Release
 4. `publish-npm.yml` 自动执行：
    - `pnpm i --frozen-lockfile`
    - `pnpm lint`
    - `pnpm test`
    - `sh ./scripts/publish.sh`
+
+补充说明：
+
+- `publish-npm.yml` 当前监听的是 `release.published`
+- 这意味着既支持直接发布 Release，也支持先保存 draft 再点击 Publish
+- 发布链路会自动把 tag `v0.1.1` 规范化为 npm 版本 `0.1.1`
 
 ## 发布前人工确认项
 
@@ -100,5 +106,5 @@
 - [ ] GitHub 仓库 URL 正确：`https://github.com/MixGeekers/element-plus-mobile`
 - [ ] issues URL 正确：`https://github.com/MixGeekers/element-plus-mobile/issues`
 - [ ] 发布 tag 使用 `v0.1.0` 这种带 `v` 的格式
-- [ ] GitHub Release 不是 draft
+- [ ] 已确认 `.github/workflows/publish-npm.yml` 使用 `release.published`
 - [ ] `element-plus-mobile` 首次发布后立即补配 Trusted Publisher
