@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ env.TARGET_REF }}
       - name: Add dev branch
-        run: git branch dev origin/dev
+        run: git show-ref --verify --quiet refs/heads/dev || git branch dev origin/dev
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
