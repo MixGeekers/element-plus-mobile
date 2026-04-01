@@ -10,7 +10,7 @@ pnpm build
 
 echo "Publishing element-plus-mobile from dist/element-plus"
 cd dist/element-plus
-pnpm publish --access public --no-git-checks
+npm publish --access public
 cd -
 
 echo "✅ Publish completed"
