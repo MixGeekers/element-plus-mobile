@@ -9,9 +9,14 @@ on:
         description: Release tag to publish, e.g. v0.1.1
         required: true
         type: string
+      source_ref:
+        description: Git ref to build and test, defaults to the tag version
+        required: false
+        type: string
 
 env:
-  TARGET_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_version || github.ref_name }}
+  TARGET_REF: ${{ github.event_name == 'workflow_dispatch' && (inputs.source_ref || inputs.tag_version) || github.ref_name }}
+  RELEASE_TAG_VERSION: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_version || github.ref_name }}
 
 jobs:
   test:
@@ -64,7 +69,7 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Get version
-        run: echo "TAG_VERSION=${TARGET_REF}" >> $GITHUB_ENV
+        run: echo "TAG_VERSION=${RELEASE_TAG_VERSION}" >> $GITHUB_ENV
 
       - name: Get git head
         run: echo "GIT_HEAD=$(git rev-parse HEAD)" >> $GITHUB_ENV

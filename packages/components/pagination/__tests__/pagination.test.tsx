@@ -1,12 +1,7 @@
-import { nextTick, ref } from 'vue'
+import { defineComponent, markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
-import {
-  CaretLeft,
-  CaretRight,
-  DArrowLeft,
-  DArrowRight,
-} from '@element-plus/utils'
+import { DArrowLeft, DArrowRight } from '@element-plus/utils'
 import Pagination from '../src/pagination'
 import selectDropdownVue from '../../select/src/select-dropdown.vue'
 
@@ -183,22 +178,33 @@ describe('Pagination', () => {
     })
 
     test('test custom icon', async () => {
+      const PrevIcon = markRaw(
+        defineComponent({
+          name: 'PaginationPrevIcon',
+          setup() {
+            return () => <svg class="pagination-prev-icon" />
+          },
+        })
+      )
+      const NextIcon = markRaw(
+        defineComponent({
+          name: 'PaginationNextIcon',
+          setup() {
+            return () => <svg class="pagination-next-icon" />
+          },
+        })
+      )
       const wrapper = mount(() => (
         <Pagination
           layout="prev, pager, next"
           total={1000}
-          prev-icon={CaretLeft}
-          next-icon={CaretRight}
+          prev-icon={PrevIcon}
+          next-icon={NextIcon}
         />
       ))
 
-      const btnPrev = wrapper.findComponent(CaretLeft).element
-      const caretLeftIcon = mount(CaretLeft).find('svg').element
-      expect(btnPrev.innerHTML).toBe(caretLeftIcon.innerHTML)
-
-      const nextPrev = wrapper.findComponent(CaretRight).element
-      const caretRightIcon = mount(CaretRight).find('svg').element
-      expect(nextPrev.innerHTML).toBe(caretRightIcon.innerHTML)
+      expect(wrapper.find('.pagination-prev-icon').exists()).toBe(true)
+      expect(wrapper.find('.pagination-next-icon').exists()).toBe(true)
     })
   })
 

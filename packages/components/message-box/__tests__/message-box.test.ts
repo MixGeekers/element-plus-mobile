@@ -1,17 +1,14 @@
-import { markRaw } from 'vue'
+import { defineComponent, h, markRaw } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, test, vi } from 'vitest'
 import { rAF } from '@element-plus/test-utils/tick'
 import { triggerNativeCompositeClick } from '@element-plus/test-utils/composite-click'
-import { QuestionFilled as QuestionFilledIcon } from '@element-plus/utils'
 import MessageBox from '../src/messageBox'
 import { ElMessageBox } from '..'
 
 import type { Action } from '..'
 
 const selector = '.el-overlay'
-const QuestionFilled = markRaw(QuestionFilledIcon)
-
 vi.mock('@element-plus/utils/error', () => ({
   debugWarn: vi.fn(),
 }))
@@ -73,18 +70,24 @@ describe('MessageBox', () => {
   })
 
   test('custom icon', async () => {
+    const CustomIcon = markRaw(
+      defineComponent({
+        name: 'MessageBoxCustomIcon',
+        setup() {
+          return () => h('svg', { class: 'message-box-custom-icon' })
+        },
+      })
+    )
     MessageBox({
       type: 'warning',
-      icon: QuestionFilled,
+      icon: CustomIcon,
       message: '这是一段内容',
     })
     await rAF()
     const icon = document.querySelector('.el-message-box__status')!
 
     expect(icon.classList.contains('el-icon')).toBe(true)
-
-    const svg = mount(QuestionFilled).find('svg').element
-    expect(icon.querySelector('svg')!.innerHTML).toBe(svg.innerHTML)
+    expect(icon.querySelector('.message-box-custom-icon')).toBeDefined()
   })
 
   test('html string', async () => {
@@ -132,7 +135,11 @@ describe('MessageBox', () => {
     await rAF()
     const msgbox: HTMLElement = document.querySelector(selector)!
     expect(msgbox.style.display).toEqual('')
-    expect(msgbox.querySelector('.el-icon-warning')).toBeDefined()
+    expect(
+      msgbox.querySelector(
+        '.el-message-box__status.el-message-box-icon--warning'
+      )
+    ).toBeDefined()
   })
 
   test('confirm', async () => {

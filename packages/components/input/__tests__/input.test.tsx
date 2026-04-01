@@ -827,10 +827,9 @@ describe('Input.vue', () => {
     ))
 
     const icon = wrapper.find('.el-input__icon.el-input__password')
-    const d = icon.find('path').element.getAttribute('d')
+    expect(wrapper.findComponent({ name: 'ElHideIcon' }).exists()).toBe(true)
     await icon.trigger('click')
-    const d0 = icon.find('path').element.getAttribute('d')
-    expect(d !== d0).toBeTruthy()
+    expect(wrapper.findComponent({ name: 'ElViewIcon' }).exists()).toBe(true)
   })
 
   test('show / hide password', async () => {

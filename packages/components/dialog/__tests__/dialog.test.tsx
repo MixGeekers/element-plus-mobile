@@ -1,9 +1,8 @@
-import { markRaw, nextTick, ref } from 'vue'
+import { defineComponent, markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, test, vi } from 'vitest'
 import { rAF } from '@element-plus/test-utils/tick'
 import triggerCompositeClick from '@element-plus/test-utils/composite-click'
-import { Delete } from '@element-plus/utils'
 import Dialog from '../src/dialog.vue'
 import triggerEvent from '@element-plus/test-utils/trigger-event'
 import { EVENT_CODE } from '@element-plus/constants'
@@ -461,17 +460,21 @@ describe('Dialog.vue', () => {
     })
 
     test('closeIcon', async () => {
+      const CloseIcon = defineComponent({
+        name: 'DialogCloseIcon',
+        setup() {
+          return () => <svg class="dialog-close-icon" />
+        },
+      })
       const wrapper = mount(
-        <Dialog modelValue={true} closeIcon={markRaw(Delete)}>
+        <Dialog modelValue={true} closeIcon={markRaw(CloseIcon)}>
           {AXIOM}
         </Dialog>
       )
       await nextTick()
       await rAF()
-      const closeIcon = wrapper.find('svg')
+      const closeIcon = wrapper.find('.dialog-close-icon')
       expect(closeIcon.exists()).toBe(true)
-      const svg = mount(Delete).find('svg').element
-      expect(closeIcon.element.innerHTML).toBe(svg.innerHTML)
     })
 
     test('should render draggable prop', async () => {

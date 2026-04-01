@@ -1,7 +1,6 @@
-import { markRaw, nextTick, ref } from 'vue'
+import { defineComponent, markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, test } from 'vitest'
-import { Edit } from '@element-plus/utils'
 import Steps from '../src/steps.vue'
 import Step from '../src/item.vue'
 
@@ -160,7 +159,14 @@ describe('Steps.vue', () => {
   test('step attribute', () => {
     const wrapper = mount({
       setup() {
-        const iconEdit = markRaw(Edit)
+        const iconEdit = markRaw(
+          defineComponent({
+            name: 'StepTestIcon',
+            setup() {
+              return () => <svg class="step-test-icon" />
+            },
+          })
+        )
         return () => (
           <Steps active={0}>
             <Step
@@ -176,7 +182,7 @@ describe('Steps.vue', () => {
     expect(wrapper.find('.el-step__head').classes()).toContain('is-wait')
     expect(wrapper.find('.el-step__title').text()).toBe('title')
     expect(wrapper.find('.el-step__description').text()).toBe('description')
-    expect(wrapper.findComponent(Edit).exists()).toBe(true)
+    expect(wrapper.find('.step-test-icon').exists()).toBe(true)
   })
 
   test('step slot', () => {
