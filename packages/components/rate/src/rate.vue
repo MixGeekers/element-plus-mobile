@@ -73,7 +73,14 @@ import {
   EVENT_CODE,
   UPDATE_MODEL_EVENT,
 } from '@element-plus/constants'
-import { getEventCode, isArray, isObject, isString } from '@element-plus/utils'
+import {
+  Star,
+  StarFilled,
+  getEventCode,
+  isArray,
+  isObject,
+  isString,
+} from '@element-plus/utils'
 import {
   formItemContextKey,
   useFormDisabled,
@@ -82,7 +89,6 @@ import {
 } from '@element-plus/components/form'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
-import { Star, StarFilled } from '@element-plus/icons-vue'
 import { useNamespace } from '@element-plus/hooks'
 import { rateEmits } from './rate'
 

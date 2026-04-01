@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Search } from '@element-plus/icons-vue'
+import Search from '~icons/ep/search'
 
 const input1 = ref('')
 const input2 = ref('')

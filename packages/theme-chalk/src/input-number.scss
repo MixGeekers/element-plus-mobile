@@ -3,6 +3,48 @@
 @use 'mixins/mixins' as *;
 @use 'common/var' as *;
 
+@mixin input-number-mobile-layout {
+  width: 100%;
+  line-height: to-rem(42px);
+
+  .#{$namespace}-input__wrapper {
+    min-height: to-rem(44px);
+    padding-left: to-rem(48px);
+    padding-right: to-rem(48px);
+  }
+
+  @include e((increase, decrease)) {
+    width: to-rem(44px);
+    font-size: to-rem(16px);
+    @include touch-feedback;
+  }
+
+  @include when(without-controls) {
+    .#{$namespace}-input__wrapper {
+      padding-left: to-rem(14px);
+      padding-right: to-rem(14px);
+    }
+  }
+
+  @include when(controls-right) {
+    .#{$namespace}-input__wrapper {
+      padding-left: to-rem(14px);
+      padding-right: to-rem(48px);
+    }
+
+    @include e((increase, decrease)) {
+      @include set-css-var-value(
+        ('input', 'number-controls-height'),
+        calc((#{to-rem(44px)} - #{to-rem(2px)}) / 2)
+      );
+
+      [class*='#{$namespace}-icon'] {
+        transform: none;
+      }
+    }
+  }
+}
+
 @include b(input-number) {
   position: relative;
   display: inline-flex;
@@ -199,41 +241,11 @@
     }
   }
 
+  @include when(mobile) {
+    @include input-number-mobile-layout;
+  }
+
   @include res('sm-and-down', $breakpoints-spec) {
-    width: 100%;
-    line-height: to-rem(42px);
-
-    .#{$namespace}-input__wrapper {
-      min-height: to-rem(44px);
-      padding-left: to-rem(48px);
-      padding-right: to-rem(48px);
-    }
-
-    @include e((increase, decrease)) {
-      width: to-rem(44px);
-      font-size: to-rem(16px);
-      @include touch-feedback;
-    }
-
-    @include when(without-controls) {
-      .#{$namespace}-input__wrapper {
-        padding-left: to-rem(14px);
-        padding-right: to-rem(14px);
-      }
-    }
-
-    @include when(controls-right) {
-      .#{$namespace}-input__wrapper {
-        padding-left: to-rem(14px);
-        padding-right: to-rem(48px);
-      }
-
-      @include e((increase, decrease)) {
-        @include set-css-var-value(
-          ('input', 'number-controls-height'),
-          calc((#{to-rem(44px)} - #{to-rem(2px)}) / 2)
-        );
-      }
-    }
+    @include input-number-mobile-layout;
   }
 }

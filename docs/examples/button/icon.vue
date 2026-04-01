@@ -11,5 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { Delete, Edit, Search, Share, Upload } from '@element-plus/icons-vue'
+import Delete from '~icons/ep/delete'
+import Edit from '~icons/ep/edit'
+import Search from '~icons/ep/search'
+import Share from '~icons/ep/share'
+import Upload from '~icons/ep/upload'
 </script>

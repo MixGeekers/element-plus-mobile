@@ -1,12 +1,10 @@
-// @ts-nocheck
 import { nextTick, ref } from 'vue'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { NOOP, hasClass } from '@element-plus/utils'
+import { ArrowDown, NOOP, hasClass } from '@element-plus/utils'
 import { EVENT_CODE } from '@element-plus/constants'
 import { makeMountFunc } from '@element-plus/test-utils/make-mount'
 import { rAF } from '@element-plus/test-utils/tick'
 import defineGetter from '@element-plus/test-utils/define-getter'
-import { ArrowDown } from '@element-plus/icons-vue'
 import { usePopperContainerId } from '@element-plus/hooks'
 import { ElForm, ElFormItem } from '@element-plus/components/form'
 import Select from '../src/select.vue'

@@ -206,13 +206,19 @@ import ElInput from '@element-plus/components/input'
 import ElIcon from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import ElTooltip from '@element-plus/components/tooltip'
-import { NOOP, debugWarn, getEventCode, isArray } from '@element-plus/utils'
+import {
+  Calendar,
+  Clock,
+  NOOP,
+  debugWarn,
+  getEventCode,
+  isArray,
+} from '@element-plus/utils'
 import {
   CHANGE_EVENT,
   EVENT_CODE,
   UPDATE_MODEL_EVENT,
 } from '@element-plus/constants'
-import { Calendar, Clock } from '@element-plus/icons-vue'
 import { dayOrDaysToDate, valueEquals } from '../utils'
 import {
   PICKER_BASE_INJECTION_KEY,

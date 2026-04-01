@@ -23,6 +23,7 @@ import {
   isIconifyIconName,
   isIconifyIconNameObject,
   isIconifyIconSource,
+  stringifyIconifyIconName,
 } from '@element-plus/utils'
 
 import type { IconifyIcon as IconifyIconData } from '@element-plus/utils'
@@ -69,8 +70,7 @@ const resolveRegisteredComponent = (name: string) => {
 const iconifyIcon = computed<string | IconifyIconData | undefined>(() => {
   const icon = props.icon
   if (isIconifyIconNameObject(icon)) {
-    const provider = icon.provider ? `@${icon.provider}:` : ''
-    return `${provider}${icon.prefix}:${icon.name}`
+    return stringifyIconifyIconName(icon)
   }
 
   return isIconifyIconData(icon) || isIconifyIconName(icon) ? icon : undefined

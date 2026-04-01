@@ -1,12 +1,13 @@
-import { Star, StarFilled } from '@element-plus/icons-vue'
-import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import {
+  Star,
+  StarFilled,
   buildProps,
   definePropType,
   iconPropType,
   isNumber,
   mutable,
 } from '@element-plus/utils'
+import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { useAriaProps, useSizeProp } from '@element-plus/hooks'
 
 import type { Component, ExtractPublicPropTypes } from 'vue'

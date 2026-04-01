@@ -1,7 +1,7 @@
 import { markRaw } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, test } from 'vitest'
-import { ArrowLeft } from '@element-plus/icons-vue'
+import { ArrowLeft } from '@element-plus/utils'
 import PageHeader from '../src/page-header.vue'
 
 const AXIOM = 'Rem is the best girl'

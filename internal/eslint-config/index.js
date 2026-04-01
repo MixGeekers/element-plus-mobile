@@ -370,7 +370,6 @@ export default defineConfig([
             {
               group: [
                 '@element-plus/*',
-                '!@element-plus/icons-vue',
                 'element-plus/es/*',
                 '!element-plus/es/locale',
                 'element-plus/lib/*',

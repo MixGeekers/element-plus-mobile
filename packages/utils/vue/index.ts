@@ -1,3 +1,4 @@
+export * from './builtin-icons'
 export * from './global-node'
 export * from './icon'
 export * from './install'

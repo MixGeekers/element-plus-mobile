@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowDown } from '@element-plus/icons-vue'
+import ArrowDown from '~icons/ep/arrow-down'
 </script>
 
 <style scoped>

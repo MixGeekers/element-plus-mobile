@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { InfoFilled } from '@element-plus/icons-vue'
+import InfoFilled from '~icons/ep/info-filled'
 
 const clicked = ref(false)
 function onCancel() {

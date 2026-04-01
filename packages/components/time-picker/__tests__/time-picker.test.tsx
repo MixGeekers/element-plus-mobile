@@ -1,9 +1,8 @@
-// @ts-nocheck
 import { computed, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import dayjs from 'dayjs'
-import { CircleClose } from '@element-plus/icons-vue'
+import { CircleClose } from '@element-plus/utils'
 import triggerEvent from '@element-plus/test-utils/trigger-event'
 import { rAF } from '@element-plus/test-utils/tick'
 import { ElFormItem } from '@element-plus/components/form'

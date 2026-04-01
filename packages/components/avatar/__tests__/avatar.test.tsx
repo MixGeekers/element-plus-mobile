@@ -1,7 +1,7 @@
 import { markRaw, nextTick } from 'vue'
 import { flushPromises, mount } from '@vue/test-utils'
 import { describe, expect, test } from 'vitest'
-import { User } from '@element-plus/icons-vue'
+import { User } from '@element-plus/utils'
 import {
   IMAGE_FAIL,
   IMAGE_SUCCESS,

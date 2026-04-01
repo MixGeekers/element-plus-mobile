@@ -30,7 +30,7 @@
 import { computed, markRaw } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
-import { Loading } from '@element-plus/icons-vue'
+import { Loading } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
 import { useButton } from './use-button'
 import { buttonEmits } from './button'

@@ -61,14 +61,12 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ArrowDown,
-  Check,
-  CircleCheck,
-  CirclePlus,
-  CirclePlusFilled,
-  Plus,
-} from '@element-plus/icons-vue'
+import ArrowDown from '~icons/ep/arrow-down'
+import Check from '~icons/ep/check'
+import CircleCheck from '~icons/ep/circle-check'
+import CirclePlus from '~icons/ep/circle-plus'
+import CirclePlusFilled from '~icons/ep/circle-plus-filled'
+import Plus from '~icons/ep/plus'
 </script>
 
 <style scoped>

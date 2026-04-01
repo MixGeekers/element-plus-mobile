@@ -110,7 +110,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { CaretLeft, CaretRight } from '@element-plus/icons-vue'
+import CaretLeft from '~icons/ep/caret-left'
+import CaretRight from '~icons/ep/caret-right'
 
 const value1 = ref('')
 const value2 = ref('')

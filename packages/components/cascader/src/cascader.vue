@@ -228,6 +228,9 @@ import {
 import { cloneDeep } from 'lodash-unified'
 import { useCssVar, useDebounceFn, useResizeObserver } from '@vueuse/core'
 import {
+  ArrowDown,
+  Check,
+  CircleClose,
   debugWarn,
   focusNode,
   getEventCode,
@@ -260,7 +263,6 @@ import {
   EVENT_CODE,
   UPDATE_MODEL_EVENT,
 } from '@element-plus/constants'
-import { ArrowDown, Check, CircleClose } from '@element-plus/icons-vue'
 import { cascaderEmits } from './cascader'
 
 import type { Options } from '@element-plus/components/popper'

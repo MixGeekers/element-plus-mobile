@@ -26,7 +26,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Lock, Unlock } from '@element-plus/icons-vue'
+import Lock from '~icons/ep/lock'
+import Unlock from '~icons/ep/unlock'
 
 const input = ref('')
 </script>

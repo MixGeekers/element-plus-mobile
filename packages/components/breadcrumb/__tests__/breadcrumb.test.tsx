@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { Check } from '@element-plus/icons-vue'
+import { Check } from '@element-plus/utils'
 import Breadcrumb from '../src/breadcrumb.vue'
 import BreadcrumbItem from '../src/breadcrumb-item.vue'
 

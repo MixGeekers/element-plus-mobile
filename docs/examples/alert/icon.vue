@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Bell } from '@element-plus/icons-vue'
+import Bell from '~icons/ep/bell'
 </script>
 
 <style scoped>

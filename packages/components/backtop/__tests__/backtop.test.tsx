@@ -1,7 +1,7 @@
 import { nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, test } from 'vitest'
-import { CaretTop } from '@element-plus/icons-vue'
+import { CaretTop } from '@element-plus/utils'
 import Backtop from '../src/backtop.vue'
 
 import type { VNode } from 'vue'

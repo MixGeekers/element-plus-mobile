@@ -1,5 +1,10 @@
-import { buildProps, definePropType, iconPropType } from '@element-plus/utils'
-import { CircleClose, Clock } from '@element-plus/icons-vue'
+import {
+  CircleClose,
+  Clock,
+  buildProps,
+  definePropType,
+  iconPropType,
+} from '@element-plus/utils'
 import { useEmptyValuesProps, useSizeProp } from '@element-plus/hooks'
 
 import type { UseEmptyValuesProps } from '@element-plus/hooks'

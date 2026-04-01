@@ -1,8 +1,13 @@
 import { markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, test, vi } from 'vitest'
-import { debugWarn } from '@element-plus/utils'
-import { Checked, CircleClose, Hide, View } from '@element-plus/icons-vue'
+import {
+  Checked,
+  CircleClose,
+  Hide,
+  View,
+  debugWarn,
+} from '@element-plus/utils'
 import { ElForm, ElFormItem } from '@element-plus/components/form'
 import { UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import Switch from '../src/switch.vue'

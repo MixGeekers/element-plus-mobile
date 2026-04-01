@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Clock, Loading, Warning } from '@element-plus/icons-vue'
 import { useWindowSize } from '@vueuse/core'
 import { useIssueCount } from '../../composables/use-issue-count'
 import { useLocale } from '../../composables/locale'
@@ -9,6 +8,10 @@ import allChangelogs from 'virtual:component-changelog-data'
 
 import type { TimelineItemProps } from 'element-plus-mobile'
 import type { VersionChangelog } from '../../../utils/changelog-parser'
+
+import Warning from '~icons/ep/warning'
+import Loading from '~icons/ep/loading'
+import Clock from '~icons/ep/clock'
 
 const props = defineProps({
   component: {

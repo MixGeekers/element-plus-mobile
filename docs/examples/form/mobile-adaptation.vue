@@ -422,22 +422,6 @@ const resetForm = () => {
     line-height: 1.5;
   }
 
-  :deep(.el-input-number) {
-    line-height: 2.625rem;
-  }
-
-  :deep(.el-input-number .el-input__wrapper) {
-    min-height: 2.75rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-
-  :deep(.el-input-number__increase),
-  :deep(.el-input-number__decrease) {
-    width: 2.75rem;
-    font-size: 1rem;
-  }
-
   :deep(.el-select__wrapper) {
     min-height: 2.75rem;
     padding: 0.375rem 0.875rem;

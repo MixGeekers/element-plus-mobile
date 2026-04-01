@@ -8,7 +8,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Hide, View } from '@element-plus/icons-vue'
+import Hide from '~icons/ep/hide'
+import View from '~icons/ep/view'
 
 const value1 = ref(true)
 </script>

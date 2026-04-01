@@ -57,7 +57,7 @@ import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { ElDivider } from '@element-plus/components/divider'
 import { useLocale, useNamespace } from '@element-plus/hooks'
-import { Back } from '@element-plus/icons-vue'
+import { Back } from '@element-plus/utils'
 import { pageHeaderEmits } from './page-header'
 
 import type { PageHeaderProps } from './page-header'

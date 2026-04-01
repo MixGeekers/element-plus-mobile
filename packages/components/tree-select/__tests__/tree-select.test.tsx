@@ -1,7 +1,7 @@
 import { nextTick, reactive, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
-import { CircleClose } from '@element-plus/icons-vue'
+import { CircleClose } from '@element-plus/utils'
 import TreeSelect from '../src/tree-select.vue'
 import Tree from '@element-plus/components/tree/src/tree.vue'
 import defineGetter from '@element-plus/test-utils/define-getter'
@@ -12,7 +12,6 @@ import type { VueWrapper } from '@vue/test-utils'
 import type { TreeSelectInstance } from '../src/instance'
 import type { SelectInstance } from '../../select'
 import type { TreeInstance } from '../../tree'
-
 // Keep track of all mounted wrappers for cleanup
 const mountedWrappers: VueWrapper<any>[] = []
 

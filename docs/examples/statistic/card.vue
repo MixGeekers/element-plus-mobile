@@ -93,12 +93,10 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ArrowRight,
-  CaretBottom,
-  CaretTop,
-  Warning,
-} from '@element-plus/icons-vue'
+import ArrowRight from '~icons/ep/arrow-right'
+import CaretBottom from '~icons/ep/caret-bottom'
+import CaretTop from '~icons/ep/caret-top'
+import Warning from '~icons/ep/warning'
 </script>
 
 <style scoped>

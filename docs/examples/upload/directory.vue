@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { UploadFilled } from '@element-plus/icons-vue'
-
 import type { UploadFile, UploadFiles } from 'element-plus-mobile'
+
+import UploadFilled from '~icons/ep/upload-filled'
 
 const handleChange = (uploadFile: UploadFile, uploadFiles: UploadFiles) => {
   console.log(uploadFile, uploadFiles)

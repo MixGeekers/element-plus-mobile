@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { CloseBold } from '@element-plus/icons-vue'
+import CloseBold from '~icons/ep/close-bold'
 
 const input = ref<string[]>(['custom', 'clear', 'icon'])
 </script>

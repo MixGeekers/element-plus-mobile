@@ -59,11 +59,10 @@
 
 <script lang="ts" setup generic="T extends TransferDataItem = TransferDataItem">
 import { computed, reactive, toRefs, useSlots } from 'vue'
-import { isEmpty, mutable } from '@element-plus/utils'
+import { Search, isEmpty, mutable } from '@element-plus/utils'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import { ElCheckbox, ElCheckboxGroup } from '@element-plus/components/checkbox'
 import { ElInput } from '@element-plus/components/input'
-import { Search } from '@element-plus/icons-vue'
 import { transferPanelEmits } from './transfer-panel'
 import { useCheck, usePropsAlias } from './composables'
 

@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { CloseBold } from '@element-plus/icons-vue'
+import CloseBold from '~icons/ep/close-bold'
 
 const input = ref('Custom clear icon')
 const textareaInput = ref('Custom clear icon')

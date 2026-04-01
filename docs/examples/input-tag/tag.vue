@@ -23,9 +23,10 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElementPlus } from '@element-plus/icons-vue'
 
 import type { TagProps } from 'element-plus-mobile'
+
+import ElementPlus from '~icons/ep/element-plus'
 
 const type: Array<TagProps['type']> = [
   'primary',

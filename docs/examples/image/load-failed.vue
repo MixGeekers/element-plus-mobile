@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Picture as IconPicture } from '@element-plus/icons-vue'
+import IconPicture from '~icons/ep/picture'
 
 const showPreview = ref(false)
 

@@ -18,9 +18,10 @@ import {
   ElTooltip,
   TableV2FixedDir,
 } from 'element-plus-mobile'
-import { Timer } from '@element-plus/icons-vue'
 
 import type { Column } from 'element-plus-mobile'
+
+import Timer from '~icons/ep/timer'
 
 let id = 0
 

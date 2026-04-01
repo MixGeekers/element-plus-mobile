@@ -61,12 +61,17 @@
 
 <script lang="ts" setup generic="T extends TransferDataItem = TransferDataItem">
 import { Comment, computed, h, reactive, ref, watch } from 'vue'
-import { debugWarn, isEmpty, isUndefined } from '@element-plus/utils'
+import {
+  ArrowLeft,
+  ArrowRight,
+  debugWarn,
+  isEmpty,
+  isUndefined,
+} from '@element-plus/utils'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import { ElButton } from '@element-plus/components/button'
 import { ElIcon } from '@element-plus/components/icon'
 import { useFormItem } from '@element-plus/components/form'
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
 import { transferEmits } from './transfer'
 import {
   useCheckedChange,

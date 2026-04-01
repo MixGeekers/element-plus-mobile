@@ -15,14 +15,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import {
-  Apple,
-  Cherry,
-  Grape,
-  Orange,
-  Pear,
-  Watermelon,
-} from '@element-plus/icons-vue'
+import Apple from '~icons/ep/apple'
+import Cherry from '~icons/ep/cherry'
+import Grape from '~icons/ep/grape'
+import Orange from '~icons/ep/orange'
+import Pear from '~icons/ep/pear'
+import Watermelon from '~icons/ep/watermelon'
 
 const value = ref('Apple')
 

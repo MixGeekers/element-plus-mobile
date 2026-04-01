@@ -11,7 +11,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElementPlus, Search } from '@element-plus/icons-vue'
+import ElementPlus from '~icons/ep/element-plus'
+import Search from '~icons/ep/search'
 
 const input = ref<string[]>()
 </script>

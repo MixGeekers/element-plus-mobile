@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { CircleCloseFilled } from '@element-plus/icons-vue'
+import CircleCloseFilled from '~icons/ep/circle-close-filled'
 
 const visible = ref(false)
 </script>

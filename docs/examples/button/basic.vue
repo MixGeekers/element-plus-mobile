@@ -48,14 +48,12 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-} from '@element-plus/icons-vue'
+import Check from '~icons/ep/check'
+import Delete from '~icons/ep/delete'
+import Edit from '~icons/ep/edit'
+import Message from '~icons/ep/message'
+import Search from '~icons/ep/search'
+import Star from '~icons/ep/star'
 </script>
 
 <style scoped>

@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { Message } from '@element-plus/icons-vue'
+import Message from '~icons/ep/message'
 </script>
 
 <style scoped>

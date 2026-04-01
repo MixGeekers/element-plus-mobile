@@ -82,11 +82,11 @@
 <script lang="ts" setup>
 import { computed, nextTick, onMounted, ref } from 'vue'
 import { useRouter, withBase } from 'vitepress'
-import { Search } from '@element-plus/icons-vue'
 import overviewLocale from '../../../i18n/component/overview.json'
 
 import type { InputInstance } from 'element-plus-mobile'
 
+import Search from '~icons/ep/search'
 import { useSidebar } from '~/composables/sidebar'
 import { useLang } from '~/composables/lang'
 import overviewIcons from '~/components/overview-icons'

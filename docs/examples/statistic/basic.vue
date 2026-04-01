@@ -34,7 +34,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useTransition } from '@vueuse/core'
-import { ChatLineRound, Male } from '@element-plus/icons-vue'
+import ChatLineRound from '~icons/ep/chat-line-round'
+import Male from '~icons/ep/male'
 
 const source = ref(0)
 const outputValue = useTransition(source, {

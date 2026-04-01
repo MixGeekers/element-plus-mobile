@@ -241,18 +241,16 @@ import {
 } from '@element-plus/components/time-picker'
 import { ElIcon } from '@element-plus/components/icon'
 import {
+  ArrowLeft,
+  ArrowRight,
+  DArrowLeft,
+  DArrowRight,
   extractFirst,
   getEventCode,
   isArray,
   isFunction,
 } from '@element-plus/utils'
 import { EVENT_CODE } from '@element-plus/constants'
-import {
-  ArrowLeft,
-  ArrowRight,
-  DArrowLeft,
-  DArrowRight,
-} from '@element-plus/icons-vue'
 import { panelDatePickProps } from '../props/panel-date-pick'
 import {
   correctlyParseUserInput,

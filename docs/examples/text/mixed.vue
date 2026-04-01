@@ -22,5 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-import { Bell, ElementPlus } from '@element-plus/icons-vue'
+import Bell from '~icons/ep/bell'
+import ElementPlus from '~icons/ep/element-plus'
 </script>

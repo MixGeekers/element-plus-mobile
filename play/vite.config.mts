@@ -14,6 +14,7 @@ import {
   pkgRoot,
   projRoot,
 } from '@element-plus/build-utils'
+import { ElementPlusIconify } from '../packages/element-plus/vite/iconify'
 
 const IGNORED_DEPENDENCIES = ['vue-component-type-helpers']
 
@@ -60,6 +61,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
     plugins: [
       vue(),
       vueJsx(),
+      ElementPlusIconify({
+        include: ['ep'],
+      }),
       Components({
         include: `${__dirname}/**`,
         resolvers: ElementPlusResolver({

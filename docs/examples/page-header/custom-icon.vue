@@ -7,5 +7,5 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeft } from '@element-plus/icons-vue'
+import ArrowLeft from '~icons/ep/arrow-left'
 </script>

@@ -90,9 +90,10 @@ import {
   CircleClose,
   Close,
   WarningFilled,
-} from '@element-plus/icons-vue'
+  isFunction,
+  isString,
+} from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
-import { isFunction, isString } from '@element-plus/utils'
 
 import type { CSSProperties } from 'vue'
 import type { ProgressColor, ProgressProps } from './progress'

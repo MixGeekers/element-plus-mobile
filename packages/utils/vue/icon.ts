@@ -7,7 +7,7 @@ import {
   Loading,
   SuccessFilled,
   WarningFilled,
-} from '@element-plus/icons-vue'
+} from './builtin-icons'
 import { definePropType } from './props'
 
 import type { Component } from 'vue'
@@ -16,8 +16,8 @@ export interface IconifyIcon {
   body: string
   left?: number
   top?: number
-  width?: number | string
-  height?: number | string
+  width?: number
+  height?: number
   rotate?: number
   hFlip?: boolean
   vFlip?: boolean
@@ -27,6 +27,29 @@ export interface IconifyIconName {
   provider: string
   prefix: string
   name: string
+}
+
+export interface IconifyIconAlias {
+  parent: string
+  left?: number
+  top?: number
+  width?: number
+  height?: number
+  rotate?: number
+  hFlip?: boolean
+  vFlip?: boolean
+}
+
+export interface IconifyCollection {
+  prefix: string
+  icons: Record<string, IconifyIcon>
+  provider?: string
+  aliases?: Record<string, IconifyIconAlias>
+  not_found?: string[]
+  left?: number
+  top?: number
+  width?: number
+  height?: number
 }
 
 export type IconifyIconSource = IconifyIcon | IconifyIconName
@@ -50,6 +73,11 @@ export const isIconifyIconNameObject = (
   typeof value.provider === 'string' &&
   typeof value.prefix === 'string' &&
   typeof value.name === 'string'
+
+export const stringifyIconifyIconName = (value: IconifyIconName): string => {
+  const provider = value.provider ? `@${value.provider}:` : ''
+  return `${provider}${value.prefix}:${value.name}`
+}
 
 export const isIconifyIconSource = (
   value: unknown

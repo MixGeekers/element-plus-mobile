@@ -425,7 +425,7 @@ import {
   ArrowRight,
   DArrowLeft,
   DArrowRight,
-} from '@element-plus/icons-vue'
+} from '@element-plus/utils'
 import { panelDateRangeProps } from '../props/panel-date-range'
 import { useRangePicker } from '../composables/use-range-picker'
 import {

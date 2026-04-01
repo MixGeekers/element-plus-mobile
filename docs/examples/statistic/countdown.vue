@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import dayjs from 'dayjs'
-import { Calendar } from '@element-plus/icons-vue'
+import Calendar from '~icons/ep/calendar'
 
 const value = ref(Date.now() + 1000 * 60 * 60 * 7)
 const value1 = ref(Date.now() + 1000 * 60 * 60 * 24 * 2)

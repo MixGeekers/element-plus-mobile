@@ -5,113 +5,94 @@ lang: zh-CN
 
 # 图标
 
-Element Plus 提供了一组常用图标。
+Element Plus Mobile 默认使用 Iconify 图标。
 
 ## 图标使用
 
-- 如果你想像示例一样**直接使用**，则需要在使用前对组件进行[全局注册](https://v3.vuejs.org/guide/component-registration.html#global-registration)。
-
-- 如果您想查看所有可用的 SVG 图标，请检查 [@element-plus/icons-vue@1.x](https://unpkg.com/browse/@element-plus/icons-vue@1/dist/es/)[@element-plus/icons-vue@latest](https://unpkg.com/browse/@element-plus/icons-vue@latest/dist/types/components/) 和源 [element-plus-icons](https://github.com/element-plus/element-plus-icons) 或 [Icon收藏](#icon-collection)
+- Iconify 官网：https://iconify.design/
+- 如果你希望在构建阶段把图标当作 Vue 组件使用，请优先配合 `unplugin-icons` 与 Iconify 图标集。
+- 如果你希望在运行时直接把 Iconify 图标名传给组件属性，请阅读 [Iconify 支持](#iconify-support) 章节。
+- 当前文档页的图标集合展示基于 `@iconify-json/ep`。
 
 ## 安装
 
-### 使用包装管理器
+### 构建时按需导入
 
-选择您喜欢的包管理器。
+如果你希望像普通 Vue 组件一样使用图标，推荐安装对应的 Iconify 图标集，并通过 [unplugin-icons](https://github.com/antfu/unplugin-icons) 按需导入。
 
-::: code-group
-
-```shell [npm]
-$ npm install @element-plus/icons-vue
+```shell
+pnpm add -D unplugin-icons @iconify-json/ep
 ```
-
-```shell [yarn]
-$ yarn add @element-plus/icons-vue
-```
-
-```shell [pnpm]
-$ pnpm install @element-plus/icons-vue
-```
-
-:::
-
-### 注册所有图标
-
-您需要从`@element-plus/icons-vue`导入所有图标并全局注册它们。
 
 ```ts
-// main.ts
-
-// if you're using CDN, please remove this line.
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
-const app = createApp(App)
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
-}
+import Edit from '~icons/ep/edit'
+import Search from '~icons/ep/search'
 ```
 
-您也可以参考[此模板](https://codepen.io/sxzz/pen/xxpvdrg)。
+这种方式适合模板里直接书写 `<Edit />`、`<Search />` 这类图标组件，并且不会引入不需要的整套图标。
 
-### 在浏览器中导入
+## Iconify 支持{#iconify-support}
 
-直接通过浏览器HTML标签导入Element Plus Icons，并使用全局变量`ElementPlusIconsVue`。
+如果你希望把图标作为字符串传给组件属性，而不是在构建阶段导入 Vue 组件，`el-icon` 与组件库中常见的 `icon` / `prefix-icon` / `suffix-icon` / `clear-icon` / `close-icon` 类属性都可以直接接收 Iconify 图标名。
 
-根据不同的CDN提供商，有不同的引入方式。
-这里我们以 [unpkg](https://unpkg.com) 和 [jsDelivr](https://jsdelivr.com) 为例。
-您还可以使用其他 CDN 提供商。
+如果你已经通过 `unplugin-icons` 在构建阶段自动导入 Vue 组件，也可以继续保持那种方式；原生 Iconify 支持主要用于图标需要以字符串形式在配置、schema 或接口数据中流转的场景。
 
-::: code-group
+### 本地优先（Vite / uni-app Vue3）
 
-```html [unpkg]
-<script src="//unpkg.com/@element-plus/icons-vue"></script>
+如果你的项目希望优先使用本地安装的 Iconify 图标集，可以安装对应的 `@iconify-json/*` 包，并在 `vite.config.ts` 中启用官方插件。插件会在应用入口前自动注册本地图标集，之后组件里仍然可以继续使用 `ep:edit` 这类字符串。
+
+```shell
+pnpm add -D @iconify-json/ep
 ```
 
-```html [jsDelivr]
-<script src="//cdn.jsdelivr.net/npm/@element-plus/icons-vue"></script>
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { ElementPlusIconify } from 'element-plus-mobile/vite/iconify'
+
+export default defineConfig({
+  plugins: [vue(), ElementPlusIconify()],
+})
 ```
 
-:::
+```ts
+// vite.config.ts (uni-app Vue3 / HBuilderX 3.2+)
+import { defineConfig } from 'vite'
+import uni from '@dcloudio/vite-plugin-uni'
+import { ElementPlusIconify } from 'element-plus-mobile/vite/iconify'
 
-:::tip
+export default defineConfig({
+  plugins: [uni(), ElementPlusIconify()],
+})
+```
 
-建议使用CDN导入Element Plus用户锁定版本
-链接地址上，以免Element Plus时受到不兼容更新的影响
-未来还会升级。请检查[unpkg.com](https://unpkg.com)
-锁定版本的方法。
+接入后，已安装图标集会优先从本地注册数据解析；未安装前缀或未命中的图标仍会回退到 Iconify 默认运行时行为。为了控制包体积，建议只安装实际需要的图标集。
 
-:::
-
-### 自动导入
-
-使用 [unplugin-icons](https://github.com/antfu/unplugin-icons) 和 [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import)
-自动从 iconify 导入任何图标集合。
-您可以参考[此模板](https://github.com/sxzz/element-plus-best-practices/blob/db2dfc983ccda5570033a0ac608a1bd9d9a7f658/vite.config.ts#L21-L58)。
-
-### 原生 Iconify 支持
-
-`el-icon` 以及组件库中大部分 `icon` / `prefix-icon` / `suffix-icon` 类属性现在都可以直接接收 Iconify 图标名。
+### 运行时字符串用法
 
 ```vue
 <template>
-  <el-space>
-    <el-icon icon="mdi:home" />
-    <el-button icon="mdi:heart">Like</el-button>
-    <el-input prefix-icon="mdi:magnify" placeholder="搜索内容" />
+  <el-space wrap>
+    <el-icon icon="ep:edit" />
+    <el-button icon="ep:search">Search</el-button>
+    <el-input prefix-icon="ep:search" placeholder="搜索内容" />
+    <el-select suffix-icon="ep:arrow-down" placeholder="请选择" />
   </el-space>
 </template>
 ```
 
-::::tip
+如果你不使用 `Vite` 插件，也可以在应用启动阶段手动调用 `registerIconifyCollection()` 或 `registerIconifyIcon()` 注册本地图标数据，然后继续传递 `ep:edit` 这类字符串。
 
-包含 `:` 的字符串会按 Iconify 图标名解析，例如 `mdi:home` 或 `@custom:line:search`。
-不包含 `:` 的字符串仍保持原有行为，会继续按已注册的全局组件名解析。
+### 兼容规则
 
-::::
+- 包含 `:` 的字符串会按 Iconify 图标名解析，例如 `ep:edit` 或 `@custom:line:search`。
+- 不包含 `:` 的字符串仍保持原有行为，会继续按已注册的全局组件名解析。
+- 直接传入本地 Vue 图标组件时，行为不变；如果你已经有现成组件，仍然可以优先使用组件形式。
 
 ::::warning
 
-运行时 Iconify 名称会在客户端加载图标数据。
+运行时 Iconify 图标名默认会在客户端解析图标数据。接入本地优先插件后，已安装图标集会先从本地数据渲染，只有未命中时才会继续走默认运行时加载。
 如果您需要 SSR 首屏直接输出 SVG，建议继续传入本地 Vue 图标组件，或传入预先准备好的 Iconify 图标数据对象。
 
 ::::
@@ -139,7 +120,11 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 ```
 
 <vp-script setup>
-import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
+import Delete from '~icons/ep/delete'
+import Edit from '~icons/ep/edit'
+import Loading from '~icons/ep/loading'
+import Search from '~icons/ep/search'
+import Share from '~icons/ep/share'
 </vp-script>
 
 <ElRow>
@@ -239,7 +224,7 @@ import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
 
 :::tip
 
-**任何版本都可以使用SVG图标**只要你安装了
+**当前页面展示的是 `@iconify-json/ep` 图标集**
 
 **您可以点击图标进行复制**
 
@@ -248,6 +233,8 @@ import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
 <IconList />
 
 ## API
+
+以下 API 仅针对 `el-icon` 本身；组件库中其他 `icon` 类 props 也遵循相同的输入规则。
 
 ### 属性
 

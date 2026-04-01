@@ -1,7 +1,7 @@
 import { defineComponent, markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, test, vi } from 'vitest'
-import { Loading, Search } from '@element-plus/icons-vue'
+import { Loading, Search } from '@element-plus/utils'
 import Form from '@element-plus/components/form'
 import ConfigProvider from '@element-plus/components/config-provider'
 import { useNamespace } from '@element-plus/hooks'

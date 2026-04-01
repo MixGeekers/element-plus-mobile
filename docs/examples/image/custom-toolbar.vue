@@ -38,17 +38,15 @@
 
 <script lang="ts" setup>
 import { ElIcon } from 'element-plus-mobile'
-import {
-  Back,
-  DArrowRight,
-  Download,
-  Refresh,
-  RefreshLeft,
-  RefreshRight,
-  Right,
-  ZoomIn,
-  ZoomOut,
-} from '@element-plus/icons-vue'
+import Back from '~icons/ep/back'
+import DArrowRight from '~icons/ep/d-arrow-right'
+import Download from '~icons/ep/download'
+import Refresh from '~icons/ep/refresh'
+import RefreshLeft from '~icons/ep/refresh-left'
+import RefreshRight from '~icons/ep/refresh-right'
+import Right from '~icons/ep/right'
+import ZoomIn from '~icons/ep/zoom-in'
+import ZoomOut from '~icons/ep/zoom-out'
 
 const url =
   'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'

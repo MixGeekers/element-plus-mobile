@@ -130,10 +130,6 @@ import {
   useZIndex,
 } from '@element-plus/hooks'
 import { EVENT_CODE } from '@element-plus/constants'
-import { getEventCode, keysOf } from '@element-plus/utils'
-import ElFocusTrap from '@element-plus/components/focus-trap'
-import ElTeleport from '@element-plus/components/teleport'
-import ElIcon from '@element-plus/components/icon'
 import {
   ArrowLeft,
   ArrowRight,
@@ -144,7 +140,12 @@ import {
   ScaleToOriginal,
   ZoomIn,
   ZoomOut,
-} from '@element-plus/icons-vue'
+  getEventCode,
+  keysOf,
+} from '@element-plus/utils'
+import ElFocusTrap from '@element-plus/components/focus-trap'
+import ElTeleport from '@element-plus/components/teleport'
+import ElIcon from '@element-plus/components/icon'
 import { imageViewerEmits } from './image-viewer'
 
 import type { CSSProperties } from 'vue'

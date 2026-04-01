@@ -15,6 +15,7 @@ import {
   getPackageDependencies,
   projRoot,
 } from '@element-plus/build-utils'
+import { ElementPlusIconify } from '../../../packages/element-plus/vite/iconify'
 import { MarkdownTransform } from '../plugins/markdown-transform'
 import { ComponentChangelogPlugin } from '../plugins/component-changelog'
 
@@ -88,6 +89,9 @@ export const getViteConfig = ({ mode }: { mode: string }) => {
     },
     plugins: [
       vueJsx(),
+      ElementPlusIconify({
+        include: ['ep'],
+      }) as Plugin,
 
       // https://github.com/antfu/unplugin-vue-components
       Components({

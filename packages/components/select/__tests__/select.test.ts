@@ -1,14 +1,9 @@
-// @ts-nocheck
-/**
- * @vitest-environment happy-dom
- */
 import { defineComponent, h, markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, test, vi } from 'vitest'
 import { BORDER_HORIZONTAL_WIDTH, EVENT_CODE } from '@element-plus/constants'
-import { ArrowDown, CaretTop } from '@element-plus/icons-vue'
+import { ArrowDown, CaretTop, hasClass } from '@element-plus/utils'
 import { usePopperContainerId } from '@element-plus/hooks'
-import { hasClass } from '@element-plus/utils'
 import defineGetter from '@element-plus/test-utils/define-getter'
 import { ElForm, ElFormItem } from '@element-plus/components/form'
 import Select from '../src/select.vue'

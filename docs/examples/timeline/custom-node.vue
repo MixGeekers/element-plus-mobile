@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { MoreFilled } from '@element-plus/icons-vue'
-
 import type { TimelineItemProps } from 'element-plus-mobile'
+
+import MoreFilled from '~icons/ep/more-filled'
 
 interface ActivityType extends Partial<TimelineItemProps> {
   content: string

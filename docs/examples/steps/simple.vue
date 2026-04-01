@@ -19,5 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Edit, Picture, UploadFilled } from '@element-plus/icons-vue'
+import Edit from '~icons/ep/edit'
+import Picture from '~icons/ep/picture'
+import UploadFilled from '~icons/ep/upload-filled'
 </script>

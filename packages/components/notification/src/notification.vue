@@ -41,13 +41,12 @@
 <script lang="ts" setup>
 import { computed, markRaw, onMounted, ref } from 'vue'
 import { useEventListener, useTimeoutFn } from '@vueuse/core'
-import { TypeComponentsMap, getEventCode } from '@element-plus/utils'
+import { Close, TypeComponentsMap, getEventCode } from '@element-plus/utils'
 import { EVENT_CODE } from '@element-plus/constants'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useGlobalComponentSettings } from '@element-plus/components/config-provider'
 import { notificationEmits } from './notification'
-import { Close } from '@element-plus/icons-vue'
 
 import type { CSSProperties } from 'vue'
 import type { NotificationProps } from './notification'

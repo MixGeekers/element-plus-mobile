@@ -57,8 +57,7 @@ import {
 import { useNamespace } from '@element-plus/hooks'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
-import { Check, Close } from '@element-plus/icons-vue'
-import { isNumber } from '@element-plus/utils'
+import { Check, Close, isNumber } from '@element-plus/utils'
 import { STEPS_INJECTION_KEY } from './tokens'
 
 import type { StepProps } from './item'

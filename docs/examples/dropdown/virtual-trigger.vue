@@ -32,15 +32,14 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import {
-  Check,
-  CircleCheck,
-  CirclePlus,
-  CirclePlusFilled,
-  Plus,
-} from '@element-plus/icons-vue'
 
 import type { DropdownInstance } from 'element-plus-mobile'
+
+import Check from '~icons/ep/check'
+import CircleCheck from '~icons/ep/circle-check'
+import CirclePlus from '~icons/ep/circle-plus'
+import CirclePlusFilled from '~icons/ep/circle-plus-filled'
+import Plus from '~icons/ep/plus'
 
 const dropdownRef = ref<DropdownInstance>()
 const position = ref({

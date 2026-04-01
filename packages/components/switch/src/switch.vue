@@ -84,6 +84,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, onMounted, ref, shallowRef, watch } from 'vue'
 import {
+  Loading,
   addUnit,
   debugWarn,
   isBoolean,
@@ -98,7 +99,6 @@ import {
   useFormItemInputId,
   useFormSize,
 } from '@element-plus/components/form'
-import { Loading } from '@element-plus/icons-vue'
 import {
   CHANGE_EVENT,
   INPUT_EVENT,

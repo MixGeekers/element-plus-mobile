@@ -1,7 +1,7 @@
 import { nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
-import { Check, Loading } from '@element-plus/icons-vue'
+import { Check, Loading } from '@element-plus/utils'
 import CascaderPanel from '../src/index.vue'
 import Node from '../src/node.vue'
 

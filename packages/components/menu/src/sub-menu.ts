@@ -19,6 +19,8 @@ import { useTimeoutFn } from '@vueuse/core'
 import ElCollapseTransition from '@element-plus/components/collapse-transition'
 import ElTooltip from '@element-plus/components/tooltip'
 import {
+  ArrowDown,
+  ArrowRight,
   buildProps,
   definePropType,
   focusElement,
@@ -27,7 +29,6 @@ import {
   throwError,
 } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
-import { ArrowDown, ArrowRight } from '@element-plus/icons-vue'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import useMenu from './use-menu'

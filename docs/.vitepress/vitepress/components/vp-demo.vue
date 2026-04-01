@@ -2,12 +2,12 @@
 import { computed, getCurrentInstance, ref, toRef } from 'vue'
 import { useClipboard, useLocalStorage, useToggle } from '@vueuse/core'
 import { EVENT_CODE } from 'element-plus-mobile'
-import { CaretTop } from '@element-plus/icons-vue'
 import { useLang } from '../composables/lang'
 import { useSourceCode } from '../composables/source-code'
 import { usePlayground } from '../composables/use-playground'
 import demoBlockLocale from '../../i18n/component/demo-block.json'
 import SourceCode from './demo/vp-source-code.vue'
+import CaretTop from '~icons/ep/caret-top'
 
 const props = defineProps<{
   sources: [string, string]

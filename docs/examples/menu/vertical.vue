@@ -85,12 +85,10 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from '@element-plus/icons-vue'
+import Document from '~icons/ep/document'
+import IconMenu from '~icons/ep/menu'
+import Location from '~icons/ep/location'
+import Setting from '~icons/ep/setting'
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)

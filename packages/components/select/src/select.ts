@@ -5,9 +5,14 @@ import {
   useEmptyValuesProps,
   useSizeProp,
 } from '@element-plus/hooks'
-import { buildProps, definePropType, iconPropType } from '@element-plus/utils'
+import {
+  ArrowDown,
+  CircleClose,
+  buildProps,
+  definePropType,
+  iconPropType,
+} from '@element-plus/utils'
 import { useTooltipContentProps } from '@element-plus/components/tooltip'
-import { ArrowDown, CircleClose } from '@element-plus/icons-vue'
 import { tagProps } from '@element-plus/components/tag'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { defaultProps } from '@element-plus/components/select-v2/src/useProps'
@@ -26,7 +31,6 @@ import type {
 } from '@element-plus/components/popper'
 import type { OptionValue } from './type'
 import type { Props } from '@element-plus/components/select-v2/src/useProps'
-
 /**
  * @description Tag tooltip configuration interface
  */

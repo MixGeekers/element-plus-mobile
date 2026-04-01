@@ -31,6 +31,11 @@
     "./global": {
       "types": "./global.d.ts"
     },
+    "./vite/iconify": {
+      "types": "./es/vite/iconify.d.ts",
+      "import": "./es/vite/iconify.mjs",
+      "require": "./lib/vite/iconify.js"
+    },
     "./es": {
       "types": "./es/index.d.ts",
       "import": "./es/index.mjs"
@@ -85,7 +90,6 @@
   },
   "dependencies": {
     "@ctrl/tinycolor": "^4.2.0",
-    "@element-plus/icons-vue": "^2.3.2",
     "@floating-ui/dom": "^1.0.1",
     "@iconify/vue": "^5.0.0",
     "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.7",

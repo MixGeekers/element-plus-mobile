@@ -176,6 +176,7 @@ import {
 import ElInput from '@element-plus/components/input'
 import { ElOverlay } from '@element-plus/components/overlay'
 import {
+  Loading,
   TypeComponents,
   TypeComponentsMap,
   isFunction,
@@ -184,7 +185,6 @@ import {
 } from '@element-plus/utils'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
-import { Loading } from '@element-plus/icons-vue'
 import ElFocusTrap from '@element-plus/components/focus-trap'
 import { useGlobalComponentSettings } from '@element-plus/components/config-provider'
 

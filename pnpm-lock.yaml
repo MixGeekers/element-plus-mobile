@@ -29,9 +29,6 @@ importers:
       '@element-plus/hooks':
         specifier: workspace:*
         version: link:packages/hooks
-      '@element-plus/icons-vue':
-        specifier: ^2.3.2
-        version: 2.3.2(vue@3.5.25(typescript@5.5.4))
       '@element-plus/locale':
         specifier: workspace:*
         version: link:packages/locale
@@ -99,6 +96,9 @@ importers:
       '@element-plus/eslint-config':
         specifier: workspace:*
         version: link:internal/eslint-config
+      '@iconify/vue':
+        specifier: ^5.0.0
+        version: 5.0.0(vue@3.5.25(typescript@5.5.4))
       '@pnpm/find-workspace-packages':
         specifier: ^4.0.16
         version: 4.0.43(@pnpm/logger@4.0.0)(@yarnpkg/core@4.5.0(typanion@3.14.0))(typanion@3.14.0)
@@ -207,9 +207,6 @@ importers:
       '@docsearch/js':
         specifier: ^3.1.0
         version: 3.9.0(@algolia/client-search@5.46.0)(search-insights@2.17.3)
-      '@element-plus/icons-vue':
-        specifier: ^2.3.2
-        version: 2.3.2(vue@3.5.25(typescript@5.5.4))
       '@element-plus/metadata':
         specifier: workspace:*
         version: link:../internal/metadata
@@ -222,9 +219,6 @@ importers:
       clipboard-copy:
         specifier: ^4.0.1
         version: 4.0.1
-      element-plus:
-        specifier: npm:element-plus@latest
-        version: 2.13.6(typescript@5.5.4)(vue@3.5.25(typescript@5.5.4))
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
@@ -247,6 +241,9 @@ importers:
       '@element-plus/build-utils':
         specifier: workspace:*
         version: link:../internal/build-utils
+      '@iconify-json/ep':
+        specifier: ^1.2.4
+        version: 1.2.4
       '@iconify-json/ri':
         specifier: ^1.1.3
         version: 1.2.6
@@ -457,9 +454,6 @@ importers:
       '@element-plus/hooks':
         specifier: workspace:^
         version: link:../hooks
-      '@element-plus/icons-vue':
-        specifier: ^2.3.2
-        version: 2.3.2(vue@3.5.25(typescript@5.5.4))
       '@element-plus/utils':
         specifier: workspace:^
         version: link:../utils
@@ -515,9 +509,6 @@ importers:
       '@ctrl/tinycolor':
         specifier: ^4.2.0
         version: 4.2.0
-      '@element-plus/icons-vue':
-        specifier: ^2.3.2
-        version: 2.3.2(vue@3.5.25(typescript@5.5.4))
       '@floating-ui/dom':
         specifier: ^1.0.1
         version: 1.7.4
@@ -636,9 +627,9 @@ importers:
       '@element-plus/constants':
         specifier: workspace:^
         version: link:../constants
-      '@element-plus/icons-vue':
-        specifier: ^2.3.2
-        version: 2.3.2(vue@3.5.25(typescript@5.5.4))
+      '@iconify/vue':
+        specifier: ^5.0.0
+        version: 5.0.0(vue@3.5.25(typescript@5.5.4))
       '@vueuse/core':
         specifier: 12.0.0
         version: 12.0.0(typescript@5.5.4)
@@ -661,13 +652,13 @@ importers:
 
   play:
     dependencies:
-      '@element-plus/icons-vue':
-        specifier: ^2.3.2
-        version: 2.3.2(vue@3.5.25(typescript@5.5.4))
       vue:
         specifier: ^3.5.22
         version: 3.5.25(typescript@5.5.4)
     devDependencies:
+      '@iconify-json/ep':
+        specifier: ^1.2.4
+        version: 1.2.4
       '@vitejs/plugin-vue':
         specifier: ^5.1.4
         version: 5.2.4(vite@5.4.21(@types/node@22.19.3)(lightningcss@1.31.1)(sass-embedded@1.97.3)(sass@1.97.3))(vue@3.5.25(typescript@5.5.4))
@@ -1089,11 +1080,6 @@ packages:
         optional: true
       search-insights:
         optional: true
-
-  '@element-plus/icons-vue@2.3.2':
-    resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
-    peerDependencies:
-      vue: ^3.2.0
 
   '@emnapi/core@1.8.1':
     resolution: {integrity: sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==}
@@ -1631,6 +1617,9 @@ packages:
   '@humanwhocodes/retry@0.4.3':
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
+
+  '@iconify-json/ep@1.2.4':
+    resolution: {integrity: sha512-dtKOueYp1CRxAUW+GayIiuHqOlELfO0W3QiHOH4NjvKtBn2uxZbByIKQ+7B1Hj+AgZrhWTie3QKYkZn+VQVZrw==}
 
   '@iconify-json/logos@1.2.10':
     resolution: {integrity: sha512-qxaXKJ6fu8jzTMPQdHtNxlfx6tBQ0jXRbHZIYy5Ilh8Lx9US9FsAdzZWUR8MXV8PnWTKGDFO4ZZee9VwerCyMA==}
@@ -4275,11 +4264,6 @@ packages:
 
   electron-to-chromium@1.5.267:
     resolution: {integrity: sha512-0Drusm6MVRXSOJpGbaSVgcQsuB4hEkMpHXaVstcPmhu5LIedxs1xNK/nIxmQIU/RPC0+1/o0AVZfBTkTNJOdUw==}
-
-  element-plus@2.13.6:
-    resolution: {integrity: sha512-XHgwXr8Fjz6i+6BaqFhAbae/dJbG7bBAAlHrY3pWL7dpj+JcqcOyKYt4Oy5KP86FQwS1k4uIZDjCx2FyUR5lDg==}
-    peerDependencies:
-      vue: ^3.3.0
 
   emoji-regex-xs@1.0.0:
     resolution: {integrity: sha512-LRlerrMYoIDrT6jgpeZ2YYl/L8EulRTt5hQcYjy5AInh7HWXKimpqx68aknBFpGL2+/IcogTcaydJEgaTmOpDg==}
@@ -8809,10 +8793,6 @@ snapshots:
     transitivePeerDependencies:
       - '@algolia/client-search'
 
-  '@element-plus/icons-vue@2.3.2(vue@3.5.25(typescript@5.5.4))':
-    dependencies:
-      vue: 3.5.25(typescript@5.5.4)
-
   '@emnapi/core@1.8.1':
     dependencies:
       '@emnapi/wasi-threads': 1.1.0
@@ -9146,6 +9126,10 @@ snapshots:
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/retry@0.4.3': {}
+
+  '@iconify-json/ep@1.2.4':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/logos@1.2.10':
     dependencies:
@@ -12433,27 +12417,6 @@ snapshots:
       semver: 7.7.3
 
   electron-to-chromium@1.5.267: {}
-
-  element-plus@2.13.6(typescript@5.5.4)(vue@3.5.25(typescript@5.5.4)):
-    dependencies:
-      '@ctrl/tinycolor': 4.2.0
-      '@element-plus/icons-vue': 2.3.2(vue@3.5.25(typescript@5.5.4))
-      '@floating-ui/dom': 1.7.4
-      '@popperjs/core': '@sxzz/popperjs-es@2.11.8'
-      '@types/lodash': 4.17.21
-      '@types/lodash-es': 4.17.12
-      '@vueuse/core': 12.0.0(typescript@5.5.4)
-      async-validator: 4.2.5(patch_hash=cc6d77b35ed2a1683012935ca9ed998d418912785fcf78c6497d3268ac596d23)
-      dayjs: 1.11.19
-      lodash: 4.17.23
-      lodash-es: 4.17.23
-      lodash-unified: 1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.23)(lodash@4.17.23)
-      memoize-one: 6.0.0
-      normalize-wheel-es: 1.2.0
-      vue: 3.5.25(typescript@5.5.4)
-      vue-component-type-helpers: 3.2.4
-    transitivePeerDependencies:
-      - typescript
 
   emoji-regex-xs@1.0.0: {}
 

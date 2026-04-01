@@ -1,5 +1,4 @@
-import { buildProps, iconPropType } from '@element-plus/utils'
-import { Back } from '@element-plus/icons-vue'
+import { Back, buildProps, iconPropType } from '@element-plus/utils'
 
 import type { ExtractPublicPropTypes } from 'vue'
 import type { IconPropType } from '@element-plus/utils'

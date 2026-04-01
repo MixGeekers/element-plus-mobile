@@ -21,13 +21,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import {
-  ArrowLeft,
-  ArrowRight,
-  House,
-  Notification,
-  Operation,
-} from '@element-plus/icons-vue'
+import ArrowLeft from '~icons/ep/arrow-left'
+import ArrowRight from '~icons/ep/arrow-right'
+import House from '~icons/ep/house'
+import Notification from '~icons/ep/notification'
+import Operation from '~icons/ep/operation'
 
 const direction = ref<'horizontal' | 'vertical'>('horizontal')
 </script>

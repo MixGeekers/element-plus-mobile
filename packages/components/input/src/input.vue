@@ -191,20 +191,21 @@ import { useResizeObserver } from '@vueuse/core'
 import { isNil } from 'lodash-unified'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
-import { Hide, View } from '@element-plus/icons-vue'
+import {
+  Hide,
+  NOOP,
+  ValidateComponentsMap,
+  View,
+  debugWarn,
+  isClient,
+  isObject,
+} from '@element-plus/utils'
 import {
   useFormDisabled,
   useFormItem,
   useFormItemInputId,
   useFormSize,
 } from '@element-plus/components/form'
-import {
-  NOOP,
-  ValidateComponentsMap,
-  debugWarn,
-  isClient,
-  isObject,
-} from '@element-plus/utils'
 import {
   useAttrs,
   useComposition,

@@ -59,10 +59,9 @@
 import { computed, inject } from 'vue'
 import ElIcon from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
-import { CaretRight } from '@element-plus/icons-vue'
+import { CaretRight, isFunction, isString, mutable } from '@element-plus/utils'
 import ElCheckbox from '@element-plus/components/checkbox'
 import { useNamespace } from '@element-plus/hooks'
-import { isFunction, isString, mutable } from '@element-plus/utils'
 import ElNodeContent from './tree-node-content'
 import {
   EMPTY_NODE,

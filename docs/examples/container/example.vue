@@ -96,7 +96,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue'
+import IconMenu from '~icons/ep/menu'
+import Message from '~icons/ep/message'
+import Setting from '~icons/ep/setting'
 
 const item = {
   date: '2016-05-02',

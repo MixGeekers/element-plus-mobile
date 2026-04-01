@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, test, vi } from 'vitest'
 import { rAF } from '@element-plus/test-utils/tick'
 import { triggerNativeCompositeClick } from '@element-plus/test-utils/composite-click'
-import { QuestionFilled as QuestionFilledIcon } from '@element-plus/icons-vue'
+import { QuestionFilled as QuestionFilledIcon } from '@element-plus/utils'
 import MessageBox from '../src/messageBox'
 import { ElMessageBox } from '..'
 

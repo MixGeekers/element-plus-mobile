@@ -96,15 +96,14 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import {
-  Iphone,
-  Location,
-  OfficeBuilding,
-  Tickets,
-  User,
-} from '@element-plus/icons-vue'
 
 import type { ComponentSize } from 'element-plus-mobile'
+
+import Iphone from '~icons/ep/iphone'
+import Location from '~icons/ep/location'
+import OfficeBuilding from '~icons/ep/office-building'
+import Tickets from '~icons/ep/tickets'
+import User from '~icons/ep/user'
 
 const size = ref<ComponentSize>('default')
 

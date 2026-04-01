@@ -8,7 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import { Edit, View as IconView } from '@element-plus/icons-vue'
+import Edit from '~icons/ep/edit'
+import IconView from '~icons/ep/view'
 </script>
 
 <style scoped>

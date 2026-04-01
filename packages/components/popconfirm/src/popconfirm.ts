@@ -1,6 +1,5 @@
 import { buttonTypes } from '@element-plus/components/button'
-import { QuestionFilled } from '@element-plus/icons-vue'
-import { buildProps, iconPropType } from '@element-plus/utils'
+import { QuestionFilled, buildProps, iconPropType } from '@element-plus/utils'
 import {
   useTooltipContentProps,
   useTooltipTriggerProps,

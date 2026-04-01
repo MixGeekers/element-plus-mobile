@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { computed, ref, shallowRef } from 'vue'
 import clipboardCopy from 'clipboard-copy'
+import epIcons from '@iconify-json/ep/icons.json'
 import { ElMessage } from 'element-plus-mobile'
-import * as Icons from '@element-plus/icons-vue'
 import { useLang } from '../../composables/lang'
 import localeData from '../../../i18n/component/icons.json'
 import IconCategories from './icons-categories.json'
 
-import type { Component, DefineComponent } from 'vue'
-
 type CategoriesItem = {
   name: string
-  icons: (DefineComponent | Component)[]
+  icons: IconItem[]
+}
+
+type IconItem = {
+  name: string
+  icon: string
 }
 
 const lang = useLang()
@@ -19,7 +22,21 @@ const locale = computed(() => localeData[lang.value])
 const copyIcon = ref(true)
 const query = ref('')
 
-const copyContent = async (content) => {
+const toDisplayName = (value: string) =>
+  value
+    .split('-')
+    .map((segment) =>
+      segment ? segment[0].toUpperCase() + segment.slice(1) : segment
+    )
+    .join('')
+
+const toIconifyName = (value: string) =>
+  value
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .toLowerCase()
+
+const copyContent = async (content: string) => {
   try {
     await clipboardCopy(content)
 
@@ -37,11 +54,14 @@ const copyContent = async (content) => {
   }
 }
 
-const copySvgIcon = async (name, refs) => {
+const copySvgIcon = async (
+  item: IconItem,
+  refs: Record<string, Element[] | undefined>
+) => {
   if (copyIcon.value) {
-    await copyContent(`<el-icon><${name} /></el-icon>`)
+    await copyContent(`<el-icon icon="ep:${item.icon}" />`)
   } else {
-    let content = refs[name]?.[0].querySelector('svg')?.outerHTML ?? ''
+    let content = refs[item.name]?.[0].querySelector('svg')?.outerHTML ?? ''
     if (content) {
       content = content.replace(/data-v-\w+=""/, '')
     }
@@ -50,31 +70,51 @@ const copySvgIcon = async (name, refs) => {
 }
 
 const categories = shallowRef<CategoriesItem[]>([])
-const iconMap = new Map(Object.entries(Icons))
+const iconEntries = new Map<string, IconItem>(
+  [...Object.keys(epIcons.icons), ...Object.keys(epIcons.aliases ?? {})].map(
+    (icon) => [toDisplayName(icon), { name: toDisplayName(icon), icon }]
+  )
+)
 
-IconCategories.categories.forEach((o) => {
+IconCategories.categories.forEach((category) => {
   const result: CategoriesItem = {
-    name: o.name,
+    name: category.name,
     icons: [],
   }
-  o.items.forEach((i) => {
-    const icon = iconMap.get(i)
+
+  category.items.forEach((name) => {
+    const resolvedIconName = toIconifyName(name)
+    const icon =
+      iconEntries.get(name) ||
+      ((epIcons.icons[resolvedIconName] ||
+        epIcons.aliases?.[resolvedIconName]) && {
+        name,
+        icon: resolvedIconName,
+      })
+
     if (icon) {
       result.icons.push(icon)
-      iconMap.delete(i)
+      iconEntries.delete(icon.name)
     }
   })
+
   categories.value.push(result)
 })
 
-categories.value.push({ name: 'Other', icons: Array.from(iconMap.values()) })
+categories.value.push({
+  name: 'Other',
+  icons: Array.from(iconEntries.values()).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  ),
+})
 
 const filterCategories = computed(() => {
   return categories.value
     .map((category) => {
-      const icons = category.icons.filter((icon) => {
-        return icon.name?.toLowerCase().includes(query.value.toLowerCase())
-      })
+      const icons = category.icons.filter((icon) =>
+        icon.name.toLowerCase().includes(query.value.toLowerCase())
+      )
+
       return { ...category, icons }
     })
     .filter((category) => category.icons.length)
@@ -92,7 +132,7 @@ const filterCategories = computed(() => {
   <div class="icon-search-content">
     <el-input
       v-model="query"
-      :prefix-icon="Icons.Search"
+      prefix-icon="ep:search"
       size="large"
       placeholder="Search Icons"
     />
@@ -101,17 +141,15 @@ const filterCategories = computed(() => {
     <div class="demo-icon-title">{{ item.name }}</div>
     <ul class="demo-icon-list">
       <li
-        v-for="component in item.icons"
-        :key="component.name"
-        :ref="component.name"
+        v-for="icon in item.icons"
+        :key="icon.name"
+        :ref="icon.name"
         class="icon-item"
-        @click="copySvgIcon(component.name, $refs)"
+        @click="copySvgIcon(icon, $refs)"
       >
         <span class="demo-svg-icon">
-          <ElIcon :size="20">
-            <component :is="component" />
-          </ElIcon>
-          <span class="icon-name">{{ component.name }}</span>
+          <ElIcon :size="20" :icon="`ep:${icon.icon}`" />
+          <span class="icon-name">{{ icon.name }}</span>
         </span>
       </li>
     </ul>

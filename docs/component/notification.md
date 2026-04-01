@@ -91,12 +91,11 @@ Element Plus Mobile 为 `app.config.globalProperties` 添加了全局方法 `$no
 
 ```javascript
 import { ElNotification } from 'element-plus-mobile'
-import { CloseBold } from '@element-plus/icons-vue'
 
 ElNotification({
   title: 'Title',
   message: 'This is a message',
-  closeIcon: CloseBold,
+  closeIcon: 'ep:close-bold',
 })
 ```
 

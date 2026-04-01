@@ -107,7 +107,12 @@
 import { computed, defineComponent, getCurrentInstance, ref } from 'vue'
 import { ElCheckbox, ElCheckboxGroup } from '@element-plus/components/checkbox'
 import { ElIcon } from '@element-plus/components/icon'
-import { ArrowDown, ArrowUp } from '@element-plus/icons-vue'
+import {
+  ArrowDown,
+  ArrowUp,
+  getEventCode,
+  isPropAbsent,
+} from '@element-plus/utils'
 import { EVENT_CODE } from '@element-plus/constants'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import {
@@ -115,7 +120,6 @@ import {
   useTooltipContentProps,
 } from '@element-plus/components/tooltip'
 import ElScrollbar from '@element-plus/components/scrollbar'
-import { getEventCode, isPropAbsent } from '@element-plus/utils'
 
 import type { DefaultRow } from './table/defaults'
 import type { TooltipInstance } from '@element-plus/components/tooltip'

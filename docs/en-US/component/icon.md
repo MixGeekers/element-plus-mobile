@@ -5,113 +5,94 @@ lang: en-US
 
 # Icon
 
-Element Plus provides a set of common icons.
+Element Plus Mobile uses Iconify as the default icon source.
 
 ## Icon Usage
 
-- If you want to **use directly** like the example, you need to [globally register](https://v3.vuejs.org/guide/component-registration.html#global-registration) the components before using it.
-
-- If you want to see all available SVG icons please check [@element-plus/icons-vue@1.x](https://unpkg.com/browse/@element-plus/icons-vue@1/dist/es/)[@element-plus/icons-vue@latest](https://unpkg.com/browse/@element-plus/icons-vue@latest/dist/types/components/) and the source [element-plus-icons](https://github.com/element-plus/element-plus-icons) out or [Icon Collection](#icon-collection)
+- Iconify website: https://iconify.design/
+- If you want to use icons as Vue components at build time, prefer `unplugin-icons` with an Iconify collection.
+- If you want to pass Iconify icon names directly at runtime, see the [Iconify Support](#iconify-support) section.
+- The icon collection shown on this page is based on `@iconify-json/ep`.
 
 ## Installation
 
-### Using packaging manager
+### Build-Time On-Demand Imports
 
-Choose a package manager you like.
+If you want to use icons like regular Vue components, install the matching Iconify collection and import them on demand with [unplugin-icons](https://github.com/antfu/unplugin-icons).
 
-::: code-group
-
-```shell [npm]
-$ npm install @element-plus/icons-vue
+```shell
+pnpm add -D unplugin-icons @iconify-json/ep
 ```
-
-```shell [yarn]
-$ yarn add @element-plus/icons-vue
-```
-
-```shell [pnpm]
-$ pnpm install @element-plus/icons-vue
-```
-
-:::
-
-### Register All Icons
-
-You need import all icons from `@element-plus/icons-vue` and register them globally.
 
 ```ts
-// main.ts
-
-// if you're using CDN, please remove this line.
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
-const app = createApp(App)
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
-}
+import Edit from '~icons/ep/edit'
+import Search from '~icons/ep/search'
 ```
 
-You can also refer to [this template](https://codepen.io/sxzz/pen/xxpvdrg).
+This works well when you want to write `<Edit />` or `<Search />` directly in templates without pulling in a whole icon library.
 
-### Import in Browser
+## Iconify Support{#iconify-support}
 
-Import Element Plus Icons through browser HTML tags directly, and use global variable `ElementPlusIconsVue`.
+If you want to pass icons as strings instead of importing Vue components at build time, `el-icon` and common `icon` / `prefix-icon` / `suffix-icon` / `clear-icon` / `close-icon` style props across the component library can accept Iconify icon names directly.
 
-According to different CDN providers, there are different introduction methods.
-Here we use [unpkg](https://unpkg.com) and [jsDelivr](https://jsdelivr.com) as example.
-You can also use other CDN providers.
+If you already use `unplugin-icons` to auto-import Vue components at build time, you can keep doing that. Native Iconify support mainly targets scenarios where icons need to flow through config objects, schemas, or API data as strings.
 
-::: code-group
+### Local-First Setup (Vite / uni-app Vue3)
 
-```html [unpkg]
-<script src="//unpkg.com/@element-plus/icons-vue"></script>
+If your project prefers locally installed Iconify collections, install the matching `@iconify-json/*` package and enable the official plugin in `vite.config.ts`. The plugin registers local collections before your app entry runs, so your components can keep using string names such as `ep:edit`.
+
+```shell
+pnpm add -D @iconify-json/ep
 ```
 
-```html [jsDelivr]
-<script src="//cdn.jsdelivr.net/npm/@element-plus/icons-vue"></script>
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { ElementPlusIconify } from 'element-plus-mobile/vite/iconify'
+
+export default defineConfig({
+  plugins: [vue(), ElementPlusIconify()],
+})
 ```
 
-:::
+```ts
+// vite.config.ts (uni-app Vue3 / HBuilderX 3.2+)
+import { defineConfig } from 'vite'
+import uni from '@dcloudio/vite-plugin-uni'
+import { ElementPlusIconify } from 'element-plus-mobile/vite/iconify'
 
-:::tip
+export default defineConfig({
+  plugins: [uni(), ElementPlusIconify()],
+})
+```
 
-We recommend using CDN to import Element Plus users to lock the version
-on the link address, so as not to be affected by incompatible updates when Element Plus
-is upgraded in the future. Please check [unpkg.com](https://unpkg.com) for
-the method to lock the version.
+With this setup, installed collections are resolved from local registered data first. Unknown prefixes or missing icons still fall back to the default Iconify runtime behavior. To keep bundle size under control, install only the collections you actually use.
 
-:::
-
-### Auto Import
-
-Use [unplugin-icons](https://github.com/antfu/unplugin-icons) and [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import)
-to automatically import any icon collections from iconify.
-You can refer to [this template](https://github.com/sxzz/element-plus-best-practices/blob/db2dfc983ccda5570033a0ac608a1bd9d9a7f658/vite.config.ts#L21-L58).
-
-### Native Iconify Support
-
-`el-icon` and most `icon` / `prefix-icon` / `suffix-icon` style props in the component library can now accept Iconify icon names directly.
+### Runtime String Usage
 
 ```vue
 <template>
-  <el-space>
-    <el-icon icon="mdi:home" />
-    <el-button icon="mdi:heart">Like</el-button>
-    <el-input prefix-icon="mdi:magnify" placeholder="Search" />
+  <el-space wrap>
+    <el-icon icon="ep:edit" />
+    <el-button icon="ep:search">Search</el-button>
+    <el-input prefix-icon="ep:search" placeholder="Search" />
+    <el-select suffix-icon="ep:arrow-down" placeholder="Select" />
   </el-space>
 </template>
 ```
 
-::::tip
+If you do not want to use the `Vite` plugin, you can also call `registerIconifyCollection()` or `registerIconifyIcon()` during app startup and keep passing string names such as `ep:edit`.
 
-Strings containing `:` are treated as Iconify names, such as `mdi:home` or `@custom:line:search`.
-Strings without `:` keep the previous behavior and are still resolved as globally registered component names.
+### Compatibility Rules
 
-::::
+- Strings containing `:` are treated as Iconify icon names, such as `ep:edit` or `@custom:line:search`.
+- Strings without `:` keep the previous behavior and are still resolved as globally registered component names.
+- Passing local Vue icon components still works exactly as before, and remains the most stable option when you already have component imports.
 
 ::::warning
 
-Runtime Iconify names load icon data on the client.
+Runtime Iconify icon names resolve icon data on the client by default. After enabling the local-first plugin, installed collections render from local data first and only fall back to the default runtime loader when they miss.
 If you need SSR to output SVG on first render, prefer local Vue icon components or preloaded Iconify icon data objects.
 
 ::::
@@ -139,7 +120,11 @@ so you need to use an alias in order to render the icon, if you register `Menu` 
 ```
 
 <vp-script setup>
-import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
+import Delete from '~icons/ep/delete'
+import Edit from '~icons/ep/edit'
+import Loading from '~icons/ep/loading'
+import Search from '~icons/ep/search'
+import Share from '~icons/ep/share'
 </vp-script>
 
 <ElRow>
@@ -239,7 +224,7 @@ import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
 
 :::tip
 
-**You can use SVG icon in any version** as long as you install it
+**This page displays the `@iconify-json/ep` icon set**
 
 **You can click the icon to copy it**
 
@@ -248,6 +233,8 @@ import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
 <IconList />
 
 ## API
+
+The following API belongs to `el-icon` itself. Other `icon`-like props across the component library follow the same input rules.
 
 ### Attributes
 

@@ -1,12 +1,16 @@
 import { placements } from '@popperjs/core'
-import { buildProps, definePropType, iconPropType } from '@element-plus/utils'
+import {
+  CircleClose,
+  buildProps,
+  definePropType,
+  iconPropType,
+} from '@element-plus/utils'
 import {
   useAriaProps,
   useEmptyValuesProps,
   useSizeProp,
 } from '@element-plus/hooks'
 import { useTooltipContentProps } from '@element-plus/components/tooltip'
-import { CircleClose } from '@element-plus/icons-vue'
 import { disabledTimeListsProps } from '../props/shared'
 
 import type { ExtractPropTypes, ExtractPublicPropTypes } from 'vue'

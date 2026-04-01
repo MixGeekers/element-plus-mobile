@@ -7,3 +7,9 @@ export const ElIcon: SFCWithInstall<typeof Icon> = withInstall(Icon)
 export default ElIcon
 
 export * from './src/icon'
+export * from './src/iconify-registry'
+export type {
+  IconifyCollection,
+  IconifyIcon,
+  IconifyIconName,
+} from '@element-plus/utils'

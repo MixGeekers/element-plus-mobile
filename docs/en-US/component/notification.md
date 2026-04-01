@@ -91,12 +91,11 @@ Element Plus Mobile has added a global method `$notify` for `app.config.globalPr
 
 ```javascript
 import { ElNotification } from 'element-plus-mobile'
-import { CloseBold } from '@element-plus/icons-vue'
 
 ElNotification({
   title: 'Title',
   message: 'This is a message',
-  closeIcon: CloseBold,
+  closeIcon: 'ep:close-bold',
 })
 ```
 

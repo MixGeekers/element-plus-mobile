@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress'
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
 import { usePageNav } from '../../composables/page-nav'
+import ArrowLeft from '~icons/ep/arrow-left'
+import ArrowRight from '~icons/ep/arrow-right'
 
 const { hasLinks, prev, next } = usePageNav()
 </script>

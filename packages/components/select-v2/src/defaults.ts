@@ -5,6 +5,8 @@ import {
   useSizeProp,
 } from '@element-plus/hooks'
 import {
+  ArrowDown,
+  CircleClose,
   buildProps,
   definePropType,
   iconPropType,
@@ -13,7 +15,6 @@ import {
 } from '@element-plus/utils'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { useTooltipContentProps } from '@element-plus/components/tooltip'
-import { ArrowDown, CircleClose } from '@element-plus/icons-vue'
 import { tagProps } from '../../tag'
 import { defaultProps } from './useProps'
 
@@ -31,7 +32,6 @@ import type {
   Placement,
   PopperEffect,
 } from '@element-plus/components/popper'
-
 /**
  * @description Tag tooltip configuration interface
  */

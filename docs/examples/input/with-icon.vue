@@ -45,7 +45,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Calendar, Search } from '@element-plus/icons-vue'
+import Calendar from '~icons/ep/calendar'
+import Search from '~icons/ep/search'
 
 const input1 = ref('')
 const input2 = ref('')

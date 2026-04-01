@@ -1,9 +1,8 @@
-// @ts-nocheck
 import { nextTick } from 'vue'
 import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import dayjs from 'dayjs'
-import { CircleClose } from '@element-plus/icons-vue'
+import { CircleClose } from '@element-plus/utils'
 import { rAF } from '@element-plus/test-utils/tick'
 import ConfigProvider from '@element-plus/components/config-provider'
 import {

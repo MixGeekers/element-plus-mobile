@@ -3,6 +3,7 @@
     :class="[
       ns.b(),
       ns.m(inputNumberSize),
+      ns.is('mobile', isMobile),
       ns.is('disabled', inputNumberDisabled),
       ns.is('without-controls', !controls),
       ns.is('controls-right', controlsAtRight),
@@ -85,6 +86,10 @@ import {
 import { vRepeatClick } from '@element-plus/directives'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import {
+  ArrowDown,
+  ArrowUp,
+  Minus,
+  Plus,
   debugWarn,
   getEventCode,
   getEventKey,
@@ -93,7 +98,6 @@ import {
   isUndefined,
   throwError,
 } from '@element-plus/utils'
-import { ArrowDown, ArrowUp, Minus, Plus } from '@element-plus/icons-vue'
 import {
   CHANGE_EVENT,
   EVENT_CODE,
@@ -139,7 +143,7 @@ const data = reactive<Data>({
   userInput: null,
 })
 
-const { formItem } = useFormItem()
+const { form, formItem } = useFormItem()
 
 const minDisabled = computed(
   () => isNumber(props.modelValue) && props.modelValue <= props.min
@@ -165,6 +169,7 @@ const numPrecision = computed(() => {
 const controlsAtRight = computed(() => {
   return props.controls && props.controlsPosition === 'right'
 })
+const isMobile = computed(() => props.mobile || !!form?.isMobile)
 
 const inputNumberSize = useFormSize()
 const inputNumberDisabled = useFormDisabled()

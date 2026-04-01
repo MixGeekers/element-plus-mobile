@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { useNamespace } from '@element-plus/hooks'
-import { PictureFilled } from '@element-plus/icons-vue'
+import { PictureFilled } from '@element-plus/utils'
 
 import type { SkeletonItemProps } from './skeleton-item.ts'
 

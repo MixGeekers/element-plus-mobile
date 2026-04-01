@@ -38,9 +38,13 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 
 import type { UploadFile } from 'element-plus-mobile'
+
+import Delete from '~icons/ep/delete'
+import Download from '~icons/ep/download'
+import Plus from '~icons/ep/plus'
+import ZoomIn from '~icons/ep/zoom-in'
 
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)

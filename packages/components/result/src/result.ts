@@ -1,10 +1,10 @@
-import { buildProps } from '@element-plus/utils'
 import {
   CircleCheckFilled,
   CircleCloseFilled,
   InfoFilled,
   WarningFilled,
-} from '@element-plus/icons-vue'
+  buildProps,
+} from '@element-plus/utils'
 
 import type { Component, ExtractPublicPropTypes } from 'vue'
 import type Result from './result.vue'

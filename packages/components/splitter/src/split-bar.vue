@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { pxToRem } from '@element-plus/utils'
 import {
   ArrowDown,
   ArrowLeft,
   ArrowRight,
   ArrowUp,
-} from '@element-plus/icons-vue'
+  pxToRem,
+} from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
 
 const ns = useNamespace('splitter-bar')
