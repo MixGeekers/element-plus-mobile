@@ -6,7 +6,7 @@ import { EVENT_CODE } from '@element-plus/constants'
 import { makeMountFunc } from '@element-plus/test-utils/make-mount'
 import { rAF } from '@element-plus/test-utils/tick'
 import defineGetter from '@element-plus/test-utils/define-getter'
-import { ArrowDown, CircleClose } from '@element-plus/icons-vue'
+import { ArrowDown } from '@element-plus/icons-vue'
 import { usePopperContainerId } from '@element-plus/hooks'
 import { ElForm, ElFormItem } from '@element-plus/components/form'
 import Select from '../src/select.vue'
@@ -54,7 +54,7 @@ const clickClearButton = async (wrapper) => {
   const selectVm = select.vm as any
   selectVm.states.inputHovering = true
   await nextTick()
-  const clearBtn = wrapper.findComponent(CircleClose)
+  const clearBtn = wrapper.find('.el-select__clear')
   expect(clearBtn.exists()).toBeTruthy()
   await clearBtn.trigger('click')
 }
@@ -1252,7 +1252,7 @@ describe('Select', () => {
       const input = wrapper.find('input')
       await input.trigger('blur')
       await input.trigger('focus')
-      expect(wrapper.findComponent(CircleClose).exists()).toBe(true)
+      expect(wrapper.find('.el-select__clear').exists()).toBe(true)
     })
 
     it('blur', async () => {
@@ -2845,8 +2845,9 @@ describe('Select', () => {
       }
     )
 
-    const suffixIcon = wrapper.findComponent(ArrowDown)
-    expect(suffixIcon.exists()).toBe(true)
+    const select = wrapper.findComponent(Select)
+    expect(wrapper.find('.el-select__caret').exists()).toBe(true)
+    expect((select.vm as any).iconComponent.name).toBe(ArrowDown.name)
   })
 
   it('hoveringIndex should stay on the most recently selected option when using multiple', async () => {

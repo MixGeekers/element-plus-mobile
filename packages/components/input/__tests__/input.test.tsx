@@ -1,4 +1,4 @@
-import { nextTick, ref } from 'vue'
+import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, test, vi } from 'vitest'
 import defineGetter from '@element-plus/test-utils/define-getter'
@@ -8,6 +8,26 @@ import Input from '../src/input.vue'
 import type { CSSProperties } from 'vue'
 import type { InputAutoSize, InputProps } from '../src/input'
 import type { InputInstance } from '../src/instance'
+
+vi.mock('@iconify/vue', () => ({
+  Icon: defineComponent({
+    name: 'IconifyStub',
+    props: {
+      icon: {
+        type: [String, Object],
+        required: true,
+      },
+    },
+    setup(props, { attrs }) {
+      return () => (
+        <svg
+          {...attrs}
+          data-iconify={typeof props.icon === 'string' ? props.icon : 'object'}
+        />
+      )
+    },
+  }),
+}))
 
 describe('Input.vue', () => {
   afterEach(() => {
@@ -344,6 +364,12 @@ describe('Input.vue', () => {
     const wrapper = mount(() => <Input prefix-icon="time" />)
     const icon = wrapper.find('.el-input__icon')
     expect(icon.exists()).toBe(true)
+  })
+
+  test('iconify prefixIcon', () => {
+    const wrapper = mount(() => <Input prefix-icon="mdi:magnify" />)
+
+    expect(wrapper.find('[data-iconify="mdi:magnify"]').exists()).toBe(true)
   })
 
   test('size', () => {

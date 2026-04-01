@@ -267,7 +267,7 @@
               v-show="!showClearBtn"
               :class="[nsSelect.e('caret'), nsInput.e('icon'), iconReverse]"
             >
-              <component :is="iconComponent" />
+              <ElIconContent :icon="iconComponent" />
             </el-icon>
             <el-icon
               v-if="showClearBtn && clearIcon"
@@ -278,7 +278,7 @@
               ]"
               @click.prevent.stop="handleClear"
             >
-              <component :is="clearIcon" />
+              <ElIconContent :icon="clearIcon" />
             </el-icon>
             <el-icon
               v-if="validateState && validateIcon && needStatusIcon"
@@ -288,7 +288,7 @@
                 nsInput.is('loading', validateState === 'validating'),
               ]"
             >
-              <component :is="validateIcon" />
+              <ElIconContent :icon="validateIcon" />
             </el-icon>
           </div>
         </div>
@@ -360,6 +360,7 @@ import { ClickOutside } from '@element-plus/directives'
 import ElTooltip from '@element-plus/components/tooltip'
 import ElTag from '@element-plus/components/tag'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import ElButton from '@element-plus/components/button'
 import { useCalcInputWidth, useId } from '@element-plus/hooks'
 import ElSelectMenu from './select-dropdown'
@@ -375,6 +376,7 @@ export default defineComponent({
     ElTag,
     ElTooltip,
     ElIcon,
+    ElIconContent,
     ElButton,
   },
   directives: { ClickOutside },

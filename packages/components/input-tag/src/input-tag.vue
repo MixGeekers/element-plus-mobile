@@ -117,7 +117,7 @@
         @mousedown.prevent="NOOP"
         @click="handleClear"
       >
-        <component :is="clearIcon" />
+        <el-icon-content :icon="clearIcon" />
       </el-icon>
       <el-icon
         v-if="validateState && validateIcon && needStatusIcon"
@@ -127,7 +127,7 @@
           nsInput.is('loading', validateState === 'validating'),
         ]"
       >
-        <component :is="validateIcon" />
+        <el-icon-content :icon="validateIcon" />
       </el-icon>
     </div>
   </div>
@@ -136,6 +136,7 @@
 <script lang="ts" setup>
 import { computed, markRaw, useSlots } from 'vue'
 import { useAttrs, useCalcInputWidth } from '@element-plus/hooks'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { NOOP, ValidateComponentsMap } from '@element-plus/utils'
 import { CircleClose } from '@element-plus/icons-vue'
 import ElTooltip from '@element-plus/components/tooltip'

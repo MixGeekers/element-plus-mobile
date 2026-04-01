@@ -1,5 +1,5 @@
 import { placements } from '@popperjs/core'
-import { buildProps, definePropType } from '@element-plus/utils'
+import { buildProps, definePropType, iconPropType } from '@element-plus/utils'
 import {
   useAriaProps,
   useEmptyValuesProps,
@@ -9,7 +9,7 @@ import { useTooltipContentProps } from '@element-plus/components/tooltip'
 import { CircleClose } from '@element-plus/icons-vue'
 import { disabledTimeListsProps } from '../props/shared'
 
-import type { Component, ExtractPropTypes, ExtractPublicPropTypes } from 'vue'
+import type { ExtractPropTypes, ExtractPublicPropTypes } from 'vue'
 import type { Options } from '@popperjs/core'
 import type { Dayjs } from 'dayjs'
 import type { Placement } from '@element-plus/components/popper'
@@ -95,7 +95,7 @@ export const timePickerDefaultProps = buildProps({
    * @description Custom clear icon component
    */
   clearIcon: {
-    type: definePropType<string | Component>([String, Object]),
+    type: iconPropType,
     default: CircleClose,
   },
   /**
@@ -116,7 +116,7 @@ export const timePickerDefaultProps = buildProps({
    * @description Custom prefix icon component
    */
   prefixIcon: {
-    type: definePropType<string | Component>([String, Object]),
+    type: iconPropType,
     default: '',
   },
   /**

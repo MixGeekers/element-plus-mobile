@@ -88,6 +88,34 @@ Use [unplugin-icons](https://github.com/antfu/unplugin-icons) and [unplugin-auto
 to automatically import any icon collections from iconify.
 You can refer to [this template](https://github.com/sxzz/element-plus-best-practices/blob/db2dfc983ccda5570033a0ac608a1bd9d9a7f658/vite.config.ts#L21-L58).
 
+### Native Iconify Support
+
+`el-icon` and most `icon` / `prefix-icon` / `suffix-icon` style props in the component library can now accept Iconify icon names directly.
+
+```vue
+<template>
+  <el-space>
+    <el-icon icon="mdi:home" />
+    <el-button icon="mdi:heart">Like</el-button>
+    <el-input prefix-icon="mdi:magnify" placeholder="Search" />
+  </el-space>
+</template>
+```
+
+::::tip
+
+Strings containing `:` are treated as Iconify names, such as `mdi:home` or `@custom:line:search`.
+Strings without `:` keep the previous behavior and are still resolved as globally registered component names.
+
+::::
+
+::::warning
+
+Runtime Iconify names load icon data on the client.
+If you need SSR to output SVG on first render, prefer local Vue icon components or preloaded Iconify icon data objects.
+
+::::
+
 ## Simple Usage
 
 :::warning
@@ -223,10 +251,11 @@ import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
 
 ### Attributes
 
-| Name  | Description                | Type                  | Default                |
-| ----- | -------------------------- | --------------------- | ---------------------- |
-| color | SVG tag's fill attribute   | ^[string]             | inherit from color     |
-| size  | SVG icon size, size x size | ^[number] / ^[string] | inherit from font size |
+| Name  | Description                                                                                         | Type                                 | Default                |
+| ----- | --------------------------------------------------------------------------------------------------- | ------------------------------------ | ---------------------- |
+| icon  | Icon content. Supports Vue components, global component names, and Iconify names such as `mdi:home` | ^[string] / ^[Component] / ^[object] | —                      |
+| color | SVG tag's fill attribute                                                                            | ^[string]                            | inherit from color     |
+| size  | SVG icon size, size x size                                                                          | ^[number] / ^[string]                | inherit from font size |
 
 ### Slots
 

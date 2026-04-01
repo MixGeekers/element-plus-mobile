@@ -15,7 +15,7 @@
       @click="onClick"
     >
       <el-icon v-if="iconComponent" :class="[ns.e('icon'), typeClass]">
-        <component :is="iconComponent" />
+        <el-icon-content :icon="iconComponent" />
       </el-icon>
       <div :class="ns.e('group')">
         <h2 :class="ns.e('title')" v-text="title" />
@@ -31,7 +31,7 @@
           </slot>
         </div>
         <el-icon v-if="showClose" :class="ns.e('closeBtn')" @click.stop="close">
-          <component :is="closeIcon" />
+          <el-icon-content :icon="closeIcon" />
         </el-icon>
       </div>
     </div>
@@ -44,6 +44,7 @@ import { useEventListener, useTimeoutFn } from '@vueuse/core'
 import { TypeComponentsMap, getEventCode } from '@element-plus/utils'
 import { EVENT_CODE } from '@element-plus/constants'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useGlobalComponentSettings } from '@element-plus/components/config-provider'
 import { notificationEmits } from './notification'
 import { Close } from '@element-plus/icons-vue'

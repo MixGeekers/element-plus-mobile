@@ -52,7 +52,7 @@
               :class="[nsInput.e('icon'), 'icon-circle-close']"
               @click.stop="handleClear"
             >
-              <component :is="clearIcon" />
+              <el-icon-content :icon="clearIcon" />
             </el-icon>
             <el-icon
               v-else
@@ -241,6 +241,7 @@ import ElTooltip from '@element-plus/components/tooltip'
 import ElScrollbar from '@element-plus/components/scrollbar'
 import ElTag from '@element-plus/components/tag'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import {
   useFormDisabled,
   useFormItem,

@@ -20,7 +20,7 @@
   >
     <el-icon v-if="icon || $slots.icon">
       <slot name="icon">
-        <component :is="icon" />
+        <ElIconContent :icon="icon" />
       </slot>
     </el-icon>
     <slot />
@@ -35,6 +35,7 @@ import {
 } from '@element-plus/components/roving-focus-group'
 import { COLLECTION_ITEM_SIGN } from '@element-plus/components/collection'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useNamespace } from '@element-plus/hooks'
 import {
   composeEventHandlers,
@@ -49,6 +50,7 @@ export default defineComponent({
   name: 'DropdownItemImpl',
   components: {
     ElIcon,
+    ElIconContent,
   },
   props: dropdownItemProps,
   emits: ['pointermove', 'pointerleave', 'click', 'clickimpl'],

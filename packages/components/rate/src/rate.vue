@@ -33,17 +33,17 @@
           ns.is('focus-visible', item === Math.ceil(currentValue || 1)),
         ]"
       >
-        <component
-          :is="activeComponent"
+        <el-icon-content
           v-show="!showDecimalIcon(item) && item <= currentValue"
+          :icon="activeComponent"
         />
-        <component
-          :is="voidComponent"
+        <el-icon-content
           v-show="!showDecimalIcon(item) && item > currentValue"
+          :icon="voidComponent"
         />
-        <component
-          :is="voidComponent"
+        <el-icon-content
           v-show="showDecimalIcon(item)"
+          :icon="voidComponent"
           :class="[ns.em('decimal', 'box')]"
         />
         <el-icon
@@ -51,7 +51,7 @@
           :style="decimalStyle"
           :class="[ns.e('icon'), ns.e('decimal')]"
         >
-          <component :is="decimalIconComponent" />
+          <el-icon-content :icon="decimalIconComponent" />
         </el-icon>
       </el-icon>
     </span>
@@ -81,11 +81,13 @@ import {
   useFormSize,
 } from '@element-plus/components/form'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { Star, StarFilled } from '@element-plus/icons-vue'
 import { useNamespace } from '@element-plus/hooks'
 import { rateEmits } from './rate'
 
 import type { CSSProperties, Component } from 'vue'
+import type { IconPropType } from '@element-plus/utils'
 import type { IconInstance } from '@element-plus/components/icon'
 import type { RateProps } from './rate'
 
@@ -206,9 +208,7 @@ const decimalStyle = computed(() => {
 })
 const componentMap = computed(() => {
   let icons = isArray(props.icons) ? [...props.icons] : { ...props.icons }
-  icons = markRaw(icons) as
-    | Array<string | Component>
-    | Record<number, string | Component>
+  icons = markRaw(icons) as Array<IconPropType> | Record<number, IconPropType>
   return isArray(icons)
     ? {
         [props.lowThreshold]: icons[0],

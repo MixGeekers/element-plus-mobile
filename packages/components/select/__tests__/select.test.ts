@@ -2,11 +2,11 @@
 /**
  * @vitest-environment happy-dom
  */
-import { defineComponent, markRaw, nextTick, ref } from 'vue'
+import { defineComponent, h, markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, test, vi } from 'vitest'
 import { BORDER_HORIZONTAL_WIDTH, EVENT_CODE } from '@element-plus/constants'
-import { ArrowDown, CaretTop, CircleClose } from '@element-plus/icons-vue'
+import { ArrowDown, CaretTop } from '@element-plus/icons-vue'
 import { usePopperContainerId } from '@element-plus/hooks'
 import { hasClass } from '@element-plus/utils'
 import defineGetter from '@element-plus/test-utils/define-getter'
@@ -34,6 +34,26 @@ vi.mock('@vueuse/core', async () => {
     }),
   }
 })
+
+vi.mock('@iconify/vue', () => ({
+  Icon: defineComponent({
+    name: 'IconifyStub',
+    props: {
+      icon: {
+        type: [String, Object],
+        required: true,
+      },
+    },
+    setup(props, { attrs }) {
+      return () =>
+        h('svg', {
+          ...attrs,
+          'data-iconify':
+            typeof props.icon === 'string' ? props.icon : 'object',
+        })
+    },
+  }),
+}))
 
 interface SelectProps {
   filterMethod?: any
@@ -1371,7 +1391,7 @@ describe('Select', () => {
     await nextTick()
     selectVm.states.inputHovering = true
     await selectVm.$nextTick()
-    const iconClear = wrapper.findComponent(CircleClose)
+    const iconClear = wrapper.find('.el-select__clear')
     expect(iconClear.exists()).toBe(true)
     await iconClear.trigger('click')
     expect(vm.value).toBe(undefined)
@@ -1379,11 +1399,18 @@ describe('Select', () => {
 
   test('suffix icon', async () => {
     wrapper = _mount(`<el-select></el-select>`)
-    let suffixIcon = wrapper.findComponent(ArrowDown)
-    expect(suffixIcon.exists()).toBe(true)
+    const select = wrapper.findComponent({ name: 'ElSelect' })
+    expect(wrapper.find('.el-select__caret').exists()).toBe(true)
+    expect((select.vm as any).iconComponent).toBe(ArrowDown)
     await wrapper.setProps({ suffixIcon: markRaw(CaretTop) })
-    suffixIcon = wrapper.findComponent(CaretTop)
-    expect(suffixIcon.exists()).toBe(true)
+    expect((select.vm as any).iconComponent).toBe(CaretTop)
+  })
+
+  test('iconify suffix icon', async () => {
+    wrapper = _mount(`<el-select suffix-icon="mdi:chevron-down"></el-select>`)
+    const select = wrapper.findComponent({ name: 'ElSelect' })
+
+    expect((select.vm as any).iconComponent).toBe('mdi:chevron-down')
   })
 
   test('test remote show suffix', async () => {
@@ -1394,8 +1421,9 @@ describe('Select', () => {
       remoteShowSuffix: true,
     })
 
-    const suffixIcon = wrapper.findComponent(ArrowDown)
-    expect(suffixIcon.exists()).toBe(true)
+    const select = wrapper.findComponent({ name: 'ElSelect' })
+    expect(wrapper.find('.el-select__caret').exists()).toBe(true)
+    expect((select.vm as any).iconComponent).toBe(ArrowDown)
   })
 
   test('fitInputWidth', async () => {
@@ -1954,7 +1982,7 @@ describe('Select', () => {
     const input = wrapper.find('input')
     await input.trigger('blur')
     await input.trigger('focus')
-    expect(wrapper.findComponent(CircleClose).exists()).toBe(true)
+    expect(wrapper.find('.el-select__clear').exists()).toBe(true)
   })
 
   test('event:blur', async () => {
@@ -2007,7 +2035,7 @@ describe('Select', () => {
     selectVm.states.inputHovering = true
     await selectVm.$nextTick()
 
-    const iconClear = wrapper.findComponent(CircleClose)
+    const iconClear = wrapper.find('.el-select__clear')
     expect(iconClear.exists()).toBe(true)
     await iconClear.trigger('click')
     expect(vm.value).toBe(undefined)
@@ -2689,7 +2717,7 @@ describe('Select', () => {
     await nextTick()
     selectVm.states.inputHovering = true
     await selectVm.$nextTick()
-    const iconClear = wrapper.findComponent(CircleClose)
+    const iconClear = wrapper.find('.el-select__clear')
     expect(wrapper.findAll('.el-tag').length).toBe(3)
     await iconClear.trigger('click')
     expect(wrapper.findAll('.el-tag').length).toBe(2)
@@ -3376,7 +3404,7 @@ describe('Select', () => {
     const selectVm = wrapper.findComponent({ name: 'ElSelect' }).vm
     selectVm.states.inputHovering = true
     await nextTick()
-    const iconClear = wrapper.findComponent(CircleClose)
+    const iconClear = wrapper.find('.el-select__clear')
     await iconClear.trigger('click')
     expect(wrapper.findAll('.el-tag').length).toBe(1)
     const selectInput = wrapper.find('.el-select__input')

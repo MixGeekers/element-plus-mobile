@@ -16,6 +16,7 @@
     "@element-plus/hooks": "workspace:^",
     "@element-plus/icons-vue": "^2.3.2",
     "@element-plus/utils": "workspace:^",
+    "@iconify/vue": "^5.0.0",
     "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.7",
     "@vueuse/core": "12.0.0",
     "lodash-unified": "^1.0.3"

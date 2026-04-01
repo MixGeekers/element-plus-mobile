@@ -255,7 +255,7 @@
               v-if="iconComponent && !showClearBtn"
               :class="[nsSelect.e('caret'), nsSelect.e('icon'), iconReverse]"
             >
-              <component :is="iconComponent" />
+              <ElIconContent :icon="iconComponent" />
             </el-icon>
             <el-icon
               v-if="showClearBtn && clearIcon"
@@ -266,7 +266,7 @@
               ]"
               @click="handleClearClick"
             >
-              <component :is="clearIcon" />
+              <ElIconContent :icon="clearIcon" />
             </el-icon>
             <el-icon
               v-if="validateState && validateIcon && needStatusIcon"
@@ -276,7 +276,7 @@
                 nsInput.is('loading', validateState === 'validating'),
               ]"
             >
-              <component :is="validateIcon" />
+              <ElIconContent :icon="validateIcon" />
             </el-icon>
           </div>
         </div>
@@ -385,6 +385,7 @@ import ElTooltip from '@element-plus/components/tooltip'
 import ElScrollbar from '@element-plus/components/scrollbar'
 import ElTag from '@element-plus/components/tag'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import ElButton from '@element-plus/components/button'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { flattedChildren, isArray, isObject } from '@element-plus/utils'
@@ -460,6 +461,7 @@ export default defineComponent({
     ElScrollbar,
     ElTooltip,
     ElIcon,
+    ElIconContent,
     ElButton,
   },
   directives: { ClickOutside },

@@ -10,7 +10,7 @@
         :class="[ns.e('icon'), ns.is('big', hasDesc)]"
       >
         <slot name="icon">
-          <component :is="iconComponent" />
+          <el-icon-content :icon="iconComponent" />
         </slot>
       </el-icon>
 
@@ -46,6 +46,7 @@
 <script lang="ts" setup>
 import { computed, ref, useSlots } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import {
   TypeComponents,
   TypeComponentsMap,

@@ -27,7 +27,7 @@
           >
             <slot name="icon">
               <el-icon v-if="icon">
-                <component :is="icon" />
+                <el-icon-content :icon="icon" />
               </el-icon>
             </slot>
           </div>
@@ -54,6 +54,7 @@
 
 <script lang="ts" setup>
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { ElDivider } from '@element-plus/components/divider'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import { Back } from '@element-plus/icons-vue'

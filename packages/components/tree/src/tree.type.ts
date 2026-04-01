@@ -1,5 +1,4 @@
 import type {
-  Component,
   ComponentInternalInstance,
   Ref,
   SetupContext,
@@ -9,6 +8,7 @@ import type {
 import type Node from './model/node'
 import type TreeStore from './model/tree-store'
 import type { treeEmits } from './tree'
+import type { IconPropType } from '@element-plus/utils'
 
 export interface RootTreeType {
   ctx: SetupContext<typeof treeEmits>
@@ -124,7 +124,7 @@ export interface TreeComponentProps {
   filterNodeMethod: FilterNodeMethodFunction
   accordion: boolean
   indent: number
-  icon: string | Component
+  icon: IconPropType
 }
 
 export type NodeDropType = 'before' | 'after' | 'inner' | 'none'

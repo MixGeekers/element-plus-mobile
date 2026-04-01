@@ -7,7 +7,8 @@ import { EVENT_CODE } from '@element-plus/constants'
 import Message from '../src/message.vue'
 import { messageTypes } from '../src/message'
 
-import type { CSSProperties, Component } from 'vue'
+import type { CSSProperties } from 'vue'
+import type { IconPropType } from '@element-plus/utils'
 
 const AXIOM = 'Rem is the best girl'
 
@@ -15,7 +16,7 @@ const onClose = vi.fn()
 
 const _mount = makeMount(
   Message as typeof Message & {
-    new (): { iconComponent: string | Component; customStyle: CSSProperties }
+    new (): { iconComponent: IconPropType; customStyle: CSSProperties }
   },
   {
     props: {

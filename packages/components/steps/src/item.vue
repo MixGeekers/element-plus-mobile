@@ -11,7 +11,7 @@
       >
         <slot name="icon">
           <el-icon v-if="icon" :class="ns.e('icon-inner')">
-            <component :is="icon" />
+            <el-icon-content :icon="icon" />
           </el-icon>
           <el-icon
             v-else-if="currentStatus === 'success'"
@@ -56,6 +56,7 @@ import {
 } from 'vue'
 import { useNamespace } from '@element-plus/hooks'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { Check, Close } from '@element-plus/icons-vue'
 import { isNumber } from '@element-plus/utils'
 import { STEPS_INJECTION_KEY } from './tokens'

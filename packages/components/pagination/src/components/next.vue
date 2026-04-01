@@ -9,7 +9,7 @@
   >
     <span v-if="nextText">{{ nextText }}</span>
     <el-icon v-else>
-      <component :is="nextIcon" />
+      <el-icon-content :icon="nextIcon" />
     </el-icon>
   </button>
 </template>
@@ -18,6 +18,7 @@
 import { computed } from 'vue'
 import { useLocale } from '@element-plus/hooks'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { paginationNextProps } from './next'
 
 defineOptions({

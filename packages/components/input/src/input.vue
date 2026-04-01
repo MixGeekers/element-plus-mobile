@@ -24,7 +24,7 @@
           <span :class="nsInput.e('prefix-inner')">
             <slot name="prefix" />
             <el-icon v-if="prefixIcon" :class="nsInput.e('icon')">
-              <component :is="prefixIcon" />
+              <el-icon-content :icon="prefixIcon" />
             </el-icon>
           </span>
         </span>
@@ -65,7 +65,7 @@
             >
               <slot name="suffix" />
               <el-icon v-if="suffixIcon" :class="nsInput.e('icon')">
-                <component :is="suffixIcon" />
+                <el-icon-content :icon="suffixIcon" />
               </el-icon>
             </template>
             <el-icon
@@ -74,7 +74,7 @@
               @mousedown.prevent="NOOP"
               @click="clear"
             >
-              <component :is="clearIcon" />
+              <el-icon-content :icon="clearIcon" />
             </el-icon>
             <el-icon
               v-if="showPwdVisible"
@@ -84,7 +84,7 @@
               @mouseup.prevent="NOOP"
             >
               <slot name="password-icon" :visible="passwordVisible">
-                <component :is="passwordIcon" />
+                <el-icon-content :icon="passwordIcon" />
               </slot>
             </el-icon>
             <span
@@ -106,7 +106,7 @@
                 nsInput.is('loading', validateState === 'validating'),
               ]"
             >
-              <component :is="validateIcon" />
+              <el-icon-content :icon="validateIcon" />
             </el-icon>
           </span>
         </span>
@@ -159,7 +159,7 @@
         @mousedown.prevent="NOOP"
         @click="clear"
       >
-        <component :is="clearIcon" />
+        <el-icon-content :icon="clearIcon" />
       </el-icon>
       <span
         v-if="isWordLimitVisible"
@@ -190,6 +190,7 @@ import {
 import { useResizeObserver } from '@vueuse/core'
 import { isNil } from 'lodash-unified'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { Hide, View } from '@element-plus/icons-vue'
 import {
   useFormDisabled,

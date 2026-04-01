@@ -2,9 +2,9 @@
   <div :class="ns.b()">
     <div :class="ns.e('icon')">
       <slot name="icon">
-        <component
-          :is="resultIcon.component"
+        <el-icon-content
           v-if="resultIcon.component"
+          :icon="resultIcon.component"
           :class="resultIcon.class"
         />
       </slot>
@@ -27,6 +27,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useNamespace } from '@element-plus/hooks'
 import { IconComponentMap, IconMap } from './result'
 

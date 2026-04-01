@@ -1,6 +1,7 @@
 <template>
   <i :class="ns.b()" :style="style" v-bind="$attrs">
-    <slot />
+    <slot v-if="$slots.default" />
+    <el-icon-content v-else-if="icon" :icon="icon" />
   </i>
 </template>
 
@@ -8,6 +9,7 @@
 import { computed } from 'vue'
 import { pxToRem } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
+import ElIconContent from './icon-content.vue'
 
 import type { CSSProperties } from 'vue'
 import type { IconProps } from './icon'

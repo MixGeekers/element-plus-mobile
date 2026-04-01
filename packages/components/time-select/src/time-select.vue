@@ -30,7 +30,7 @@
     />
     <template #prefix>
       <el-icon v-if="prefixIcon" :class="nsInput.e('prefix-icon')">
-        <component :is="prefixIcon" />
+        <el-icon-content :icon="prefixIcon" />
       </el-icon>
     </template>
   </el-select>
@@ -43,6 +43,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat.js'
 import ElSelect from '@element-plus/components/select'
 import { useFormDisabled } from '@element-plus/components/form'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { CircleClose, Clock } from '@element-plus/icons-vue'

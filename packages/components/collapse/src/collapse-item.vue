@@ -19,7 +19,7 @@
       </span>
       <slot name="icon" :is-active="isActive">
         <el-icon :class="arrowKls">
-          <component :is="icon" />
+          <el-icon-content :icon="icon" />
         </el-icon>
       </slot>
     </div>
@@ -45,6 +45,7 @@
 import { markRaw } from 'vue'
 import ElCollapseTransition from '@element-plus/components/collapse-transition'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { ArrowRight } from '@element-plus/icons-vue'
 import { useCollapseItem, useCollapseItemDOM } from './use-collapse-item'
 

@@ -24,13 +24,8 @@ import {
   keysOf,
 } from '@element-plus/utils'
 
-import type {
-  CSSProperties,
-  Component,
-  InjectionKey,
-  Ref,
-  SetupContext,
-} from 'vue'
+import type { IconPropType } from '@element-plus/utils'
+import type { CSSProperties, InjectionKey, Ref, SetupContext } from 'vue'
 import type { UseNamespaceReturn } from '@element-plus/hooks'
 import type { PosInfo, TourGap, TourMask } from './types'
 import type {
@@ -150,7 +145,7 @@ export interface TourContext {
   current: Ref<number>
   total: Ref<number>
   showClose: Ref<boolean>
-  closeIcon: Ref<string | Component | undefined>
+  closeIcon: Ref<IconPropType | undefined>
   mergedType: Ref<'default' | 'primary' | undefined>
   ns: UseNamespaceReturn
   slots: SetupContext['slots']

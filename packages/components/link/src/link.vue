@@ -5,7 +5,7 @@
     :target="disabled || !href ? undefined : target"
     @click="handleClick"
   >
-    <el-icon v-if="icon"><component :is="icon" /></el-icon>
+    <el-icon v-if="icon"><el-icon-content :icon="icon" /></el-icon>
     <span v-if="$slots.default" :class="ns.e('inner')">
       <slot />
     </span>
@@ -17,6 +17,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useGlobalConfig } from '@element-plus/components/config-provider'
 import { useDeprecated, useNamespace } from '@element-plus/hooks'
 import { isBoolean } from '@element-plus/utils'

@@ -23,7 +23,7 @@
             :class="ns.e('icon')"
             :style="{ color: iconColor }"
           >
-            <component :is="icon" />
+            <el-icon-content :icon="icon" />
           </el-icon>
           {{ title }}
         </div>
@@ -59,6 +59,7 @@
 import { computed, ref, unref } from 'vue'
 import ElButton from '@element-plus/components/button'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import ElTooltip from '@element-plus/components/tooltip'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import { addUnit } from '@element-plus/utils'

@@ -30,7 +30,7 @@
         :class="ns.e('badge')"
       />
       <el-icon v-if="iconComponent" :class="[ns.e('icon'), typeClass]">
-        <component :is="iconComponent" />
+        <el-icon-content :icon="iconComponent" />
       </el-icon>
       <slot>
         <p v-if="!dangerouslyUseHTMLString" :class="ns.e('content')">
@@ -58,6 +58,7 @@ import { EVENT_CODE } from '@element-plus/constants'
 import ElBadge from '@element-plus/components/badge'
 import { useGlobalComponentSettings } from '@element-plus/components/config-provider'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import {
   MESSAGE_DEFAULT_PLACEMENT,
   messageDefaults,

@@ -1,4 +1,4 @@
-import { nextTick } from 'vue'
+import { defineComponent, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, test, vi } from 'vitest'
 import { TypeComponentsMap } from '@element-plus/utils'
@@ -10,6 +10,26 @@ import Notification from '../src/notification.vue'
 import type { VNode } from 'vue'
 import type { MockInstance } from 'vitest'
 import type { NotificationProps } from '../src/notification'
+
+vi.mock('@iconify/vue', () => ({
+  Icon: defineComponent({
+    name: 'IconifyStub',
+    props: {
+      icon: {
+        type: [String, Object],
+        required: true,
+      },
+    },
+    setup(props, { attrs }) {
+      return () => (
+        <svg
+          {...attrs}
+          data-iconify={typeof props.icon === 'string' ? props.icon : 'object'}
+        />
+      )
+    },
+  }),
+}))
 
 const AXIOM = 'Rem is the best girl'
 
@@ -111,6 +131,16 @@ describe('Notification.vue', () => {
       })
 
       expect(wrapper.findComponent(CloseBold).exists()).toBe(true)
+    })
+
+    test('should render iconify close icon', () => {
+      const wrapper = _mount({
+        props: {
+          closeIcon: 'mdi:close',
+        },
+      })
+
+      expect(wrapper.find('[data-iconify="mdi:close"]').exists()).toBe(true)
     })
   })
 

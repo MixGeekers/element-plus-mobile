@@ -10,11 +10,11 @@
     <template v-if="loading">
       <slot v-if="$slots.loading" name="loading" />
       <el-icon v-else :class="ns.is('loading')">
-        <component :is="loadingIcon" />
+        <el-icon-content :icon="loadingIcon" />
       </el-icon>
     </template>
     <el-icon v-else-if="icon || $slots.icon">
-      <component :is="icon" v-if="icon" />
+      <el-icon-content v-if="icon" :icon="icon" />
       <slot v-else name="icon" />
     </el-icon>
     <span
@@ -29,6 +29,7 @@
 <script lang="ts" setup>
 import { computed, markRaw } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { Loading } from '@element-plus/icons-vue'
 import { useNamespace } from '@element-plus/hooks'
 import { useButton } from './use-button'

@@ -40,7 +40,7 @@
         ]"
         @click.stop="handleExpandIconClick"
       >
-        <component :is="icon" />
+        <el-icon-content :icon="icon" />
       </el-icon>
       <el-checkbox
         v-if="showCheckbox"
@@ -58,6 +58,7 @@
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { CaretRight } from '@element-plus/icons-vue'
 import ElCheckbox from '@element-plus/components/checkbox'
 import { useNamespace } from '@element-plus/hooks'

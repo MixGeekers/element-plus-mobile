@@ -1,9 +1,9 @@
 import { buttonTypes } from '@element-plus/components/button'
 
-import type { AppContext, Component, VNode } from 'vue'
+import type { AppContext, VNode } from 'vue'
 import type { ComponentSize } from '@element-plus/constants'
 import type { InputType } from '@element-plus/components/input/src/input'
-import type { CSSProperties } from '@element-plus/utils'
+import type { CSSProperties, IconPropType } from '@element-plus/utils'
 
 type MessageType = '' | 'primary' | 'success' | 'warning' | 'info' | 'error'
 type MessageBoxButtonType = (typeof buttonTypes)[number]
@@ -25,8 +25,8 @@ export declare interface MessageBoxState {
   title: string | undefined
   message: string
   type: MessageType
-  icon: string | Component
-  closeIcon: string | Component
+  icon: IconPropType
+  closeIcon: IconPropType
   customClass: string
   customStyle: CSSProperties
   showInput: boolean
@@ -46,8 +46,8 @@ export declare interface MessageBoxState {
   cancelButtonType: MessageBoxButtonType
   confirmButtonLoading: boolean
   cancelButtonLoading: boolean
-  confirmButtonLoadingIcon: string | Component
-  cancelButtonLoadingIcon: string | Component
+  confirmButtonLoadingIcon: IconPropType
+  cancelButtonLoadingIcon: IconPropType
   confirmButtonClass: string
   confirmButtonDisabled: boolean
   cancelButtonClass: string
@@ -113,10 +113,10 @@ export interface ElMessageBoxOptions {
   confirmButtonType?: MessageBoxButtonType
 
   /** Loading Icon content of cancel button */
-  cancelButtonLoadingIcon?: string | Component
+  cancelButtonLoadingIcon?: IconPropType
 
   /** Loading Icon content of confirm button */
-  confirmButtonLoadingIcon?: string | Component
+  confirmButtonLoadingIcon?: IconPropType
 
   /** Custom class name of cancel button */
   cancelButtonClass?: string
@@ -146,10 +146,10 @@ export interface ElMessageBoxOptions {
   boxType?: MessageBoxType
 
   /** Custom icon component */
-  icon?: string | Component
+  icon?: IconPropType
 
   /** Custom close icon component */
-  closeIcon?: string | Component
+  closeIcon?: IconPropType
 
   /** Whether message is treated as HTML string */
   dangerouslyUseHTMLString?: boolean

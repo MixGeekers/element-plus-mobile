@@ -17,7 +17,7 @@
         @click="$emit('close')"
       >
         <el-icon :class="ns.e('close')">
-          <component :is="closeIcon || Close" />
+          <el-icon-content :icon="closeIcon || Close" />
         </el-icon>
       </button>
     </header>
@@ -33,6 +33,7 @@
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { FOCUS_TRAP_INJECTION_KEY } from '@element-plus/components/focus-trap'
 import { useDraggable, useLocale } from '@element-plus/hooks'
 import { CloseComponents, composeRefs } from '@element-plus/utils'

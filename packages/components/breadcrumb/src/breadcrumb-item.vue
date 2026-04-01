@@ -8,7 +8,7 @@
       <slot />
     </span>
     <el-icon v-if="breadcrumbContext?.separatorIcon" :class="ns.e('separator')">
-      <component :is="breadcrumbContext.separatorIcon" />
+      <el-icon-content :icon="breadcrumbContext.separatorIcon" />
     </el-icon>
     <span v-else :class="ns.e('separator')" role="presentation">
       {{ breadcrumbContext?.separator }}
@@ -19,6 +19,7 @@
 <script lang="ts" setup>
 import { getCurrentInstance, inject } from 'vue'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useNamespace } from '@element-plus/hooks'
 import { breadcrumbKey } from './constants'
 

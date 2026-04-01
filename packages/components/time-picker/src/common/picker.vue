@@ -78,7 +78,7 @@
             @mousedown.prevent="onMouseDownInput"
             @touchstart.passive="onTouchStartInput"
           >
-            <component :is="triggerIcon" />
+            <el-icon-content :icon="triggerIcon" />
           </el-icon>
         </template>
         <template #suffix>
@@ -88,7 +88,7 @@
             @mousedown.prevent="NOOP"
             @click="onClear"
           >
-            <component :is="clearIcon" />
+            <el-icon-content :icon="clearIcon" />
           </el-icon>
         </template>
       </el-input>
@@ -132,7 +132,7 @@
             v-if="triggerIcon"
             :class="[nsInput.e('icon'), nsRange.e('icon')]"
           >
-            <component :is="triggerIcon" />
+            <el-icon-content :icon="triggerIcon" />
           </el-icon>
         </template>
         <template #range-separator>
@@ -147,7 +147,7 @@
             @mousedown.prevent="NOOP"
             @click="onClear"
           >
-            <component :is="clearIcon" />
+            <el-icon-content :icon="clearIcon" />
           </el-icon>
         </template>
       </picker-range-trigger>
@@ -204,6 +204,7 @@ import {
 } from '@element-plus/components/form'
 import ElInput from '@element-plus/components/input'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import ElTooltip from '@element-plus/components/tooltip'
 import { NOOP, debugWarn, getEventCode, isArray } from '@element-plus/utils'
 import {

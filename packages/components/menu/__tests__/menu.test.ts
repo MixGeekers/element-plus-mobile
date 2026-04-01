@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { nextTick } from 'vue'
+import { defineComponent, h, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, test, vi } from 'vitest'
 import { rAF } from '@element-plus/test-utils/tick'
@@ -8,6 +8,26 @@ import Menu from '../src/menu'
 import MenuGroup from '../src/menu-item-group.vue'
 import MenuItem from '../src/menu-item.vue'
 import SubMenu from '../src/sub-menu'
+
+vi.mock('@iconify/vue', () => ({
+  Icon: defineComponent({
+    name: 'IconifyStub',
+    props: {
+      icon: {
+        type: [String, Object],
+        required: true,
+      },
+    },
+    setup(props, { attrs }) {
+      return () =>
+        h('svg', {
+          ...attrs,
+          'data-iconify':
+            typeof props.icon === 'string' ? props.icon : 'object',
+        })
+    },
+  }),
+}))
 
 const _mount = (template: string, options = {}) =>
   mount({
@@ -189,6 +209,28 @@ describe('menu', () => {
     vm.background = '#F00'
     await nextTick()
     // expect(vm.$refs.menu.hoverBackground).toEqual('rgb(204, 0, 0)')
+  })
+
+  test('submenu accepts iconify expand icons', async () => {
+    const wrapper = _mount(
+      `<el-menu>
+        <el-sub-menu
+          ref="subMenu"
+          index="1"
+          expand-close-icon="mdi:chevron-down"
+          expand-open-icon="mdi:chevron-up"
+        >
+          <template #title>导航一</template>
+          <el-menu-item index="1-1">选项1</el-menu-item>
+        </el-sub-menu>
+      </el-menu>`
+    )
+
+    await nextTick()
+
+    expect(wrapper.find('[data-iconify="mdi:chevron-down"]').exists()).toBe(
+      true
+    )
   })
 
   test('menu-overflow', async () => {

@@ -9,7 +9,7 @@
       @error="handleError"
     />
     <el-icon v-else-if="icon">
-      <component :is="icon" />
+      <el-icon-content :icon="icon" />
     </el-icon>
     <slot v-else />
   </span>
@@ -18,6 +18,7 @@
 <script lang="ts" setup>
 import { computed, inject, ref, watch } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useNamespace } from '@element-plus/hooks'
 import { addUnit, isNumber, isString } from '@element-plus/utils'
 import { avatarEmits } from './avatar'

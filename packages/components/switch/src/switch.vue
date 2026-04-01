@@ -23,7 +23,7 @@
     >
       <slot name="inactive">
         <el-icon v-if="inactiveIcon">
-          <component :is="inactiveIcon" />
+          <el-icon-content :icon="inactiveIcon" />
         </el-icon>
         <span v-if="!inactiveIcon && inactiveText" :aria-hidden="checked">{{
           inactiveText
@@ -35,7 +35,7 @@
         <div v-if="!checked" :class="ns.e('inner-wrapper')">
           <slot name="inactive">
             <el-icon v-if="inactiveIcon">
-              <component :is="inactiveIcon" />
+              <el-icon-content :icon="inactiveIcon" />
             </el-icon>
             <span v-if="!inactiveIcon && inactiveText">{{ inactiveText }}</span>
           </slot>
@@ -43,7 +43,7 @@
         <div v-else :class="ns.e('inner-wrapper')">
           <slot name="active">
             <el-icon v-if="activeIcon">
-              <component :is="activeIcon" />
+              <el-icon-content :icon="activeIcon" />
             </el-icon>
             <span v-if="!activeIcon && activeText">{{ activeText }}</span>
           </slot>
@@ -55,12 +55,12 @@
         </el-icon>
         <slot v-else-if="checked" name="active-action">
           <el-icon v-if="activeActionIcon">
-            <component :is="activeActionIcon" />
+            <el-icon-content :icon="activeActionIcon" />
           </el-icon>
         </slot>
         <slot v-else-if="!checked" name="inactive-action">
           <el-icon v-if="inactiveActionIcon">
-            <component :is="inactiveActionIcon" />
+            <el-icon-content :icon="inactiveActionIcon" />
           </el-icon>
         </slot>
       </div>
@@ -71,7 +71,7 @@
     >
       <slot name="active">
         <el-icon v-if="activeIcon">
-          <component :is="activeIcon" />
+          <el-icon-content :icon="activeIcon" />
         </el-icon>
         <span v-if="!activeIcon && activeText" :aria-hidden="!checked">{{
           activeText
@@ -91,6 +91,7 @@ import {
   throwError,
 } from '@element-plus/utils'
 import ElIcon from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import {
   useFormDisabled,
   useFormItem,

@@ -40,7 +40,7 @@
         ]"
         @click.stop="handleExpandIconClick"
       >
-        <component :is="tree.props.icon || CaretRight" />
+        <ElIconContent :icon="tree.props.icon || CaretRight" />
       </el-icon>
       <el-checkbox
         v-if="showCheckbox"
@@ -97,6 +97,7 @@ import { debugWarn, isFunction, isString } from '@element-plus/utils'
 import ElCollapseTransition from '@element-plus/components/collapse-transition'
 import ElCheckbox from '@element-plus/components/checkbox'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { CaretRight, Loading } from '@element-plus/icons-vue'
 import { useNamespace } from '@element-plus/hooks'
 import NodeContent from './tree-node-content.vue'
@@ -117,6 +118,7 @@ export default defineComponent({
     ElCheckbox,
     NodeContent,
     ElIcon,
+    ElIconContent,
     Loading,
   },
   props: {

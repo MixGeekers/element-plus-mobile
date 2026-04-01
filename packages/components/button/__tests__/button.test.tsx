@@ -1,6 +1,6 @@
-import { markRaw, nextTick, ref } from 'vue'
+import { defineComponent, markRaw, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
-import { describe, expect, it, test } from 'vitest'
+import { describe, expect, it, test, vi } from 'vitest'
 import { Loading, Search } from '@element-plus/icons-vue'
 import Form from '@element-plus/components/form'
 import ConfigProvider from '@element-plus/components/config-provider'
@@ -9,6 +9,26 @@ import Button from '../src/button.vue'
 import ButtonGroup from '../src/button-group.vue'
 
 import type { ComponentSize } from '@element-plus/constants'
+
+vi.mock('@iconify/vue', () => ({
+  Icon: defineComponent({
+    name: 'IconifyStub',
+    props: {
+      icon: {
+        type: [String, Object],
+        required: true,
+      },
+    },
+    setup(props, { attrs }) {
+      return () => (
+        <svg
+          {...attrs}
+          data-iconify={typeof props.icon === 'string' ? props.icon : 'object'}
+        />
+      )
+    },
+  }),
+}))
 
 const AXIOM = 'Rem is the best girl'
 const ns = useNamespace('button')
@@ -24,6 +44,12 @@ describe('Button.vue', () => {
     const wrapper = mount(() => <Button icon={markRaw(Search)} />)
 
     expect(wrapper.findComponent(Search).exists()).toBeTruthy()
+  })
+
+  it('iconify icon', () => {
+    const wrapper = mount(() => <Button icon="mdi:home" />)
+
+    expect(wrapper.find('[data-iconify="mdi:home"]').exists()).toBe(true)
   })
 
   it('nativeType', () => {

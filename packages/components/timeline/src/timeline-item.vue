@@ -9,7 +9,7 @@
       }"
     >
       <el-icon v-if="icon" :class="ns.e('icon')">
-        <component :is="icon" />
+        <el-icon-content :icon="icon" />
       </el-icon>
     </div>
     <div v-if="$slots.dot" :class="ns.e('dot')">
@@ -41,6 +41,7 @@
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useNamespace } from '@element-plus/hooks'
 import { TIMELINE_INJECTION_KEY } from './tokens'
 

@@ -46,7 +46,7 @@
                   v-if="iconComponent && center"
                   :class="[ns.e('status'), typeClass]"
                 >
-                  <component :is="iconComponent" />
+                  <ElIconContent :icon="iconComponent" />
                 </el-icon>
                 <span>{{ title }}</span>
               </div>
@@ -63,7 +63,7 @@
                 "
               >
                 <el-icon :class="ns.e('close')">
-                  <component :is="closeIcon || 'close'" />
+                  <ElIconContent :icon="closeIcon || Close" />
                 </el-icon>
               </button>
             </div>
@@ -73,7 +73,7 @@
                   v-if="iconComponent && !center && hasMessage"
                   :class="[ns.e('status'), typeClass]"
                 >
-                  <component :is="iconComponent" />
+                  <ElIconContent :icon="iconComponent" />
                 </el-icon>
                 <div v-if="hasMessage" :class="ns.e('message')">
                   <slot>
@@ -183,6 +183,7 @@ import {
   isValidComponentSize,
 } from '@element-plus/utils'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { Loading } from '@element-plus/icons-vue'
 import ElFocusTrap from '@element-plus/components/focus-trap'
 import { useGlobalComponentSettings } from '@element-plus/components/config-provider'
@@ -207,6 +208,7 @@ export default defineComponent({
     ElInput,
     ElOverlay,
     ElIcon,
+    ElIconContent,
     ...TypeComponents,
   },
   inheritAttrs: false,
@@ -254,6 +256,7 @@ export default defineComponent({
   },
   emits: ['vanish', 'action'],
   setup(props, { emit }) {
+    const { Close } = TypeComponents
     // const popup = usePopup(props, doClose)
     const {
       locale,
@@ -513,6 +516,7 @@ export default defineComponent({
       handleInputEnter,
       handleAction,
       t,
+      Close,
     }
   },
 })

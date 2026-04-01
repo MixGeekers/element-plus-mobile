@@ -88,6 +88,34 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 自动从 iconify 导入任何图标集合。
 您可以参考[此模板](https://github.com/sxzz/element-plus-best-practices/blob/db2dfc983ccda5570033a0ac608a1bd9d9a7f658/vite.config.ts#L21-L58)。
 
+### 原生 Iconify 支持
+
+`el-icon` 以及组件库中大部分 `icon` / `prefix-icon` / `suffix-icon` 类属性现在都可以直接接收 Iconify 图标名。
+
+```vue
+<template>
+  <el-space>
+    <el-icon icon="mdi:home" />
+    <el-button icon="mdi:heart">Like</el-button>
+    <el-input prefix-icon="mdi:magnify" placeholder="搜索内容" />
+  </el-space>
+</template>
+```
+
+::::tip
+
+包含 `:` 的字符串会按 Iconify 图标名解析，例如 `mdi:home` 或 `@custom:line:search`。
+不包含 `:` 的字符串仍保持原有行为，会继续按已注册的全局组件名解析。
+
+::::
+
+::::warning
+
+运行时 Iconify 名称会在客户端加载图标数据。
+如果您需要 SSR 首屏直接输出 SVG，建议继续传入本地 Vue 图标组件，或传入预先准备好的 Iconify 图标数据对象。
+
+::::
+
 ## 简单用法
 
 :::warning
@@ -223,12 +251,13 @@ import { Edit, Share, Delete, Search, Loading } from '@element-plus/icons-vue'
 
 ### 属性
 
-| 名称 | 描述                      | 类型                | 默认           |
-| ---- | ------------------------- | ------------------- | -------------- |
-| 颜色 | SVG 标签的 fill 属性      | ^[字符串]           | 从颜色继承     |
-| 尺寸 | SVG 图标大小，大小 x 大小 | ^[数字] / ^[字符串] | 从字体大小继承 |
+| 名称  | 描述                                                                      | 类型                                 | 默认           |
+| ----- | ------------------------------------------------------------------------- | ------------------------------------ | -------------- |
+| icon  | 图标内容，支持 Vue 组件、全局组件名字串以及 Iconify 名称，例如 `mdi:home` | ^[string] / ^[Component] / ^[object] | —              |
+| color | SVG 标签的 fill 属性                                                      | ^[string]                            | 从颜色继承     |
+| size  | SVG 图标大小，大小 x 大小                                                 | ^[number] / ^[string]                | 从字体大小继承 |
 
-### 老虎机
+### 插槽
 
 | 名称 | 描述           |
 | ---- | -------------- |

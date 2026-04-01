@@ -23,13 +23,13 @@ import {
   definePropType,
   focusElement,
   iconPropType,
-  isString,
   isUndefined,
   throwError,
 } from '@element-plus/utils'
 import { useNamespace } from '@element-plus/hooks'
 import { ArrowDown, ArrowRight } from '@element-plus/icons-vue'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import useMenu from './use-menu'
 import { useMenuCssVar } from './use-menu-css-var'
 import { MENU_INJECTION_KEY, SUB_MENU_INJECTION_KEY } from './tokens'
@@ -376,9 +376,9 @@ export default defineComponent({
           },
           {
             default: () =>
-              isString(subMenuTitleIcon.value)
-                ? h(instance.appContext.components[subMenuTitleIcon.value])
-                : h(subMenuTitleIcon.value),
+              h(ElIconContent, {
+                icon: subMenuTitleIcon.value,
+              }),
           }
         ),
       ]

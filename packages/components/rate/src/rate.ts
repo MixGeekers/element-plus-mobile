@@ -165,9 +165,10 @@ export const rateProps = buildProps({
    * @description icon components. If array, it should have 3 elements, each of which corresponds with a score level, else if object, the key should be threshold value between two levels, and the value should be corresponding icon component
    */
   icons: {
-    type: definePropType<
-      Array<string | Component> | Record<number, string | Component>
-    >([Array, Object]),
+    type: definePropType<Array<IconPropType> | Record<number, IconPropType>>([
+      Array,
+      Object,
+    ]),
     default: () =>
       [StarFilled, StarFilled, StarFilled] as [Component, Component, Component],
   },

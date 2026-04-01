@@ -1,9 +1,14 @@
-import { buildProps, definePropType } from '@element-plus/utils'
+import { buildProps, definePropType, iconPropType } from '@element-plus/utils'
 
 import type { ExtractPublicPropTypes } from 'vue'
 import type Icon from './icon.vue'
+import type { IconPropType } from '@element-plus/utils'
 
 export interface IconProps {
+  /**
+   * @description icon content. Supports Vue components, globally registered component names, and Iconify names such as `mdi:home`
+   */
+  icon?: IconPropType
   /**
    * @description SVG icon size, size x size
    */
@@ -18,6 +23,12 @@ export interface IconProps {
  * @deprecated Removed after 3.0.0, Use `IconProps` instead.
  */
 export const iconProps = buildProps({
+  /**
+   * @description icon content. Supports Vue components, globally registered component names, and Iconify names such as `mdi:home`
+   */
+  icon: {
+    type: iconPropType,
+  },
   /**
    * @description SVG icon size, size x size
    */

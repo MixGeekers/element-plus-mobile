@@ -7,7 +7,7 @@
     @click="onClose"
   >
     <el-icon :class="ns.e('close')">
-      <component :is="mergedCloseIcon" />
+      <el-icon-content :icon="mergedCloseIcon" />
     </el-icon>
   </button>
   <header :class="[ns.e('header'), { 'show-close': showClose }]">
@@ -70,6 +70,7 @@ import { EVENT_CODE } from '@element-plus/constants'
 import { omit } from 'lodash-unified'
 import { ElButton } from '@element-plus/components/button'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { CloseComponents, getEventCode } from '@element-plus/utils'
 import { useLocale } from '@element-plus/hooks'
 import { tourStepEmits } from './step'

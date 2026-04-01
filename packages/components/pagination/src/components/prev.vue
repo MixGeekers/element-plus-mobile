@@ -9,7 +9,7 @@
   >
     <span v-if="prevText">{{ prevText }}</span>
     <el-icon v-else>
-      <component :is="prevIcon" />
+      <el-icon-content :icon="prevIcon" />
     </el-icon>
   </button>
 </template>
@@ -18,6 +18,7 @@
 import { computed } from 'vue'
 import { useLocale } from '@element-plus/hooks'
 import { ElIcon } from '@element-plus/components/icon'
+import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { paginationPrevEmits, paginationPrevProps } from './prev'
 
 defineOptions({
