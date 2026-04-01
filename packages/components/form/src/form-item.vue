@@ -5,25 +5,19 @@
     :role="isGroup ? 'group' : undefined"
     :aria-labelledby="isGroup ? labelId : undefined"
   >
-    <form-label-wrap
-      :is-auto-width="labelStyle.width === 'auto'"
-      :update-all="formContext?.labelWidth === 'auto'"
+    <component
+      :is="labelFor ? 'label' : 'div'"
+      v-if="!!(label || $slots.label)"
+      :id="labelId"
+      :for="labelFor"
+      :class="ns.e('label')"
     >
-      <component
-        :is="labelFor ? 'label' : 'div'"
-        v-if="!!(label || $slots.label)"
-        :id="labelId"
-        :for="labelFor"
-        :class="ns.e('label')"
-        :style="labelStyle"
-      >
-        <slot name="label" :label="currentLabel">
-          {{ currentLabel }}
-        </slot>
-      </component>
-    </form-label-wrap>
+      <slot name="label" :label="currentLabel">
+        {{ currentLabel }}
+      </slot>
+    </component>
 
-    <div :class="ns.e('content')" :style="contentStyle">
+    <div :class="ns.e('content')">
       <slot />
       <transition-group :name="`${ns.namespace.value}-zoom-in-top`">
         <slot v-if="shouldShowError" name="error" :error="validateMessage">
@@ -53,7 +47,6 @@ import {
 import AsyncValidator from 'async-validator'
 import { refDebounced } from '@vueuse/core'
 import {
-  addUnit,
   ensureArray,
   getProp,
   isArray,
@@ -62,11 +55,9 @@ import {
 } from '@element-plus/utils'
 import { useId, useNamespace } from '@element-plus/hooks'
 import { useFormSize } from './hooks'
-import FormLabelWrap from './form-label-wrap'
 import { formContextKey, formItemContextKey } from './constants'
 import { cloneDeep } from 'lodash-unified'
 
-import type { CSSProperties } from 'vue'
 import type { RuleItem } from 'async-validator'
 import type { Arrayable } from '@element-plus/utils'
 import type {
@@ -80,7 +71,6 @@ defineOptions({
   name: 'ElFormItem',
 })
 const props = withDefaults(defineProps<FormItemProps>(), {
-  labelPosition: '',
   showMessage: true,
   required: undefined,
   inlineMessage: undefined,
@@ -88,7 +78,6 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 const slots = useSlots()
 
 const formContext = inject(formContextKey, undefined)
-const parentFormItemContext = inject(formItemContextKey, undefined)
 
 const _size = useFormSize(undefined, { formItem: false })
 const ns = useNamespace('form-item')
@@ -104,39 +93,6 @@ const formItemRef = ref<HTMLDivElement>()
 let initialValue: any = undefined
 let isResettingField = false
 
-const labelPosition = computed(() =>
-  formContext?.isMobile
-    ? 'top'
-    : props.labelPosition || formContext?.labelPosition
-)
-
-const labelStyle = computed<CSSProperties>(() => {
-  if (labelPosition.value === 'top' || formContext?.isMobile) {
-    return {}
-  }
-
-  const labelWidth = addUnit(props.labelWidth ?? formContext?.labelWidth)
-  return { width: labelWidth }
-})
-
-const contentStyle = computed<CSSProperties>(() => {
-  if (
-    labelPosition.value === 'top' ||
-    formContext?.inline ||
-    formContext?.isMobile
-  ) {
-    return {}
-  }
-  if (!props.label && !props.labelWidth && isNested) {
-    return {}
-  }
-  const labelWidth = addUnit(props.labelWidth ?? formContext?.labelWidth)
-  if (!props.label && !slots.label) {
-    return { marginLeft: labelWidth }
-  }
-  return {}
-})
-
 const formItemClasses = computed(() => [
   ns.b(),
   ns.m(_size.value),
@@ -145,22 +101,18 @@ const formItemClasses = computed(() => [
   ns.is('success', validateState.value === 'success'),
   ns.is('required', isRequired.value || props.required),
   ns.is('no-asterisk', formContext?.hideRequiredAsterisk),
-  ns.is('mobile', !!formContext?.isMobile),
   formContext?.requireAsteriskPosition === 'right'
     ? 'asterisk-right'
     : 'asterisk-left',
   {
     [ns.m('feedback')]: formContext?.statusIcon,
-    [ns.m(`label-${labelPosition.value}`)]: labelPosition.value,
   },
 ])
 
 const _inlineMessage = computed(() =>
-  formContext?.isMobile
-    ? false
-    : isBoolean(props.inlineMessage)
-      ? props.inlineMessage
-      : formContext?.inlineMessage || false
+  isBoolean(props.inlineMessage)
+    ? props.inlineMessage
+    : formContext?.inlineMessage || false
 )
 
 const validateClasses = computed(() => [
@@ -186,8 +138,6 @@ const labelFor = computed<string | undefined>(() => {
 const isGroup = computed<boolean>(() => {
   return !labelFor.value && hasLabel.value
 })
-
-const isNested = !!parentFormItemContext
 
 const fieldValue = computed(() => {
   const model = formContext?.model

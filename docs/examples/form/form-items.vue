@@ -1,55 +1,84 @@
 <template>
-  <el-form
-    ref="formRef"
-    style="max-width: 600px"
-    :model="dynamicValidateForm"
-    label-width="auto"
-    class="demo-dynamic"
+  <MobileFormDemo
+    title="Add / Delete Form Items"
+    description="Dynamic fields are stacked for mobile, so added rows and actions stay readable without horizontal squeezing."
+    header-title="Domain Whitelist"
+    header-description="Add or remove validated domains from a compact touch-first form."
   >
-    <el-form-item
-      prop="email"
-      label="Email"
-      :rules="[
-        {
+    <div class="mobile-form-demo__panel">
+      <strong>Dynamic validation</strong>
+      <p>
+        Each added domain keeps its own validation rule, and destructive actions
+        stay separated from the final submit buttons.
+      </p>
+    </div>
+
+    <el-form
+      ref="formRef"
+      :model="dynamicValidateForm"
+      class="demo-dynamic"
+      @submit.prevent
+    >
+      <el-form-item
+        prop="email"
+        label="Email"
+        :rules="[
+          {
+            required: true,
+            message: 'Please input email address',
+            trigger: 'blur',
+          },
+          {
+            type: 'email',
+            message: 'Please input correct email address',
+            trigger: ['blur', 'change'],
+          },
+        ]"
+      >
+        <el-input
+          v-model="dynamicValidateForm.email"
+          clearable
+          placeholder="owner@example.com"
+        />
+      </el-form-item>
+
+      <el-form-item
+        v-for="(domain, index) in dynamicValidateForm.domains"
+        :key="domain.key"
+        :label="`Domain ${index + 1}`"
+        :prop="'domains.' + index + '.value'"
+        :rules="{
           required: true,
-          message: 'Please input email address',
+          message: 'domain can not be null',
           trigger: 'blur',
-        },
-        {
-          type: 'email',
-          message: 'Please input correct email address',
-          trigger: ['blur', 'change'],
-        },
-      ]"
-    >
-      <el-input v-model="dynamicValidateForm.email" />
-    </el-form-item>
-    <el-form-item
-      v-for="(domain, index) in dynamicValidateForm.domains"
-      :key="domain.key"
-      :label="'Domain' + index"
-      :prop="'domains.' + index + '.value'"
-      :rules="{
-        required: true,
-        message: 'domain can not be null',
-        trigger: 'blur',
-      }"
-    >
-      <el-input v-model="domain.value" />
-      <el-button class="mt-2" @click.prevent="removeDomain(domain)">
-        Delete
-      </el-button>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm(formRef)">Submit</el-button>
-      <el-button @click="addDomain">New domain</el-button>
-      <el-button @click="resetForm(formRef)">Reset</el-button>
-    </el-form-item>
-  </el-form>
+        }"
+      >
+        <div class="mobile-form-demo__stack">
+          <el-input v-model="domain.value" placeholder="campaign.example.com" />
+          <el-button plain @click.prevent="removeDomain(domain)">
+            Delete domain
+          </el-button>
+        </div>
+      </el-form-item>
+
+      <el-form-item>
+        <div class="mobile-form-demo__stack">
+          <el-button @click="addDomain">New domain</el-button>
+          <div class="mobile-form-demo__actions">
+            <el-button type="primary" @click="submitForm(formRef)">
+              Submit
+            </el-button>
+            <el-button @click="resetForm(formRef)">Reset</el-button>
+          </div>
+        </div>
+      </el-form-item>
+    </el-form>
+  </MobileFormDemo>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
+import MobileFormDemo from './components/mobile-demo-shell.vue'
 
 import type { FormInstance } from 'element-plus-mobile'
 

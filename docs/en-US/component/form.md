@@ -13,6 +13,8 @@ The component has been upgraded with a flex layout to replace the old float layo
 
 :::
 
+All demos below are rendered inside a mobile preview shell so you can inspect the default touch layout, action spacing, and validation flow directly.
+
 ## Basic Form
 
 It includes all kinds of input items, such as `input`, `select`, `radio` and `checkbox`.
@@ -23,11 +25,11 @@ form/basic-form
 
 :::
 
-## Mobile Form Preview
+## Touch Form Example
 
-On narrow screens, Form automatically switches to a touch-friendly layout with top-aligned labels, in-flow validation messages, and larger control hit areas. You can also force the same layout in previews or embedded surfaces with the `mobile` prop.
+`Form` now uses a stacked mobile-first layout by default, with top-aligned labels, in-flow validation messages, and touch-sized controls.
 
-:::demo This demo renders the second batch of form components directly in their mobile layout. Open `Select` or `SelectV2` in the demo to continue checking the bottom-sheet flow.
+:::demo This demo shows the default form behavior directly. Open `Select` or `SelectV2` to continue checking the bottom-sheet flow and multi-select confirmation actions.
 
 form/mobile-adaptation
 
@@ -40,28 +42,6 @@ form/mobile-adaptation
 > <i>When there is only one single-line text input field in a form, the user agent should accept Enter in that field as a request to submit the form.</i>
 
 To prevent this behavior, you can add `@submit.prevent` on `<el-form>`.
-
-:::
-
-## Inline Form
-
-When the vertical space is limited and the form is relatively simple, you can put it in one line.
-
-:::demo Set the `inline` attribute to `true` and the form will be inline.
-
-form/inline-form
-
-:::
-
-## Alignment
-
-Depending on your design, there are several different ways to align your label element.
-
-You can set `label-position` of `el-form-item` separately ^(2.7.7). If the value is empty, the `label-position` of `el-form` is used.
-
-:::demo The `label-position` attribute decides how labels align, it can be `top` or `left`. When set to `top`, labels will be placed at the top of the form field.
-
-form/alignment
 
 :::
 
@@ -107,12 +87,6 @@ form/number-validate
 
 :::
 
-:::tip
-
-When an `el-form-item` is nested in another `el-form-item`, its label width will be `0`. You can set `label-width` on that `el-form-item` if needed.
-
-:::
-
 ## Size Control
 
 All components in a Form inherit their `size` attribute from that Form. Similarly, FormItem also has a `size` attribute.
@@ -141,10 +115,6 @@ form/accessibility
 | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | ------- |
 | model                             | Data of form component.                                                                                                                                                                                                          | ^[object]`Record<string, any>`                 | —       |
 | rules                             | Validation rules of form.                                                                                                                                                                                                        | ^[object]`FormRules`                           | —       |
-| inline                            | Whether the form is inline.                                                                                                                                                                                                      | ^[boolean]                                     | false   |
-| mobile                            | Force the form to use the mobile layout regardless of viewport width.                                                                                                                                                            | ^[boolean]                                     | false   |
-| label-position                    | Position of label. If set to `'left'` or `'right'`, `label-width` prop is also required.                                                                                                                                         | ^[enum]`'left' \| 'right' \| 'top'`            | right   |
-| label-width                       | Width of label, e.g. `'50px'`. All its direct child form items will inherit this value. `auto` is supported.                                                                                                                     | ^[string] / ^[number]                          | ''      |
 | label-suffix                      | Suffix of the label.                                                                                                                                                                                                             | ^[string]                                      | ''      |
 | hide-required-asterisk            | Whether to hide required fields should have a red asterisk (star) beside their labels.                                                                                                                                           | ^[boolean]                                     | false   |
 | require-asterisk-position         | Position of asterisk.                                                                                                                                                                                                            | ^[enum]`'left' \| 'right'`                     | left    |
@@ -186,20 +156,18 @@ form/accessibility
 
 ### FormItem Attributes
 
-| Name                    | Description                                                                                                                                                            | Type                                                | Default |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------- |
-| prop                    | A key of `model`. It could be a path of the property (e.g `a.b.0` or `['a', 'b', '0']`). In the use of `validate` and `resetFields` method, the attribute is required. | ^[string] / ^[string&#91;&#93;]                     | —       |
-| label                   | Label text.                                                                                                                                                            | ^[string]                                           | —       |
-| label-position ^(2.7.7) | Position of item label. If set to `'left'` or `'right'`, `label-width` prop is also required. Default extend `label-position` of `form`.                               | ^[enum]`'left' \| 'right' \| 'top'`                 | ''      |
-| label-width             | Width of label, e.g. `'50px'`. `'auto'` is supported.                                                                                                                  | ^[string] / ^[number]                               | —       |
-| required                | Whether the field is required or not, will be determined by validation rules if omitted.                                                                               | ^[boolean]                                          | —       |
-| rules                   | Validation rules of form, see the [following table](#formitemrule), more advanced usage at [async-validator](https://github.com/yiminghe/async-validator).             | ^[object]`Arrayable<FormItemRule>`                  | —       |
-| error                   | Field error message, set its value and the field will validate error and show this message immediately.                                                                | ^[string]                                           | —       |
-| show-message            | Whether to show the error message.                                                                                                                                     | ^[boolean]                                          | true    |
-| inline-message          | Inline style validate message.                                                                                                                                         | ^[boolean]                                          | false   |
-| size                    | Control the size of components in this form-item.                                                                                                                      | ^[enum]`'' \| 'large' \| 'default' \| 'small'`      | —       |
-| for                     | Same as for in native label.                                                                                                                                           | ^[string]                                           | —       |
-| validate-status         | Validation state of formItem.                                                                                                                                          | ^[enum]`'' \| 'error' \| 'validating' \| 'success'` | —       |
+| Name            | Description                                                                                                                                                            | Type                                                | Default |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------- |
+| prop            | A key of `model`. It could be a path of the property (e.g `a.b.0` or `['a', 'b', '0']`). In the use of `validate` and `resetFields` method, the attribute is required. | ^[string] / ^[string&#91;&#93;]                     | —       |
+| label           | Label text.                                                                                                                                                            | ^[string]                                           | —       |
+| required        | Whether the field is required or not, will be determined by validation rules if omitted.                                                                               | ^[boolean]                                          | —       |
+| rules           | Validation rules of form, see the [following table](#formitemrule), more advanced usage at [async-validator](https://github.com/yiminghe/async-validator).             | ^[object]`Arrayable<FormItemRule>`                  | —       |
+| error           | Field error message, set its value and the field will validate error and show this message immediately.                                                                | ^[string]                                           | —       |
+| show-message    | Whether to show the error message.                                                                                                                                     | ^[boolean]                                          | true    |
+| inline-message  | Inline style validate message.                                                                                                                                         | ^[boolean]                                          | false   |
+| size            | Control the size of components in this form-item.                                                                                                                      | ^[enum]`'' \| 'large' \| 'default' \| 'small'`      | —       |
+| for             | Same as for in native label.                                                                                                                                           | ^[string]                                           | —       |
+| validate-status | Validation state of formItem.                                                                                                                                          | ^[enum]`'' \| 'error' \| 'validating' \| 'success'` | —       |
 
 #### FormItemRule
 

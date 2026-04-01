@@ -2,41 +2,26 @@
   <div
     ref="selectRef"
     v-click-outside:[popperRef]="handleClickOutside"
-    :class="[
-      nsSelect.b(),
-      nsSelect.m(selectSize),
-      nsSelect.is('mobile', isMobile),
-    ]"
+    :class="[nsSelect.b(), nsSelect.m(selectSize)]"
     @[mouseEnterEventName]="states.inputHovering = true"
     @mouseleave="states.inputHovering = false"
   >
     <el-tooltip
       ref="tooltipRef"
       :visible="dropdownMenuVisible"
-      :placement="placement"
-      :teleported="resolvedTeleported"
-      :popper-class="[
-        nsSelect.e('popper'),
-        popperClass,
-        nsSelect.is('mobile', isMobile),
-      ]"
+      placement="bottom"
+      :teleported="true"
+      :popper-class="[nsSelect.e('popper'), popperClass]"
       :popper-style="popperStyle"
-      :popper-options="popperOptions"
-      :fallback-placements="fallbackPlacements"
       :effect="effect"
       pure
       trigger="click"
-      :transition="
-        isMobile
-          ? `${nsSelect.namespace.value}-fade-in-linear`
-          : `${nsSelect.namespace.value}-zoom-in-top`
-      "
+      :transition="`${nsSelect.namespace.value}-fade-in-linear`"
       :stop-popper-mouse-event="false"
       :gpu-acceleration="false"
       :persistent="persistent"
       :append-to="appendTo"
-      :show-arrow="showArrow"
-      :offset="offset"
+      :show-arrow="false"
       @before-show="handleMenuEnter"
       @hide="states.isBeforeHide = false"
     >
@@ -119,9 +104,9 @@
                 :placement="tagTooltip?.placement ?? 'bottom'"
                 :popper-class="tagTooltip?.popperClass ?? popperClass"
                 :popper-style="tagTooltip?.popperStyle ?? popperStyle"
-                :teleported="tagTooltip?.teleported ?? resolvedTeleported"
+                :teleported="tagTooltip?.teleported ?? true"
                 :append-to="tagTooltip?.appendTo ?? appendTo"
-                :popper-options="tagTooltip?.popperOptions ?? popperOptions"
+                :popper-options="tagTooltip?.popperOptions"
                 :transition="tagTooltip?.transition"
                 :show-after="tagTooltip?.showAfter"
                 :hide-after="tagTooltip?.hideAfter"

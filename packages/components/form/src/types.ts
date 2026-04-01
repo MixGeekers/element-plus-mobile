@@ -13,9 +13,7 @@ import type {
   FormItemValidateState,
 } from './form-item'
 import type { FormEmits, FormProps } from './form'
-import type { useFormLabelWidth } from './utils'
 
-export type FormLabelWidthContext = ReturnType<typeof useFormLabelWidth>
 export interface FormItemRule extends RuleItem {
   trigger?: Arrayable<string>
 }
@@ -47,21 +45,19 @@ export interface FormValidateFailure {
   fields: ValidateFieldsError
 }
 
-export type FormContext = FormProps &
-  UnwrapRef<FormLabelWidthContext> & {
-    isMobile: boolean
-    emit: SetupContext<FormEmits>['emit']
-    getField: (prop: FormItemProp) => FormItemContext | undefined
-    addField: (field: FormItemContext) => void
-    removeField: (field: FormItemContext, oldPropString?: string) => void
-    resetFields: (props?: Arrayable<FormItemProp>) => void
-    setInitialValues: (initModel: Record<string, any>) => void
-    clearValidate: (props?: Arrayable<FormItemProp>) => void
-    validateField: (
-      props?: Arrayable<FormItemProp>,
-      callback?: FormValidateCallback
-    ) => FormValidationResult
-  }
+export type FormContext = FormProps & {
+  emit: SetupContext<FormEmits>['emit']
+  getField: (prop: FormItemProp) => FormItemContext | undefined
+  addField: (field: FormItemContext) => void
+  removeField: (field: FormItemContext, oldPropString?: string) => void
+  resetFields: (props?: Arrayable<FormItemProp>) => void
+  setInitialValues: (initModel: Record<string, any>) => void
+  clearValidate: (props?: Arrayable<FormItemProp>) => void
+  validateField: (
+    props?: Arrayable<FormItemProp>,
+    callback?: FormValidateCallback
+  ) => FormValidationResult
+}
 
 export interface FormItemContext extends FormItemProps {
   $el: HTMLDivElement | undefined

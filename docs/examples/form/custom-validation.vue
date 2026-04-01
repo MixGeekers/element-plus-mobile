@@ -1,37 +1,69 @@
 <template>
-  <el-form
-    ref="ruleFormRef"
-    style="max-width: 600px"
-    :model="ruleForm"
-    status-icon
-    :rules="rules"
-    label-width="auto"
-    class="demo-ruleForm"
+  <MobileFormDemo
+    title="Custom Validation Rules"
+    description="This example keeps the validation flow mobile-friendly while showing password confirmation and async age checks."
+    header-title="Account Security"
+    header-description="Two-factor style validation with status icons and touch-sized fields."
   >
-    <el-form-item label="Password" prop="pass">
-      <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
-    </el-form-item>
-    <el-form-item label="Confirm" prop="checkPass">
-      <el-input
-        v-model="ruleForm.checkPass"
-        type="password"
-        autocomplete="off"
-      />
-    </el-form-item>
-    <el-form-item label="Age" prop="age">
-      <el-input v-model.number="ruleForm.age" />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)">
-        Submit
-      </el-button>
-      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-    </el-form-item>
-  </el-form>
+    <div class="mobile-form-demo__panel">
+      <strong>Validation flow</strong>
+      <p>
+        Password confirmation is checked immediately, while age is validated
+        asynchronously after blur.
+      </p>
+    </div>
+
+    <el-form
+      ref="ruleFormRef"
+      :model="ruleForm"
+      :rules="rules"
+      status-icon
+      @submit.prevent
+    >
+      <el-form-item label="Password" prop="pass">
+        <el-input
+          v-model="ruleForm.pass"
+          autocomplete="new-password"
+          placeholder="Enter a password"
+          show-password
+          type="password"
+        />
+      </el-form-item>
+
+      <el-form-item label="Confirm" prop="checkPass">
+        <el-input
+          v-model="ruleForm.checkPass"
+          autocomplete="new-password"
+          placeholder="Repeat the password"
+          show-password
+          type="password"
+        />
+      </el-form-item>
+
+      <el-form-item label="Age" prop="age">
+        <el-input
+          v-model.number="ruleForm.age"
+          autocomplete="off"
+          inputmode="numeric"
+          placeholder="Must be 18 or above"
+        />
+      </el-form-item>
+
+      <el-form-item>
+        <div class="mobile-form-demo__actions">
+          <el-button type="primary" @click="submitForm(ruleFormRef)">
+            Submit
+          </el-button>
+          <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+        </div>
+      </el-form-item>
+    </el-form>
+  </MobileFormDemo>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
+import MobileFormDemo from './components/mobile-demo-shell.vue'
 
 import type { FormInstance, FormRules } from 'element-plus-mobile'
 
@@ -75,7 +107,11 @@ const validatePass2 = (rule: any, value: any, callback: any) => {
   }
 }
 
-const ruleForm = reactive({
+const ruleForm = reactive<{
+  pass: string
+  checkPass: string
+  age: number | ''
+}>({
   pass: '',
   checkPass: '',
   age: '',

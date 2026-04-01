@@ -1,12 +1,10 @@
 <template>
   <div class="mobile-select-doc-demo">
     <div class="mobile-select-doc-demo__copy">
-      <div class="mobile-select-doc-demo__title">
-        Select Mobile Sheet Preview
-      </div>
+      <div class="mobile-select-doc-demo__title">Select Bottom-Sheet Flow</div>
       <p class="mobile-select-doc-demo__desc">
         Open the multi-select to inspect draft selection, cancel / confirm
-        actions, and the bottom-sheet dropdown directly in mobile mode.
+        actions, and the default bottom-sheet dropdown flow.
       </p>
     </div>
 
@@ -19,10 +17,7 @@
 
         <div class="mobile-device__header">
           <strong>Region filters</strong>
-          <span
-            >Committed values only update after confirmation in mobile
-            mode.</span
-          >
+          <span>Committed values only update after confirmation.</span>
         </div>
 
         <div class="mobile-device__body">
@@ -33,7 +28,6 @@
 
           <el-select
             v-model="region"
-            mobile
             clearable
             filterable
             placeholder="Choose a region"
@@ -57,7 +51,6 @@
 
           <el-select
             v-model="owners"
-            mobile
             clearable
             collapse-tags
             collapse-tags-tooltip
@@ -209,26 +202,6 @@ const ownerOptions = [
 .mobile-select-doc-demo {
   :deep(.el-select) {
     width: 100%;
-  }
-
-  :deep(.el-select__wrapper) {
-    min-height: 2.75rem;
-    padding: 0.375rem 0.875rem;
-    gap: 0.5rem;
-  }
-
-  :deep(.el-select__selection) {
-    gap: 0.5rem;
-  }
-
-  :deep(.el-select__selected-item) {
-    align-items: center;
-    min-height: 2rem;
-  }
-
-  :deep(.el-select__input) {
-    height: 2rem;
-    font-size: 1rem;
   }
 }
 </style>

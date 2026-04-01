@@ -9,7 +9,7 @@ import {
   watchEffect,
 } from 'vue'
 import { clamp, findLastIndex, get, isEqual, isNil } from 'lodash-unified'
-import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
+import { useDebounceFn, useResizeObserver } from '@vueuse/core'
 import {
   ValidateComponentsMap,
   debugWarn,
@@ -99,9 +99,6 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   const debouncing = ref(false)
   const mobileSelection = ref<OptionValue[]>([])
   const mobileSelectionCommitted = ref(false)
-  const { width: viewportWidth } = useWindowSize({
-    initialWidth: Number.POSITIVE_INFINITY,
-  })
 
   const { form, formItem } = useFormItem()
   const { inputId } = useFormItemInputId(props, {
@@ -119,11 +116,9 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   })
 
   const selectDisabled = useFormDisabled()
-  const isMobile = computed(() => props.mobile || viewportWidth.value < 768)
-  const showMobileFooter = computed(() => props.multiple && isMobile.value)
-  const resolvedTeleported = computed(() => props.teleported || isMobile.value)
+  const showMobileFooter = computed(() => props.multiple && expanded.value)
   const selectionModelValue = computed(() => {
-    return props.multiple && isMobile.value && expanded.value
+    return props.multiple && expanded.value
       ? mobileSelection.value
       : props.modelValue
   })
@@ -191,9 +186,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   )
 
   const debounce = computed(() => (props.remote ? props.debounce : 0))
-  const useMobileDraft = computed(
-    () => props.multiple && isMobile.value && expanded.value
-  )
+  const useMobileDraft = computed(() => props.multiple && expanded.value)
 
   const isRemoteSearchEmpty = computed(
     () => props.remote && !states.inputValue && states.options.size === 0
@@ -315,7 +308,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   watch(
     () => props.modelValue,
     (val, oldVal) => {
-      if (props.multiple && isMobile.value && expanded.value) {
+      if (props.multiple && expanded.value) {
         syncMobileSelection()
       }
       if (props.multiple) {
@@ -340,7 +333,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
     (val) => {
       if (val) {
         mobileSelectionCommitted.value = false
-        if (showMobileFooter.value) {
+        if (props.multiple) {
           syncMobileSelection()
           setSelected()
         }
@@ -350,7 +343,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
         states.previousQuery = null
         states.isBeforeHide = true
         states.menuVisibleOnFocus = false
-        if (showMobileFooter.value) {
+        if (props.multiple) {
           if (!mobileSelectionCommitted.value) {
             syncMobileSelection()
           }
@@ -613,7 +606,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const handleOptionSelect = (option: OptionPublicInstance) => {
-    if (useMobileDraft.value) {
+    if (props.multiple) {
       const value = mobileSelection.value.slice()
       const optionIndex = getValueIndex(value, option)
       if (optionIndex > -1) {
@@ -635,25 +628,6 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
       nextTick(() => {
         scrollToOption(option)
       })
-    } else if (props.multiple) {
-      const value = ensureArray(props.modelValue ?? []).slice()
-      const optionIndex = getValueIndex(value, option)
-      if (optionIndex > -1) {
-        value.splice(optionIndex, 1)
-      } else if (
-        props.multipleLimit <= 0 ||
-        value.length < props.multipleLimit
-      ) {
-        value.push(option.value)
-      }
-      emit(UPDATE_MODEL_EVENT, value)
-      emitChange(value)
-      if (option.created) {
-        handleQueryChange('')
-      }
-      if (props.filterable && (option.created || !props.reserveKeyword)) {
-        states.inputValue = ''
-      }
     } else {
       !isEqual(props.modelValue, option.value) &&
         emit(UPDATE_MODEL_EVENT, option.value)
@@ -668,7 +642,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const confirmMobileSelection = () => {
-    if (!showMobileFooter.value) return
+    if (!props.multiple) return
 
     const value = mobileSelection.value.slice()
     mobileSelectionCommitted.value = true
@@ -679,7 +653,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const cancelMobileSelection = () => {
-    if (!showMobileFooter.value) return
+    if (!props.multiple) return
 
     mobileSelectionCommitted.value = false
     syncMobileSelection()
@@ -767,7 +741,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const handleClickOutside = (event: Event) => {
-    if (showMobileFooter.value && expanded.value) {
+    if (props.multiple && expanded.value) {
       mobileSelectionCommitted.value = false
       syncMobileSelection()
       setSelected()
@@ -781,11 +755,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const handleEsc = () => {
-    if (
-      showMobileFooter.value &&
-      expanded.value &&
-      states.inputValue.length === 0
-    ) {
+    if (props.multiple && expanded.value && states.inputValue.length === 0) {
       mobileSelectionCommitted.value = false
       syncMobileSelection()
       setSelected()
@@ -1063,8 +1033,6 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
     collapseTagSize,
     setSelected,
     selectDisabled,
-    isMobile,
-    resolvedTeleported,
     selectionModelValue,
     showMobileFooter,
     mobileCancelText,

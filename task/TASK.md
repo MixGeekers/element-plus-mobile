@@ -69,35 +69,36 @@
 
 ### 已完成改造项
 
-- [x] Form 在窄屏下增加 `is-mobile` 运行时态并自动切换为移动端表单布局
-- [x] FormItem 移动端强制标签置顶、取消桌面偏移量、错误信息回流到文档流
-- [x] Select / SelectV2 增加移动端检测、移动端类名与移动端强制 teleported 行为
-- [x] Select / SelectV2 多选引入草稿选择模型，提供确认 / 取消底部操作区
-- [x] Select / SelectV2 选项选中态在移动端跟随草稿值同步更新
+- [x] Form / FormItem 切换为默认移动端堆叠布局，移除 `inline`、`labelPosition`、`labelWidth` 与 `mobile` 相关 API
+- [x] FormItem 默认标签置顶、取消桌面偏移量，错误信息回流到文档流
+- [x] Select / SelectV2 默认切换为底部弹层交互，移除 `mobile`、`teleported`、`placement`、`fallbackPlacements`、`showArrow`、`offset`、`fitInputWidth`、`popperOptions`
+- [x] Select / SelectV2 多选引入草稿选择模型，提供确认 / 取消底部操作区，并在展开态同步草稿选中态
 - [x] Select 下拉层改为更适合移动端的底部弹层样式，放大选项点击热区
-- [x] Input / Textarea / InputNumber 提升触控尺寸并优化移动端输入字号
-- [x] Checkbox / Radio / Switch / Slider / Rate / Segmented 提升触控热区与窄屏布局表现
+- [x] Input / Textarea / InputNumber 默认提升触控尺寸并优化输入字号
+- [x] InputNumber 修正右侧操作按钮布局与间距，统一移动端样式
+- [x] Checkbox / Radio / Switch / Slider / Rate / Segmented 提升触控热区与移动端布局表现
 - [x] CheckboxGroup / RadioGroup 调整为更适合移动端的换行与间距
 - [x] 第二批表单组件样式尺寸统一改为 rem / rem-backed token，保留 `1px` hairline 与 focus ring
-- [x] 补充 Form / Select / SelectV2 的移动端定向测试
-- [x] 补充 Form / Select / SelectV2 的移动端文档示例，并提供桌面 / 移动预览切换
-- [x] 同步通过 `theme-chalk` 构建验证
+- [x] 补充并重写 Form / Select / SelectV2 的移动端定向测试，删除桌面 / 移动分支断言
+- [x] 补充并重写 Form / Select / SelectV2 的文档示例，默认展示移动端效果并移除桌面预览内容
 
 ### 关键验证
 
-- [x] `pnpm exec vitest run packages/components/form/__tests__/form.test.tsx` 通过（28 / 28）
-- [x] `pnpm exec vitest run packages/components/select/__tests__/select.test.ts` 通过（130 / 130）
-- [x] `pnpm exec vitest run packages/components/select-v2/__tests__/select.test.ts` 通过（104 / 104）
-- [x] `pnpm --filter @element-plus/theme-chalk build` 通过
+- [x] `pnpm exec vitest run packages/components/form/__tests__/form.test.tsx`
+- [x] `pnpm exec vitest run packages/components/form/__tests__/form-item.test.tsx`
+- [x] `pnpm exec vitest run packages/components/input-number/__tests__/input-number.test.tsx`
+- [x] `pnpm exec vitest run packages/components/select/__tests__/select.test.ts`
+- [x] `pnpm exec vitest run packages/components/select-v2/__tests__/select.test.ts`
+- [x] `pnpm --filter @element-plus/theme-chalk build`
+- [x] `pnpm --dir docs vitepress:build`
 
 ### 当前遗留说明
 
 - [ ] `CheckboxButton / RadioButton` 的移动端专门样式仍可继续细化
 - [ ] 日期、时间、级联等更复杂表单组件尚未纳入本批
-- [ ] 需要补充移动端表单场景的文档 / demo 展示
+- [ ] 仍需完成最终测试 / 构建验证并补充 breaking changes 说明
 
 ### 下一步建议
 
 - [ ] 继续推进日期、时间、级联、上传等高频表单组件的移动端改造
-- [ ] 补一套移动端表单 playground / docs 示例，覆盖底部弹层与窄屏校验态
-- [ ] 梳理本批移动端行为变化中的 breaking changes 说明
+- [ ] 梳理第二批默认移动端化后的 breaking changes 与迁移说明

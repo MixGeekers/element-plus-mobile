@@ -311,32 +311,30 @@ $checkbox-bordered-input-width: map.merge(
     margin-right: 0;
   }
 
-  @include res('sm-and-down', $breakpoints-spec) {
-    align-items: flex-start;
-    min-height: to-rem(44px);
-    height: auto;
-    margin-right: to-rem(16px);
-    white-space: normal;
-    @include touch-feedback;
+  align-items: flex-start;
+  min-height: to-rem(44px);
+  height: auto;
+  margin-right: to-rem(16px);
+  white-space: normal;
+  @include touch-feedback;
 
-    @include when(bordered) {
-      padding-top: to-rem(10px);
-      padding-bottom: to-rem(10px);
+  @include when(bordered) {
+    padding-top: to-rem(10px);
+    padding-bottom: to-rem(10px);
+  }
+
+  @include e(inner) {
+    width: to-rem(18px);
+    height: to-rem(18px);
+
+    &::after {
+      width: to-rem(4px);
+      height: to-rem(8px);
     }
+  }
 
-    @include e(inner) {
-      width: to-rem(18px);
-      height: to-rem(18px);
-
-      &::after {
-        width: to-rem(4px);
-        height: to-rem(8px);
-      }
-    }
-
-    @include e(label) {
-      padding-left: to-rem(12px);
-      line-height: 1.4;
-    }
+  @include e(label) {
+    padding-left: to-rem(12px);
+    line-height: 1.4;
   }
 }

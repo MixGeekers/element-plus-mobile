@@ -1,4 +1,4 @@
-import { nextTick, reactive, ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, test, vi } from 'vitest'
 import { ArrowDown, ArrowUp } from '@element-plus/utils'
@@ -312,33 +312,6 @@ describe('InputNumber.vue', () => {
     ))
     expect(wrapper.findComponent(ArrowDown).exists()).toBe(true)
     expect(wrapper.findComponent(ArrowUp).exists()).toBe(true)
-  })
-
-  test('mobile prop should add mobile class', async () => {
-    const num = ref(0)
-    const wrapper = mount(() => <InputNumber mobile v-model={num.value} />)
-
-    await nextTick()
-
-    expect(wrapper.find('.el-input-number').classes()).toContain('is-mobile')
-  })
-
-  test('should inherit mobile class from form context', async () => {
-    const form = reactive({
-      budget: 100,
-    })
-
-    const wrapper = mount(() => (
-      <ElForm mobile model={form}>
-        <ElFormItem label="Budget">
-          <InputNumber v-model={form.budget} controls-position="right" />
-        </ElFormItem>
-      </ElForm>
-    ))
-
-    await nextTick()
-
-    expect(wrapper.find('.el-input-number').classes()).toContain('is-mobile')
   })
 
   test('input-event', async () => {

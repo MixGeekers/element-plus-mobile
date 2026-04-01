@@ -9,7 +9,7 @@ $checked-icon: "data:image/svg+xml;utf8,%3Csvg class='icon' width='200' height='
   content: '';
   position: absolute;
   top: 50%;
-  right: to-rem(20px);
+  right: to-rem(18px);
   border-top: none;
   border-right: none;
   background-repeat: no-repeat;
@@ -20,24 +20,27 @@ $checked-icon: "data:image/svg+xml;utf8,%3Csvg class='icon' width='200' height='
   -webkit-mask: url('#{$checked-icon}') no-repeat;
   -webkit-mask-size: 100% 100%;
   transform: translateY(-50%);
-  width: to-rem(12px);
-  height: to-rem(12px);
+  width: to-rem(16px);
+  height: to-rem(16px);
 }
 
 @include b(select-dropdown) {
   @include e(item) {
     font-size: map.get($select, 'font-size');
-    // 20 as the padding of option item, 12 as the size of ✓ icon size
-    padding: 0 to-rem(32px) 0 to-rem(20px);
+    display: flex;
+    align-items: center;
+    min-height: to-rem(48px);
+    padding: to-rem(12px) to-rem(48px) to-rem(12px) to-rem(16px);
     position: relative;
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     color: map.get($select-option, 'text-color');
-    height: map.get($select-option, 'height');
-    line-height: map.get($select-option, 'height');
+    height: auto;
+    line-height: 1.4;
     box-sizing: border-box;
     cursor: pointer;
+    @include touch-feedback;
 
     @include when(hovering) {
       background-color: map.get($select-option, 'hover-background');
@@ -65,29 +68,6 @@ $checked-icon: "data:image/svg+xml;utf8,%3Csvg class='icon' width='200' height='
     .#{$namespace}-select-dropdown__item.is-disabled {
       &::after {
         background-color: map.get($select-option, 'disabled-color');
-      }
-    }
-  }
-}
-
-@include res('sm-and-down', $breakpoints-spec) {
-  .#{$namespace}-select__popper.is-mobile {
-    .#{$namespace}-select-dropdown__item {
-      display: flex;
-      align-items: center;
-      min-height: to-rem(48px);
-      height: auto;
-      line-height: 1.4;
-      padding: to-rem(12px) to-rem(48px) to-rem(12px) to-rem(16px);
-      white-space: normal;
-      @include touch-feedback;
-    }
-
-    &.is-multiple {
-      .#{$namespace}-select-dropdown__item.is-selected::after {
-        right: to-rem(18px);
-        width: to-rem(16px);
-        height: to-rem(16px);
       }
     }
   }

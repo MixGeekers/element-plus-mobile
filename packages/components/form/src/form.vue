@@ -7,7 +7,6 @@
 <script lang="ts" setup>
 import { computed, provide, reactive, ref, toRefs, watch } from 'vue'
 import { cloneDeep } from 'lodash-unified'
-import { useWindowSize } from '@vueuse/core'
 import {
   debugWarn,
   ensureArray,
@@ -19,7 +18,7 @@ import { useNamespace } from '@element-plus/hooks'
 import { useFormSize } from './hooks'
 import { formContextKey } from './constants'
 import { formEmits } from './form'
-import { filterFields, useFormLabelWidth } from './utils'
+import { filterFields } from './utils'
 
 import type { ValidateFieldsError } from 'async-validator'
 import type { Arrayable } from '@element-plus/utils'
@@ -37,9 +36,7 @@ defineOptions({
   name: COMPONENT_NAME,
 })
 const props = withDefaults(defineProps<FormProps>(), {
-  labelPosition: 'right',
   requireAsteriskPosition: 'left',
-  labelWidth: '',
   labelSuffix: '',
   showMessage: true,
   validateOnRuleChange: true,
@@ -50,25 +47,10 @@ const emit = defineEmits(formEmits)
 const formRef = ref<HTMLElement>()
 const fields = reactive<FormItemContext[]>([])
 const initialValues = new Map<string, any>()
-const { width: viewportWidth } = useWindowSize({
-  initialWidth: Number.POSITIVE_INFINITY,
-})
 
 const formSize = useFormSize()
 const ns = useNamespace('form')
-const isMobile = computed(() => props.mobile || viewportWidth.value < 768)
-const formClasses = computed(() => {
-  const { labelPosition, inline } = props
-  return [
-    ns.b(),
-    ns.m(formSize.value || 'default'),
-    {
-      [ns.m(`label-${labelPosition}`)]: labelPosition,
-      [ns.m('inline')]: inline,
-      [ns.is('mobile')]: isMobile.value,
-    },
-  ]
-})
+const formClasses = computed(() => [ns.b(), ns.m(formSize.value || 'default')])
 
 const getField: FormContext['getField'] = (prop) => {
   return filterFields(fields, [prop])[0]
@@ -255,7 +237,6 @@ provide(
   formContextKey,
   reactive({
     ...toRefs(props),
-    isMobile,
     emit,
 
     resetFields,
@@ -265,8 +246,6 @@ provide(
     addField,
     removeField,
     setInitialValues,
-
-    ...useFormLabelWidth(),
   })
 )
 

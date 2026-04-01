@@ -52,10 +52,6 @@ export interface InputNumberProps {
    */
   size?: ComponentSize
   /**
-   * @description force the component to use the mobile layout regardless of viewport width
-   */
-  mobile?: boolean
-  /**
    * @description whether to enable the control buttons
    */
   controls?: boolean
@@ -158,10 +154,6 @@ export const inputNumberProps = buildProps({
    * @description size of the component
    */
   size: useSizeProp,
-  /**
-   * @description force the component to use the mobile layout regardless of viewport width
-   */
-  mobile: Boolean,
   /**
    * @description whether to enable the control buttons
    */

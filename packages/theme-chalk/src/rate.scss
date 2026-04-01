@@ -112,25 +112,23 @@ $rate-size: map.merge(
     }
   }
 
-  @include res('sm-and-down', $breakpoints-spec) {
-    min-height: to-rem(44px);
+  min-height: to-rem(44px);
 
-    @include e(item) {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: to-rem(36px);
-      min-height: to-rem(36px);
-    }
+  @include e(item) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: to-rem(36px);
+    min-height: to-rem(36px);
+  }
 
-    & .#{bem('rate', 'icon')} {
-      font-size: to-rem(22px);
-      margin-right: to-rem(6px);
-    }
+  & .#{bem('rate', 'icon')} {
+    font-size: to-rem(22px);
+    margin-right: to-rem(6px);
+  }
 
-    @include e(text) {
-      margin-left: to-rem(8px);
-      line-height: 1.4;
-    }
+  @include e(text) {
+    margin-left: to-rem(8px);
+    line-height: 1.4;
   }
 }

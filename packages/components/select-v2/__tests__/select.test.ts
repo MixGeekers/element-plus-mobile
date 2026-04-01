@@ -4,7 +4,6 @@ import { ArrowDown, NOOP, hasClass } from '@element-plus/utils'
 import { EVENT_CODE } from '@element-plus/constants'
 import { makeMountFunc } from '@element-plus/test-utils/make-mount'
 import { rAF } from '@element-plus/test-utils/tick'
-import defineGetter from '@element-plus/test-utils/define-getter'
 import { usePopperContainerId } from '@element-plus/hooks'
 import { ElForm, ElFormItem } from '@element-plus/components/form'
 import Select from '../src/select.vue'
@@ -143,10 +142,8 @@ const createSelect = (
         :placeholder="placeholder"
         :allow-create="allowCreate"
         :remote="remote"
-        :mobile="mobile"
         :reserve-keyword="reserveKeyword"
         :scrollbar-always-on="scrollbarAlwaysOn"
-        :teleported="teleported"
         :tabindex="tabindex"
         :default-first-option="defaultFirstOption"
         :automatic-dropdown="automaticDropdown"
@@ -188,7 +185,6 @@ const createSelect = (
           valueKey: 'value',
           disabled: false,
           clearable: false,
-          mobile: false,
           multiple: false,
           collapseTags: false,
           collapseTagsTooltip: false,
@@ -201,7 +197,6 @@ const createSelect = (
           placeholder: DEFAULT_PLACEHOLDER,
           scrollbarAlwaysOn: false,
           popperAppendToBody: undefined,
-          teleported: undefined,
           tabindex: undefined,
           defaultFirstOption: false,
           automaticDropdown: false,
@@ -232,6 +227,12 @@ function getMobileActionButtons(): HTMLElement[] {
       '.el-select__mobile-actions .el-button'
     )
   )
+}
+
+const confirmDraftSelection = async () => {
+  const confirmButton = getMobileActionButtons()[1]
+  confirmButton?.click()
+  await nextTick()
 }
 
 const CLASS_NAME = 'el-select'
@@ -681,13 +682,19 @@ describe('Select', () => {
       })
       await nextTick()
       const vm = wrapper.vm as any
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       const options = getOptions()
       options[1].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(1)
       expect(vm.value[0]).toBe(vm.options[1].value)
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       options[3].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(2)
       expect(vm.value[1]).toBe(vm.options[3].value)
       const tagIcon = wrapper.find('.el-tag__close')
@@ -695,62 +702,47 @@ describe('Select', () => {
       expect(vm.value.length).toBe(1)
     })
 
-    it('uses mobile draft selection until confirmed', async () => {
-      const restore = defineGetter(window, 'innerWidth', 375)
-      try {
-        const wrapper = createSelect({
-          data: () => ({
-            multiple: true,
-            value: [],
-            teleported: false,
-            options: [
-              { value: 'option_1', label: 'Option 1' },
-              { value: 'option_2', label: 'Option 2' },
-              { value: 'option_3', label: 'Option 3' },
-            ],
-          }),
-        })
-
-        window.dispatchEvent(new Event('resize'))
-        await nextTick()
-
-        const select = wrapper.findComponent(Select)
-        const selectVm = select.vm as any
-
-        expect(wrapper.classes()).toContain('is-mobile')
-        expect(selectVm.isMobile).toBe(true)
-        expect(selectVm.resolvedTeleported).toBe(true)
-
-        await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
-        await nextTick()
-
-        getOptions()[0].click()
-        await nextTick()
-        getOptions()[1].click()
-        await nextTick()
-
-        expect((wrapper.vm as any).value).toEqual([])
-        expect(
-          getOptions().filter((item) => item.classList.contains('is-selected'))
-        ).toHaveLength(2)
-
-        getMobileActionButtons()[1].click()
-        await nextTick()
-
-        expect((wrapper.vm as any).value).toEqual(['option_1', 'option_2'])
-        expect(selectVm.expanded).toBe(false)
-      } finally {
-        restore()
-      }
-    })
-
-    it('uses mobile interaction when mobile prop is enabled', async () => {
+    it('uses draft selection until confirmed', async () => {
       const wrapper = createSelect({
         data: () => ({
-          mobile: true,
           multiple: true,
           value: [],
-          teleported: false,
+          options: [
+            { value: 'option_1', label: 'Option 1' },
+            { value: 'option_2', label: 'Option 2' },
+            { value: 'option_3', label: 'Option 3' },
+          ],
+        }),
+      })
+
+      const select = wrapper.findComponent(Select)
+      const selectVm = select.vm as any
+
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
+
+      getOptions()[0].click()
+      await nextTick()
+      getOptions()[1].click()
+      await nextTick()
+
+      expect((wrapper.vm as any).value).toEqual([])
+      expect(
+        getOptions().filter((item) => item.classList.contains('is-selected'))
+      ).toHaveLength(2)
+
+      getMobileActionButtons()[1].click()
+      await nextTick()
+
+      expect((wrapper.vm as any).value).toEqual(['option_1', 'option_2'])
+      expect(selectVm.expanded).toBe(false)
+    })
+
+    it('shows confirmation actions while multiple dropdown is expanded', async () => {
+      const wrapper = createSelect({
+        data: () => ({
+          multiple: true,
+          value: [],
           options: [
             { value: 'option_1', label: 'Option 1' },
             { value: 'option_2', label: 'Option 2' },
@@ -762,11 +754,7 @@ describe('Select', () => {
       await nextTick()
 
       const select = wrapper.findComponent(Select)
-      const selectVm = select.vm as any
-
-      expect(wrapper.classes()).toContain('is-mobile')
-      expect(selectVm.isMobile).toBe(true)
-      expect(selectVm.resolvedTeleported).toBe(true)
+      expect(select.exists()).toBe(true)
 
       await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
       await nextTick()
@@ -774,50 +762,41 @@ describe('Select', () => {
       expect(getMobileActionButtons()).toHaveLength(2)
     })
 
-    it('cancels mobile draft selection', async () => {
-      const restore = defineGetter(window, 'innerWidth', 375)
-      try {
-        const wrapper = createSelect({
-          data: () => ({
-            multiple: true,
-            value: ['option_1'],
-            teleported: false,
-            options: [
-              { value: 'option_1', label: 'Option 1' },
-              { value: 'option_2', label: 'Option 2' },
-              { value: 'option_3', label: 'Option 3' },
-            ],
-          }),
-        })
+    it('cancels draft selection', async () => {
+      const wrapper = createSelect({
+        data: () => ({
+          multiple: true,
+          value: ['option_1'],
+          options: [
+            { value: 'option_1', label: 'Option 1' },
+            { value: 'option_2', label: 'Option 2' },
+            { value: 'option_3', label: 'Option 3' },
+          ],
+        }),
+      })
 
-        window.dispatchEvent(new Event('resize'))
-        await nextTick()
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
 
-        await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
-        await nextTick()
+      getOptions()[1].click()
+      await nextTick()
 
-        getOptions()[1].click()
-        await nextTick()
+      expect((wrapper.vm as any).value).toEqual(['option_1'])
+      expect(
+        getOptions().filter((item) => item.classList.contains('is-selected'))
+      ).toHaveLength(2)
 
-        expect((wrapper.vm as any).value).toEqual(['option_1'])
-        expect(
-          getOptions().filter((item) => item.classList.contains('is-selected'))
-        ).toHaveLength(2)
+      getMobileActionButtons()[0].click()
+      await nextTick()
 
-        getMobileActionButtons()[0].click()
-        await nextTick()
+      expect((wrapper.vm as any).value).toEqual(['option_1'])
 
-        expect((wrapper.vm as any).value).toEqual(['option_1'])
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
 
-        await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
-        await nextTick()
-
-        expect(
-          getOptions().filter((item) => item.classList.contains('is-selected'))
-        ).toHaveLength(1)
-      } finally {
-        restore()
-      }
+      expect(
+        getOptions().filter((item) => item.classList.contains('is-selected'))
+      ).toHaveLength(1)
     })
 
     it('remove-tag', async () => {
@@ -835,6 +814,8 @@ describe('Select', () => {
       })
       await nextTick()
       const vm = wrapper.vm as any
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       const options = getOptions()
       options[0].click()
       await nextTick()
@@ -842,6 +823,7 @@ describe('Select', () => {
       await nextTick()
       options[2].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(3)
       const tagCloseIcons = wrapper.findAll('.el-tag__close')
       await tagCloseIcons[1].trigger('click')
@@ -867,14 +849,17 @@ describe('Select', () => {
       })
       await nextTick()
       const vm = wrapper.vm as any
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       const options = getOptions()
       options[1].click()
       await nextTick()
       options[2].click()
       await nextTick()
-      expect(vm.value.length).toBe(2)
       options[3].click()
       await nextTick()
+      await confirmDraftSelection()
+      expect(vm.value.length).toBe(2)
       expect(vm.value.length).toBe(2)
     })
 
@@ -905,17 +890,26 @@ describe('Select', () => {
 
       await nextTick()
       const vm = wrapper.vm as any
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       const options = getOptions()
       options[1].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(1)
       expect(vm.value).toContainEqual(vm.options[1].value)
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       options[2].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(2)
       expect(vm.value).toContainEqual(vm.options[2].value)
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       options[2].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(1)
       expect(vm.value).not.toContainEqual(vm.options[2].value)
 
@@ -923,8 +917,11 @@ describe('Select', () => {
       await nextTick()
       expect(vm.value.length).toBe(1)
       expect(vm.value).toContainEqual(vm.options[1].value)
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       options[0].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(2)
       expect(vm.value).toContainEqual(vm.options[0].value)
     })
@@ -980,15 +977,16 @@ describe('Select', () => {
       })
       await nextTick()
       const vm = wrapper.vm as any
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       const options = getOptions()
       options[0].click()
       await nextTick()
-      expect(vm.value.length).toBe(1)
-      expect(vm.value[0]).toBe(vm.options[0].value)
       options[1].click()
       await nextTick()
       options[2].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(3)
       const tags = wrapper.findAll('.el-tag').filter((item) => {
         return !hasClass(item.element, 'in-tooltip')
@@ -1009,15 +1007,16 @@ describe('Select', () => {
       })
       await nextTick()
       const vm = wrapper.vm as any
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       const options = getOptions()
       options[0].click()
       await nextTick()
-      expect(vm.value.length).toBe(1)
-      expect(vm.value[0]).toBe(vm.options[0].value)
       options[1].click()
       await nextTick()
       options[2].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(3)
       expect(wrapper.findAll('.el-tag')[1].element.textContent.trim()).toBe(
         '+ 2'
@@ -1038,6 +1037,8 @@ describe('Select', () => {
       })
       await nextTick()
       const vm = wrapper.vm as any
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
       const options = getOptions()
       options[0].click()
       await nextTick()
@@ -1047,6 +1048,7 @@ describe('Select', () => {
       await nextTick()
       options[3].click()
       await nextTick()
+      await confirmDraftSelection()
       expect(vm.value.length).toBe(4)
       const tags = wrapper.findAll('.el-tag').filter((item) => {
         return !hasClass(item.element, 'in-tooltip')
@@ -1406,6 +1408,8 @@ describe('Select', () => {
       expect(selectVm.filteredOptions.length).toBe(1)
       // selected the new option
       selectVm.onSelect(selectVm.filteredOptions[0])
+      await selectVm.confirmMobileSelection()
+      await nextTick()
       // closed the menu
       await input.trigger('click')
       await rAF()
@@ -1413,14 +1417,16 @@ describe('Select', () => {
       await input.trigger('input')
       await nextTick()
       selectVm.onSelect(selectVm.filteredOptions[0])
+      await selectVm.confirmMobileSelection()
+      await nextTick()
       expect(JSON.stringify(vm.value)).toBe(JSON.stringify(['1111', '2222']))
       await input.trigger('click')
-      expect(selectVm.filteredOptions.length).toBe(5)
+      expect(selectVm.filteredOptions.length).toBe(3)
       // remove tag
       const tagCloseIcons = wrapper.findAll('.el-tag__close')
       await tagCloseIcons[1].trigger('click')
       await rAF()
-      expect(selectVm.filteredOptions.length).toBe(4)
+      expect(selectVm.filteredOptions.length).toBe(3)
       // simulate backspace
       await wrapper.find('input').trigger('keydown', {
         key: EVENT_CODE.backspace,
@@ -1940,11 +1946,8 @@ describe('Select', () => {
         multiple
       />`
     )
-    await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
-
     await clickClearButton(wrapper)
-    const option = document.querySelector(`.${OPTION_ITEM_CLASS_NAME}`)
-    option.click()
+    await nextTick()
     const tags = await vi.waitUntil(() => wrapper.findAll('.el-tag'))
 
     expect(tags.length).toBe(1)
@@ -1996,8 +1999,11 @@ describe('Select', () => {
     )
     // The placeholder should disappear after it is selected again
     const options = getOptions()
+    await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+    await nextTick()
     options[0].click()
     await nextTick()
+    await confirmDraftSelection()
     expect(wrapper.find(`.${PLACEHOLDER_CLASS_NAME}`).exists()).toBeFalsy()
     // Simulate keyboard events
     const selectInput = wrapper.find('input')
@@ -2290,6 +2296,8 @@ describe('Select', () => {
     expect(selectVm.states.hoveringIndex).toBe(8)
     selectVm.onKeyboardSelect()
     await nextTick()
+    await selectVm.confirmMobileSelection()
+    await nextTick()
     expect(vm.value).toEqual([6])
   })
 
@@ -2385,85 +2393,42 @@ describe('Select', () => {
     })
   })
 
-  describe('teleported API', () => {
-    it('should mount on popper container', async () => {
-      expect(document.body.innerHTML).toBe('')
-      createSelect({
-        data() {
-          return {
-            options: [
-              {
-                value: '选项1',
-                label:
-                  '黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕',
-              },
-              {
-                value: '选项2',
-                label:
-                  '双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶',
-              },
-              {
-                value: '选项3',
-                label: '蚵仔煎蚵仔煎蚵仔煎蚵仔煎蚵仔煎蚵仔煎',
-              },
-              {
-                value: '选项4',
-                label: '龙须面',
-              },
-              {
-                value: '选项5',
-                label: '北京烤鸭',
-              },
-            ],
-          }
-        },
-      })
-
-      await nextTick()
-      const { selector } = usePopperContainerId()
-      expect(document.body.querySelector(selector.value)!.innerHTML).not.toBe(
-        ''
-      )
+  it('renders dropdown inside the popper container', async () => {
+    expect(document.body.innerHTML).toBe('')
+    createSelect({
+      data() {
+        return {
+          options: [
+            {
+              value: '选项1',
+              label:
+                '黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕',
+            },
+            {
+              value: '选项2',
+              label:
+                '双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶',
+            },
+            {
+              value: '选项3',
+              label: '蚵仔煎蚵仔煎蚵仔煎蚵仔煎蚵仔煎蚵仔煎',
+            },
+            {
+              value: '选项4',
+              label: '龙须面',
+            },
+            {
+              value: '选项5',
+              label: '北京烤鸭',
+            },
+          ],
+        }
+      },
     })
 
-    it('should not mount on the popper container', async () => {
-      expect(document.body.innerHTML).toBe('')
-      createSelect({
-        data() {
-          return {
-            teleported: false,
-            options: [
-              {
-                value: '选项1',
-                label:
-                  '黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕黄金糕',
-              },
-              {
-                value: '选项2',
-                label:
-                  '双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶双皮奶',
-              },
-              {
-                value: '选项3',
-                label: '蚵仔煎蚵仔煎蚵仔煎蚵仔煎蚵仔煎蚵仔煎',
-              },
-              {
-                value: '选项4',
-                label: '龙须面',
-              },
-              {
-                value: '选项5',
-                label: '北京烤鸭',
-              },
-            ],
-          }
-        },
-      })
-
-      await nextTick()
-      const { selector } = usePopperContainerId()
-      expect(document.body.querySelector(selector.value).innerHTML).toBe('')
-    })
+    await nextTick()
+    const { selector } = usePopperContainerId()
+    expect(document.body.querySelector(selector.value)!.innerHTML).not.toBe('')
   })
 
   it('filterable case-insensitive', async () => {

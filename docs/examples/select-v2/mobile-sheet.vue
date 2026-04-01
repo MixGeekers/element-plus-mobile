@@ -2,10 +2,10 @@
   <div class="mobile-select-v2-doc-demo">
     <div class="mobile-select-v2-doc-demo__copy">
       <div class="mobile-select-v2-doc-demo__title">
-        SelectV2 Mobile Sheet Preview
+        SelectV2 Bottom-Sheet Flow
       </div>
       <p class="mobile-select-v2-doc-demo__desc">
-        The virtualized list keeps the same mobile bottom-sheet flow while
+        The virtualized list keeps the same default bottom-sheet flow while
         handling much larger option sets.
       </p>
     </div>
@@ -33,7 +33,6 @@
 
           <el-select-v2
             v-model="segment"
-            mobile
             :options="segmentOptions"
             filterable
             placeholder="Choose one segment"
@@ -52,7 +51,6 @@
 
           <el-select-v2
             v-model="stores"
-            mobile
             :options="storeOptions"
             collapse-tags
             filterable
@@ -190,26 +188,6 @@ const storeOptions = Array.from({ length: 300 }).map((_, index) => ({
 .mobile-select-v2-doc-demo {
   :deep(.el-select) {
     width: 100%;
-  }
-
-  :deep(.el-select__wrapper) {
-    min-height: 2.75rem;
-    padding: 0.375rem 0.875rem;
-    gap: 0.5rem;
-  }
-
-  :deep(.el-select__selection) {
-    gap: 0.5rem;
-  }
-
-  :deep(.el-select__selected-item) {
-    align-items: center;
-    min-height: 2rem;
-  }
-
-  :deep(.el-select__input) {
-    height: 2rem;
-    font-size: 1rem;
   }
 }
 </style>

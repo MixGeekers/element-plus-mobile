@@ -141,6 +141,7 @@ $switch-content-padding: map.merge(
     display: inline-flex;
     position: relative;
     align-items: center;
+    overflow: hidden;
     min-width: map.get($switch-core-width, 'default');
     height: map.get($switch-core-height, 'default');
     border: 1px solid
@@ -159,12 +160,14 @@ $switch-content-padding: map.merge(
 
     .#{$namespace}-switch__inner {
       width: 100%;
+      min-width: 0;
       transition: all getCssVar('transition-duration');
       height: map.get($switch-button-size, 'default');
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      box-sizing: border-box;
       padding: 0 #{map.get($switch-content-padding, 'default')} 0
         calc(#{map.get($switch-button-size, 'default')} + #{to-rem(2px)});
 
@@ -180,7 +183,9 @@ $switch-content-padding: map.merge(
 
     .#{$namespace}-switch__action {
       position: absolute;
+      top: 50%;
       left: to-rem(1px);
+      transform: translateY(-50%);
       border-radius: getCssVar('border-radius-circle');
       transition: all getCssVar('transition-duration');
       width: map.get($switch-button-size, 'default');
@@ -291,43 +296,41 @@ $switch-content-padding: map.merge(
     }
   }
 
-  @include res('sm-and-down', $breakpoints-spec) {
-    min-height: to-rem(44px);
-    gap: to-rem(10px);
-    @include touch-feedback;
+  min-height: to-rem(44px);
+  gap: to-rem(10px);
+  @include touch-feedback;
 
-    @include e(label) {
-      display: inline-flex;
-      align-items: center;
-      min-height: to-rem(32px);
-      line-height: normal;
+  @include e(label) {
+    display: inline-flex;
+    align-items: center;
+    min-height: to-rem(32px);
+    line-height: normal;
+  }
+
+  @include e(core) {
+    min-width: to-rem(52px);
+    height: to-rem(32px);
+    border-radius: to-rem(16px);
+
+    .#{$namespace}-switch__inner {
+      height: to-rem(28px);
+      padding: 0 to-rem(8px) 0 to-rem(30px);
     }
 
-    @include e(core) {
-      min-width: to-rem(52px);
-      height: to-rem(32px);
-      border-radius: to-rem(16px);
+    .#{$namespace}-switch__action {
+      width: to-rem(28px);
+      height: to-rem(28px);
+    }
+  }
+
+  @include when(checked) {
+    .#{$namespace}-switch__core {
+      .#{$namespace}-switch__action {
+        left: calc(100% - #{to-rem(29px)});
+      }
 
       .#{$namespace}-switch__inner {
-        height: to-rem(28px);
-        padding: 0 to-rem(8px) 0 to-rem(30px);
-      }
-
-      .#{$namespace}-switch__action {
-        width: to-rem(28px);
-        height: to-rem(28px);
-      }
-    }
-
-    @include when(checked) {
-      .#{$namespace}-switch__core {
-        .#{$namespace}-switch__action {
-          left: calc(100% - #{to-rem(29px)});
-        }
-
-        .#{$namespace}-switch__inner {
-          padding: 0 to-rem(30px) 0 to-rem(8px);
-        }
+        padding: 0 to-rem(30px) 0 to-rem(8px);
       }
     }
   }

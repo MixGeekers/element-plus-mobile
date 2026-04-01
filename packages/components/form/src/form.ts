@@ -50,29 +50,13 @@ export interface FormProps extends FormMetaProps {
    */
   rules?: FormRules
   /**
-   * @description Position of label. If set to `'left'` or `'right'`, `label-width` prop is also required.
-   */
-  labelPosition?: 'left' | 'right' | 'top'
-  /**
    * @description Position of asterisk.
    */
   requireAsteriskPosition?: 'left' | 'right'
   /**
-   * @description Width of label, e.g. `'50px'`. All its direct child form items will inherit this value. `auto` is supported.
-   */
-  labelWidth?: string | number
-  /**
    * @description Suffix of the label.
    */
   labelSuffix?: string
-  /**
-   * @description Whether the form is inline.
-   */
-  inline?: boolean
-  /**
-   * @description Force the form to use the mobile layout regardless of viewport width.
-   */
-  mobile?: boolean
   /**
    * @description Whether to display the error message inline with the form item.
    */
@@ -119,14 +103,6 @@ export const formProps = buildProps({
     type: definePropType<FormRules>(Object),
   },
   /**
-   * @description Position of label. If set to `'left'` or `'right'`, `label-width` prop is also required.
-   */
-  labelPosition: {
-    type: String,
-    values: ['left', 'right', 'top'],
-    default: 'right',
-  },
-  /**
    * @description Position of asterisk.
    */
   requireAsteriskPosition: {
@@ -135,27 +111,12 @@ export const formProps = buildProps({
     default: 'left',
   },
   /**
-   * @description Width of label, e.g. `'50px'`. All its direct child form items will inherit this value. `auto` is supported.
-   */
-  labelWidth: {
-    type: [String, Number],
-    default: '',
-  },
-  /**
    * @description Suffix of the label.
    */
   labelSuffix: {
     type: String,
     default: '',
   },
-  /**
-   * @description Whether the form is inline.
-   */
-  inline: Boolean,
-  /**
-   * @description Force the form to use the mobile layout regardless of viewport width.
-   */
-  mobile: Boolean,
   /**
    * @description Whether to display the error message inline with the form item.
    */

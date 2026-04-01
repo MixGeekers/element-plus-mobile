@@ -203,62 +203,61 @@ $slider-height: map.merge($common-component-size, $slider-height);
     }
   }
 
-  @include res('sm-and-down', $breakpoints-spec) {
-    min-height: to-rem(44px);
+  min-height: to-rem(44px);
 
-    @include m(with-input) {
-      flex-direction: column;
-      align-items: stretch;
-      gap: to-rem(16px);
+  @include m(with-input) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: to-rem(20px);
+  }
+
+  @include e(runway) {
+    height: to-rem(6px);
+    @include touch-feedback;
+
+    &.show-input {
+      margin-right: 0;
+    }
+  }
+
+  @include e(input) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @include e(button-wrapper) {
+    width: to-rem(36px);
+    height: to-rem(36px);
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @include e(button) {
+    width: to-rem(20px);
+    height: to-rem(20px);
+  }
+
+  @include e(stop) {
+    width: to-rem(8px);
+    height: to-rem(8px);
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @include when(vertical) {
+    .#{$namespace}-slider__runway {
+      width: to-rem(6px);
     }
 
-    @include e(runway) {
-      height: to-rem(6px);
-      @include touch-feedback;
-
-      &.show-input {
-        margin-right: 0;
-      }
+    .#{$namespace}-slider__button-wrapper {
+      top: auto;
+      left: 50%;
+      transform: translate(-50%, 50%);
     }
 
-    @include e(input) {
-      width: 100%;
-    }
-
-    @include e(button-wrapper) {
-      width: to-rem(36px);
-      height: to-rem(36px);
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    @include e(button) {
-      width: to-rem(20px);
-      height: to-rem(20px);
-    }
-
-    @include e(stop) {
-      width: to-rem(8px);
-      height: to-rem(8px);
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    @include when(vertical) {
-      .#{$namespace}-slider__runway {
-        width: to-rem(6px);
-      }
-
-      .#{$namespace}-slider__button-wrapper {
-        top: auto;
-        left: 50%;
-        transform: translate(-50%, 50%);
-      }
-
-      .#{$namespace}-slider__stop {
-        top: auto;
-        transform: translate(-50%, 50%);
-      }
+    .#{$namespace}-slider__stop {
+      top: auto;
+      transform: translate(-50%, 50%);
     }
   }
 }

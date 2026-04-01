@@ -12,7 +12,6 @@ import {
 } from 'vitest'
 import { rAF } from '@element-plus/test-utils/tick'
 import installStyle from '@element-plus/test-utils/style-plugin'
-import defineGetter from '@element-plus/test-utils/define-getter'
 import {
   ElCheckbox as Checkbox,
   ElCheckboxGroup as CheckboxGroup,
@@ -39,14 +38,14 @@ describe('Form', () => {
     installStyle()
   })
 
-  it('label width', async () => {
+  it('uses stacked layout by default', async () => {
     const wrapper = mount({
       setup() {
         const form = reactive({
           name: '',
         })
         return () => (
-          <Form ref="form" model={form} labelWidth="80px">
+          <Form ref="form" model={form}>
             <FormItem label="Activity Name">
               <Input v-model={form.name} />
             </FormItem>
@@ -54,246 +53,17 @@ describe('Form', () => {
         )
       },
     })
-    expect(findStyle(wrapper, '.el-form-item__label').width).toBe('80px')
-  })
-
-  it('auto label width', async () => {
-    const labelPosition = ref('right')
-    const wrapper = mount({
-      setup() {
-        const form = reactive({
-          name: '',
-          intro: '',
-        })
-        return () => (
-          <Form
-            ref="form"
-            model={form}
-            labelWidth="auto"
-            labelPosition={labelPosition.value}
-          >
-            <FormItem label="Name">
-              <Input v-model={form.name} />
-            </FormItem>
-            <FormItem label="Intro">
-              <Input v-model={form.intro} />
-            </FormItem>
-          </Form>
-        )
-      },
-    })
-
     await nextTick()
 
-    const formItems = wrapper.findAll<HTMLElement>('.el-form-item__content')
-    const marginLeft = Number.parseInt(
-      formItems[0].element.style.marginLeft,
-      10
-    )
-    const marginLeft1 = Number.parseInt(
-      formItems[1].element.style.marginLeft,
-      10
-    )
-    expect(marginLeft).toEqual(marginLeft1)
-
-    labelPosition.value = 'left'
-    await nextTick()
-
-    const formItems1 = wrapper.findAll<HTMLElement>('.el-form-item__content')
-    const marginRight = Number.parseInt(
-      formItems1[0].element.style.marginRight,
-      10
-    )
-    const marginRight1 = Number.parseInt(
-      formItems1[1].element.style.marginRight,
-      10
-    )
-    expect(marginRight).toEqual(marginRight1)
-  })
-
-  it('form-item auto label width', async () => {
-    const wrapper = mount({
-      setup() {
-        const form = reactive({
-          name: '',
-          region: '',
-          type: '',
-        })
-        return () => (
-          <Form
-            ref="form"
-            labelPosition="right"
-            labelWidth="150px"
-            model={form}
-          >
-            <FormItem label="Name">
-              <Input v-model={form.name} />
-            </FormItem>
-            <FormItem label="Activity Region" label-width="auto">
-              <Input v-model={form.region} />
-            </FormItem>
-            <FormItem
-              label="Activity Form (I am a very very very very long label)"
-              label-width="auto"
-            >
-              <Input v-model={form.type} />
-            </FormItem>
-          </Form>
-        )
-      },
-    })
-
-    await nextTick()
-
-    const formItemLabels = wrapper.findAll<HTMLElement>('.el-form-item__label')
-    const formItemLabelWraps = wrapper.findAll<HTMLElement>(
-      '.el-form-item__label-wrap'
-    )
-
-    const labelWrapMarginLeft1 = formItemLabelWraps[0].element.style.marginLeft
-    const labelWrapMarginLeft2 = formItemLabelWraps[1].element.style.marginLeft
-    expect(labelWrapMarginLeft1).toEqual(labelWrapMarginLeft2)
-    expect(labelWrapMarginLeft2).toEqual('')
-
-    const labelWidth0 = Number.parseInt(
-      formItemLabels[0].element.style.width,
-      10
-    )
-    expect(labelWidth0).toEqual(150)
-    const labelWidth1 = formItemLabels[1].element.style.width
-    const labelWidth2 = formItemLabels[2].element.style.width
-    expect(labelWidth1).toEqual(labelWidth2)
-    expect(labelWidth2).toEqual('auto')
-  })
-
-  it('inline form', () => {
-    const wrapper = mount({
-      setup() {
-        const form = reactive({
-          name: '',
-          address: '',
-        })
-        return () => (
-          <Form ref="form" model={form} inline>
-            <FormItem>
-              <Input v-model={form.name} />
-            </FormItem>
-            <FormItem>
-              <Input v-model={form.address} />
-            </FormItem>
-          </Form>
-        )
-      },
-    })
-    expect(wrapper.classes()).toContain('el-form--inline')
-  })
-
-  it('switches form items to mobile layout on narrow screens', async () => {
-    const restore = defineGetter(window, 'innerWidth', 375)
-    try {
-      const wrapper = mount({
-        setup() {
-          const form = reactive({
-            name: '',
-          })
-          return () => (
-            <Form model={form} labelPosition="right" labelWidth="120px">
-              <FormItem label="Name">
-                <Input v-model={form.name} />
-              </FormItem>
-            </Form>
-          )
-        },
-      })
-
-      window.dispatchEvent(new Event('resize'))
-      await nextTick()
-
-      expect(wrapper.find('form').classes()).toContain('is-mobile')
-      expect(wrapper.findComponent(FormItem).classes()).toContain('is-mobile')
-      expect(wrapper.findComponent(FormItem).classes()).toContain(
-        'el-form-item--label-top'
-      )
-      expect(findStyle(wrapper, '.el-form-item__label').width).toBe('')
-      expect(findStyle(wrapper, '.el-form-item__content').marginLeft).toBe('')
-    } finally {
-      restore()
-    }
-  })
-
-  it('switches form items to mobile layout when mobile prop is enabled', async () => {
-    const wrapper = mount({
-      setup() {
-        const form = reactive({
-          name: '',
-        })
-        return () => (
-          <Form mobile model={form} labelPosition="right" labelWidth="120px">
-            <FormItem label="Name">
-              <Input v-model={form.name} />
-            </FormItem>
-          </Form>
-        )
-      },
-    })
-
-    await nextTick()
-
-    expect(wrapper.find('form').classes()).toContain('is-mobile')
-    expect(wrapper.findComponent(FormItem).classes()).toContain('is-mobile')
-    expect(wrapper.findComponent(FormItem).classes()).toContain(
-      'el-form-item--label-top'
-    )
     expect(findStyle(wrapper, '.el-form-item__label').width).toBe('')
     expect(findStyle(wrapper, '.el-form-item__content').marginLeft).toBe('')
-  })
 
-  it('label position', () => {
-    const wrapper = mount({
-      setup() {
-        const form = reactive({
-          name: '',
-          address: '',
-        })
-        return () => (
-          <div>
-            <Form model={form} labelPosition="top" ref="labelTop">
-              <FormItem>
-                <Input v-model={form.name} />
-              </FormItem>
-              <FormItem>
-                <Input v-model={form.address} />
-              </FormItem>
-            </Form>
-            <Form model={form} labelPosition="left" ref="labelLeft">
-              <FormItem>
-                <Input v-model={form.name} />
-              </FormItem>
-              <FormItem>
-                <Input v-model={form.address} />
-              </FormItem>
-            </Form>
-            <Form model={form} ref="labelRight">
-              <FormItem>
-                <Input v-model={form.name} />
-              </FormItem>
-              <FormItem>
-                <Input v-model={form.address} />
-              </FormItem>
-            </Form>
-          </div>
-        )
-      },
-    })
-    expect(wrapper.findComponent({ ref: 'labelTop' }).classes()).toContain(
-      'el-form--label-top'
-    )
-    expect(wrapper.findComponent({ ref: 'labelLeft' }).classes()).toContain(
-      'el-form--label-left'
-    )
-    expect(wrapper.findComponent({ ref: 'labelRight' }).classes()).toContain(
-      'el-form--label-right'
-    )
+    const formItemClasses = wrapper.findComponent(FormItem).classes()
+    expect(
+      formItemClasses.some((className) =>
+        className.startsWith('el-form-item--label-')
+      )
+    ).toBe(false)
   })
 
   it('label size', () => {
@@ -736,7 +506,7 @@ describe('Form', () => {
     expect(res.valid).toBe(false)
     expect(callEl.textContent).contain('name')
     expect(callEl.className).toBe(
-      'el-form-item is-error is-required asterisk-left el-form-item--label-right'
+      'el-form-item is-error is-required asterisk-left'
     )
     window.HTMLElement.prototype.scrollIntoView = oldScrollIntoView
   })

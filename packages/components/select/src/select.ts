@@ -1,4 +1,3 @@
-import { placements } from '@popperjs/core'
 import { scrollbarEmits } from '@element-plus/components/scrollbar'
 import {
   useAriaProps,
@@ -131,13 +130,6 @@ export const selectProps = buildProps({
     type: definePropType<string | CSSProperties>([String, Object]),
   },
   /**
-   * @description [popper.js](https://popper.js.org/docs/v2/) parameters
-   */
-  popperOptions: {
-    type: definePropType<Partial<Options>>(Object),
-    default: () => ({}) as Partial<Options>,
-  },
-  /**
    * @description whether options are loaded from server
    */
   remote: Boolean,
@@ -230,14 +222,6 @@ export const selectProps = buildProps({
     default: 1,
   },
   /**
-   * @description whether select dropdown is teleported, if `true` it will be teleported to where `append-to` sets
-   */
-  teleported: useTooltipContentProps.teleported,
-  /**
-   * @description force the select to use the mobile interaction model regardless of viewport width
-   */
-  mobile: Boolean,
-  /**
    * @description when select dropdown is inactive and `persistent` is `false`, select dropdown will be destroyed
    */
   persistent: {
@@ -251,10 +235,6 @@ export const selectProps = buildProps({
     type: iconPropType,
     default: CircleClose,
   },
-  /**
-   * @description whether the width of the dropdown is the same as the input
-   */
-  fitInputWidth: Boolean,
   /**
    * @description custom suffix icon component
    */
@@ -282,35 +262,6 @@ export const selectProps = buildProps({
    * @description in remote search method show suffix icon
    */
   remoteShowSuffix: Boolean,
-  /**
-   * @description determines whether the arrow is displayed
-   */
-  showArrow: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * @description offset of the dropdown
-   */
-  offset: {
-    type: Number,
-    default: 12,
-  },
-  /**
-   * @description position of dropdown
-   */
-  placement: {
-    type: definePropType<Placement>(String),
-    values: placements,
-    default: 'bottom-start',
-  },
-  /**
-   * @description list of possible positions for dropdown
-   */
-  fallbackPlacements: {
-    type: definePropType<Placement[]>(Array),
-    default: ['bottom-start', 'top-start', 'right', 'left'],
-  },
   /**
    * @description tabindex for input
    */

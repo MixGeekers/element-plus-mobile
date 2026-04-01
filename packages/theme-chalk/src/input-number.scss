@@ -3,63 +3,19 @@
 @use 'mixins/mixins' as *;
 @use 'common/var' as *;
 
-@mixin input-number-mobile-layout {
-  width: 100%;
-  line-height: to-rem(42px);
-
-  .#{$namespace}-input__wrapper {
-    min-height: to-rem(44px);
-    padding-left: to-rem(48px);
-    padding-right: to-rem(48px);
-  }
-
-  @include e((increase, decrease)) {
-    width: to-rem(44px);
-    font-size: to-rem(16px);
-    @include touch-feedback;
-  }
-
-  @include when(without-controls) {
-    .#{$namespace}-input__wrapper {
-      padding-left: to-rem(14px);
-      padding-right: to-rem(14px);
-    }
-  }
-
-  @include when(controls-right) {
-    .#{$namespace}-input__wrapper {
-      padding-left: to-rem(14px);
-      padding-right: to-rem(48px);
-    }
-
-    @include e((increase, decrease)) {
-      @include set-css-var-value(
-        ('input', 'number-controls-height'),
-        calc((#{to-rem(44px)} - #{to-rem(2px)}) / 2)
-      );
-
-      [class*='#{$namespace}-icon'] {
-        transform: none;
-      }
-    }
-  }
-}
-
 @include b(input-number) {
   position: relative;
   display: inline-flex;
-  width: map.get($input-number-width, 'default');
-  line-height: calc(#{map.get($input-height, 'default')} - #{to-rem(2px)});
-  vertical-align: middle;
+  align-items: stretch;
+  width: 100%;
+  min-height: to-rem(44px);
+  line-height: to-rem(42px);
 
   .#{$namespace}-input {
     &__wrapper {
-      padding-left: calc(
-        #{map.get($input-height, 'default')} + #{to-rem(10px)}
-      );
-      padding-right: calc(
-        #{map.get($input-height, 'default')} + #{to-rem(10px)}
-      );
+      min-height: to-rem(44px);
+      padding-left: to-rem(48px);
+      padding-right: to-rem(48px);
     }
 
     &__inner {
@@ -83,21 +39,25 @@
   }
   @include e((increase, decrease)) {
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     height: auto;
+    box-sizing: border-box;
+    overflow: hidden;
 
     position: absolute;
     z-index: 1;
     top: to-rem(1px);
     bottom: to-rem(1px);
 
-    width: map.get($input-height, 'default');
+    width: to-rem(44px);
     background: getCssVar('fill-color', 'light');
     color: getCssVar('text-color', 'regular');
     cursor: pointer;
-    font-size: getCssVar('font-size', 'small');
+    font-size: to-rem(16px);
     user-select: none;
+    @include touch-feedback;
 
     &:hover {
       color: getCssVar('color-primary');
@@ -144,108 +104,49 @@
     }
   }
 
-  @each $size in (large, small) {
-    @include m($size) {
-      width: map.get($input-number-width, $size);
-      line-height: calc(#{map.get($input-height, $size)} - #{to-rem(2px)});
-
-      @include e((increase, decrease)) {
-        width: map.get($input-height, $size);
-        font-size: map.get($input-font-size, $size);
-      }
-
-      @include when(controls-right) {
-        .#{$namespace}-input--#{$size} {
-          .#{$namespace}-input__wrapper {
-            padding-right: calc(
-              #{map.get($input-height, $size)} + #{to-rem(7px)}
-            );
-          }
-        }
-      }
-
-      .#{$namespace}-input--#{$size} {
-        .#{$namespace}-input__wrapper {
-          padding-left: calc(#{map.get($input-height, $size)} + #{to-rem(7px)});
-          padding-right: calc(
-            #{map.get($input-height, $size)} + #{to-rem(7px)}
-          );
-        }
-      }
-    }
-  }
-
-  @include m(small) {
-    @include e((increase, decrease)) {
-      [class*='#{$namespace}-icon'] {
-        transform: scale(0.9);
-      }
-    }
-  }
-
   @include when(without-controls) {
     .#{$namespace}-input__wrapper {
-      padding-left: to-rem(15px);
-      padding-right: to-rem(15px);
+      padding-left: to-rem(14px);
+      padding-right: to-rem(14px);
     }
   }
 
   @include when(controls-right) {
     .#{$namespace}-input__wrapper {
-      padding-left: to-rem(15px);
-      padding-right: calc(
-        #{map.get($input-height, 'default')} + #{to-rem(10px)}
-      );
+      padding-left: to-rem(14px);
+      padding-right: to-rem(52px);
     }
 
     @include e((increase, decrease)) {
       @include set-css-var-value(
         ('input', 'number-controls-height'),
-        calc((#{map.get($input-height, 'default')} - #{to-rem(2px)}) / 2)
+        calc((#{to-rem(44px)} - #{to-rem(2px)}) / 2)
       );
 
+      width: to-rem(42px);
       height: getCssVar('input-number-controls-height');
       line-height: getCssVar('input-number-controls-height');
+      right: to-rem(1px);
+      left: auto;
 
       [class*='#{$namespace}-icon'] {
-        transform: scale(0.8);
+        transform: none;
       }
     }
 
     @include e(increase) {
+      top: to-rem(1px);
       bottom: auto;
-      left: auto;
       border-radius: 0 getCssVar('border-radius-base') 0 0;
       border-bottom: getCssVar('border');
     }
 
     @include e(decrease) {
-      right: to-rem(1px);
+      bottom: to-rem(1px);
       top: auto;
-      left: auto;
       border-right: none;
       border-left: getCssVar('border');
       border-radius: 0 0 getCssVar('border-radius-base') 0;
     }
-
-    @each $size in (large, small) {
-      &[class*='#{$size}'] {
-        [class*='increase'],
-        [class*='decrease'] {
-          @include set-css-var-value(
-            ('input', 'number-controls-height'),
-            calc((#{map.get($input-height, $size)} - #{to-rem(2px)}) / 2)
-          );
-        }
-      }
-    }
-  }
-
-  @include when(mobile) {
-    @include input-number-mobile-layout;
-  }
-
-  @include res('sm-and-down', $breakpoints-spec) {
-    @include input-number-mobile-layout;
   }
 }

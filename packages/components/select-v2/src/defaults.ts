@@ -1,4 +1,3 @@
-import { placements } from '@popperjs/core'
 import {
   useAriaProps,
   useEmptyValuesProps,
@@ -10,8 +9,6 @@ import {
   buildProps,
   definePropType,
   iconPropType,
-  isBoolean,
-  isNumber,
 } from '@element-plus/utils'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { useTooltipContentProps } from '@element-plus/components/tooltip'
@@ -220,14 +217,6 @@ export const selectV2Props = buildProps({
     type: String,
   },
   /**
-   * @description whether select dropdown is teleported, if `true` it will be teleported to where `append-to` sets
-   */
-  teleported: useTooltipContentProps.teleported,
-  /**
-   * @description force the select to use the mobile interaction model regardless of viewport width
-   */
-  mobile: Boolean,
-  /**
    * @description when select dropdown is inactive and `persistent` is `false`, select dropdown will be destroyed
    */
   persistent: {
@@ -242,13 +231,6 @@ export const selectV2Props = buildProps({
    * @description custom style for Select's dropdown
    */
   popperStyle: useTooltipContentProps.popperStyle,
-  /**
-   * @description [popper.js](https://popper.js.org/docs/v2/) parameters
-   */
-  popperOptions: {
-    type: definePropType<Partial<Options>>(Object),
-    default: () => ({}) as Partial<Options>,
-  },
   /**
    * @description whether search data from server
    */
@@ -290,38 +272,9 @@ export const selectV2Props = buildProps({
     default: true,
   },
   /**
-   * @description offset of the dropdown
-   */
-  offset: {
-    type: Number,
-    default: 12,
-  },
-  /**
    * @description in remote search method show suffix icon
    */
   remoteShowSuffix: Boolean,
-  /**
-   * @description Determines whether the arrow is displayed
-   */
-  showArrow: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * @description position of dropdown
-   */
-  placement: {
-    type: definePropType<Placement>(String),
-    values: placements,
-    default: 'bottom-start',
-  },
-  /**
-   * @description list of possible positions for dropdown
-   */
-  fallbackPlacements: {
-    type: definePropType<Placement[]>(Array),
-    default: ['bottom-start', 'top-start', 'right', 'left'],
-  },
   /**
    * @description tag type
    */
@@ -341,18 +294,6 @@ export const selectV2Props = buildProps({
    * @description which element the select dropdown appends to
    */
   appendTo: useTooltipContentProps.appendTo,
-  /**
-   * @description if it is `true`, the width of the dropdown panel is the same as the input box.
-   * if it is `false`, the width is automatically calculated based on the value of `label`,
-   * or it can be set to a number to make it a fixed width
-   */
-  fitInputWidth: {
-    type: [Boolean, Number],
-    default: true,
-    validator(val) {
-      return isBoolean(val) || isNumber(val)
-    },
-  },
   suffixIcon: {
     type: iconPropType,
     default: ArrowDown,

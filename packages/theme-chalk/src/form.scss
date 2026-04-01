@@ -4,33 +4,4 @@
 
 @include b(form) {
   @include set-component-css-var('form', $form);
-
-  @include m(inline) {
-    .#{$namespace}-form-item {
-      display: inline-flex;
-      vertical-align: middle;
-      margin-right: to-rem(32px);
-    }
-
-    &.#{$namespace}-form--label-top {
-      display: flex;
-      flex-wrap: wrap;
-
-      .#{$namespace}-form-item {
-        display: block;
-      }
-    }
-  }
-
-  @include when(mobile) {
-    &.#{$namespace}-form--inline {
-      display: block;
-    }
-
-    .#{$namespace}-form-item {
-      display: block;
-      width: 100%;
-      margin-right: 0;
-    }
-  }
 }

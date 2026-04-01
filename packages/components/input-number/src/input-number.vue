@@ -3,7 +3,6 @@
     :class="[
       ns.b(),
       ns.m(inputNumberSize),
-      ns.is('mobile', isMobile),
       ns.is('disabled', inputNumberDisabled),
       ns.is('without-controls', !controls),
       ns.is('controls-right', controlsAtRight),
@@ -143,7 +142,7 @@ const data = reactive<Data>({
   userInput: null,
 })
 
-const { form, formItem } = useFormItem()
+const { formItem } = useFormItem()
 
 const minDisabled = computed(
   () => isNumber(props.modelValue) && props.modelValue <= props.min
@@ -169,7 +168,6 @@ const numPrecision = computed(() => {
 const controlsAtRight = computed(() => {
   return props.controls && props.controlsPosition === 'right'
 })
-const isMobile = computed(() => props.mobile || !!form?.isMobile)
 
 const inputNumberSize = useFormSize()
 const inputNumberDisabled = useFormDisabled()

@@ -192,16 +192,14 @@ $segmented-item-padding-vertical: map.merge(
     }
   }
 
-  @include res('sm-and-down', $breakpoints-spec) {
-    font-size: to-rem(15px);
+  font-size: to-rem(15px);
 
-    @include e(item) {
-      min-height: to-rem(44px);
-      padding: 0 to-rem(14px);
-    }
+  @include e(item) {
+    min-height: to-rem(44px);
+    padding: 0 to-rem(14px);
+  }
 
-    @include e(item-label) {
-      line-height: 1.3;
-    }
+  @include e(item-label) {
+    line-height: 1.3;
   }
 }

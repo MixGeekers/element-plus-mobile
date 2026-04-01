@@ -1,40 +1,64 @@
 <template>
-  <el-form
-    ref="formRef"
-    style="max-width: 600px"
-    :model="numberValidateForm"
-    label-width="auto"
-    class="demo-ruleForm"
+  <MobileFormDemo
+    title="Number Validate"
+    description="The number modifier example is shown in the same mobile shell, so the field, hint, and actions can be checked in a realistic narrow layout."
+    header-title="Numeric Input"
+    header-description="Use the .number modifier so validation receives a numeric value instead of a string."
   >
-    <el-form-item
-      label="age"
-      prop="age"
-      :rules="[
-        { required: true, message: 'age is required' },
-        { type: 'number', message: 'age must be a number' },
-      ]"
+    <div class="mobile-form-demo__panel">
+      <strong>Why it matters</strong>
+      <p>
+        Typing into a normal input returns a string first. The `.number`
+        modifier converts that value before the numeric rule runs.
+      </p>
+    </div>
+
+    <el-form
+      ref="formRef"
+      :model="numberValidateForm"
+      class="demo-ruleForm"
+      @submit.prevent
     >
-      <el-input
-        v-model.number="numberValidateForm.age"
-        type="text"
-        autocomplete="off"
-      />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm(formRef)">Submit</el-button>
-      <el-button @click="resetForm(formRef)">Reset</el-button>
-    </el-form-item>
-  </el-form>
+      <el-form-item
+        label="Age"
+        prop="age"
+        :rules="[
+          { required: true, message: 'age is required' },
+          { type: 'number', message: 'age must be a number' },
+        ]"
+      >
+        <el-input
+          v-model.number="numberValidateForm.age"
+          autocomplete="off"
+          inputmode="numeric"
+          placeholder="Enter your age"
+          type="text"
+        />
+      </el-form-item>
+
+      <el-form-item>
+        <div class="mobile-form-demo__actions">
+          <el-button type="primary" @click="submitForm(formRef)">
+            Submit
+          </el-button>
+          <el-button @click="resetForm(formRef)">Reset</el-button>
+        </div>
+      </el-form-item>
+    </el-form>
+  </MobileFormDemo>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
+import MobileFormDemo from './components/mobile-demo-shell.vue'
 
 import type { FormInstance } from 'element-plus-mobile'
 
 const formRef = ref<FormInstance>()
 
-const numberValidateForm = reactive({
+const numberValidateForm = reactive<{
+  age: number | ''
+}>({
   age: '',
 })
 

@@ -19,7 +19,6 @@ import {
   isArray,
   isEmpty,
   isFunction,
-  isNumber,
   isObject,
   isUndefined,
 } from '@element-plus/utils'
@@ -86,7 +85,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   const mobileSelection = ref<any[]>([])
   const mobileSelectionCommitted = ref(false)
   const { width: viewportWidth } = useWindowSize({
-    initialWidth: Number.POSITIVE_INFINITY,
+    initialWidth: 375,
   })
 
   // DOM & Component refs
@@ -111,11 +110,9 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   })
 
   const selectDisabled = useFormDisabled()
-  const isMobile = computed(() => props.mobile || viewportWidth.value < 768)
-  const showMobileFooter = computed(() => props.multiple && isMobile.value)
-  const resolvedTeleported = computed(() => props.teleported || isMobile.value)
+  const showMobileFooter = computed(() => props.multiple && expanded.value)
   const selectionModelValue = computed(() => {
-    return props.multiple && isMobile.value && expanded.value
+    return props.multiple && expanded.value
       ? mobileSelection.value
       : props.modelValue
   })
@@ -206,9 +203,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   })
 
   const debounce = computed(() => (props.remote ? props.debounce : 0))
-  const useMobileDraft = computed(
-    () => props.multiple && isMobile.value && expanded.value
-  )
+  const useMobileDraft = computed(() => props.multiple && expanded.value)
 
   const isRemoteSearchEmpty = computed(
     () => props.remote && !states.inputValue && !hasOptions.value
@@ -309,47 +304,8 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   )
 
   const calculatePopperSize = () => {
-    if (isMobile.value) {
-      popperSize.value = viewportWidth.value
-      return
-    }
-    if (isNumber(props.fitInputWidth)) {
-      popperSize.value = props.fitInputWidth
-      return
-    }
-    const width = selectRef.value?.offsetWidth || 200
-    if (!props.fitInputWidth && hasOptions.value) {
-      nextTick(() => {
-        popperSize.value = Math.max(width, calculateLabelMaxWidth())
-      })
-    } else {
-      popperSize.value = width
-    }
-  }
-
-  // TODO Caching implementation
-  // 1. There is no need to calculate options that have already been calculated
-  // 2. Repeatedly expand and close when persistent is set to false, no need for repeated calculations
-  const calculateLabelMaxWidth = () => {
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-    const selector = nsSelect.be('dropdown', 'item')
-    const dom = menuRef.value?.listRef?.innerRef || document
-    const dropdownItemEl = dom.querySelector(`.${selector}`)
-    if (dropdownItemEl === null || ctx === null) return 0
-    const style = getComputedStyle(dropdownItemEl)
-    const padding =
-      Number.parseFloat(style.paddingLeft) +
-      Number.parseFloat(style.paddingRight)
-    ctx.font = `bold ${style.font.replace(
-      new RegExp(`\\b${style.fontWeight}\\b`),
-      ''
-    )}`
-    const maxWidth = filteredOptions.value.reduce((max, option) => {
-      const metrics = ctx.measureText(getLabel(option))
-      return Math.max(metrics.width, max)
-    }, 0)
-    return maxWidth + padding
+    popperSize.value =
+      viewportWidth.value || selectRef.value?.offsetWidth || 375
   }
 
   const getGapWidth = () => {
@@ -622,7 +578,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   const onSelect = (option: Option) => {
     const optionValue = getValue(option)
 
-    if (useMobileDraft.value) {
+    if (props.multiple) {
       let selectedOptions = mobileSelection.value.slice()
       const index = getValueIndex(selectedOptions, optionValue)
       if (index > -1) {
@@ -647,32 +603,6 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
         states.inputValue = ''
       }
       focus()
-    } else if (props.multiple) {
-      let selectedOptions = (props.modelValue as any[]).slice()
-
-      const index = getValueIndex(selectedOptions, optionValue)
-      if (index > -1) {
-        selectedOptions = [
-          ...selectedOptions.slice(0, index),
-          ...selectedOptions.slice(index + 1),
-        ]
-        states.cachedOptions.splice(index, 1)
-        removeNewOption(option)
-      } else if (
-        props.multipleLimit <= 0 ||
-        selectedOptions.length < props.multipleLimit
-      ) {
-        selectedOptions = [...selectedOptions, optionValue]
-        states.cachedOptions.push(option)
-        selectNewOption(option)
-      }
-      update(selectedOptions)
-      if (option.created) {
-        handleQueryChange('')
-      }
-      if (props.filterable && (option.created || !props.reserveKeyword)) {
-        states.inputValue = ''
-      }
     } else {
       states.selectedLabel = getLabel(option)
       !isEqual(props.modelValue, optionValue) && update(optionValue)
@@ -686,7 +616,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   }
 
   const confirmMobileSelection = () => {
-    if (!showMobileFooter.value) return
+    if (!props.multiple) return
 
     const value = mobileSelection.value.slice()
     mobileSelectionCommitted.value = true
@@ -696,7 +626,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   }
 
   const cancelMobileSelection = () => {
-    if (!showMobileFooter.value) return
+    if (!props.multiple) return
 
     mobileSelectionCommitted.value = false
     syncMobileSelection()
@@ -741,6 +671,16 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
 
   // keyboard handlers
   const handleEsc = () => {
+    if (props.multiple && expanded.value && states.inputValue.length === 0) {
+      mobileSelectionCommitted.value = false
+      syncMobileSelection()
+      states.cachedOptions = mobileSelection.value.map((value) =>
+        getOption(value, states.cachedOptions)
+      )
+      expanded.value = false
+      return
+    }
+
     if (states.inputValue.length > 0) {
       states.inputValue = ''
     } else {
@@ -883,7 +823,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   }
 
   const handleClickOutside = (event: Event) => {
-    if (showMobileFooter.value && expanded.value) {
+    if (props.multiple && expanded.value) {
       mobileSelectionCommitted.value = false
       syncMobileSelection()
       states.cachedOptions = mobileSelection.value.map((value) =>
@@ -977,13 +917,6 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
     calculatePopperSize()
   }
 
-  watch(
-    () => props.fitInputWidth,
-    () => {
-      calculatePopperSize()
-    }
-  )
-
   // in order to track these individually, we need to turn them into refs instead of watching the entire
   // reactive object which could cause perf penalty when unnecessary field gets changed the watch method will
   // be invoked.
@@ -991,7 +924,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   watch(expanded, (val) => {
     if (val) {
       mobileSelectionCommitted.value = false
-      if (showMobileFooter.value) {
+      if (props.multiple) {
         syncMobileSelection()
         states.cachedOptions = mobileSelection.value.map((value) =>
           getOption(value, states.cachedOptions)
@@ -1007,7 +940,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
       states.isBeforeHide = true
       states.menuVisibleOnFocus = false
       createNewOption('')
-      if (showMobileFooter.value) {
+      if (props.multiple) {
         if (!mobileSelectionCommitted.value) {
           syncMobileSelection()
         }
@@ -1023,7 +956,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
     () => props.modelValue,
     (val, oldVal) => {
       const isValEmpty = !val || (isArray(val) && val.length === 0)
-      if (props.multiple && isMobile.value && expanded.value) {
+      if (props.multiple && expanded.value) {
         syncMobileSelection()
       }
 
@@ -1134,8 +1067,6 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
     filteredOptions,
     iconComponent,
     iconReverse,
-    isMobile,
-    resolvedTeleported,
     selectionModelValue,
     showMobileFooter,
     mobileCancelText,
