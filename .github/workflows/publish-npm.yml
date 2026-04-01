@@ -60,13 +60,13 @@ jobs:
           fetch-depth: 0
           ref: ${{ env.TARGET_REF }}
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v6
         with:
           node-version: 22.14.0
           cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
 
       - name: Get version
         run: echo "TAG_VERSION=${RELEASE_TAG_VERSION}" >> $GITHUB_ENV
