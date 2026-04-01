@@ -9,6 +9,7 @@ import { BORDER_HORIZONTAL_WIDTH, EVENT_CODE } from '@element-plus/constants'
 import { ArrowDown, CaretTop, CircleClose } from '@element-plus/icons-vue'
 import { usePopperContainerId } from '@element-plus/hooks'
 import { hasClass } from '@element-plus/utils'
+import defineGetter from '@element-plus/test-utils/define-getter'
 import { ElForm, ElFormItem } from '@element-plus/components/form'
 import Select from '../src/select.vue'
 import Group from '../src/option-group.vue'
@@ -38,6 +39,7 @@ interface SelectProps {
   filterMethod?: any
   remoteMethod?: any
   multiple?: boolean
+  mobile?: boolean
   clearable?: boolean
   filterable?: boolean
   allowCreate?: boolean
@@ -49,6 +51,7 @@ interface SelectProps {
   popperStyle?: string
   defaultFirstOption?: boolean
   fitInputWidth?: boolean
+  teleported?: boolean
   size?: 'small' | 'default' | 'large'
   debounce?: number
 }
@@ -84,6 +87,20 @@ function getOptions(): HTMLElement[] {
   return Array.from(
     document.querySelectorAll<HTMLElement>(
       'body > div:last-child .el-select-dropdown__item'
+    )
+  )
+}
+
+function getVisibleOptions(): HTMLElement[] {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>('.el-select-dropdown__item')
+  )
+}
+
+function getMobileActionButtons(): HTMLElement[] {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(
+      '.el-select__mobile-actions .el-button'
     )
   )
 }
@@ -152,6 +169,8 @@ const getSelectVm = (configs: SelectProps = {}, options?) => {
       :loading="loading"
       :remoteMethod="remoteMethod"
       :automatic-dropdown="automaticDropdown"
+      :teleported="teleported"
+      :mobile="mobile"
       :size="size"
       :fit-input-width="fitInputWidth">
       <el-option
@@ -166,6 +185,7 @@ const getSelectVm = (configs: SelectProps = {}, options?) => {
     () => ({
       options,
       multiple: configs.multiple,
+      mobile: configs.mobile,
       multipleLimit: configs.multipleLimit,
       clearable: configs.clearable,
       defaultFirstOption: configs.defaultFirstOption,
@@ -176,6 +196,7 @@ const getSelectVm = (configs: SelectProps = {}, options?) => {
       popperStyle: configs.popperStyle,
       automaticDropdown: configs.automaticDropdown,
       fitInputWidth: configs.fitInputWidth,
+      teleported: configs.teleported,
       loading: false,
       filterMethod: configs.filterMethod,
       remote: configs.remote,
@@ -665,6 +686,138 @@ describe('Select', () => {
     const tags = wrapper.findAll(`.${TAG_NAME}`)
     expect(tags.length).toBe(1)
     expect(tags[0].text()).toBe('双皮奶')
+  })
+
+  test('uses mobile draft selection for multiple select until confirmed', async () => {
+    const restore = defineGetter(window, 'innerWidth', 375)
+    try {
+      wrapper = getSelectVm({
+        multiple: true,
+        teleported: false,
+      })
+
+      window.dispatchEvent(new Event('resize'))
+      await nextTick()
+
+      const select = wrapper.findComponent({ name: 'ElSelect' })
+      const selectVm = select.vm as any
+
+      expect(wrapper.classes()).toContain('is-mobile')
+      expect(selectVm.isMobile).toBe(true)
+      expect(selectVm.resolvedTeleported).toBe(true)
+
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
+
+      getVisibleOptions()[0].click()
+      await nextTick()
+      getVisibleOptions()[1].click()
+      await nextTick()
+
+      expect((wrapper.vm as any).value).toEqual([])
+      expect(
+        getVisibleOptions().filter((item) =>
+          item.classList.contains('is-selected')
+        )
+      ).toHaveLength(2)
+
+      getMobileActionButtons()[1].click()
+      await nextTick()
+
+      expect((wrapper.vm as any).value).toEqual(['选项1', '选项2'])
+      expect(selectVm.expanded).toBe(false)
+    } finally {
+      restore()
+    }
+  })
+
+  test('uses mobile interaction when mobile prop is enabled', async () => {
+    wrapper = getSelectVm({
+      multiple: true,
+      mobile: true,
+      teleported: false,
+    })
+
+    await nextTick()
+
+    const select = wrapper.findComponent({ name: 'ElSelect' })
+    const selectVm = select.vm as any
+
+    expect(wrapper.classes()).toContain('is-mobile')
+    expect(selectVm.isMobile).toBe(true)
+    expect(selectVm.resolvedTeleported).toBe(true)
+
+    await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+    await nextTick()
+
+    expect(getMobileActionButtons()).toHaveLength(2)
+  })
+
+  test('cancels mobile draft selection for multiple select', async () => {
+    const restore = defineGetter(window, 'innerWidth', 375)
+    try {
+      wrapper = _mount(
+        `
+        <el-select v-model="value" multiple :teleported="false">
+          <el-option
+            v-for="item in options"
+            :label="item.label"
+            :key="item.value"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      `,
+        () => ({
+          value: ['选项1'],
+          options: [
+            {
+              value: '选项1',
+              label: '黄金糕',
+            },
+            {
+              value: '选项2',
+              label: '双皮奶',
+            },
+            {
+              value: '选项3',
+              label: '蚵仔煎',
+            },
+          ],
+        })
+      )
+
+      window.dispatchEvent(new Event('resize'))
+      await nextTick()
+
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
+
+      getVisibleOptions()[1].click()
+      await nextTick()
+
+      expect((wrapper.vm as any).value).toEqual(['选项1'])
+      expect(
+        getVisibleOptions().filter((item) =>
+          item.classList.contains('is-selected')
+        )
+      ).toHaveLength(2)
+
+      getMobileActionButtons()[0].click()
+      await nextTick()
+
+      expect((wrapper.vm as any).value).toEqual(['选项1'])
+
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
+
+      expect(
+        getVisibleOptions().filter((item) =>
+          item.classList.contains('is-selected')
+        )
+      ).toHaveLength(1)
+    } finally {
+      restore()
+    }
   })
 
   test('expose select label', async () => {

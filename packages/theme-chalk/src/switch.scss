@@ -6,21 +6,14 @@
 @use 'common/var' as *;
 
 $switch-height: () !default;
-$switch-height: map.merge(
-  (
-    'large': 40px,
-    'default': 32px,
-    'small': 24px,
-  ),
-  $switch-height
-);
+$switch-height: map.merge($common-component-size, $switch-height);
 
 $switch-font-size: () !default;
 $switch-font-size: map.merge(
   (
-    'large': 14px,
-    'default': 14px,
-    'small': 12px,
+    'large': getCssVar('font-size', 'base'),
+    'default': getCssVar('font-size', 'base'),
+    'small': getCssVar('font-size', 'extra-small'),
   ),
   $switch-font-size
 );
@@ -28,9 +21,9 @@ $switch-font-size: map.merge(
 $switch-core-border-radius: () !default;
 $switch-core-border-radius: map.merge(
   (
-    'large': 12px,
-    'default': 10px,
-    'small': 8px,
+    'large': to-rem(12px),
+    'default': to-rem(10px),
+    'small': to-rem(8px),
   ),
   $switch-core-border-radius
 );
@@ -38,9 +31,9 @@ $switch-core-border-radius: map.merge(
 $switch-core-width: () !default;
 $switch-core-width: map.merge(
   (
-    'large': 50px,
-    'default': 40px,
-    'small': 30px,
+    'large': to-rem(50px),
+    'default': to-rem(40px),
+    'small': to-rem(30px),
   ),
   $switch-core-width
 );
@@ -48,9 +41,9 @@ $switch-core-width: map.merge(
 $switch-core-height: () !default;
 $switch-core-height: map.merge(
   (
-    'large': 24px,
-    'default': 20px,
-    'small': 16px,
+    'large': to-rem(24px),
+    'default': to-rem(20px),
+    'small': to-rem(16px),
   ),
   $switch-core-height
 );
@@ -58,9 +51,9 @@ $switch-core-height: map.merge(
 $switch-button-size: () !default;
 $switch-button-size: map.merge(
   (
-    'large': 20px,
-    'default': 16px,
-    'small': 12px,
+    'large': to-rem(20px),
+    'default': to-rem(16px),
+    'small': to-rem(12px),
   ),
   $switch-button-size
 );
@@ -68,9 +61,9 @@ $switch-button-size: map.merge(
 $switch-content-padding: () !default;
 $switch-content-padding: map.merge(
   (
-    'large': 6px,
-    'default': 4px,
-    'small': 2px,
+    'large': to-rem(6px),
+    'default': to-rem(4px),
+    'small': to-rem(2px),
   ),
   $switch-content-padding
 );
@@ -110,10 +103,10 @@ $switch-content-padding: map.merge(
     }
 
     @include m(left) {
-      margin-right: 10px;
+      margin-right: to-rem(10px);
     }
     @include m(right) {
-      margin-left: 10px;
+      margin-left: to-rem(10px);
     }
     & * {
       line-height: 1;
@@ -173,12 +166,12 @@ $switch-content-padding: map.merge(
       align-items: center;
       overflow: hidden;
       padding: 0 #{map.get($switch-content-padding, 'default')} 0
-        calc(#{map.get($switch-button-size, 'default')} + 2px);
+        calc(#{map.get($switch-button-size, 'default')} + #{to-rem(2px)});
 
       &-wrapper {
         display: flex;
         align-items: center;
-        font-size: 12px;
+        font-size: getCssVar('font-size', 'extra-small');
         color: getCssVar('color-white');
         user-select: none;
         @include utils-ellipsis;
@@ -187,7 +180,7 @@ $switch-content-padding: map.merge(
 
     .#{$namespace}-switch__action {
       position: absolute;
-      left: 1px;
+      left: to-rem(1px);
       border-radius: getCssVar('border-radius-circle');
       transition: all getCssVar('transition-duration');
       width: map.get($switch-button-size, 'default');
@@ -209,12 +202,15 @@ $switch-content-padding: map.merge(
       background-color: getCssVar('switch-on-color');
 
       .#{$namespace}-switch__action {
-        left: calc(100% - #{map.get($switch-button-size, 'default') + 1px});
+        left: calc(
+          100% - #{map.get($switch-button-size, 'default')} - #{to-rem(1px)}
+        );
         color: getCssVar('switch-on-color');
       }
 
       .#{$namespace}-switch__inner {
-        padding: 0 calc(#{map.get($switch-button-size, 'default')} + 2px) 0
+        padding: 0
+          calc(#{map.get($switch-button-size, 'default')} + #{to-rem(2px)}) 0
           #{map.get($switch-content-padding, 'default')};
       }
     }
@@ -228,13 +224,13 @@ $switch-content-padding: map.merge(
     .#{$namespace}-switch__label {
       &.#{$namespace}-switch__label--left {
         span {
-          left: 10px;
+          left: to-rem(10px);
         }
       }
 
       &.#{$namespace}-switch__label--right {
         span {
-          right: 10px;
+          right: to-rem(10px);
         }
       }
     }
@@ -268,7 +264,7 @@ $switch-content-padding: map.merge(
         .#{$namespace}-switch__inner {
           height: map.get($switch-button-size, $size);
           padding: 0 #{map.get($switch-content-padding, $size)} 0
-            calc(#{map.get($switch-button-size, $size)} + 2px);
+            calc(#{map.get($switch-button-size, $size)} + #{to-rem(2px)});
         }
 
         .#{$namespace}-switch__action {
@@ -280,13 +276,57 @@ $switch-content-padding: map.merge(
       @include when(checked) {
         .#{$namespace}-switch__core {
           .#{$namespace}-switch__action {
-            left: calc(100% - #{map.get($switch-button-size, $size) + 1px});
+            left: calc(
+              100% - #{map.get($switch-button-size, $size)} - #{to-rem(1px)}
+            );
           }
 
           .#{$namespace}-switch__inner {
-            padding: 0 calc(#{map.get($switch-button-size, $size)} + 2px) 0
+            padding: 0
+              calc(#{map.get($switch-button-size, $size)} + #{to-rem(2px)}) 0
               #{map.get($switch-content-padding, $size)};
           }
+        }
+      }
+    }
+  }
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    min-height: to-rem(44px);
+    gap: to-rem(10px);
+    @include touch-feedback;
+
+    @include e(label) {
+      display: inline-flex;
+      align-items: center;
+      min-height: to-rem(32px);
+      line-height: normal;
+    }
+
+    @include e(core) {
+      min-width: to-rem(52px);
+      height: to-rem(32px);
+      border-radius: to-rem(16px);
+
+      .#{$namespace}-switch__inner {
+        height: to-rem(28px);
+        padding: 0 to-rem(8px) 0 to-rem(30px);
+      }
+
+      .#{$namespace}-switch__action {
+        width: to-rem(28px);
+        height: to-rem(28px);
+      }
+    }
+
+    @include when(checked) {
+      .#{$namespace}-switch__core {
+        .#{$namespace}-switch__action {
+          left: calc(100% - #{to-rem(29px)});
+        }
+
+        .#{$namespace}-switch__inner {
+          padding: 0 to-rem(30px) 0 to-rem(8px);
         }
       }
     }

@@ -2,15 +2,23 @@
   <div
     ref="selectRef"
     v-click-outside:[popperRef]="handleClickOutside"
-    :class="[nsSelect.b(), nsSelect.m(selectSize)]"
+    :class="[
+      nsSelect.b(),
+      nsSelect.m(selectSize),
+      nsSelect.is('mobile', isMobile),
+    ]"
     @mouseenter="states.inputHovering = true"
     @mouseleave="states.inputHovering = false"
   >
     <el-tooltip
       ref="tooltipRef"
       :visible="dropdownMenuVisible"
-      :teleported="teleported"
-      :popper-class="[nsSelect.e('popper'), popperClass!]"
+      :teleported="resolvedTeleported"
+      :popper-class="[
+        nsSelect.e('popper'),
+        popperClass!,
+        nsSelect.is('mobile', isMobile),
+      ]"
       :popper-style="popperStyle"
       :gpu-acceleration="false"
       :stop-popper-mouse-event="false"
@@ -19,7 +27,11 @@
       :effect="effect"
       :placement="placement"
       pure
-      :transition="`${nsSelect.namespace.value}-zoom-in-top`"
+      :transition="
+        isMobile
+          ? `${nsSelect.namespace.value}-fade-in-linear`
+          : `${nsSelect.namespace.value}-zoom-in-top`
+      "
       trigger="click"
       :persistent="persistent"
       :append-to="appendTo"
@@ -109,7 +121,7 @@
                 :placement="tagTooltip?.placement ?? 'bottom'"
                 :popper-class="tagTooltip?.popperClass ?? popperClass"
                 :popper-style="tagTooltip?.popperStyle ?? popperStyle"
-                :teleported="tagTooltip?.teleported ?? teleported"
+                :teleported="tagTooltip?.teleported ?? resolvedTeleported"
                 :append-to="tagTooltip?.appendTo ?? appendTo"
                 :popper-options="tagTooltip?.popperOptions ?? popperOptions"
                 :transition="tagTooltip?.transition"
@@ -311,9 +323,28 @@
               </slot>
             </div>
           </template>
-          <template v-if="$slots.footer" #footer>
-            <div :class="nsSelect.be('dropdown', 'footer')" @click.stop>
+          <template v-if="$slots.footer || showMobileFooter" #footer>
+            <div
+              v-if="$slots.footer"
+              :class="nsSelect.be('dropdown', 'footer')"
+              @click.stop
+            >
               <slot name="footer" />
+            </div>
+            <div
+              v-if="showMobileFooter"
+              :class="[
+                nsSelect.be('dropdown', 'footer'),
+                nsSelect.e('mobile-actions'),
+              ]"
+              @click.stop
+            >
+              <el-button @click.stop="cancelMobileSelection">
+                {{ mobileCancelText }}
+              </el-button>
+              <el-button type="primary" @click.stop="confirmMobileSelection">
+                {{ mobileConfirmText }}
+              </el-button>
             </div>
           </template>
         </el-select-menu>
@@ -329,6 +360,7 @@ import { ClickOutside } from '@element-plus/directives'
 import ElTooltip from '@element-plus/components/tooltip'
 import ElTag from '@element-plus/components/tag'
 import ElIcon from '@element-plus/components/icon'
+import ElButton from '@element-plus/components/button'
 import { useCalcInputWidth, useId } from '@element-plus/hooks'
 import ElSelectMenu from './select-dropdown'
 import useSelect from './useSelect'
@@ -343,6 +375,7 @@ export default defineComponent({
     ElTag,
     ElTooltip,
     ElIcon,
+    ElButton,
   },
   directives: { ClickOutside },
   props: selectV2Props,
@@ -373,7 +406,7 @@ export default defineComponent({
       props: reactive({
         ...toRefs(props),
         height: API.popupHeight,
-        modelValue,
+        modelValue: API.selectionModelValue,
       }),
       expanded: API.expanded,
       tooltipRef: API.tooltipRef,

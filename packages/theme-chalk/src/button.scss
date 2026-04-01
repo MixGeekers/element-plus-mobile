@@ -87,11 +87,13 @@ $button-height: map.merge(
 
   & {
     @include button-size(
-      to-rem(
-        map.get($button-padding-vertical, 'default') - $button-border-width
+      calc(
+        #{map.get($button-padding-vertical, 'default')} -
+          #{$button-border-width}
       ),
-      to-rem(
-        map.get($button-padding-horizontal, 'default') - $button-border-width
+      calc(
+        #{map.get($button-padding-horizontal, 'default')} -
+          #{$button-border-width}
       ),
       map.get($button-font-size, 'default'),
       map.get($button-border-radius, 'default')
@@ -302,11 +304,13 @@ $button-height: map.merge(
 
       & {
         @include button-size(
-          to-rem(
-            map.get($button-padding-vertical, $size) - $button-border-width
+          calc(
+            #{map.get($button-padding-vertical, $size)} -
+              #{$button-border-width}
           ),
-          to-rem(
-            map.get($button-padding-horizontal, $size) - $button-border-width
+          calc(
+            #{map.get($button-padding-horizontal, $size)} -
+              #{$button-border-width}
           ),
           map.get($button-font-size, $size),
           map.get($button-border-radius, $size)

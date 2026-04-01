@@ -5,19 +5,12 @@
 @use 'common/var' as *;
 
 $rate-height: () !default;
-$rate-height: map.merge(
-  (
-    'large': 40px,
-    'default': 32px,
-    'small': 24px,
-  ),
-  $rate-height
-);
+$rate-height: map.merge($common-component-size, $rate-height);
 
 $rate-size: () !default;
 $rate-size: map.merge(
   (
-    'small': 14px,
+    'small': getCssVar('font-size', 'base'),
   ),
   $rate-size
 );
@@ -116,6 +109,28 @@ $rate-size: map.merge(
     @include e(item) {
       cursor: not-allowed;
       color: getCssVar('rate', 'disabled-void-color');
+    }
+  }
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    min-height: to-rem(44px);
+
+    @include e(item) {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: to-rem(36px);
+      min-height: to-rem(36px);
+    }
+
+    & .#{bem('rate', 'icon')} {
+      font-size: to-rem(22px);
+      margin-right: to-rem(6px);
+    }
+
+    @include e(text) {
+      margin-left: to-rem(8px);
+      line-height: 1.4;
     }
   }
 }

@@ -9,7 +9,7 @@ import {
   watchEffect,
 } from 'vue'
 import { clamp, findLastIndex, get, isEqual, isNil } from 'lodash-unified'
-import { useDebounceFn, useResizeObserver } from '@vueuse/core'
+import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
 import {
   ValidateComponentsMap,
   debugWarn,
@@ -97,6 +97,11 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   const expanded = ref(false)
   const hoverOption = ref()
   const debouncing = ref(false)
+  const mobileSelection = ref<OptionValue[]>([])
+  const mobileSelectionCommitted = ref(false)
+  const { width: viewportWidth } = useWindowSize({
+    initialWidth: Number.POSITIVE_INFINITY,
+  })
 
   const { form, formItem } = useFormItem()
   const { inputId } = useFormItemInputId(props, {
@@ -114,6 +119,20 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   })
 
   const selectDisabled = useFormDisabled()
+  const isMobile = computed(() => props.mobile || viewportWidth.value < 768)
+  const showMobileFooter = computed(() => props.multiple && isMobile.value)
+  const resolvedTeleported = computed(() => props.teleported || isMobile.value)
+  const selectionModelValue = computed(() => {
+    return props.multiple && isMobile.value && expanded.value
+      ? mobileSelection.value
+      : props.modelValue
+  })
+  const mobileCancelText = computed(() => t('el.datepicker.cancel'))
+  const mobileConfirmText = computed(() => t('el.datepicker.confirm'))
+
+  const syncMobileSelection = () => {
+    mobileSelection.value = ensureArray(props.modelValue ?? []).slice()
+  }
 
   const { wrapperRef, isFocused, handleBlur } = useFocusController(inputRef, {
     disabled: selectDisabled,
@@ -139,9 +158,9 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   })
 
   const hasModelValue = computed(() => {
-    return isArray(props.modelValue)
-      ? props.modelValue.length > 0
-      : !isEmptyValue(props.modelValue)
+    return isArray(selectionModelValue.value)
+      ? selectionModelValue.value.length > 0
+      : !isEmptyValue(selectionModelValue.value)
   })
 
   const needStatusIcon = computed(() => form?.statusIcon ?? false)
@@ -151,6 +170,7 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
       props.clearable &&
       !selectDisabled.value &&
       hasModelValue.value &&
+      !useMobileDraft.value &&
       (isFocused.value || states.inputHovering)
     )
   })
@@ -171,6 +191,9 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   )
 
   const debounce = computed(() => (props.remote ? props.debounce : 0))
+  const useMobileDraft = computed(
+    () => props.multiple && isMobile.value && expanded.value
+  )
 
   const isRemoteSearchEmpty = computed(
     () => props.remote && !states.inputValue && states.options.size === 0
@@ -264,12 +287,15 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   })
 
   const shouldShowPlaceholder = computed(() => {
-    if (props.multiple && !isUndefined(props.modelValue)) {
-      return ensureArray(props.modelValue).length === 0 && !states.inputValue
+    if (props.multiple && !isUndefined(selectionModelValue.value)) {
+      return (
+        ensureArray(selectionModelValue.value).length === 0 &&
+        !states.inputValue
+      )
     }
-    const value = isArray(props.modelValue)
-      ? props.modelValue[0]
-      : props.modelValue
+    const value = isArray(selectionModelValue.value)
+      ? selectionModelValue.value[0]
+      : selectionModelValue.value
     return props.filterable || isUndefined(value) ? !states.inputValue : true
   })
 
@@ -289,6 +315,9 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   watch(
     () => props.modelValue,
     (val, oldVal) => {
+      if (props.multiple && isMobile.value && expanded.value) {
+        syncMobileSelection()
+      }
       if (props.multiple) {
         if (props.filterable && !props.reserveKeyword) {
           states.inputValue = ''
@@ -310,12 +339,24 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
     () => expanded.value,
     (val) => {
       if (val) {
+        mobileSelectionCommitted.value = false
+        if (showMobileFooter.value) {
+          syncMobileSelection()
+          setSelected()
+        }
         handleQueryChange(states.inputValue)
       } else {
         states.inputValue = ''
         states.previousQuery = null
         states.isBeforeHide = true
         states.menuVisibleOnFocus = false
+        if (showMobileFooter.value) {
+          if (!mobileSelectionCommitted.value) {
+            syncMobileSelection()
+          }
+          mobileSelectionCommitted.value = false
+          setSelected()
+        }
       }
     }
   )
@@ -409,9 +450,9 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
 
   const setSelected = () => {
     if (!props.multiple) {
-      const value = isArray(props.modelValue)
-        ? props.modelValue[0]
-        : props.modelValue
+      const value = isArray(selectionModelValue.value)
+        ? selectionModelValue.value[0]
+        : selectionModelValue.value
       const option = getOption(value)
       states.selectedLabel = option.currentLabel
       states.selected = [option]
@@ -420,8 +461,8 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
       states.selectedLabel = ''
     }
     const result: SelectStates['selected'] = []
-    if (!isUndefined(props.modelValue)) {
-      ensureArray(props.modelValue).forEach((value) => {
+    if (!isUndefined(selectionModelValue.value)) {
+      ensureArray(selectionModelValue.value).forEach((value) => {
         result.push(getOption(value))
       })
     }
@@ -572,7 +613,29 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const handleOptionSelect = (option: OptionPublicInstance) => {
-    if (props.multiple) {
+    if (useMobileDraft.value) {
+      const value = mobileSelection.value.slice()
+      const optionIndex = getValueIndex(value, option)
+      if (optionIndex > -1) {
+        value.splice(optionIndex, 1)
+      } else if (
+        props.multipleLimit <= 0 ||
+        value.length < props.multipleLimit
+      ) {
+        value.push(option.value)
+      }
+      mobileSelection.value = value
+      setSelected()
+      if (option.created) {
+        handleQueryChange('')
+      }
+      if (props.filterable && (option.created || !props.reserveKeyword)) {
+        states.inputValue = ''
+      }
+      nextTick(() => {
+        scrollToOption(option)
+      })
+    } else if (props.multiple) {
       const value = ensureArray(props.modelValue ?? []).slice()
       const optionIndex = getValueIndex(value, option)
       if (optionIndex > -1) {
@@ -602,6 +665,27 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
     nextTick(() => {
       scrollToOption(option)
     })
+  }
+
+  const confirmMobileSelection = () => {
+    if (!showMobileFooter.value) return
+
+    const value = mobileSelection.value.slice()
+    mobileSelectionCommitted.value = true
+    emit(UPDATE_MODEL_EVENT, value)
+    emitChange(value)
+    expanded.value = false
+    focus()
+  }
+
+  const cancelMobileSelection = () => {
+    if (!showMobileFooter.value) return
+
+    mobileSelectionCommitted.value = false
+    syncMobileSelection()
+    setSelected()
+    expanded.value = false
+    focus()
   }
 
   const getValueIndex = (arr: OptionValue[], option: OptionPublicInstance) => {
@@ -683,6 +767,11 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const handleClickOutside = (event: Event) => {
+    if (showMobileFooter.value && expanded.value) {
+      mobileSelectionCommitted.value = false
+      syncMobileSelection()
+      setSelected()
+    }
     expanded.value = false
 
     if (isFocused.value) {
@@ -692,6 +781,18 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
   }
 
   const handleEsc = () => {
+    if (
+      showMobileFooter.value &&
+      expanded.value &&
+      states.inputValue.length === 0
+    ) {
+      mobileSelectionCommitted.value = false
+      syncMobileSelection()
+      setSelected()
+      expanded.value = false
+      return
+    }
+
     if (states.inputValue.length > 0) {
       states.inputValue = ''
     } else {
@@ -962,6 +1063,14 @@ export const useSelect = (props: SelectProps, emit: SelectEmits) => {
     collapseTagSize,
     setSelected,
     selectDisabled,
+    isMobile,
+    resolvedTeleported,
+    selectionModelValue,
+    showMobileFooter,
+    mobileCancelText,
+    mobileConfirmText,
+    confirmMobileSelection,
+    cancelMobileSelection,
     emptyText,
     handleCompositionStart,
     handleCompositionUpdate,

@@ -9,10 +9,11 @@ import {
   watchEffect,
 } from 'vue'
 import { findLastIndex, get, isEqual } from 'lodash-unified'
-import { useDebounceFn, useResizeObserver } from '@vueuse/core'
+import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
 import {
   ValidateComponentsMap,
   debugWarn,
+  ensureArray,
   escapeStringRegexp,
   getEventCode,
   isArray,
@@ -82,6 +83,11 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   // data refs
   const popperSize = ref(-1)
   const debouncing = ref(false)
+  const mobileSelection = ref<any[]>([])
+  const mobileSelectionCommitted = ref(false)
+  const { width: viewportWidth } = useWindowSize({
+    initialWidth: Number.POSITIVE_INFINITY,
+  })
 
   // DOM & Component refs
   const selectRef = ref<HTMLElement>()
@@ -105,6 +111,22 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   })
 
   const selectDisabled = useFormDisabled()
+  const isMobile = computed(() => props.mobile || viewportWidth.value < 768)
+  const showMobileFooter = computed(() => props.multiple && isMobile.value)
+  const resolvedTeleported = computed(() => props.teleported || isMobile.value)
+  const selectionModelValue = computed(() => {
+    return props.multiple && isMobile.value && expanded.value
+      ? mobileSelection.value
+      : props.modelValue
+  })
+  const mobileCancelText = computed(() => t('el.datepicker.cancel'))
+  const mobileConfirmText = computed(() => t('el.datepicker.confirm'))
+
+  const syncMobileSelection = () => {
+    mobileSelection.value = isArray(props.modelValue)
+      ? props.modelValue.slice()
+      : []
+  }
 
   const { wrapperRef, isFocused, handleBlur } = useFocusController(inputRef, {
     disabled: selectDisabled,
@@ -149,8 +171,9 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
 
   const hasModelValue = computed(() => {
     return props.multiple
-      ? isArray(props.modelValue) && props.modelValue.length > 0
-      : !isEmptyValue(props.modelValue)
+      ? isArray(selectionModelValue.value) &&
+          selectionModelValue.value.length > 0
+      : !isEmptyValue(selectionModelValue.value)
   })
 
   const showClearBtn = computed(() => {
@@ -158,6 +181,7 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
       props.clearable &&
       !selectDisabled.value &&
       hasModelValue.value &&
+      !useMobileDraft.value &&
       (isFocused.value || states.inputHovering)
     )
   })
@@ -182,6 +206,9 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   })
 
   const debounce = computed(() => (props.remote ? props.debounce : 0))
+  const useMobileDraft = computed(
+    () => props.multiple && isMobile.value && expanded.value
+  )
 
   const isRemoteSearchEmpty = computed(
     () => props.remote && !states.inputValue && !hasOptions.value
@@ -282,6 +309,10 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   )
 
   const calculatePopperSize = () => {
+    if (isMobile.value) {
+      popperSize.value = viewportWidth.value
+      return
+    }
     if (isNumber(props.fitInputWidth)) {
       popperSize.value = props.fitInputWidth
       return
@@ -346,8 +377,8 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   })
 
   const shouldShowPlaceholder = computed(() => {
-    if (isArray(props.modelValue)) {
-      return props.modelValue.length === 0 && !states.inputValue
+    if (isArray(selectionModelValue.value)) {
+      return selectionModelValue.value.length === 0 && !states.inputValue
     }
 
     // when it's not multiple mode, we only determine this flag based on filterable and expanded
@@ -368,22 +399,26 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   // the index with current value in options
   const indexRef = computed<number>(() => {
     if (props.multiple) {
-      const len = (props.modelValue as []).length
+      const len = ensureArray(selectionModelValue.value).length
       if (
         len > 0 &&
-        filteredOptionsValueMap.value.has(props.modelValue[len - 1])
+        filteredOptionsValueMap.value.has(
+          ensureArray(selectionModelValue.value)[len - 1]
+        )
       ) {
         const { index } = filteredOptionsValueMap.value.get(
-          props.modelValue[len - 1]
+          ensureArray(selectionModelValue.value)[len - 1]
         )
         return index
       }
     } else {
       if (
-        !isEmptyValue(props.modelValue) &&
-        filteredOptionsValueMap.value.has(props.modelValue)
+        !isEmptyValue(selectionModelValue.value) &&
+        filteredOptionsValueMap.value.has(selectionModelValue.value)
       ) {
-        const { index } = filteredOptionsValueMap.value.get(props.modelValue)
+        const { index } = filteredOptionsValueMap.value.get(
+          selectionModelValue.value
+        )
         return index
       }
     }
@@ -587,7 +622,32 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   const onSelect = (option: Option) => {
     const optionValue = getValue(option)
 
-    if (props.multiple) {
+    if (useMobileDraft.value) {
+      let selectedOptions = mobileSelection.value.slice()
+      const index = getValueIndex(selectedOptions, optionValue)
+      if (index > -1) {
+        selectedOptions = [
+          ...selectedOptions.slice(0, index),
+          ...selectedOptions.slice(index + 1),
+        ]
+      } else if (
+        props.multipleLimit <= 0 ||
+        selectedOptions.length < props.multipleLimit
+      ) {
+        selectedOptions = [...selectedOptions, optionValue]
+      }
+      mobileSelection.value = selectedOptions
+      states.cachedOptions = selectedOptions.map((value) =>
+        getOption(value, states.cachedOptions)
+      )
+      if (option.created) {
+        handleQueryChange('')
+      }
+      if (props.filterable && (option.created || !props.reserveKeyword)) {
+        states.inputValue = ''
+      }
+      focus()
+    } else if (props.multiple) {
       let selectedOptions = (props.modelValue as any[]).slice()
 
       const index = getValueIndex(selectedOptions, optionValue)
@@ -622,6 +682,28 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
         clearAllNewOption()
       }
     }
+    focus()
+  }
+
+  const confirmMobileSelection = () => {
+    if (!showMobileFooter.value) return
+
+    const value = mobileSelection.value.slice()
+    mobileSelectionCommitted.value = true
+    update(value)
+    expanded.value = false
+    focus()
+  }
+
+  const cancelMobileSelection = () => {
+    if (!showMobileFooter.value) return
+
+    mobileSelectionCommitted.value = false
+    syncMobileSelection()
+    states.cachedOptions = mobileSelection.value.map((value) =>
+      getOption(value, states.cachedOptions)
+    )
+    expanded.value = false
     focus()
   }
 
@@ -773,12 +855,14 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   const updateHoveringIndex = () => {
     if (!props.multiple) {
       states.hoveringIndex = filteredOptions.value.findIndex((item) => {
-        return getValueKey(getValue(item)) === getValueKey(props.modelValue)
+        return (
+          getValueKey(getValue(item)) === getValueKey(selectionModelValue.value)
+        )
       })
     } else {
-      const length = props.modelValue.length
+      const length = ensureArray(selectionModelValue.value).length
       if (length > 0) {
-        const lastValue = props.modelValue[length - 1]
+        const lastValue = ensureArray(selectionModelValue.value)[length - 1]
         states.hoveringIndex = filteredOptions.value.findIndex(
           (item) => getValueKey(lastValue) === getValueKey(getValue(item))
         )
@@ -799,6 +883,13 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
   }
 
   const handleClickOutside = (event: Event) => {
+    if (showMobileFooter.value && expanded.value) {
+      mobileSelectionCommitted.value = false
+      syncMobileSelection()
+      states.cachedOptions = mobileSelection.value.map((value) =>
+        getOption(value, states.cachedOptions)
+      )
+    }
     expanded.value = false
 
     if (isFocused.value) {
@@ -899,6 +990,13 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
 
   watch(expanded, (val) => {
     if (val) {
+      mobileSelectionCommitted.value = false
+      if (showMobileFooter.value) {
+        syncMobileSelection()
+        states.cachedOptions = mobileSelection.value.map((value) =>
+          getOption(value, states.cachedOptions)
+        )
+      }
       if (!props.persistent) {
         calculatePopperSize()
       }
@@ -909,6 +1007,15 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
       states.isBeforeHide = true
       states.menuVisibleOnFocus = false
       createNewOption('')
+      if (showMobileFooter.value) {
+        if (!mobileSelectionCommitted.value) {
+          syncMobileSelection()
+        }
+        mobileSelectionCommitted.value = false
+        states.cachedOptions = mobileSelection.value.map((value) =>
+          getOption(value, states.cachedOptions)
+        )
+      }
     }
   })
 
@@ -916,6 +1023,9 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
     () => props.modelValue,
     (val, oldVal) => {
       const isValEmpty = !val || (isArray(val) && val.length === 0)
+      if (props.multiple && isMobile.value && expanded.value) {
+        syncMobileSelection()
+      }
 
       if (
         isValEmpty ||
@@ -1024,6 +1134,14 @@ const useSelect = (props: SelectV2Props, emit: SelectV2EmitFn) => {
     filteredOptions,
     iconComponent,
     iconReverse,
+    isMobile,
+    resolvedTeleported,
+    selectionModelValue,
+    showMobileFooter,
+    mobileCancelText,
+    mobileConfirmText,
+    confirmMobileSelection,
+    cancelMobileSelection,
     tagStyle,
     collapseTagStyle,
     popperSize,

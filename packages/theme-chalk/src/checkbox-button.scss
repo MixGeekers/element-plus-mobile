@@ -38,8 +38,14 @@
     user-select: none;
 
     @include button-size(
-      map.get($button-padding-vertical, 'default') - $button-border-width,
-      map.get($button-padding-horizontal, 'default') - $button-border-width,
+      calc(
+        #{map.get($button-padding-vertical, 'default')} -
+          #{$button-border-width}
+      ),
+      calc(
+        #{map.get($button-padding-horizontal, 'default')} -
+          #{$button-border-width}
+      ),
       map.get($button-font-size, 'default'),
       0
     );
@@ -52,7 +58,7 @@
       line-height: 0.9;
 
       & + span {
-        margin-left: 5px;
+        margin-left: to-rem(5px);
       }
     }
   }
@@ -131,8 +137,14 @@
     @include m($size) {
       .#{$namespace}-checkbox-button__inner {
         @include button-size(
-          map.get($button-padding-vertical, $size) - $button-border-width,
-          map.get($button-padding-horizontal, $size) - $button-border-width,
+          calc(
+            #{map.get($button-padding-vertical, $size)} -
+              #{$button-border-width}
+          ),
+          calc(
+            #{map.get($button-padding-horizontal, $size)} -
+              #{$button-border-width}
+          ),
           map.get($button-font-size, $size),
           0
         );

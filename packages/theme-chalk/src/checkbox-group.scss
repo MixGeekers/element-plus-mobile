@@ -4,4 +4,15 @@
 @include b(checkbox-group) {
   font-size: 0;
   line-height: 0;
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: to-rem(8px) to-rem(12px);
+    line-height: normal;
+
+    .#{$namespace}-checkbox {
+      margin-right: 0;
+    }
+  }
 }

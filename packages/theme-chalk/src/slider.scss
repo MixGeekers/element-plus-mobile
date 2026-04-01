@@ -6,14 +6,7 @@
 @use 'common/var' as *;
 
 $slider-height: () !default;
-$slider-height: map.merge(
-  (
-    'large': 40px,
-    'default': 32px,
-    'small': 24px,
-  ),
-  $slider-height
-);
+$slider-height: map.merge($common-component-size, $slider-height);
 
 @include b(slider) {
   @include set-component-css-var('slider', $slider);
@@ -34,7 +27,7 @@ $slider-height: map.merge(
     cursor: pointer;
 
     &.show-input {
-      margin-right: 30px;
+      margin-right: to-rem(30px);
       width: auto;
     }
 
@@ -81,7 +74,7 @@ $slider-height: map.merge(
 
   @include e(input) {
     flex-shrink: 0;
-    width: 130px;
+    width: to-rem(130px);
   }
 
   @include e(bar) {
@@ -121,7 +114,7 @@ $slider-height: map.merge(
     width: getCssVar('slider-button-size');
     height: getCssVar('slider-button-size');
     vertical-align: middle;
-    border: solid 2px getCssVar('slider-main-bg-color');
+    border: solid to-rem(2px) getCssVar('slider-main-bg-color');
     background-color: getCssVar('color-white');
     border-radius: 50%;
     box-sizing: border-box;
@@ -155,16 +148,16 @@ $slider-height: map.merge(
 
   @include e(marks) {
     top: 0;
-    left: 12px;
-    width: 18px;
+    left: to-rem(12px);
+    width: to-rem(18px);
     height: 100%;
 
     @include e(marks-text) {
       position: absolute;
       transform: translateX(-50%);
-      font-size: 14px;
+      font-size: getCssVar('font-size', 'base');
       color: getCssVar('color-info');
-      margin-top: 15px;
+      margin-top: to-rem(15px);
       white-space: pre;
     }
   }
@@ -179,12 +172,12 @@ $slider-height: map.merge(
     .#{$namespace}-slider__runway {
       width: getCssVar('slider-height');
       height: 100%;
-      margin: 0 16px;
+      margin: 0 to-rem(16px);
     }
     .#{$namespace}-slider__bar {
       width: getCssVar('slider-height');
       height: auto;
-      border-radius: 0 0 3px 3px;
+      border-radius: 0 0 to-rem(3px) to-rem(3px);
     }
     .#{$namespace}-slider__button-wrapper {
       top: auto;
@@ -197,7 +190,7 @@ $slider-height: map.merge(
 
     @include e(marks-text) {
       margin-top: 0;
-      left: 15px;
+      left: to-rem(15px);
       transform: translateY(50%);
     }
   }
@@ -206,6 +199,65 @@ $slider-height: map.merge(
     @include m($size) {
       height: map.get($slider-height, $size);
       @include e(runway) {
+      }
+    }
+  }
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    min-height: to-rem(44px);
+
+    @include m(with-input) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: to-rem(16px);
+    }
+
+    @include e(runway) {
+      height: to-rem(6px);
+      @include touch-feedback;
+
+      &.show-input {
+        margin-right: 0;
+      }
+    }
+
+    @include e(input) {
+      width: 100%;
+    }
+
+    @include e(button-wrapper) {
+      width: to-rem(36px);
+      height: to-rem(36px);
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @include e(button) {
+      width: to-rem(20px);
+      height: to-rem(20px);
+    }
+
+    @include e(stop) {
+      width: to-rem(8px);
+      height: to-rem(8px);
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @include when(vertical) {
+      .#{$namespace}-slider__runway {
+        width: to-rem(6px);
+      }
+
+      .#{$namespace}-slider__button-wrapper {
+        top: auto;
+        left: 50%;
+        transform: translate(-50%, 50%);
+      }
+
+      .#{$namespace}-slider__stop {
+        top: auto;
+        transform: translate(-50%, 50%);
       }
     }
   }

@@ -50,6 +50,24 @@ describe('Container.vue', () => {
       expect(wrapper.vm.$el.classList.contains('is-vertical')).toBe(true)
     })
   })
+
+  test('full-screen', () => {
+    const wrapper = mount(() => (
+      <Container fullScreen>
+        <Main />
+      </Container>
+    ))
+    expect(wrapper.classes()).toContain('is-full-screen')
+  })
+
+  test('full-screen default false', () => {
+    const wrapper = mount(() => (
+      <Container>
+        <Main />
+      </Container>
+    ))
+    expect(wrapper.classes()).not.toContain('is-full-screen')
+  })
 })
 
 describe('Header', () => {
@@ -62,6 +80,16 @@ describe('Header', () => {
     const wrapper = mount(() => <Header height="100px" />)
     const vm = wrapper.vm
     expect(getCssVariable(vm.$el, '--el-header-height')).toEqual('100px')
+  })
+
+  test('header fixed', () => {
+    const wrapper = mount(() => <Header fixed />)
+    expect(wrapper.classes()).toContain('is-fixed')
+  })
+
+  test('header fixed default false', () => {
+    const wrapper = mount(() => <Header />)
+    expect(wrapper.classes()).not.toContain('is-fixed')
   })
 })
 
@@ -95,5 +123,15 @@ describe('Footer', () => {
     const wrapper = mount(() => <Footer height="100px" />)
     const vm = wrapper.vm
     expect(getCssVariable(vm.$el, '--el-footer-height')).toEqual('100px')
+  })
+
+  test('footer fixed', () => {
+    const wrapper = mount(() => <Footer fixed />)
+    expect(wrapper.classes()).toContain('is-fixed')
+  })
+
+  test('footer fixed default false', () => {
+    const wrapper = mount(() => <Footer />)
+    expect(wrapper.classes()).not.toContain('is-fixed')
   })
 })

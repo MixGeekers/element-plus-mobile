@@ -1,5 +1,5 @@
 <template>
-  <footer :class="ns.b()" :style="style">
+  <footer :class="[ns.b(), ns.is('fixed', fixed)]" :style="style">
     <slot />
   </footer>
 </template>
@@ -15,6 +15,10 @@ interface FooterProps {
    * @description height of the footer
    */
   height?: string | null
+  /**
+   * @description whether to fix the footer at the bottom of the viewport
+   */
+  fixed?: boolean
 }
 
 defineOptions({
@@ -22,6 +26,7 @@ defineOptions({
 })
 const props = withDefaults(defineProps<FooterProps>(), {
   height: null,
+  fixed: false,
 })
 
 const ns = useNamespace('footer')

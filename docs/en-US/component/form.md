@@ -23,6 +23,16 @@ form/basic-form
 
 :::
 
+## Mobile Form Preview
+
+On narrow screens, Form automatically switches to a touch-friendly layout with top-aligned labels, in-flow validation messages, and larger control hit areas. You can also force the same layout in previews or embedded surfaces with the `mobile` prop.
+
+:::demo This demo renders the second batch of form components directly in their mobile layout. Open `Select` or `SelectV2` in the demo to continue checking the bottom-sheet flow.
+
+form/mobile-adaptation
+
+:::
+
 :::tip
 
 [W3C](https://www.w3.org/MarkUp/html-spec/html-spec_8.html#SEC8.2) regulates that
@@ -132,6 +142,7 @@ form/accessibility
 | model                             | Data of form component.                                                                                                                                                                                                          | ^[object]`Record<string, any>`                 | —       |
 | rules                             | Validation rules of form.                                                                                                                                                                                                        | ^[object]`FormRules`                           | —       |
 | inline                            | Whether the form is inline.                                                                                                                                                                                                      | ^[boolean]                                     | false   |
+| mobile                            | Force the form to use the mobile layout regardless of viewport width.                                                                                                                                                            | ^[boolean]                                     | false   |
 | label-position                    | Position of label. If set to `'left'` or `'right'`, `label-width` prop is also required.                                                                                                                                         | ^[enum]`'left' \| 'right' \| 'top'`            | right   |
 | label-width                       | Width of label, e.g. `'50px'`. All its direct child form items will inherit this value. `auto` is supported.                                                                                                                     | ^[string] / ^[number]                          | ''      |
 | label-suffix                      | Suffix of the label.                                                                                                                                                                                                             | ^[string]                                      | ''      |

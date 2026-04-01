@@ -2,7 +2,11 @@
   <div
     ref="selectRef"
     v-click-outside:[popperRef]="handleClickOutside"
-    :class="[nsSelect.b(), nsSelect.m(selectSize)]"
+    :class="[
+      nsSelect.b(),
+      nsSelect.m(selectSize),
+      nsSelect.is('mobile', isMobile),
+    ]"
     @[mouseEnterEventName]="states.inputHovering = true"
     @mouseleave="states.inputHovering = false"
   >
@@ -10,15 +14,23 @@
       ref="tooltipRef"
       :visible="dropdownMenuVisible"
       :placement="placement"
-      :teleported="teleported"
-      :popper-class="[nsSelect.e('popper'), popperClass]"
+      :teleported="resolvedTeleported"
+      :popper-class="[
+        nsSelect.e('popper'),
+        popperClass,
+        nsSelect.is('mobile', isMobile),
+      ]"
       :popper-style="popperStyle"
       :popper-options="popperOptions"
       :fallback-placements="fallbackPlacements"
       :effect="effect"
       pure
       trigger="click"
-      :transition="`${nsSelect.namespace.value}-zoom-in-top`"
+      :transition="
+        isMobile
+          ? `${nsSelect.namespace.value}-fade-in-linear`
+          : `${nsSelect.namespace.value}-zoom-in-top`
+      "
       :stop-popper-mouse-event="false"
       :gpu-acceleration="false"
       :persistent="persistent"
@@ -107,7 +119,7 @@
                 :placement="tagTooltip?.placement ?? 'bottom'"
                 :popper-class="tagTooltip?.popperClass ?? popperClass"
                 :popper-style="tagTooltip?.popperStyle ?? popperStyle"
-                :teleported="tagTooltip?.teleported ?? teleported"
+                :teleported="tagTooltip?.teleported ?? resolvedTeleported"
                 :append-to="tagTooltip?.appendTo ?? appendTo"
                 :popper-options="tagTooltip?.popperOptions ?? popperOptions"
                 :transition="tagTooltip?.transition"
@@ -336,6 +348,21 @@
           >
             <slot name="footer" />
           </div>
+          <div
+            v-if="showMobileFooter"
+            :class="[
+              nsSelect.be('dropdown', 'footer'),
+              nsSelect.e('mobile-actions'),
+            ]"
+            @click.stop
+          >
+            <el-button @click.stop="cancelMobileSelection">
+              {{ mobileCancelText }}
+            </el-button>
+            <el-button type="primary" @click.stop="confirmMobileSelection">
+              {{ mobileConfirmText }}
+            </el-button>
+          </div>
         </el-select-menu>
       </template>
     </el-tooltip>
@@ -358,6 +385,7 @@ import ElTooltip from '@element-plus/components/tooltip'
 import ElScrollbar from '@element-plus/components/scrollbar'
 import ElTag from '@element-plus/components/tag'
 import ElIcon from '@element-plus/components/icon'
+import ElButton from '@element-plus/components/button'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { flattedChildren, isArray, isObject } from '@element-plus/utils'
 import { useCalcInputWidth } from '@element-plus/hooks'
@@ -432,6 +460,7 @@ export default defineComponent({
     ElScrollbar,
     ElTooltip,
     ElIcon,
+    ElButton,
   },
   directives: { ClickOutside },
   props: selectProps,
@@ -553,10 +582,15 @@ export default defineComponent({
       }
     )
 
+    const injectedProps = reactive({
+      ...toRefs(props),
+      modelValue: API.selectionModelValue,
+    })
+
     provide(
       selectKey,
       reactive({
-        props: _props,
+        props: injectedProps,
         states: API.states,
         selectRef: API.selectRef,
         optionsArray: API.optionsArray,

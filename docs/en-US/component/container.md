@@ -79,13 +79,37 @@ container/example
 
 :::
 
+## Mobile layouts
+
+These examples follow the same structural style as the layouts above and focus on the responsibilities of `Header`, `Main`, and `Footer` in mobile pages.
+If your page should fill the viewport, use `full-screen` on the page root. If you need page-level sticky bars, add `fixed` to `Header` or `Footer` when appropriate.
+
+:::demo The most basic mobile page shell: Header + Main + Footer.
+
+container/layout-mobile-basic
+
+:::
+
+:::demo A bottom-navigation layout with a tab bar organized inside Footer.
+
+container/layout-mobile-tabbar
+
+:::
+
+:::demo An immersive layout that keeps only Main for low-navigation scenarios.
+
+container/layout-mobile-fullscreen
+
+:::
+
 ## Container API
 
 ### Container Attributes
 
-| Name      | Description                         | Type                                | Default  |
-| --------- | ----------------------------------- | ----------------------------------- | -------- |
-| direction | layout direction for child elements | ^[enum]`'horizontal' \| 'vertical'` | vertical |
+| Name        | Description                                             | Type                                | Default  |
+| ----------- | ------------------------------------------------------- | ----------------------------------- | -------- |
+| direction   | layout direction for child elements                     | ^[enum]`'horizontal' \| 'vertical'` | vertical |
+| full-screen | whether the container takes up the full viewport height | ^[boolean]                          | false    |
 
 ### Container Slots
 
@@ -97,9 +121,10 @@ container/example
 
 ### Header Attributes
 
-| Name   | Description          | Type      | Default |
-| ------ | -------------------- | --------- | ------- |
-| height | height of the header | ^[string] | 3.5rem  |
+| Name   | Description                                          | Type       | Default |
+| ------ | ---------------------------------------------------- | ---------- | ------- |
+| height | height of the header                                 | ^[string]  | 3.5rem  |
+| fixed  | whether to fix the header at the top of the viewport | ^[boolean] | false   |
 
 ### Header Slots
 
@@ -133,9 +158,10 @@ container/example
 
 ### Footer Attributes
 
-| Name   | Description          | Type      | Default |
-| ------ | -------------------- | --------- | ------- |
-| height | height of the footer | ^[string] | 3.5rem  |
+| Name   | Description                                             | Type       | Default |
+| ------ | ------------------------------------------------------- | ---------- | ------- |
+| height | height of the footer                                    | ^[string]  | 3.5rem  |
+| fixed  | whether to fix the footer at the bottom of the viewport | ^[boolean] | false   |
 
 ### Footer Slots
 

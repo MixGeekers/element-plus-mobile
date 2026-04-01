@@ -4,7 +4,7 @@
 @use 'common/var' as *;
 
 @include b(select-group) {
-  $gap: 20px;
+  $gap: to-rem(20px);
 
   margin: 0;
   padding: 0;

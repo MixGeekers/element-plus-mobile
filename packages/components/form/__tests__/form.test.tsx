@@ -12,6 +12,7 @@ import {
 } from 'vitest'
 import { rAF } from '@element-plus/test-utils/tick'
 import installStyle from '@element-plus/test-utils/style-plugin'
+import defineGetter from '@element-plus/test-utils/define-getter'
 import {
   ElCheckbox as Checkbox,
   ElCheckboxGroup as CheckboxGroup,
@@ -185,6 +186,66 @@ describe('Form', () => {
       },
     })
     expect(wrapper.classes()).toContain('el-form--inline')
+  })
+
+  it('switches form items to mobile layout on narrow screens', async () => {
+    const restore = defineGetter(window, 'innerWidth', 375)
+    try {
+      const wrapper = mount({
+        setup() {
+          const form = reactive({
+            name: '',
+          })
+          return () => (
+            <Form model={form} labelPosition="right" labelWidth="120px">
+              <FormItem label="Name">
+                <Input v-model={form.name} />
+              </FormItem>
+            </Form>
+          )
+        },
+      })
+
+      window.dispatchEvent(new Event('resize'))
+      await nextTick()
+
+      expect(wrapper.find('form').classes()).toContain('is-mobile')
+      expect(wrapper.findComponent(FormItem).classes()).toContain('is-mobile')
+      expect(wrapper.findComponent(FormItem).classes()).toContain(
+        'el-form-item--label-top'
+      )
+      expect(findStyle(wrapper, '.el-form-item__label').width).toBe('')
+      expect(findStyle(wrapper, '.el-form-item__content').marginLeft).toBe('')
+    } finally {
+      restore()
+    }
+  })
+
+  it('switches form items to mobile layout when mobile prop is enabled', async () => {
+    const wrapper = mount({
+      setup() {
+        const form = reactive({
+          name: '',
+        })
+        return () => (
+          <Form mobile model={form} labelPosition="right" labelWidth="120px">
+            <FormItem label="Name">
+              <Input v-model={form.name} />
+            </FormItem>
+          </Form>
+        )
+      },
+    })
+
+    await nextTick()
+
+    expect(wrapper.find('form').classes()).toContain('is-mobile')
+    expect(wrapper.findComponent(FormItem).classes()).toContain('is-mobile')
+    expect(wrapper.findComponent(FormItem).classes()).toContain(
+      'el-form-item--label-top'
+    )
+    expect(findStyle(wrapper, '.el-form-item__label').width).toBe('')
+    expect(findStyle(wrapper, '.el-form-item__content').marginLeft).toBe('')
   })
 
   it('label position', () => {

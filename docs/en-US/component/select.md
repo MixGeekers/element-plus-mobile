@@ -75,6 +75,16 @@ select/multiple
 
 :::
 
+## Mobile Bottom-Sheet Preview
+
+On narrow screens, `Select` switches to a more touch-friendly interaction model. In multiple mode, selections stay in a draft state until the user confirms or cancels them. You can also force the same interaction model with the `mobile` prop.
+
+:::demo This demo renders the mobile interaction model by default. Open the multi-select dropdown to inspect the bottom-sheet presentation, draft selection state, and confirm / cancel actions.
+
+select/mobile-sheet
+
+:::
+
 ## Custom template
 
 You can customize HTML templates for options.
@@ -236,6 +246,7 @@ select/custom-label
 | reserve-keyword                       | when `multiple` and `filterable` is true, whether to reserve current keyword after selecting an option                                   | ^[boolean]                                                                                                                                                                  | true                                           |
 | default-first-option                  | select first matching option on enter key. Use with `filterable` or `remote`                                                             | ^[boolean]                                                                                                                                                                  | false                                          |
 | teleported                            | whether select dropdown is teleported, if `true` it will be teleported to where `append-to` sets                                         | ^[boolean]                                                                                                                                                                  | true                                           |
+| mobile                                | force the select to use the mobile interaction model regardless of viewport width                                                        | ^[boolean]                                                                                                                                                                  | false                                          |
 | append-to ^(2.8.4)                    | which element the select dropdown appends to                                                                                             | ^[CSSSelector] / ^[HTMLElement]                                                                                                                                             | —                                              |
 | persistent                            | when select dropdown is inactive and `persistent` is `false`, select dropdown will be destroyed                                          | ^[boolean]                                                                                                                                                                  | true                                           |
 | automatic-dropdown                    | for non-filterable Select, this prop decides if the option menu pops up when the input is focused                                        | ^[boolean]                                                                                                                                                                  | false                                          |

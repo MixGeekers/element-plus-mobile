@@ -5,6 +5,7 @@ import { NOOP, hasClass } from '@element-plus/utils'
 import { EVENT_CODE } from '@element-plus/constants'
 import { makeMountFunc } from '@element-plus/test-utils/make-mount'
 import { rAF } from '@element-plus/test-utils/tick'
+import defineGetter from '@element-plus/test-utils/define-getter'
 import { ArrowDown, CircleClose } from '@element-plus/icons-vue'
 import { usePopperContainerId } from '@element-plus/hooks'
 import { ElForm, ElFormItem } from '@element-plus/components/form'
@@ -144,6 +145,7 @@ const createSelect = (
         :placeholder="placeholder"
         :allow-create="allowCreate"
         :remote="remote"
+        :mobile="mobile"
         :reserve-keyword="reserveKeyword"
         :scrollbar-always-on="scrollbarAlwaysOn"
         :teleported="teleported"
@@ -188,6 +190,7 @@ const createSelect = (
           valueKey: 'value',
           disabled: false,
           clearable: false,
+          mobile: false,
           multiple: false,
           collapseTags: false,
           collapseTagsTooltip: false,
@@ -222,6 +225,14 @@ const createSelect = (
 function getOptions(): HTMLElement[] {
   return Array.from(
     document.querySelectorAll<HTMLElement>(`.${OPTION_ITEM_CLASS_NAME}`)
+  )
+}
+
+function getMobileActionButtons(): HTMLElement[] {
+  return Array.from(
+    document.querySelectorAll<HTMLElement>(
+      '.el-select__mobile-actions .el-button'
+    )
   )
 }
 
@@ -684,6 +695,131 @@ describe('Select', () => {
       const tagIcon = wrapper.find('.el-tag__close')
       await tagIcon.trigger('click')
       expect(vm.value.length).toBe(1)
+    })
+
+    it('uses mobile draft selection until confirmed', async () => {
+      const restore = defineGetter(window, 'innerWidth', 375)
+      try {
+        const wrapper = createSelect({
+          data: () => ({
+            multiple: true,
+            value: [],
+            teleported: false,
+            options: [
+              { value: 'option_1', label: 'Option 1' },
+              { value: 'option_2', label: 'Option 2' },
+              { value: 'option_3', label: 'Option 3' },
+            ],
+          }),
+        })
+
+        window.dispatchEvent(new Event('resize'))
+        await nextTick()
+
+        const select = wrapper.findComponent(Select)
+        const selectVm = select.vm as any
+
+        expect(wrapper.classes()).toContain('is-mobile')
+        expect(selectVm.isMobile).toBe(true)
+        expect(selectVm.resolvedTeleported).toBe(true)
+
+        await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+        await nextTick()
+
+        getOptions()[0].click()
+        await nextTick()
+        getOptions()[1].click()
+        await nextTick()
+
+        expect((wrapper.vm as any).value).toEqual([])
+        expect(
+          getOptions().filter((item) => item.classList.contains('is-selected'))
+        ).toHaveLength(2)
+
+        getMobileActionButtons()[1].click()
+        await nextTick()
+
+        expect((wrapper.vm as any).value).toEqual(['option_1', 'option_2'])
+        expect(selectVm.expanded).toBe(false)
+      } finally {
+        restore()
+      }
+    })
+
+    it('uses mobile interaction when mobile prop is enabled', async () => {
+      const wrapper = createSelect({
+        data: () => ({
+          mobile: true,
+          multiple: true,
+          value: [],
+          teleported: false,
+          options: [
+            { value: 'option_1', label: 'Option 1' },
+            { value: 'option_2', label: 'Option 2' },
+            { value: 'option_3', label: 'Option 3' },
+          ],
+        }),
+      })
+
+      await nextTick()
+
+      const select = wrapper.findComponent(Select)
+      const selectVm = select.vm as any
+
+      expect(wrapper.classes()).toContain('is-mobile')
+      expect(selectVm.isMobile).toBe(true)
+      expect(selectVm.resolvedTeleported).toBe(true)
+
+      await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+      await nextTick()
+
+      expect(getMobileActionButtons()).toHaveLength(2)
+    })
+
+    it('cancels mobile draft selection', async () => {
+      const restore = defineGetter(window, 'innerWidth', 375)
+      try {
+        const wrapper = createSelect({
+          data: () => ({
+            multiple: true,
+            value: ['option_1'],
+            teleported: false,
+            options: [
+              { value: 'option_1', label: 'Option 1' },
+              { value: 'option_2', label: 'Option 2' },
+              { value: 'option_3', label: 'Option 3' },
+            ],
+          }),
+        })
+
+        window.dispatchEvent(new Event('resize'))
+        await nextTick()
+
+        await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+        await nextTick()
+
+        getOptions()[1].click()
+        await nextTick()
+
+        expect((wrapper.vm as any).value).toEqual(['option_1'])
+        expect(
+          getOptions().filter((item) => item.classList.contains('is-selected'))
+        ).toHaveLength(2)
+
+        getMobileActionButtons()[0].click()
+        await nextTick()
+
+        expect((wrapper.vm as any).value).toEqual(['option_1'])
+
+        await wrapper.find(`.${WRAPPER_CLASS_NAME}`).trigger('click')
+        await nextTick()
+
+        expect(
+          getOptions().filter((item) => item.classList.contains('is-selected'))
+        ).toHaveLength(1)
+      } finally {
+        restore()
+      }
     })
 
     it('remove-tag', async () => {

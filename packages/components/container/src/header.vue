@@ -1,5 +1,5 @@
 <template>
-  <header :class="ns.b()" :style="style">
+  <header :class="[ns.b(), ns.is('fixed', fixed)]" :style="style">
     <slot />
   </header>
 </template>
@@ -15,6 +15,10 @@ interface HeaderProps {
    * @description height of the header
    */
   height?: string | null
+  /**
+   * @description whether to fix the header at the top of the viewport
+   */
+  fixed?: boolean
 }
 
 defineOptions({
@@ -23,6 +27,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<HeaderProps>(), {
   height: null,
+  fixed: false,
 })
 
 const ns = useNamespace('header')

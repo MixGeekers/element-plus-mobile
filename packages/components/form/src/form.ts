@@ -70,6 +70,10 @@ export interface FormProps extends FormMetaProps {
    */
   inline?: boolean
   /**
+   * @description Force the form to use the mobile layout regardless of viewport width.
+   */
+  mobile?: boolean
+  /**
    * @description Whether to display the error message inline with the form item.
    */
   inlineMessage?: boolean
@@ -148,6 +152,10 @@ export const formProps = buildProps({
    * @description Whether the form is inline.
    */
   inline: Boolean,
+  /**
+   * @description Force the form to use the mobile layout regardless of viewport width.
+   */
+  mobile: Boolean,
   /**
    * @description Whether to display the error message inline with the form item.
    */

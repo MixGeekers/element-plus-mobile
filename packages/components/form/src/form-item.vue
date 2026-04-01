@@ -104,12 +104,14 @@ const formItemRef = ref<HTMLDivElement>()
 let initialValue: any = undefined
 let isResettingField = false
 
-const labelPosition = computed(
-  () => props.labelPosition || formContext?.labelPosition
+const labelPosition = computed(() =>
+  formContext?.isMobile
+    ? 'top'
+    : props.labelPosition || formContext?.labelPosition
 )
 
 const labelStyle = computed<CSSProperties>(() => {
-  if (labelPosition.value === 'top') {
+  if (labelPosition.value === 'top' || formContext?.isMobile) {
     return {}
   }
 
@@ -118,7 +120,11 @@ const labelStyle = computed<CSSProperties>(() => {
 })
 
 const contentStyle = computed<CSSProperties>(() => {
-  if (labelPosition.value === 'top' || formContext?.inline) {
+  if (
+    labelPosition.value === 'top' ||
+    formContext?.inline ||
+    formContext?.isMobile
+  ) {
     return {}
   }
   if (!props.label && !props.labelWidth && isNested) {
@@ -139,6 +145,7 @@ const formItemClasses = computed(() => [
   ns.is('success', validateState.value === 'success'),
   ns.is('required', isRequired.value || props.required),
   ns.is('no-asterisk', formContext?.hideRequiredAsterisk),
+  ns.is('mobile', !!formContext?.isMobile),
   formContext?.requireAsteriskPosition === 'right'
     ? 'asterisk-right'
     : 'asterisk-left',
@@ -149,9 +156,11 @@ const formItemClasses = computed(() => [
 ])
 
 const _inlineMessage = computed(() =>
-  isBoolean(props.inlineMessage)
-    ? props.inlineMessage
-    : formContext?.inlineMessage || false
+  formContext?.isMobile
+    ? false
+    : isBoolean(props.inlineMessage)
+      ? props.inlineMessage
+      : formContext?.inlineMessage || false
 )
 
 const validateClasses = computed(() => [

@@ -1,10 +1,17 @@
 @use 'mixins/mixins' as *;
+@use 'mixins/var' as *;
+@use 'common/var' as *;
 
 @include b(aside) {
+  @include set-component-css-var('aside', $aside);
+
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
   flex-shrink: 0;
-  width: var(#{getCssVarName('aside', 'width')}, 100%);
+  width: getCssVar('aside-width');
   max-width: 100%;
   min-width: 0;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }

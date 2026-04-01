@@ -37,6 +37,16 @@ select-v2/multiple
 
 :::
 
+## Mobile Bottom-Sheet Preview
+
+`SelectV2` keeps its virtualized list on mobile while switching to a more touch-friendly bottom-sheet interaction. You can also force the same interaction model with the `mobile` prop.
+
+:::demo This demo renders the mobile interaction model by default. Open the multi-select dropdown to inspect the bottom-sheet presentation, draft selection state, and confirm / cancel flow.
+
+select-v2/mobile-sheet
+
+:::
+
 ## Sizes
 
 :::demo Add `size` attribute to change the size of Select-V2. In addition to the default size, there are two other options: `large`, `small`.
@@ -265,6 +275,7 @@ select-v2/custom-width
 | popper-class                          | custom class name for Select's dropdown and tags' tooltip                                                                                                                                        | ^[string] / ^[object]                                                                                                                                                       | ''                                             |
 | popper-style ^(2.11.0)                | custom style for Select's dropdown and tags' tooltip                                                                                                                                             | ^[string] / ^[object]                                                                                                                                                       | —                                              |
 | teleported                            | whether select dropdown is teleported, if `true` it will be teleported to where `append-to` sets                                                                                                 | ^[boolean]                                                                                                                                                                  | true                                           |
+| mobile                                | force the select to use the mobile interaction model regardless of viewport width                                                                                                                | ^[boolean]                                                                                                                                                                  | false                                          |
 | append-to ^(2.8.8)                    | which element the select dropdown appends to                                                                                                                                                     | ^[CSSSelector] / ^[HTMLElement]                                                                                                                                             | —                                              |
 | persistent                            | when select dropdown is inactive and `persistent` is `false`, select dropdown will be destroyed                                                                                                  | ^[boolean]                                                                                                                                                                  | true                                           |
 | popper-options                        | [popper.js](https://popper.js.org/docs/v2/) parameters                                                                                                                                           | ^[object]refer to [popper.js](https://popper.js.org/docs/v2/) doc                                                                                                           | {}                                             |

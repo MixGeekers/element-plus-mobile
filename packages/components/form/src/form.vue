@@ -7,6 +7,7 @@
 <script lang="ts" setup>
 import { computed, provide, reactive, ref, toRefs, watch } from 'vue'
 import { cloneDeep } from 'lodash-unified'
+import { useWindowSize } from '@vueuse/core'
 import {
   debugWarn,
   ensureArray,
@@ -49,9 +50,13 @@ const emit = defineEmits(formEmits)
 const formRef = ref<HTMLElement>()
 const fields = reactive<FormItemContext[]>([])
 const initialValues = new Map<string, any>()
+const { width: viewportWidth } = useWindowSize({
+  initialWidth: Number.POSITIVE_INFINITY,
+})
 
 const formSize = useFormSize()
 const ns = useNamespace('form')
+const isMobile = computed(() => props.mobile || viewportWidth.value < 768)
 const formClasses = computed(() => {
   const { labelPosition, inline } = props
   return [
@@ -60,6 +65,7 @@ const formClasses = computed(() => {
     {
       [ns.m(`label-${labelPosition}`)]: labelPosition,
       [ns.m('inline')]: inline,
+      [ns.is('mobile')]: isMobile.value,
     },
   ]
 })
@@ -249,6 +255,7 @@ provide(
   formContextKey,
   reactive({
     ...toRefs(props),
+    isMobile,
     emit,
 
     resetFields,

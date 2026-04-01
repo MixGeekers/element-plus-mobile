@@ -51,3 +51,53 @@
 - [ ] 开始第二批组件的移动端改造
 - [ ] 评估是否需要补一套移动端 playground / demo 页面
 - [ ] 统一梳理对外 API 的 breaking changes 说明
+
+## 第二批表单核心组件移动端改造
+
+### 范围
+
+- [x] Form / FormItem
+- [x] Input / Textarea
+- [x] Select / SelectV2 / Option
+- [x] InputNumber
+- [x] Checkbox / CheckboxGroup
+- [x] Radio / RadioGroup
+- [x] Switch
+- [x] Slider
+- [x] Rate
+- [x] Segmented
+
+### 已完成改造项
+
+- [x] Form 在窄屏下增加 `is-mobile` 运行时态并自动切换为移动端表单布局
+- [x] FormItem 移动端强制标签置顶、取消桌面偏移量、错误信息回流到文档流
+- [x] Select / SelectV2 增加移动端检测、移动端类名与移动端强制 teleported 行为
+- [x] Select / SelectV2 多选引入草稿选择模型，提供确认 / 取消底部操作区
+- [x] Select / SelectV2 选项选中态在移动端跟随草稿值同步更新
+- [x] Select 下拉层改为更适合移动端的底部弹层样式，放大选项点击热区
+- [x] Input / Textarea / InputNumber 提升触控尺寸并优化移动端输入字号
+- [x] Checkbox / Radio / Switch / Slider / Rate / Segmented 提升触控热区与窄屏布局表现
+- [x] CheckboxGroup / RadioGroup 调整为更适合移动端的换行与间距
+- [x] 第二批表单组件样式尺寸统一改为 rem / rem-backed token，保留 `1px` hairline 与 focus ring
+- [x] 补充 Form / Select / SelectV2 的移动端定向测试
+- [x] 补充 Form / Select / SelectV2 的移动端文档示例，并提供桌面 / 移动预览切换
+- [x] 同步通过 `theme-chalk` 构建验证
+
+### 关键验证
+
+- [x] `pnpm exec vitest run packages/components/form/__tests__/form.test.tsx` 通过（28 / 28）
+- [x] `pnpm exec vitest run packages/components/select/__tests__/select.test.ts` 通过（130 / 130）
+- [x] `pnpm exec vitest run packages/components/select-v2/__tests__/select.test.ts` 通过（104 / 104）
+- [x] `pnpm --filter @element-plus/theme-chalk build` 通过
+
+### 当前遗留说明
+
+- [ ] `CheckboxButton / RadioButton` 的移动端专门样式仍可继续细化
+- [ ] 日期、时间、级联等更复杂表单组件尚未纳入本批
+- [ ] 需要补充移动端表单场景的文档 / demo 展示
+
+### 下一步建议
+
+- [ ] 继续推进日期、时间、级联、上传等高频表单组件的移动端改造
+- [ ] 补一套移动端表单 playground / docs 示例，覆盖底部弹层与窄屏校验态
+- [ ] 梳理本批移动端行为变化中的 breaking changes 说明

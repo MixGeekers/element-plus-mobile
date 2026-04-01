@@ -224,6 +224,10 @@ export const selectV2Props = buildProps({
    */
   teleported: useTooltipContentProps.teleported,
   /**
+   * @description force the select to use the mobile interaction model regardless of viewport width
+   */
+  mobile: Boolean,
+  /**
    * @description when select dropdown is inactive and `persistent` is `false`, select dropdown will be destroyed
    */
   persistent: {

@@ -53,7 +53,8 @@
     position: relative;
     display: block;
     resize: vertical;
-    padding: 5px map.get($input-padding-horizontal, 'default')-$border-width;
+    padding: to-rem(5px)
+      calc(#{map.get($input-padding-horizontal, 'default')} - #{$border-width});
     line-height: 1.5;
     box-sizing: border-box;
     width: 100%;
@@ -83,8 +84,12 @@
     border: none;
 
     @include when(clearable) {
-      padding: 5px map.get($input-padding-horizontal, 'default') + 14px 5px
-        map.get($input-padding-horizontal, 'default')-$border-width;
+      padding: to-rem(5px)
+        calc(#{map.get($input-padding-horizontal, 'default')} + #{to-rem(14px)})
+        to-rem(5px)
+        calc(
+          #{map.get($input-padding-horizontal, 'default')} - #{$border-width}
+        );
     }
 
     &::placeholder {
@@ -106,8 +111,8 @@
 
   @include e(clear) {
     position: absolute;
-    right: 11px;
-    top: 15px;
+    right: to-rem(11px);
+    top: to-rem(15px);
     transform: translateY(-50%);
     color: getCssVar('input-icon-color');
     font-size: map.get($input-font-size, 'default');
@@ -122,15 +127,15 @@
     color: getCssVar('color-info');
     background: getCssVar('fill-color', 'blank');
     position: absolute;
-    font-size: 12px;
-    line-height: 14px;
-    bottom: 5px;
-    right: 10px;
+    font-size: getCssVar('font-size', 'extra-small');
+    line-height: to-rem(14px);
+    bottom: to-rem(5px);
+    right: to-rem(10px);
 
     @include when(outside) {
       position: absolute;
       background: transparent;
-      padding-top: 2px;
+      padding-top: to-rem(2px);
       top: 100%;
       right: 0;
       bottom: unset;
@@ -158,6 +163,19 @@
 
     .#{$namespace}-input__count {
       color: getCssVar('color-danger');
+    }
+  }
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    @include e(inner) {
+      min-height: to-rem(96px);
+      padding: to-rem(10px) to-rem(14px);
+      font-size: to-rem(16px);
+      line-height: 1.5;
+    }
+
+    @include e(clear) {
+      top: to-rem(18px);
     }
   }
 }
@@ -194,25 +212,25 @@
     display: inline-flex;
     align-items: center;
     color: getCssVar('color-info');
-    font-size: 12px;
+    font-size: getCssVar('font-size', 'extra-small');
 
     .#{$namespace}-input__count-inner {
       background: getCssVar('fill-color', 'blank');
       line-height: initial;
       display: inline-block;
-      padding-left: 8px;
+      padding-left: to-rem(8px);
     }
 
     @include when(outside) {
       height: unset;
       position: absolute;
-      padding-top: 2px;
+      padding-top: to-rem(2px);
       top: 100%;
       right: 0;
 
       .#{$namespace}-input__count-inner {
         background: transparent;
-        padding-left: 0px;
+        padding-left: 0;
         line-height: 1;
       }
     }
@@ -224,7 +242,7 @@
     align-items: center;
     justify-content: center;
     padding: $border-width
-      map.get($input-padding-horizontal, 'default')-$border-width;
+      calc(#{map.get($input-padding-horizontal, 'default')} - #{$border-width});
     background-color: var(
       #{getCssVarName('input-bg-color')},
       map.get($input, 'bg-color')
@@ -330,7 +348,7 @@
 
       @if $slot == prefix {
         > :last-child {
-          margin-right: 8px;
+          margin-right: to-rem(8px);
         }
 
         > :first-child {
@@ -341,7 +359,7 @@
         }
       } @else {
         > :first-child {
-          margin-left: 8px;
+          margin-left: to-rem(8px);
         }
       }
     }
@@ -354,7 +372,7 @@
     justify-content: center;
     align-items: center;
     transition: all getCssVar('transition-duration');
-    margin-left: 8px;
+    margin-left: to-rem(8px);
   }
 
   @include e(validateIcon) {
@@ -421,7 +439,7 @@
 
       @include e(wrapper) {
         padding: $border-width
-          map.get($input-padding-horizontal, $size)-$border-width;
+          calc(#{map.get($input-padding-horizontal, $size)} - #{$border-width});
       }
 
       & {
@@ -436,6 +454,32 @@
           )
         );
       }
+    }
+  }
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    width: 100%;
+
+    @include e(wrapper) {
+      min-height: to-rem(44px);
+      padding: $border-width calc(#{to-rem(14px)} - #{$border-width});
+      @include touch-feedback;
+    }
+
+    @include e(inner) {
+      font-size: to-rem(16px);
+    }
+
+    @include e((prefix, suffix)) {
+      line-height: normal;
+    }
+
+    & .#{$namespace}-input__clear,
+    & .#{$namespace}-input__password {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      @include touch-target(32px);
     }
   }
 }
@@ -454,7 +498,7 @@
     justify-content: center;
     min-height: 100%;
     border-radius: getCssVar('input-border-radius');
-    padding: 0 20px;
+    padding: 0 to-rem(20px);
     white-space: nowrap;
 
     &:focus {
@@ -465,7 +509,7 @@
     .#{$namespace}-button {
       display: inline-block;
       flex: 1;
-      margin: 0 -20px;
+      margin: 0 to-rem(-20px);
     }
 
     button.#{$namespace}-button,
@@ -528,6 +572,12 @@
           @include inset-append-border(#{getCssVar('input-border-color')});
         }
       }
+    }
+  }
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    @include e((append, prepend)) {
+      padding: 0 to-rem(16px);
     }
   }
 }

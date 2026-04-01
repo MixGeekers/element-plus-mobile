@@ -6,4 +6,13 @@
   align-items: center;
   flex-wrap: wrap;
   font-size: 0;
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    width: 100%;
+    gap: to-rem(8px) to-rem(12px);
+
+    .#{$namespace}-radio {
+      margin-right: 0;
+    }
+  }
 }

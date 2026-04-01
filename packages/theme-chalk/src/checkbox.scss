@@ -11,9 +11,9 @@ $checkbox-height: map.merge($common-component-size, $checkbox-height);
 $checkbox-bordered-input-height: () !default;
 $checkbox-bordered-input-height: map.merge(
   (
-    'large': 14px,
-    'default': 12px,
-    'small': 12px,
+    'large': to-rem(14px),
+    'default': to-rem(12px),
+    'small': to-rem(12px),
   ),
   $checkbox-bordered-input-height
 );
@@ -21,8 +21,8 @@ $checkbox-bordered-input-height: map.merge(
 $checkbox-font-size: () !default;
 $checkbox-font-size: map.merge(
   (
-    'large': 14px,
-    'small': 12px,
+    'large': getCssVar('font-size', 'base'),
+    'small': getCssVar('font-size', 'extra-small'),
   ),
   $checkbox-font-size
 );
@@ -47,7 +47,7 @@ $checkbox-bordered-input-width: map.merge(
   align-items: center;
   white-space: nowrap;
   user-select: none;
-  margin-right: 30px;
+  margin-right: to-rem(30px);
   height: getCssVarWithDefault(
     'checkbox-height',
     map.get($checkbox-height, 'default')
@@ -59,8 +59,15 @@ $checkbox-bordered-input-width: map.merge(
 
   @include when(bordered) {
     padding: 0
-      map.get($checkbox-bordered-padding-right, 'default')-$border-width 0
-      map.get($checkbox-bordered-padding-left, 'default')-$border-width;
+      calc(
+        #{map.get($checkbox-bordered-padding-right, 'default')} -
+          #{$border-width}
+      )
+      0
+      calc(
+        #{map.get($checkbox-bordered-padding-left, 'default')} -
+          #{$border-width}
+      );
     border-radius: getCssVar('border-radius-base');
     border: getCssVar('border');
     box-sizing: border-box;
@@ -76,9 +83,15 @@ $checkbox-bordered-input-width: map.merge(
     @each $size in (large, small) {
       &.#{$namespace}-checkbox--#{$size} {
         padding: 0
-          map.get($checkbox-bordered-padding-right, $size)-$border-width
+          calc(
+            #{map.get($checkbox-bordered-padding-right, $size)} -
+              #{$border-width}
+          )
           0
-          map.get($checkbox-bordered-padding-left, $size)-$border-width;
+          calc(
+            #{map.get($checkbox-bordered-padding-left, $size)} -
+              #{$border-width}
+          );
 
         border-radius: map.get($button-border-radius, $size);
 
@@ -96,8 +109,8 @@ $checkbox-bordered-input-width: map.merge(
     &.#{$namespace}-checkbox--small {
       .#{$namespace}-checkbox__inner {
         &::after {
-          height: 6px;
-          width: 2px;
+          height: to-rem(6px);
+          width: to-rem(2px);
         }
       }
     }
@@ -197,11 +210,11 @@ $checkbox-bordered-input-width: map.merge(
           position: absolute;
           display: block;
           background-color: getCssVar('checkbox-checked-icon-color');
-          height: 2px;
+          height: to-rem(2px);
           transform: scale(0.5);
           left: 0;
           right: 0;
-          top: 5px;
+          top: to-rem(5px);
         }
 
         &::after {
@@ -235,12 +248,12 @@ $checkbox-bordered-input-width: map.merge(
       border: 1px solid transparent;
       border-left: 0;
       border-top: 0;
-      height: 7px;
+      height: to-rem(7px);
       left: 50%;
       position: absolute;
       top: 50%;
       transform: translate(-45%, -60%) rotate(45deg) scaleY(0);
-      width: 3px;
+      width: to-rem(3px);
       transition: transform 0.15s ease-in 0.05s;
       transform-origin: center;
     }
@@ -258,7 +271,7 @@ $checkbox-bordered-input-width: map.merge(
 
   @include e(label) {
     display: inline-block;
-    padding-left: 8px;
+    padding-left: to-rem(8px);
     line-height: 1;
     font-size: getCssVar('checkbox-font-size');
   }
@@ -281,20 +294,49 @@ $checkbox-bordered-input-width: map.merge(
       @include when(indeterminate) {
         @include e(inner) {
           &::before {
-            top: 4px;
+            top: to-rem(4px);
           }
         }
       }
     }
     @include e(inner) {
       &::after {
-        width: 2px;
-        height: 6px;
+        width: to-rem(2px);
+        height: to-rem(6px);
       }
     }
   }
 
   &:last-of-type {
     margin-right: 0;
+  }
+
+  @include res('sm-and-down', $breakpoints-spec) {
+    align-items: flex-start;
+    min-height: to-rem(44px);
+    height: auto;
+    margin-right: to-rem(16px);
+    white-space: normal;
+    @include touch-feedback;
+
+    @include when(bordered) {
+      padding-top: to-rem(10px);
+      padding-bottom: to-rem(10px);
+    }
+
+    @include e(inner) {
+      width: to-rem(18px);
+      height: to-rem(18px);
+
+      &::after {
+        width: to-rem(4px);
+        height: to-rem(8px);
+      }
+    }
+
+    @include e(label) {
+      padding-left: to-rem(12px);
+      line-height: 1.4;
+    }
   }
 }
