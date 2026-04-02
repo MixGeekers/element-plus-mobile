@@ -8,3 +8,5 @@ zh-CN
 fr-FR
 es-ES
 ja-JP
+!.vitepress/crowdin/zh-CN
+!.vitepress/crowdin/zh-CN/**

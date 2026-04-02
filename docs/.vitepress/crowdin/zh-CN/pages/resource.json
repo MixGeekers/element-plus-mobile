@@ -1,0 +1,18 @@
+{
+  "title": "设计资源",
+  "lineOne": "更多资源仍在持续建设中。",
+  "lineTwo": "如果你有兴趣参与 Element Plus 的设计，欢迎通过 <span><a href=\"mailto:element-plus@outlook.com\" target=\"_blank\">element-plus@outlook.com</a></span> 联系我们。",
+  "download": "下载",
+  "axure": "2022 Axure 组件库",
+  "axureIntro": "在 Axure 中导入 Element Plus 后，你可以在交互设计阶段更方便地使用我们提供的全部组件。",
+  "sketch": "2022 Sketch 模板",
+  "sketchIntro": "2022 全新设计的 Sketch 组件库，覆盖 Element Plus 全量组件，在保持统一视觉风格的同时提升设计效率。",
+  "figma": "2022 Figma 模板",
+  "figmaIntro": "2022 全新设计的 Figma 组件库，支持 Auto-layout、Variants 等新特性。",
+  "figmaVariables": "2023 Figma Variables",
+  "figmaVariablesIntro": "所有组件均使用变量构建，可快速切换亮色和暗色模式。",
+  "figma2023": "2023 Figma UI Kit",
+  "figma2023Intro": "基于 Figma 最新变量能力设计的组件，支持 Light / Dark / Dark Alpha 主题切换，帮助你快速构建设计稿。",
+  "masterGo2024": "2024 MasterGo UI Kit",
+  "masterGo2024Intro": "适配布局更完善、组件状态更完整、支持变体切换的 MasterGo 组件库。"
+}
