@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'site/**'
   workflow_dispatch:
 
 permissions:
@@ -17,6 +15,14 @@ concurrency:
 
 jobs:
   publish-static-docs:
+    if: >-
+      ${{
+        github.event_name != 'push' ||
+        (
+          github.actor != 'github-actions[bot]' &&
+          !contains(github.event.head_commit.message, '[docs-static]')
+        )
+      }}
     runs-on: ubuntu-latest
 
     steps:
