@@ -1,3 +1,4 @@
+import { normalizeContentPath } from '../shared/lang'
 import { ensureLang } from '../utils/lang'
 import guideLocale from '../i18n/pages/guide.json'
 import componentLocale from '../i18n/pages/component.json'
@@ -44,7 +45,7 @@ function mapPrefix(item: Item, lang: string, prefix = '') {
   }
   return {
     ...item,
-    link: `${ensureLang(lang)}${prefix}${item.link}`,
+    link: normalizeContentPath(`${ensureLang(lang)}${prefix}${item.link}`),
   }
 }
 

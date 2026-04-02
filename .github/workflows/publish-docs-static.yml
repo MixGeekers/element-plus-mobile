@@ -1,0 +1,68 @@
+name: Publish Static Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'site/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish-static-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20.19.0
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Build Metadata
+        run: pnpm -C internal/metadata build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build static docs
+        run: pnpm docs:build:static
+        env:
+          DOC_SITE_URL: ${{ vars.DOC_SITE_URL }}
+          NODE_OPTIONS: --max-old-space-size=4096
+
+      - name: Detect site changes
+        id: changes
+        run: |
+          if [[ -n "$(git status --porcelain -- site)" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit static docs
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A site
+          git commit -m "chore(docs): refresh static site [skip ci][docs-static]"
+          git push origin HEAD:${{ github.ref_name }}

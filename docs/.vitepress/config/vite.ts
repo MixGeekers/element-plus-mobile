@@ -87,6 +87,11 @@ export const getViteConfig = ({ mode }: { mode: string }) => {
     resolve: {
       alias,
     },
+    define: {
+      __DOC_CLEAN_URLS__: JSON.stringify(
+        process.env.DOC_CLEAN_URLS !== 'false'
+      ),
+    },
     plugins: [
       vueJsx(),
       ElementPlusIconify({

@@ -35,6 +35,7 @@
     "typecheck:vitest": "vue-tsc -p tsconfig.vitest.json --composite false --noEmit",
     "docs:dev": "pnpm run -C docs dev",
     "docs:build": "pnpm run -C docs build",
+    "docs:build:static": "node scripts/build-docs-static.mjs",
     "docs:serve": "pnpm run -C docs serve",
     "docs:gen-locale": "pnpm run -C docs gen-locale",
     "docs:crowdin-credentials": "pnpm run -C docs crowdin-credentials",

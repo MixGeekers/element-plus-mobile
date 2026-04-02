@@ -12,6 +12,28 @@ export const languageMap: Record<string, string> = {
 export const isDefaultLang = (lang: string) => lang === defaultLang
 
 const normalizeSlashes = (value = '') => value.replace(/\\/g, '/')
+const splitPathSuffix = (value = '') => {
+  const hashIndex = value.indexOf('#')
+  const queryIndex = value.indexOf('?')
+  const suffixIndex =
+    hashIndex === -1
+      ? queryIndex
+      : queryIndex === -1
+        ? hashIndex
+        : Math.min(hashIndex, queryIndex)
+
+  if (suffixIndex === -1) {
+    return {
+      pathname: value,
+      suffix: '',
+    }
+  }
+
+  return {
+    pathname: value.slice(0, suffixIndex),
+    suffix: value.slice(suffixIndex),
+  }
+}
 
 export const ensureLeadingSlash = (value = '') =>
   value.startsWith('/') ? value : `/${value}`
@@ -23,16 +45,58 @@ export const trimTrailingSlash = (value = '') => value.replace(/\/+$/, '')
 export const getLocaleKey = (lang: string) =>
   isDefaultLang(lang) ? 'root' : lang
 
+export const isDocCleanUrls = () => {
+  if (typeof __DOC_CLEAN_URLS__ !== 'undefined') {
+    return __DOC_CLEAN_URLS__
+  }
+
+  return typeof process === 'undefined'
+    ? true
+    : process.env.DOC_CLEAN_URLS !== 'false'
+}
+
+export const normalizeContentPath = (
+  pathname: string,
+  cleanUrls = isDocCleanUrls()
+) => {
+  const normalized = ensureLeadingSlash(normalizeSlashes(pathname || '/'))
+  const { pathname: pathOnly, suffix } = splitPathSuffix(normalized)
+
+  if (cleanUrls || pathOnly === '/') {
+    return `${pathOnly}${suffix}`
+  }
+
+  if (pathOnly.endsWith('/')) {
+    return `${pathOnly}${suffix}`
+  }
+
+  if (pathOnly === '/index') {
+    return `/${suffix}`
+  }
+
+  if (pathOnly.endsWith('/index')) {
+    return `${pathOnly.slice(0, -'/index'.length)}/${suffix}`
+  }
+
+  if (/\.[^/]+$/.test(pathOnly)) {
+    return `${pathOnly}${suffix}`
+  }
+
+  return `${pathOnly}.html${suffix}`
+}
+
 export const getLocalePath = (lang: string) =>
   isDefaultLang(lang) ? '/' : `/${lang}/`
 
 export const withLangPath = (lang: string, pathname: string) => {
   const normalized = ensureLeadingSlash(normalizeSlashes(pathname || '/'))
   if (isDefaultLang(lang)) {
-    return normalized
+    return normalizeContentPath(normalized)
   }
 
-  return normalized === '/' ? `/${lang}/` : `/${lang}${normalized}`
+  return normalizeContentPath(
+    normalized === '/' ? `/${lang}/` : `/${lang}${normalized}`
+  )
 }
 
 export const getLangFromRelativePath = (
@@ -63,7 +127,10 @@ export const stripLangFromRelativePath = (
   return normalized.slice(lang.length).replace(/^\/+/, '')
 }
 
-export const relativePathToRoutePath = (relativePath: string) => {
+export const relativePathToRoutePath = (
+  relativePath: string,
+  cleanUrls = isDocCleanUrls()
+) => {
   const normalized = trimLeadingSlash(normalizeSlashes(relativePath))
 
   if (!normalized || normalized === 'index.md') {
@@ -77,10 +144,10 @@ export const relativePathToRoutePath = (relativePath: string) => {
 
   if (withoutExt.endsWith('/index')) {
     const routePath = withoutExt.slice(0, -'/index'.length)
-    return routePath ? `/${routePath}/` : '/'
+    return normalizeContentPath(routePath ? `/${routePath}/` : '/', cleanUrls)
   }
 
-  return ensureLeadingSlash(withoutExt)
+  return normalizeContentPath(ensureLeadingSlash(withoutExt), cleanUrls)
 }
 
 export const resolveRoutePath = (

@@ -17,6 +17,11 @@ import { getViteConfig } from './vite'
 
 import type { UserConfig } from 'vitepress'
 
+const docEnv = process.env.DOC_ENV
+const docOutDir = process.env.DOC_OUT_DIR
+const docCleanUrls = process.env.DOC_CLEAN_URLS !== 'false'
+const docSiteUrl = process.env.DOC_SITE_URL || 'https://element-plus.org'
+
 const buildTransformers = () => {
   const transformer = () => {
     return {
@@ -43,7 +48,10 @@ const buildTransformers = () => {
   return transformers
 }
 
-consola.debug(`DOC_ENV: ${process.env.DOC_ENV}`)
+consola.debug(`DOC_ENV: ${docEnv}`)
+consola.debug(`DOC_OUT_DIR: ${docOutDir || 'dist'}`)
+consola.debug(`DOC_CLEAN_URLS: ${docCleanUrls}`)
+consola.debug(`DOC_SITE_URL: ${docSiteUrl}`)
 
 const locales = {}
 languages.forEach((lang) => {
@@ -65,6 +73,7 @@ const setupConfig = (configEnv) => {
     description: '一个基于 Vue 3 的组件库，面向设计师和开发者',
     lastUpdated: true,
     head,
+    ...(docOutDir ? { outDir: docOutDir } : {}),
     themeConfig: {
       repo: REPO_PATH,
       docsBranch: REPO_BRANCH,
@@ -84,9 +93,9 @@ const setupConfig = (configEnv) => {
       features,
       langs: languages,
     },
-    cleanUrls: true,
+    cleanUrls: docCleanUrls,
     sitemap: {
-      hostname: 'https://element-plus.org',
+      hostname: docSiteUrl,
     },
     locales,
     vite: getViteConfig(configEnv),
