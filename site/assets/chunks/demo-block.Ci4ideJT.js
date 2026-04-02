@@ -1,0 +1,1 @@
+import{ad as o,Q as c,M as s,K as r}from"./framework.bDjb1xZu.js";const t={};function a(e,n){return s(),c("div",{class:"demo-block"},[r(e.$slots,"default")])}const d=o(t,[["render",a]]);export{d as D};

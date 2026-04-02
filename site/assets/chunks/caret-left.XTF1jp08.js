@@ -1,0 +1,1 @@
+import{Q as t,M as o,U as r}from"./framework.bDjb1xZu.js";const n={viewBox:"0 0 1024 1024",width:"1.2em",height:"1.2em"};function a(l,e){return o(),t("svg",n,[...e[0]||(e[0]=[r("path",{fill:"currentColor",d:"M672 192L288 512l384 320z"},null,-1)])])}const c={name:"ep-caret-left",render:a};export{c as C};

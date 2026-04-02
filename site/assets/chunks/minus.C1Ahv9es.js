@@ -1,0 +1,1 @@
+import{Q as t,M as o,U as n}from"./framework.bDjb1xZu.js";const r={viewBox:"0 0 1024 1024",width:"1.2em",height:"1.2em"};function s(a,e){return o(),t("svg",r,[...e[0]||(e[0]=[n("path",{fill:"currentColor",d:"M128 544h768a32 32 0 1 0 0-64H128a32 32 0 0 0 0 64"},null,-1)])])}const l={name:"ep-minus",render:s};export{l as M};
