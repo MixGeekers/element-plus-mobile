@@ -1,8 +1,9 @@
-import { computed, defineComponent, provide, ref } from 'vue'
+import { computed, defineComponent, provide, reactive, ref, toRef } from 'vue'
 import {
   CommonPicker,
   DEFAULT_FORMATS_DATE,
   DEFAULT_FORMATS_DATEPICKER,
+  PICKER_POPPER_OPTIONS_INJECTION_KEY,
 } from '@element-plus/components/time-picker'
 import { UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import {
@@ -27,6 +28,10 @@ export default defineComponent({
       return !props.format
     })
     provide(ROOT_PICKER_IS_DEFAULT_FORMAT_INJECTION_KEY, isDefaultFormat)
+    provide(
+      PICKER_POPPER_OPTIONS_INJECTION_KEY,
+      reactive(toRef(props, 'popperOptions'))
+    )
     const commonPicker = ref<InstanceType<typeof CommonPicker>>()
     const refProps: DatePickerExpose = {
       focus: () => {
