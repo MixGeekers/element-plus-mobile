@@ -1,12 +1,14 @@
 <template>
-  <el-transfer
-    v-model="value"
-    :props="{
-      key: 'value',
-      label: 'desc',
-    }"
-    :data="data"
-  />
+  <div class="demo-transfer-shell">
+    <el-transfer
+      v-model="value"
+      :props="{
+        key: 'value',
+        label: 'desc',
+      }"
+      :data="data"
+    />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -33,3 +35,10 @@ const generateData = () => {
 const data = ref<Option[]>(generateData())
 const value = ref([])
 </script>
+
+<style scoped>
+.demo-transfer-shell {
+  max-width: 28rem;
+  margin: 0 auto;
+}
+</style>

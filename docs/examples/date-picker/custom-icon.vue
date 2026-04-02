@@ -2,11 +2,11 @@
   <div class="demo-date-picker-icon">
     <div class="container">
       <div class="block">
-        <div class="demonstration">date</div>
+        <div class="demonstration">单日</div>
         <el-date-picker
           v-model="value1"
           type="date"
-          placeholder="Pick a day"
+          placeholder="请选择日期"
           format="YYYY/MM/DD"
           value-format="YYYY-MM-DD"
         >
@@ -54,15 +54,14 @@
       </div>
       <div class="line" />
       <div class="block">
-        <div class="demonstration">date range</div>
+        <div class="demonstration">日期范围</div>
         <el-date-picker
           v-model="value2"
           type="daterange"
-          start-placeholder="Start date"
-          end-placeholder="End date"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
           format="YYYY/MM/DD"
           value-format="YYYY-MM-DD"
-          unlink-panels
         >
           <template #prev-month>
             <el-icon><CaretLeft /></el-icon>
@@ -110,15 +109,14 @@
     <div class="container">
       <div class="line" />
       <div class="block">
-        <div class="demonstration">month range</div>
+        <div class="demonstration">月份范围</div>
         <el-date-picker
           v-model="value3"
           type="monthrange"
-          start-placeholder="Start date"
-          end-placeholder="End date"
+          start-placeholder="开始月份"
+          end-placeholder="结束月份"
           format="YYYY/MM/DD"
           value-format="YYYY-MM-DD"
-          unlink-panels
         >
           <template #prev-month>
             <el-icon><CaretLeft /></el-icon>
@@ -164,13 +162,13 @@
       </div>
       <div class="line" />
       <div class="block">
-        <div class="demonstration">year range</div>
+        <div class="demonstration">年份范围</div>
         <el-date-picker
           v-model="value4"
           type="yearrange"
-          range-separator="To"
-          start-placeholder="Start Year"
-          end-placeholder="End Year"
+          range-separator="至"
+          start-placeholder="开始年份"
+          end-placeholder="结束年份"
         >
           <template #prev-year>
             <el-icon>

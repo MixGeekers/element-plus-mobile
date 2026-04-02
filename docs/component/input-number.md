@@ -7,7 +7,7 @@ lang: zh-CN
 
 输入具有可自定义范围的数值。
 
-`InputNumber` 默认采用更适合触控的输入框和操作按钮尺寸，`controls-position="right"` 也会沿用同一套移动端布局。
+`InputNumber` 默认采用更大的输入框和操作按钮尺寸，`controls-position="right"` 也会沿用同一套布局。
 
 ## 基本用法
 

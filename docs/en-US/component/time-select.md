@@ -9,6 +9,8 @@ Use Time Select for time input.
 
 The available time range is 00:00 to 23:59
 
+The fixed time list opens as a full-width sheet.
+
 ## Fixed time picker
 
 Provide a list of fixed time for users to choose.
@@ -61,7 +63,6 @@ time-select/time-range
 | size                      | size of Input                                                                                      | ^[enum]`'large' \| 'default' \| 'small'`                                                         | default     |
 | placeholder               | placeholder in non-range mode                                                                      | ^[string]                                                                                        | —           |
 | name ^(2.13.3)            | same as `name` in native input                                                                     | ^[string]                                                                                        | —           |
-| effect                    | Tooltip theme, built-in theme: `dark` / `light`                                                    | ^[string] / ^[enum]`'dark' \| 'light'`                                                           | light       |
 | prefix-icon               | custom prefix icon component                                                                       | ^[string] / ^[Component]                                                                         | Clock       |
 | clear-icon                | custom clear icon component                                                                        | ^[string] / ^[Component]                                                                         | CircleClose |
 | start                     | start time                                                                                         | ^[string]                                                                                        | 09:00       |

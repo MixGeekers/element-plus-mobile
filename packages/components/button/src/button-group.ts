@@ -37,7 +37,7 @@ export const buttonGroupProps = {
   direction: {
     type: definePropType<'horizontal' | 'vertical'>(String),
     values: ['horizontal', 'vertical'],
-    default: 'horizontal',
+    default: 'vertical',
   },
 } as const
 

@@ -69,3 +69,126 @@
 .doc-content .header-anchor:before {
   content: '#';
 }
+
+.example-showcase :is(
+    .demo-date-picker,
+    .demo-datetime-picker,
+    .demo-date-picker-icon,
+    .demo-datetime-picker-icon,
+    .example-basic,
+    .demo-range,
+    .demo-time-range,
+    .demo-color-block,
+    .demo-color-sizes,
+    .upload-demo
+  ) {
+  max-width: 24rem;
+  margin: 0 auto;
+}
+
+.example-showcase :is(.example-basic, .demo-range, .demo-time-range) {
+  display: grid !important;
+  gap: 0.875rem;
+}
+
+.example-showcase :is(
+    .demo-date-picker,
+    .demo-datetime-picker,
+    .demo-date-picker-icon,
+    .demo-datetime-picker-icon
+  ) {
+  display: grid !important;
+  gap: 0.875rem;
+}
+
+.example-showcase :is(
+    .demo-date-picker .block,
+    .demo-datetime-picker .block,
+    .demo-date-picker-icon .block,
+    .demo-datetime-picker-icon .block
+  ) {
+  min-width: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  border: 0 !important;
+}
+
+.example-showcase :is(
+    .demo-date-picker .block + .block,
+    .demo-datetime-picker .block + .block,
+    .demo-date-picker-icon .block + .block,
+    .demo-datetime-picker-icon .block + .block
+  ) {
+  padding-top: 0.875rem !important;
+  border-top: 1px solid var(--el-border-color) !important;
+}
+
+.example-showcase :is(.demo-date-picker-icon .container) {
+  min-width: 0 !important;
+  border-right: 0 !important;
+}
+
+.example-showcase :is(.demo-date-picker-icon .line, .demo-datetime-picker-icon .line) {
+  display: none !important;
+}
+
+.example-showcase > .el-time-select,
+.example-showcase > .el-color-picker,
+.example-showcase > .el-color-picker-panel,
+.example-showcase > .el-date-picker-panel {
+  max-width: 24rem;
+  margin-inline: auto;
+}
+
+.example-showcase :is(
+    .el-date-editor,
+    .el-time-select,
+    .el-cascader,
+    .el-upload,
+    .el-upload-dragger,
+    .el-upload-list,
+    .el-date-picker-panel,
+    .el-color-picker-panel
+  ) {
+  width: 100% !important;
+}
+
+.example-showcase > .el-date-picker-panel,
+.example-showcase > .el-color-picker-panel {
+  max-width: 24rem;
+}
+
+.example-showcase > :is(
+    .button-example,
+    .group-example,
+    .button-row,
+    .link-example,
+    .space-stack,
+    .space-control,
+    .alignment-container,
+    .splitter-control,
+    .splitter-demo,
+    .text-truncated-demo,
+    .demo-transfer-shell,
+    .demo-transfer-stack,
+    .common-layout.mobile-layout-demo
+  ) {
+  max-width: 24rem;
+  margin-inline: auto;
+}
+
+.example-showcase :is(.demo-color-block, .demo-color-sizes) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.example-showcase .demo-color-block .demonstration,
+.example-showcase .demo-color-sizes .demonstration {
+  margin-right: 0 !important;
+}
+
+.example-showcase .upload-demo .el-button {
+  width: 100%;
+}

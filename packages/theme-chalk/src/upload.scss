@@ -418,7 +418,7 @@
       justify-content: center;
       align-items: center;
 
-      color: #fff;
+      color: getCssVar('color-white');
       opacity: 0;
       font-size: 20px;
       background-color: getCssVar('overlay-color', 'lighter');
@@ -544,6 +544,180 @@
   }
 }
 
+@include b(upload) {
+  max-width: 100%;
+
+  @include e(tip) {
+    margin-top: to-rem(8px);
+    font-size: to-rem(12px);
+    line-height: 1.5;
+  }
+
+  @include m(picture-card) {
+    width: min(
+      calc(50% - #{to-rem(6px)}),
+      getCssVar('upload', 'picture-card', 'size')
+    );
+    height: auto;
+    min-height: min(
+      calc(50vw - #{to-rem(12px)}),
+      getCssVar('upload', 'picture-card', 'size')
+    );
+    border-radius: getCssVar('border-radius-base');
+  }
+}
+
+@include b(upload-dragger) {
+  display: grid;
+  gap: to-rem(10px);
+  justify-items: center;
+  min-height: to-rem(148px);
+  padding: to-rem(24px) to-rem(20px);
+  border-radius: getCssVar('border-radius-base');
+
+  .#{bem('icon', '', 'upload')} {
+    margin-bottom: 0;
+    font-size: to-rem(40px);
+    line-height: 1;
+  }
+
+  .#{bem('upload', 'text')} {
+    font-size: to-rem(16px);
+    line-height: 1.5;
+  }
+}
+
+@include b(upload-list) {
+  margin: to-rem(12px) 0 0;
+
+  @include e(item) {
+    min-height: to-rem(56px);
+    margin-bottom: to-rem(8px);
+    padding: to-rem(12px) to-rem(44px) to-rem(12px) to-rem(12px);
+    border: 1px solid getCssVar('border-color-lighter');
+    border-radius: getCssVar('border-radius-base');
+    background: getCssVar('fill-color', 'blank');
+
+    .#{bem('progress')} {
+      top: calc(100% - #{to-rem(10px)});
+    }
+
+    .#{bem('icon', '', 'close')} {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      right: to-rem(8px);
+      top: to-rem(8px);
+      width: to-rem(28px);
+      height: to-rem(28px);
+      border-radius: getCssVar('border-radius-base');
+      transform: none;
+      background: getCssVar('fill-color', 'light');
+    }
+
+    .#{bem('icon', '', 'close-tip')} {
+      display: none !important;
+    }
+
+    &:hover,
+    &:focus-within {
+      background: getCssVar('fill-color', 'light');
+
+      .#{bem('icon', '', 'close')} {
+        display: inline-flex;
+      }
+
+      .#{bem('progress', 'text')} {
+        display: block;
+      }
+    }
+
+    .#{bem('upload-list', 'item-info')} {
+      width: 100%;
+      margin-left: 0;
+      gap: to-rem(4px);
+    }
+  }
+
+  @include e(item-name) {
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    font-size: to-rem(14px);
+    line-height: 1.5;
+
+    .#{$namespace}-icon {
+      margin-right: to-rem(8px);
+    }
+  }
+
+  @include e(item-status-label) {
+    right: to-rem(12px);
+  }
+
+  @include e(item-delete) {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include m(picture-card) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: to-rem(12px);
+
+    .#{bem('upload-list', 'item')} {
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+      aspect-ratio: 1 / 1;
+      border-radius: getCssVar('border-radius-base');
+    }
+
+    .#{bem('upload-list', 'item-status-label')} {
+      right: to-rem(-12px);
+      top: to-rem(-4px);
+    }
+
+    .#{bem('upload-list', 'item-actions')} {
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: to-rem(8px);
+      padding: to-rem(12px);
+      opacity: 1;
+      background: getCssVar('overlay-color', 'light');
+
+      span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: to-rem(36px);
+        height: to-rem(36px);
+        border-radius: getCssVar('border-radius-base');
+        background: getCssVar('mask-color', 'extra-light');
+      }
+
+      span + span {
+        margin-left: 0;
+      }
+    }
+
+    .#{bem('progress')} {
+      width: min(70%, #{to-rem(140px)});
+    }
+  }
+
+  @include m(picture) {
+    .#{bem('upload-list', 'item')} {
+      margin-top: to-rem(8px);
+      padding: to-rem(12px);
+      border-radius: getCssVar('border-radius-base');
+    }
+  }
+}
+
 @include b(upload-cover) {
   position: absolute;
   left: 0;
@@ -562,7 +736,7 @@
   }
 
   @include e(label) {
-    @include upload-success(#fff);
+    @include upload-success(getCssVar('color-white'));
   }
 
   @include e(progress) {

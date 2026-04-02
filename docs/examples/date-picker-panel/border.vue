@@ -3,7 +3,7 @@
     ref="containerRef"
     :class="['date-picker--example', { 'is-narrow': isNarrow }]"
   >
-    <div class="text-center">No border:</div>
+    <div class="text-center">无边框：</div>
     <el-divider />
     <div class="date-picker--flex-container">
       <div class="p-[20px]">

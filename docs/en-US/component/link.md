@@ -5,7 +5,9 @@ lang: en-US
 
 # Link
 
-Text hyperlink
+Use Link to present tappable text actions.
+
+Links are underlined by default on mobile so the clickable state does not depend on hover feedback.
 
 :::warning Security Warning
 The `href` prop will be rendered directly to an `<a>` tag. If you pass a value such as `javascript:alert(1)` or a malicious URL, it may cause **XSS** or **open redirect vulnerabilities**.
@@ -53,28 +55,7 @@ link/disabled
 
 ## Underline
 
-Controlling when underlines should appear
-
-:::warning
-
-The `boolean` value has been **deprecated**, and **will be** removed in ^(3.0.0) , consider switching to new values.
-
-:::
-
-:::tip
-
-Starting from ^(2.9.9) , you can use `'always' | 'hover' | 'never'` to control when underlines should appear. The examples in the document all use these values. If you are using a version **less than** ^(2.9.9) , please refer to:
-
-:::
-
-```vue
-<template>
-  <!-- works before 2.9.9, use 'hover' after, removed in 3.0.0 -->
-  <el-link underline>link</el-link>
-  <!-- works before 2.9.9, use 'never' after, removed in 3.0.0 -->
-  <el-link :underline="false">link</el-link>
-</template>
-```
+`underline` now only supports `'always'` and `'never'`. The default is `'always'`.
 
 :::demo
 
@@ -105,7 +86,7 @@ link/with-icon
 | Name      | Description                         | Type                                                                            | Default |
 | --------- | ----------------------------------- | ------------------------------------------------------------------------------- | ------- |
 | type      | type                                | ^[enum]`'primary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'default'` | default |
-| underline | when underlines should appear       | ^[enum]`'always' \| 'hover' \| 'never' \| boolean`                              | hover   |
+| underline | when underlines should appear       | ^[enum]`'always' \| 'never'`                                                    | always  |
 | disabled  | whether the component is disabled   | ^[boolean]                                                                      | false   |
 | href      | same as native hyperlink's `href`   | ^[string]                                                                       | —       |
 | target    | same as native hyperlink's `target` | ^[enum]`'_blank' \| '_parent' \| '_self' \| '_top'`                             | \_self  |

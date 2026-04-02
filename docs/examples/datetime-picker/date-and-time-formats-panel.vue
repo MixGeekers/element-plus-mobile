@@ -4,9 +4,9 @@
       <el-date-picker
         v-model="value1"
         type="datetime"
-        placeholder="Pick a Date"
+        placeholder="请选择日期时间"
         format="YYYY-MM-DD HH:mm:ss"
-        date-format="MMM DD, YYYY"
+        date-format="YYYY年MM月DD日"
         time-format="HH:mm"
       />
     </div>
@@ -15,11 +15,11 @@
       <el-date-picker
         v-model="value2"
         type="datetimerange"
-        start-placeholder="Start date"
-        end-placeholder="End date"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
         format="YYYY-MM-DD HH:mm:ss"
-        date-format="YYYY/MM/DD ddd"
-        time-format="A hh:mm:ss"
+        date-format="YYYY年MM月DD日"
+        time-format="HH:mm:ss"
       />
     </div>
   </div>

@@ -1,11 +1,11 @@
 <template>
   <div class="demo-date-picker">
     <div class="block">
-      <span class="demonstration">set prefix-icon</span>
+      <span class="demonstration">自定义前缀图标</span>
       <el-date-picker
         v-model="value1"
         type="date"
-        placeholder="Pick a day"
+        placeholder="请选择日期"
         :prefix-icon="customPrefix"
       />
     </div>
@@ -19,7 +19,7 @@ const value1 = ref('')
 
 const customPrefix = shallowRef({
   render() {
-    return h('p', 'pre')
+    return h('p', '前')
   },
 })
 </script>

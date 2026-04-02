@@ -1,5 +1,5 @@
 <template>
-  <p>Basic link button</p>
+  <p>基础链接按钮</p>
   <div class="mb-4">
     <el-button
       v-for="button in buttons"
@@ -11,7 +11,7 @@
     </el-button>
   </div>
 
-  <p>Disabled link button</p>
+  <p>禁用链接按钮</p>
   <div>
     <el-button
       v-for="button in buttons"
@@ -27,11 +27,11 @@
 
 <script setup lang="ts">
 const buttons = [
-  { type: '', text: 'plain' },
-  { type: 'primary', text: 'primary' },
-  { type: 'success', text: 'success' },
-  { type: 'info', text: 'info' },
-  { type: 'warning', text: 'warning' },
-  { type: 'danger', text: 'danger' },
+  { type: '', text: '默认' },
+  { type: 'primary', text: '主要' },
+  { type: 'success', text: '成功' },
+  { type: 'info', text: '信息' },
+  { type: 'warning', text: '提醒' },
+  { type: 'danger', text: '删除' },
 ] as const
 </script>

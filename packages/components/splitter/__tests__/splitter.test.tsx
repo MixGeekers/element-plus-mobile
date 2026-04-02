@@ -9,6 +9,27 @@ vi.mock('@vueuse/core', () => {
   return import('./__mocks__/vueuse')
 })
 
+const createPointerEvent = (
+  type: string,
+  values: Record<string, number | string | boolean> = {}
+) => {
+  const event = new MouseEvent(type, {
+    bubbles: true,
+    cancelable: true,
+  }) as PointerEvent
+
+  Object.entries({
+    pointerId: 1,
+    pointerType: 'touch',
+    button: 0,
+    ...values,
+  }).forEach(([key, value]) => {
+    Object.defineProperty(event, key, { value })
+  })
+
+  return event
+}
+
 describe('Splitter', () => {
   const mockResizeObserver = vi.fn(() => ({
     observe: vi.fn(),
@@ -33,18 +54,19 @@ describe('Splitter', () => {
     ))
 
     expect(wrapper.find('.el-splitter').exists()).toBe(true)
+    expect(wrapper.find('.el-splitter__vertical').exists()).toBe(true)
     expect(wrapper.findAll('.el-splitter-panel')).toHaveLength(2)
   })
 
-  it('should render with vertical layout', () => {
+  it('should render with horizontal layout', () => {
     const wrapper = mount(() => (
-      <ElSplitter layout="vertical">
-        <ElSplitterPanel>Top Panel</ElSplitterPanel>
-        <ElSplitterPanel>Bottom Panel</ElSplitterPanel>
+      <ElSplitter layout="horizontal">
+        <ElSplitterPanel>Left Panel</ElSplitterPanel>
+        <ElSplitterPanel>Right Panel</ElSplitterPanel>
       </ElSplitter>
     ))
 
-    expect(wrapper.find('.el-splitter__vertical').exists()).toBe(true)
+    expect(wrapper.find('.el-splitter__horizontal').exists()).toBe(true)
   })
 
   it('should keep panels size consistent with props.size when containerSize is 0.', async () => {
@@ -57,7 +79,7 @@ describe('Splitter', () => {
 
     const wrapper = mount(() => (
       <div style={{ width: splitterWidth.value, height: '400px' }}>
-        <ElSplitter>
+        <ElSplitter layout="horizontal">
           <ElSplitterPanel>
             <div class="demo-panel">1</div>
           </ElSplitterPanel>
@@ -109,24 +131,14 @@ describe('Splitter', () => {
     // default size
     expect(panels[0].attributes('style')).toContain('flex-basis: 150px;')
 
-    // mock mouse event
     const simulateDrag = async (startPos: number, endPos: number) => {
       const splitBar = wrapper.find('.el-splitter-bar__dragger')
 
-      // Simulate mouse down
-      const mousedown = new MouseEvent('mousedown', { bubbles: true })
-      Object.defineProperty(mousedown, 'pageX', { value: startPos })
-      splitBar.element.dispatchEvent(mousedown)
-
-      // Simulate mouse move
-      const mousemove = new MouseEvent('mousemove', { bubbles: true })
-      Object.defineProperty(mousemove, 'pageX', { value: endPos })
-      window.dispatchEvent(mousemove)
-
-      // Simulate mouse up
-      const mouseup = new MouseEvent('mouseup', { bubbles: true })
-      Object.defineProperty(mouseup, 'pageX', { value: endPos })
-      window.dispatchEvent(mouseup)
+      splitBar.element.dispatchEvent(
+        createPointerEvent('pointerdown', { pageY: startPos })
+      )
+      window.dispatchEvent(createPointerEvent('pointermove', { pageY: endPos }))
+      window.dispatchEvent(createPointerEvent('pointerup', { pageY: endPos }))
 
       await nextTick()
     }
@@ -140,7 +152,7 @@ describe('Splitter', () => {
     expect(panels[0].attributes('style')).toContain('flex-basis: 200px;')
   })
 
-  it('should support touch dragging', async () => {
+  it('should support pointer dragging', async () => {
     const wrapper = mount(() => (
       <div style={{ width: '400px', height: '400px' }}>
         <ElSplitter>
@@ -154,33 +166,16 @@ describe('Splitter', () => {
     const panels = wrapper.findAll('.el-splitter-panel')
     const splitBar = wrapper.find('.el-splitter-bar__dragger')
 
-    const touchStart = new Event('touchstart', {
-      bubbles: true,
-      cancelable: true,
-    })
-    Object.defineProperty(touchStart, 'touches', {
-      value: [{ pageX: 200, pageY: 0 }],
-    })
-    splitBar.element.dispatchEvent(touchStart)
-
-    const touchMove = new Event('touchmove', {
-      bubbles: true,
-      cancelable: true,
-    })
-    Object.defineProperty(touchMove, 'touches', {
-      value: [{ pageX: 100, pageY: 0 }],
-    })
-    window.dispatchEvent(touchMove)
+    splitBar.element.dispatchEvent(
+      createPointerEvent('pointerdown', { pageY: 200, pointerType: 'touch' })
+    )
+    window.dispatchEvent(
+      createPointerEvent('pointermove', { pageY: 100, pointerType: 'touch' })
+    )
     await nextTick()
-
-    const touchEnd = new Event('touchend', {
-      bubbles: true,
-      cancelable: true,
-    })
-    Object.defineProperty(touchEnd, 'changedTouches', {
-      value: [{ pageX: 100, pageY: 0 }],
-    })
-    window.dispatchEvent(touchEnd)
+    window.dispatchEvent(
+      createPointerEvent('pointerup', { pageY: 100, pointerType: 'touch' })
+    )
     await nextTick()
 
     expect(panels[0].attributes('style')).toContain('flex-basis: 100px;')
@@ -201,10 +196,10 @@ describe('Splitter', () => {
 
     const panels = wrapper.findAll('.el-splitter-panel')
     const startCollapseButton = wrapper.find(
-      '.el-splitter-bar__horizontal-collapse-icon-start'
+      '.el-splitter-bar__collapse-icon.is-start'
     )
     const endCollapseButton = wrapper.find(
-      '.el-splitter-bar__horizontal-collapse-icon-end'
+      '.el-splitter-bar__collapse-icon.is-end'
     )
 
     // default size
@@ -244,29 +239,20 @@ describe('Splitter', () => {
     ))
     await nextTick()
 
-    // mock mouse event
     const simulateDrag = async (startPos: number, endPos: number) => {
       const splitBar = wrapper.find('.el-splitter-bar__dragger')
 
-      // Simulate mouse down
-      const mousedown = new MouseEvent('mousedown', { bubbles: true })
-      Object.defineProperty(mousedown, 'pageX', { value: startPos })
-      splitBar.element.dispatchEvent(mousedown)
+      splitBar.element.dispatchEvent(
+        createPointerEvent('pointerdown', { pageY: startPos })
+      )
       await nextTick()
 
-      // Simulate mouse move
-      const mousemove = new MouseEvent('mousemove', { bubbles: true })
-      Object.defineProperty(mousemove, 'pageX', { value: endPos })
-      window.dispatchEvent(mousemove)
-
-      // Move again
+      const pointerMove = createPointerEvent('pointermove', { pageY: endPos })
+      window.dispatchEvent(pointerMove)
       await nextTick()
-      window.dispatchEvent(mousemove)
+      window.dispatchEvent(pointerMove)
 
-      // Simulate mouse up
-      const mouseup = new MouseEvent('mouseup', { bubbles: true })
-      Object.defineProperty(mouseup, 'pageX', { value: endPos })
-      window.dispatchEvent(mouseup)
+      window.dispatchEvent(createPointerEvent('pointerup', { pageY: endPos }))
 
       await nextTick()
     }
@@ -293,10 +279,10 @@ describe('Splitter', () => {
     await nextTick()
 
     const startCollapseButton = wrapper.find(
-      '.el-splitter-bar__horizontal-collapse-icon-start'
+      '.el-splitter-bar__collapse-icon.is-start'
     )
     const endCollapseButton = wrapper.find(
-      '.el-splitter-bar__horizontal-collapse-icon-end'
+      '.el-splitter-bar__collapse-icon.is-end'
     )
 
     // Click collapse button
@@ -331,10 +317,10 @@ describe('Splitter', () => {
 
     const panels = wrapper.findAll('.el-splitter-panel')
     const startCollapseButton = wrapper.find(
-      '.el-splitter-bar__horizontal-collapse-icon-start'
+      '.el-splitter-bar__collapse-icon.is-start'
     )
     const endCollapseButton = wrapper.find(
-      '.el-splitter-bar__horizontal-collapse-icon-end'
+      '.el-splitter-bar__collapse-icon.is-end'
     )
 
     // default size
@@ -375,19 +361,14 @@ describe('Splitter', () => {
     const panels = wrapper.findAll('.el-splitter-panel')
     const splitBar = wrapper.find('.el-splitter-bar__dragger')
 
-    const mousedown = new MouseEvent('mousedown', { bubbles: true })
-    Object.defineProperty(mousedown, 'pageX', { value: 200 })
-    splitBar.element.dispatchEvent(mousedown)
-
-    const mousemove = new MouseEvent('mousemove', { bubbles: true })
-    Object.defineProperty(mousemove, 'pageX', { value: 100 })
-    window.dispatchEvent(mousemove)
+    splitBar.element.dispatchEvent(
+      createPointerEvent('pointerdown', { pageY: 200 })
+    )
+    window.dispatchEvent(createPointerEvent('pointermove', { pageY: 100 }))
     await nextTick()
     expect(panels[0].attributes('style')).toContain('flex-basis: 200px;')
 
-    const mouseup = new MouseEvent('mouseup', { bubbles: true })
-    Object.defineProperty(mouseup, 'pageX', { value: 100 })
-    window.dispatchEvent(mouseup)
+    window.dispatchEvent(createPointerEvent('pointerup', { pageY: 100 }))
     await nextTick()
     expect(panels[0].attributes('style')).toContain('flex-basis: 100px;')
   })
@@ -405,19 +386,14 @@ describe('Splitter', () => {
     const panels = wrapper.findAll('.el-splitter-panel')
     const splitBar = wrapper.find('.el-splitter-bar__dragger')
 
-    const mousedown = new MouseEvent('mousedown', { bubbles: true })
-    Object.defineProperty(mousedown, 'pageX', { value: 200 })
-    splitBar.element.dispatchEvent(mousedown)
-
-    const mousemove = new MouseEvent('mousemove', { bubbles: true })
-    Object.defineProperty(mousemove, 'pageX', { value: 100 })
-    window.dispatchEvent(mousemove)
+    splitBar.element.dispatchEvent(
+      createPointerEvent('pointerdown', { pageY: 200 })
+    )
+    window.dispatchEvent(createPointerEvent('pointermove', { pageY: 100 }))
     await nextTick()
     expect(panels[0].attributes('style')).toContain('flex-basis: 100px;')
 
-    const mouseup = new MouseEvent('mouseup', { bubbles: true })
-    Object.defineProperty(mouseup, 'pageX', { value: 100 })
-    window.dispatchEvent(mouseup)
+    window.dispatchEvent(createPointerEvent('pointerup', { pageY: 100 }))
     await nextTick()
     expect(panels[0].attributes('style')).toContain('flex-basis: 100px;')
   })
@@ -436,19 +412,15 @@ describe('Splitter', () => {
 
     const splitBar = wrapper.find('.el-splitter-bar__dragger')
 
-    const mousedown = new MouseEvent('mousedown', { bubbles: true })
-    Object.defineProperty(mousedown, 'pageX', { value: 200 })
-    splitBar.element.dispatchEvent(mousedown)
+    splitBar.element.dispatchEvent(
+      createPointerEvent('pointerdown', { pageY: 200 })
+    )
     await nextTick()
 
-    const mousemove = new MouseEvent('mousemove', { bubbles: true })
-    Object.defineProperty(mousemove, 'pageX', { value: 150 })
-    window.dispatchEvent(mousemove)
+    window.dispatchEvent(createPointerEvent('pointermove', { pageY: 150 }))
     await nextTick()
 
-    const mouseup = new MouseEvent('mouseup', { bubbles: true })
-    Object.defineProperty(mouseup, 'pageX', { value: 150 })
-    window.dispatchEvent(mouseup)
+    window.dispatchEvent(createPointerEvent('pointerup', { pageY: 150 }))
     await nextTick()
 
     expect(onResizeEnd).toHaveBeenCalledWith(0, [150, 250])
@@ -473,9 +445,9 @@ describe('Splitter', () => {
     expect(wrapper.find('.el-splitter__mask').exists()).toBeFalsy()
 
     const splitBar = wrapper.find('.el-splitter-bar__dragger')
-    const mousedown = new MouseEvent('mousedown', { bubbles: true })
-    Object.defineProperty(mousedown, 'pageX', { value: 200 })
-    splitBar.element.dispatchEvent(mousedown)
+    splitBar.element.dispatchEvent(
+      createPointerEvent('pointerdown', { pageY: 200 })
+    )
     await nextTick()
     expect(wrapper.find('.el-splitter__mask').exists()).toBeFalsy()
   })

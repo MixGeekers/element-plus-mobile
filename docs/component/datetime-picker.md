@@ -13,9 +13,11 @@ DateTimePicker 派生自 DatePicker 和 TimePicker。关于属性更详细的解
 
 :::
 
+日期和时间选择都会收敛到同一个底部面板流程里。
+
 ## 日期和时间
 
-:::demo 通过将 `type` 设置为 `datetime`，您可以在一个选择器中同时选择日期和时间。快捷键的使用方法与日期选择器相同。
+:::demo 通过将 `type` 设置为 `datetime`，您可以在一个选择器中同时选择日期和时间。这两个步骤会保留在同一套底部面板流程里。
 
 datetime-picker/date-and-time
 
@@ -81,49 +83,43 @@ datetime-picker/custom-icon
 
 ### 属性
 
-| 名称               | 描述                                                                                                 | 类型                                                                                           | 默认                         |
-| ------------------ | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------- |
-| 模型值 / v 模型    | 绑定值，如果是 `range` 选择器，则数组长度应为 2                                                      | ^[数字] / ^[字符串] / ^[日期] / ^[数组]`number[] \| string[] \| Date[]`                        | ''                           |
-| 只读               | DatePicker 是否为只读                                                                                | ^[布尔值]                                                                                      | 假                           |
-| 已禁用             | DatePicker 是否被禁用                                                                                | ^[布尔值]                                                                                      | 假                           |
-| 可编辑             | 输入是否可编辑                                                                                       | ^[布尔值]                                                                                      | 真实                         |
-| 可清除             | 是否显示清除按钮                                                                                     | ^[布尔值]                                                                                      | 真实                         |
-| 尺寸               | 输入的大小                                                                                           | ^[枚举]`'large' \| 'default' \| 'small'`                                                       | 默认                         |
-| 占位符             | 非范围模式下的占位符                                                                                 | ^[字符串]                                                                                      | —                            |
-| 开始占位符         | 范围模式下开始日期的占位符                                                                           | ^[字符串]                                                                                      | —                            |
-| 结束占位符         | 范围模式下结束日期的占位符                                                                           | ^[字符串]                                                                                      | —                            |
-| 箭头控制           | 是否使用箭头按钮选择时间                                                                             | ^[布尔值]                                                                                      | 假                           |
-| 类型               | 选取器的类型                                                                                         | ^[枚举]`'year' \| 'month' \| 'date' \| 'datetime' \| 'week' \| 'datetimerange' \| 'daterange'` | 日期                         |
-| 格式               | 输入框中显示值的格式                                                                                 | ^[字符串] 请参阅[日期格式](./date-picker.md#date-formats)                                      | YYYY-MM-DD HH:mm:ss          |
-| 波普尔级           | DateTimePicker 下拉菜单的自定义类名                                                                  | ^[字符串]                                                                                      | —                            |
-| 波普风格           | DateTimePicker 下拉菜单的自定义样式                                                                  | ^[字符串] / ^[对象]                                                                            | —                            |
-| popper 选项        | 自定义 popper 选项请参阅 [popper.js](https://popper.js.org/docs/v2/)                                 | ^[对象]`Partial<PopperOptions>`                                                                | {}                           |
-| 后备放置 ^(2.8.4)  | 工具提示的可能位置列表 [popper.js](https://popper.js.org/docs/v2/modifiers/flip/#fallbackplacements) | ^[数组]`Placement[]`                                                                           | ['底部'、'顶部'、'右'、'左'] |
-| 放置 ^(2.8.4)      | 下拉菜单的位置                                                                                       | `Placement`                                                                                    | 底部                         |
-| 范围分隔符         | 范围分隔符                                                                                           | ^[字符串]                                                                                      | '-'                          |
-| 默认值             | 可选，日历的默认日期                                                                                 | ^[对象]`Date \| [Date, Date]`                                                                  | —                            |
-| 默认时间           | 选择日期后的默认时间值。如果未指定，将使用时间 `00:00:00`                                            | ^[对象]`Date \| [Date, Date]`                                                                  | —                            |
-| 值格式             | 可选，绑定值的格式。如果未指定，绑定值将为 Date 对象                                                 | ^[字符串] 请参阅[日期格式](https://day.js.org/docs/en/display/format)                          | —                            |
-| 日期格式 ^(2.4.0)  | 可选，输入内部面板中显示的日期格式                                                                   | ^[字符串] 请参阅[日期格式](https://day.js.org/docs/en/display/format)                          | 年-月-日                     |
-| 时间格式 ^(2.4.0)  | 可选，输入内部面板中显示的时间格式                                                                   | ^[字符串] 请参阅[日期格式](https://day.js.org/docs/en/display/format)                          | 时:分:秒                     |
-| 编号               | 与本机输入中的 `id` 相同                                                                             | ^[字符串] / ^[数组]`[string, string]`                                                          | —                            |
-| 名称               | 与本机输入中的 `name` 相同                                                                           | ^[字符串]                                                                                      | —                            |
-| 取消链接面板       | 取消范围选择器中两个日期面板的链接                                                                   | ^[布尔值]                                                                                      | 假                           |
-| 前缀图标           | 自定义前缀图标组件                                                                                   | ^[字符串] / `Component`                                                                        | 日期                         |
-| 清除图标           | 自定义透明图标组件                                                                                   | ^[字符串] / `Component`                                                                        | 圆圈关闭                     |
-| 快捷方式           | 用于设置快捷方式选项的对象数组                                                                       | ^[数组]`Array<{ text: string, value: Date \| Function }>`                                      | —                            |
-| 禁用日期           | 确定某个日期是否被禁用并以该日期作为参数的函数。应该返回一个布尔值                                   | ^[功能]`(data: Date) => boolean`                                                               | —                            |
-| 残疾人时间         | 指定无法选择的小时数组                                                                               | ^[功能]`(role: string, comparingDate?: Dayjs) => number[]`                                     | —                            |
-| 伤残分钟数         | 指定无法选择的分钟数组                                                                               | ^[功能]`(hour: number, role: string, comparingDate?: Dayjs) => number[]`                       | —                            |
-| 禁用秒             | 指定无法选择的秒数组                                                                                 | ^[功能]`(hour: number, minute: number, role: string, comparingDate?: Dayjs) => number[]`       | —                            |
-| 细胞类别名称       | 设置自定义类名                                                                                       | ^[功能]`(data: Date) => string`                                                                | —                            |
-| 传送               | 日期时间选择器下拉列表是否传送到正文                                                                 | ^[布尔值]                                                                                      | 真实                         |
-| 空值 ^(2.7.0)      | 组件的空值，[参见配置提供程序](./config-provider.md#empty-values-configurations)                     | ^[数组]                                                                                        | —                            |
-| 清除值 ^(2.7.0)    | 清除返回值，[参见配置提供程序](./config-provider.md#empty-values-configurations)                     | ^[字符串] / ^[数字] / ^[布尔值] / ^[函数]                                                      | —                            |
-| 现在显示 ^(2.8.7)  | 是否显示立即按钮                                                                                     | ^[布尔值]                                                                                      | 真实                         |
-| 显示页脚 ^(2.10.5) | 是否显示日期选择器为 1 的页脚 ^[enum]`'datetime' \| 'datetimerange'`                                 | ^[布尔值]                                                                                      | 真实                         |
-| 显示确认 ^(2.11.0) | 是否显示确认按钮                                                                                     | ^[布尔值]                                                                                      | 真实                         |
-| 显示周数 ^(2.10.3) | 除星期外还显示星期数                                                                                 | `boolean`                                                                                      | 假                           |
+| 名称               | 描述                                                                             | 类型                                                                                           | 默认                |
+| ------------------ | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------- |
+| 模型值 / v 模型    | 绑定值，如果是 `range` 选择器，则数组长度应为 2                                  | ^[数字] / ^[字符串] / ^[日期] / ^[数组]`number[] \| string[] \| Date[]`                        | ''                  |
+| 只读               | DatePicker 是否为只读                                                            | ^[布尔值]                                                                                      | 假                  |
+| 已禁用             | DatePicker 是否被禁用                                                            | ^[布尔值]                                                                                      | 假                  |
+| 可编辑             | 输入是否可编辑                                                                   | ^[布尔值]                                                                                      | 真实                |
+| 可清除             | 是否显示清除按钮                                                                 | ^[布尔值]                                                                                      | 真实                |
+| 尺寸               | 输入的大小                                                                       | ^[枚举]`'large' \| 'default' \| 'small'`                                                       | 默认                |
+| 占位符             | 非范围模式下的占位符                                                             | ^[字符串]                                                                                      | —                   |
+| 开始占位符         | 范围模式下开始日期的占位符                                                       | ^[字符串]                                                                                      | —                   |
+| 结束占位符         | 范围模式下结束日期的占位符                                                       | ^[字符串]                                                                                      | —                   |
+| 类型               | 选取器的类型                                                                     | ^[枚举]`'year' \| 'month' \| 'date' \| 'datetime' \| 'week' \| 'datetimerange' \| 'daterange'` | 日期                |
+| 格式               | 输入框中显示值的格式                                                             | ^[字符串] 请参阅[日期格式](./date-picker.md#date-formats)                                      | YYYY-MM-DD HH:mm:ss |
+| 波普尔级           | DateTimePicker 下拉菜单的自定义类名                                              | ^[字符串]                                                                                      | —                   |
+| 波普风格           | DateTimePicker 下拉菜单的自定义样式                                              | ^[字符串] / ^[对象]                                                                            | —                   |
+| 范围分隔符         | 范围分隔符                                                                       | ^[字符串]                                                                                      | '-'                 |
+| 默认值             | 可选，日历的默认日期                                                             | ^[对象]`Date \| [Date, Date]`                                                                  | —                   |
+| 默认时间           | 选择日期后的默认时间值。如果未指定，将使用时间 `00:00:00`                        | ^[对象]`Date \| [Date, Date]`                                                                  | —                   |
+| 值格式             | 可选，绑定值的格式。如果未指定，绑定值将为 Date 对象                             | ^[字符串] 请参阅[日期格式](https://day.js.org/docs/en/display/format)                          | —                   |
+| 日期格式 ^(2.4.0)  | 可选，输入内部面板中显示的日期格式                                               | ^[字符串] 请参阅[日期格式](https://day.js.org/docs/en/display/format)                          | 年-月-日            |
+| 时间格式 ^(2.4.0)  | 可选，输入内部面板中显示的时间格式                                               | ^[字符串] 请参阅[日期格式](https://day.js.org/docs/en/display/format)                          | 时:分:秒            |
+| 编号               | 与本机输入中的 `id` 相同                                                         | ^[字符串] / ^[数组]`[string, string]`                                                          | —                   |
+| 名称               | 与本机输入中的 `name` 相同                                                       | ^[字符串]                                                                                      | —                   |
+| 前缀图标           | 自定义前缀图标组件                                                               | ^[字符串] / `Component`                                                                        | 日期                |
+| 清除图标           | 自定义透明图标组件                                                               | ^[字符串] / `Component`                                                                        | 圆圈关闭            |
+| 快捷方式           | 用于设置快捷方式选项的对象数组                                                   | ^[数组]`Array<{ text: string, value: Date \| Function }>`                                      | —                   |
+| 禁用日期           | 确定某个日期是否被禁用并以该日期作为参数的函数。应该返回一个布尔值               | ^[功能]`(data: Date) => boolean`                                                               | —                   |
+| 残疾人时间         | 指定无法选择的小时数组                                                           | ^[功能]`(role: string, comparingDate?: Dayjs) => number[]`                                     | —                   |
+| 伤残分钟数         | 指定无法选择的分钟数组                                                           | ^[功能]`(hour: number, role: string, comparingDate?: Dayjs) => number[]`                       | —                   |
+| 禁用秒             | 指定无法选择的秒数组                                                             | ^[功能]`(hour: number, minute: number, role: string, comparingDate?: Dayjs) => number[]`       | —                   |
+| 细胞类别名称       | 设置自定义类名                                                                   | ^[功能]`(data: Date) => string`                                                                | —                   |
+| 空值 ^(2.7.0)      | 组件的空值，[参见配置提供程序](./config-provider.md#empty-values-configurations) | ^[数组]                                                                                        | —                   |
+| 清除值 ^(2.7.0)    | 清除返回值，[参见配置提供程序](./config-provider.md#empty-values-configurations) | ^[字符串] / ^[数字] / ^[布尔值] / ^[函数]                                                      | —                   |
+| 现在显示 ^(2.8.7)  | 是否显示立即按钮                                                                 | ^[布尔值]                                                                                      | 真实                |
+| 显示页脚 ^(2.10.5) | 是否显示日期选择器为 1 的页脚 ^[enum]`'datetime' \| 'datetimerange'`             | ^[布尔值]                                                                                      | 真实                |
+| 显示确认 ^(2.11.0) | 是否显示确认按钮                                                                 | ^[布尔值]                                                                                      | 真实                |
+| 显示周数 ^(2.10.3) | 除星期外还显示星期数                                                             | `boolean`                                                                                      | 假                  |
 
 ### 活动
 
@@ -161,19 +157,7 @@ datetime-picker/custom-icon
   <summary>显示声明</summary>
 
 ```ts
-type Placement =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
+// DateTimePicker 复用 DatePicker 和 TimePicker 的值类型。
 ```
 
 </details>

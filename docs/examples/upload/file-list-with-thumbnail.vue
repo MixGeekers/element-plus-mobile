@@ -7,11 +7,9 @@
     :on-remove="handleRemove"
     list-type="picture"
   >
-    <el-button type="primary">Click to upload</el-button>
+    <el-button type="primary">点击上传</el-button>
     <template #tip>
-      <div class="el-upload__tip">
-        jpg/png files with a size less than 500kb
-      </div>
+      <div class="el-upload__tip">支持上传 500KB 以内的 JPG 或 PNG 文件</div>
     </template>
   </el-upload>
 </template>
@@ -23,11 +21,11 @@ import type { UploadProps, UploadUserFile } from 'element-plus-mobile'
 
 const fileList = ref<UploadUserFile[]>([
   {
-    name: 'food.jpeg',
+    name: '菜品.jpeg',
     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
   },
   {
-    name: 'food2.jpeg',
+    name: '菜品-2.jpeg',
     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
   },
 ])

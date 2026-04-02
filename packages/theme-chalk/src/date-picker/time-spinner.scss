@@ -113,3 +113,38 @@
     }
   }
 }
+
+@include b(time-spinner) {
+  @include e(wrapper) {
+    max-height: min(45vh, #{to-rem(240px)});
+    scroll-snap-type: y mandatory;
+  }
+
+  @include e(arrow) {
+    height: to-rem(40px);
+    line-height: to-rem(40px);
+    font-size: to-rem(14px);
+
+    &.arrow-up {
+      top: to-rem(12px);
+    }
+
+    &.arrow-down {
+      bottom: to-rem(12px);
+    }
+  }
+
+  @include e(list) {
+    &::after,
+    &::before {
+      height: to-rem(110px);
+    }
+  }
+
+  @include e(item) {
+    height: to-rem(44px);
+    line-height: to-rem(44px);
+    font-size: to-rem(16px);
+    scroll-snap-align: center;
+  }
+}

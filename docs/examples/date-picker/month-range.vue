@@ -1,43 +1,50 @@
 <template>
-  <div class="demo-date-picker">
-    <div class="block">
-      <span class="demonstration">Default</span>
-      <el-date-picker
-        v-model="value1"
-        type="monthrange"
-        range-separator="To"
-        start-placeholder="Start month"
-        end-placeholder="End month"
-      />
+  <DemoBlock>
+    <div class="demo-block__stack">
+      <div class="demo-block__section">
+        <span class="demo-block__caption">月份范围</span>
+        <strong>选择报表周期</strong>
+        <el-date-picker
+          v-model="value1"
+          type="monthrange"
+          range-separator="至"
+          start-placeholder="开始月份"
+          end-placeholder="结束月份"
+        />
+        <p>底部面板会将整套流程保持在同一块纵向区域中。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">常用区间</span>
+        <strong>为高频报表提供快捷选项</strong>
+        <el-date-picker
+          v-model="value2"
+          type="monthrange"
+          range-separator="至"
+          start-placeholder="开始月份"
+          end-placeholder="结束月份"
+          :shortcuts="shortcuts"
+        />
+        <p>本月、最近六个月这类常用选项能显著降低操作成本。</p>
+      </div>
     </div>
-    <div class="block">
-      <span class="demonstration">With quick options</span>
-      <el-date-picker
-        v-model="value2"
-        type="monthrange"
-        unlink-panels
-        range-separator="To"
-        start-placeholder="Start month"
-        end-placeholder="End month"
-        :shortcuts="shortcuts"
-      />
-    </div>
-  </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import DemoBlock from '../components/demo-block.vue'
 
 const value1 = ref('')
 const value2 = ref('')
 
 const shortcuts = [
   {
-    text: 'This month',
+    text: '本月',
     value: [new Date(), new Date()],
   },
   {
-    text: 'This year',
+    text: '今年',
     value: () => {
       const end = new Date()
       const start = new Date(new Date().getFullYear(), 0)
@@ -45,7 +52,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'Last 6 months',
+    text: '最近六个月',
     value: () => {
       const end = new Date()
       const start = new Date()
@@ -55,45 +62,3 @@ const shortcuts = [
   },
 ]
 </script>
-
-<style scoped>
-.demo-date-picker {
-  display: flex;
-  width: 100%;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-.demo-date-picker .block {
-  padding: 1.5rem 0;
-  text-align: center;
-  border-right: solid 1px var(--el-border-color);
-  flex: 1;
-  min-width: 300px;
-}
-
-.demo-date-picker .block:last-child {
-  border-right: none;
-}
-
-.demo-date-picker .demonstration {
-  display: block;
-  color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-bottom: 1rem;
-}
-
-@media screen and (max-width: 768px) {
-  .demo-date-picker .block {
-    flex: 0 0 100%;
-    padding: 1rem 0;
-    min-width: auto;
-    border-right: none;
-    border-bottom: solid 1px var(--el-border-color);
-  }
-
-  .demo-date-picker .block:last-child {
-    border-bottom: none;
-  }
-}
-</style>

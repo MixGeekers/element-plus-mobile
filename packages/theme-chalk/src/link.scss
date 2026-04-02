@@ -25,19 +25,6 @@
   font-weight: getCssVar('link', 'font-weight');
   color: getCssVar('link', 'text-color');
 
-  @include when(hover-underline) {
-    &:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 0;
-      bottom: 0;
-      opacity: 0.72;
-      border-bottom: to-rem(1px) solid currentColor;
-    }
-  }
-
   @include when(underline) {
     &:after {
       content: '';

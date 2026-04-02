@@ -15,15 +15,21 @@ export function useSpace(props: SpaceProps) {
   const ns = useNamespace('space')
 
   const classes = computed(() => [ns.b(), ns.m(props.direction), props.class])
+  const resolvedAlignment = computed(
+    () =>
+      props.alignment ?? (props.direction === 'vertical' ? 'stretch' : 'center')
+  )
 
   const horizontalSize = ref(0)
   const verticalSize = ref(0)
 
   const containerStyle = computed<StyleValue>(() => {
     const wrapKls: CSSProperties =
-      props.wrap || props.fill ? { flexWrap: 'wrap' } : {}
+      props.direction === 'horizontal' && (props.wrap || props.fill)
+        ? { flexWrap: 'wrap' }
+        : {}
     const alignment: CSSProperties = {
-      alignItems: props.alignment,
+      alignItems: resolvedAlignment.value,
     }
     const gap: CSSProperties = {
       rowGap: pxToRem(verticalSize.value),
@@ -33,7 +39,17 @@ export function useSpace(props: SpaceProps) {
   })
 
   const itemStyle = computed<StyleValue>(() => {
-    return props.fill ? { flexGrow: 1, minWidth: `${props.fillRatio}%` } : {}
+    if (!props.fill) return {}
+    if (props.direction === 'horizontal') {
+      return {
+        flexGrow: 1,
+        minWidth: `${props.fillRatio}%`,
+      }
+    }
+
+    return {
+      width: '100%',
+    }
   })
 
   watchEffect(() => {

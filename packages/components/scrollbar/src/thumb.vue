@@ -4,16 +4,14 @@
       v-show="always || visible"
       ref="instance"
       :class="[ns.e('bar'), ns.is(bar.key)]"
-      @mousedown="clickTrackHandler"
-      @touchstart.prevent="clickTrackTouchHandler"
+      @pointerdown="clickTrackHandler"
       @click.stop
     >
       <div
         ref="thumb"
         :class="ns.e('thumb')"
         :style="thumbStyle"
-        @mousedown="clickThumbHandler"
-        @touchstart.stop.prevent="clickThumbTouchHandler"
+        @pointerdown.stop="clickThumbHandler"
       />
     </div>
   </transition>
@@ -44,8 +42,8 @@ const thumbState = ref<Partial<Record<'X' | 'Y', number>>>({})
 const visible = ref(false)
 const HIDE_DELAY = 600
 
-let cursorDown = false
-let cursorLeave = false
+let activePointerId: number | null = null
+let dragging = false
 let baseScrollHeight = 0
 let baseScrollWidth = 0
 let originalOnSelectStart:
@@ -63,16 +61,6 @@ const thumbStyle = computed(() =>
   })
 )
 
-const getClientOffset = (event: MouseEvent | TouchEvent) => {
-  if ('touches' in event) {
-    const touch = event.touches[0] ?? event.changedTouches[0]
-    if (!touch) return undefined
-    return touch[bar.value.client]
-  }
-
-  return event[bar.value.client]
-}
-
 const clearHideTimer = () => {
   if (!hideTimer) return
   clearTimeout(hideTimer)
@@ -81,13 +69,12 @@ const clearHideTimer = () => {
 
 const showScrollbar = () => {
   clearHideTimer()
-  cursorLeave = false
   visible.value = !!props.size
 }
 
 const queueHideScrollbar = () => {
   clearHideTimer()
-  if (props.always || cursorDown) return
+  if (props.always || dragging) return
 
   hideTimer = setTimeout(() => {
     visible.value = false
@@ -105,10 +92,11 @@ const offsetRatio = computed(
     thumb.value![bar.value.offset]
 )
 
-const clickThumbHandler = (e: MouseEvent) => {
+const clickThumbHandler = (e: PointerEvent) => {
   // prevent click event of middle and right button
   e.stopPropagation()
-  if (e.ctrlKey || [1, 2].includes(e.button)) return
+  if (e.pointerType === 'mouse' && (e.ctrlKey || [1, 2].includes(e.button)))
+    return
 
   window.getSelection()?.removeAllRanges()
   startDrag(e)
@@ -120,18 +108,7 @@ const clickThumbHandler = (e: MouseEvent) => {
     (e[bar.value.client] - el.getBoundingClientRect()[bar.value.direction])
 }
 
-const clickThumbTouchHandler = (e: TouchEvent) => {
-  const clientOffset = getClientOffset(e)
-  const el = e.currentTarget as HTMLDivElement
-  if (!el || clientOffset === undefined) return
-
-  startDrag(e)
-  thumbState.value[bar.value.axis] =
-    el[bar.value.offset] -
-    (clientOffset - el.getBoundingClientRect()[bar.value.direction])
-}
-
-const clickTrackHandler = (e: MouseEvent) => {
+const clickTrackHandler = (e: PointerEvent) => {
   if (!thumb.value || !instance.value || !scrollbar.wrapElement) return
 
   const offset = Math.abs(
@@ -146,52 +123,28 @@ const clickTrackHandler = (e: MouseEvent) => {
   scrollbar.wrapElement[bar.value.scroll] =
     (thumbPositionPercentage * scrollbar.wrapElement[bar.value.scrollSize]) /
     100
-}
-
-const clickTrackTouchHandler = (e: TouchEvent) => {
-  if (!thumb.value || !instance.value || !scrollbar.wrapElement) return
-
-  const clientOffset = getClientOffset(e)
-  if (clientOffset === undefined) return
-
-  const offset = Math.abs(
-    (e.currentTarget as HTMLElement).getBoundingClientRect()[
-      bar.value.direction
-    ] - clientOffset
-  )
-  const thumbHalf = thumb.value[bar.value.offset] / 2
-  const thumbPositionPercentage =
-    ((offset - thumbHalf) * 100 * offsetRatio.value) /
-    instance.value[bar.value.offset]
-
-  scrollbar.wrapElement[bar.value.scroll] =
-    (thumbPositionPercentage * scrollbar.wrapElement[bar.value.scrollSize]) /
-    100
   showScrollbar()
   queueHideScrollbar()
 }
 
-const startDrag = (e: MouseEvent | TouchEvent) => {
+const startDrag = (e: PointerEvent) => {
   e.stopImmediatePropagation()
-  if ('touches' in e) e.preventDefault()
-  cursorDown = true
+  e.preventDefault()
+  activePointerId = e.pointerId
+  dragging = true
   showScrollbar()
   baseScrollHeight = scrollbar.wrapElement!.scrollHeight
   baseScrollWidth = scrollbar.wrapElement!.scrollWidth
-  document.addEventListener('mousemove', mouseMoveDocumentHandler)
-  document.addEventListener('mouseup', mouseUpDocumentHandler)
-  document.addEventListener('touchmove', touchMoveDocumentHandler, {
-    passive: false,
-  })
-  document.addEventListener('touchend', touchEndDocumentHandler)
-  document.addEventListener('touchcancel', touchEndDocumentHandler)
+  document.addEventListener('pointermove', pointerMoveDocumentHandler)
+  document.addEventListener('pointerup', pointerUpDocumentHandler)
+  document.addEventListener('pointercancel', pointerUpDocumentHandler)
   originalOnSelectStart = document.onselectstart
   document.onselectstart = () => false
 }
 
 const updateScrollPosition = (clientOffset: number) => {
   if (!instance.value || !thumb.value) return
-  if (cursorDown === false) return
+  if (dragging === false) return
 
   const prevPage = thumbState.value[bar.value.axis]
   if (!prevPage) return
@@ -214,51 +167,25 @@ const updateScrollPosition = (clientOffset: number) => {
   }
 }
 
-const mouseMoveDocumentHandler = (e: MouseEvent) => {
+const pointerMoveDocumentHandler = (e: PointerEvent) => {
+  if (activePointerId !== null && e.pointerId !== activePointerId) return
   updateScrollPosition(e[bar.value.client])
 }
 
-const touchMoveDocumentHandler = (e: TouchEvent) => {
-  const clientOffset = getClientOffset(e)
-  if (clientOffset === undefined) return
-  e.preventDefault()
-  updateScrollPosition(clientOffset)
-}
-
 const endDrag = () => {
-  cursorDown = false
+  dragging = false
+  activePointerId = null
   thumbState.value[bar.value.axis] = 0
-  document.removeEventListener('mousemove', mouseMoveDocumentHandler)
-  document.removeEventListener('mouseup', mouseUpDocumentHandler)
-  document.removeEventListener('touchmove', touchMoveDocumentHandler)
-  document.removeEventListener('touchend', touchEndDocumentHandler)
-  document.removeEventListener('touchcancel', touchEndDocumentHandler)
+  document.removeEventListener('pointermove', pointerMoveDocumentHandler)
+  document.removeEventListener('pointerup', pointerUpDocumentHandler)
+  document.removeEventListener('pointercancel', pointerUpDocumentHandler)
   restoreOnselectstart()
-
-  if (cursorLeave) {
-    queueHideScrollbar()
-  }
-}
-
-const mouseUpDocumentHandler = () => {
-  endDrag()
-}
-
-const touchEndDocumentHandler = () => {
-  endDrag()
-}
-
-const mouseMoveScrollbarHandler = () => {
-  showScrollbar()
-}
-
-const mouseLeaveScrollbarHandler = () => {
-  cursorLeave = true
-  if (cursorDown) {
-    visible.value = true
-    return
-  }
   queueHideScrollbar()
+}
+
+const pointerUpDocumentHandler = (e: PointerEvent) => {
+  if (activePointerId !== null && e.pointerId !== activePointerId) return
+  endDrag()
 }
 
 const scrollHandler = () => {
@@ -269,11 +196,9 @@ const scrollHandler = () => {
 onBeforeUnmount(() => {
   clearHideTimer()
   restoreOnselectstart()
-  document.removeEventListener('mouseup', mouseUpDocumentHandler)
-  document.removeEventListener('mousemove', mouseMoveDocumentHandler)
-  document.removeEventListener('touchmove', touchMoveDocumentHandler)
-  document.removeEventListener('touchend', touchEndDocumentHandler)
-  document.removeEventListener('touchcancel', touchEndDocumentHandler)
+  document.removeEventListener('pointermove', pointerMoveDocumentHandler)
+  document.removeEventListener('pointerup', pointerUpDocumentHandler)
+  document.removeEventListener('pointercancel', pointerUpDocumentHandler)
 })
 
 const restoreOnselectstart = () => {
@@ -281,25 +206,5 @@ const restoreOnselectstart = () => {
     document.onselectstart = originalOnSelectStart
 }
 
-useEventListener(
-  toRef(scrollbar, 'scrollbarElement'),
-  'mousemove',
-  mouseMoveScrollbarHandler
-)
-useEventListener(
-  toRef(scrollbar, 'scrollbarElement'),
-  'mouseleave',
-  mouseLeaveScrollbarHandler
-)
 useEventListener(toRef(scrollbar, 'wrapElement'), 'scroll', scrollHandler)
-useEventListener(
-  toRef(scrollbar, 'scrollbarElement'),
-  'touchstart',
-  showScrollbar
-)
-useEventListener(
-  toRef(scrollbar, 'scrollbarElement'),
-  'touchend',
-  queueHideScrollbar
-)
 </script>

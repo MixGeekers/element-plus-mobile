@@ -1,48 +1,48 @@
 <template>
-  <el-radio-group v-model="size" aria-label="size control" class="mb-4">
-    <el-radio-button value="large">large</el-radio-button>
-    <el-radio-button value="default">default</el-radio-button>
-    <el-radio-button value="small">small</el-radio-button>
-  </el-radio-group>
-  <div class="demo-date-picker">
-    <div class="block">
-      <span class="demonstration">Default</span>
-      <el-date-picker
-        v-model="value1"
-        type="date"
-        placeholder="Pick a day"
-        :size="size"
-      />
+  <DemoBlock>
+    <div class="demo-block__stack">
+      <div class="demo-block__section">
+        <span class="demo-block__caption">首选日期</span>
+        <strong>选择主要配送日期</strong>
+        <el-date-picker
+          v-model="value1"
+          clearable
+          type="date"
+          placeholder="请选择配送日期"
+        />
+        <p>轻触一次即可打开底部面板，并在页脚完成确认。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">备选方案</span>
+        <strong>通过快捷选项减少重复操作</strong>
+        <el-date-picker
+          v-model="value2"
+          type="date"
+          placeholder="请选择备选日期"
+          :disabled-date="disabledDate"
+          :shortcuts="shortcuts"
+        />
+        <p>这里禁用了未来日期，用于模拟有限预约窗口。</p>
+      </div>
     </div>
-    <div class="block">
-      <span class="demonstration">Picker with quick options</span>
-      <el-date-picker
-        v-model="value2"
-        type="date"
-        placeholder="Pick a day"
-        :disabled-date="disabledDate"
-        :shortcuts="shortcuts"
-        :size="size"
-      />
-    </div>
-  </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-
-const size = ref<'default' | 'large' | 'small'>('default')
+import DemoBlock from '../components/demo-block.vue'
 
 const value1 = ref('')
 const value2 = ref('')
 
 const shortcuts = [
   {
-    text: 'Today',
+    text: '今天',
     value: new Date(),
   },
   {
-    text: 'Yesterday',
+    text: '昨天',
     value: () => {
       const date = new Date()
       date.setTime(date.getTime() - 3600 * 1000 * 24)
@@ -50,7 +50,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'A week ago',
+    text: '一周前',
     value: () => {
       const date = new Date()
       date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
@@ -63,45 +63,3 @@ const disabledDate = (time: Date) => {
   return time.getTime() > Date.now()
 }
 </script>
-
-<style scoped>
-.demo-date-picker {
-  display: flex;
-  width: 100%;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-.demo-date-picker .block {
-  padding: 1.5rem 0;
-  text-align: center;
-  border-right: solid 1px var(--el-border-color);
-  flex: 1;
-  min-width: 300px;
-}
-
-.demo-date-picker .block:last-child {
-  border-right: none;
-}
-
-.demo-date-picker .demonstration {
-  display: block;
-  color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-bottom: 1rem;
-}
-
-@media screen and (max-width: 768px) {
-  .demo-date-picker .block {
-    flex: 0 0 100%;
-    padding: 1rem 0;
-    min-width: auto;
-    border-right: none;
-    border-bottom: solid 1px var(--el-border-color);
-  }
-
-  .demo-date-picker .block:last-child {
-    border-bottom: none;
-  }
-}
-</style>

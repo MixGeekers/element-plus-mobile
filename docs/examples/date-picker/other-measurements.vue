@@ -2,56 +2,52 @@
   <div class="demo-date-picker">
     <div class="container">
       <div class="block">
-        <span class="demonstration">Week</span>
+        <span class="demonstration">周</span>
         <el-date-picker
           v-model="value1"
           type="week"
-          format="[Week] ww"
-          placeholder="Pick a week"
+          format="[第] ww [周]"
+          placeholder="请选择周"
         />
       </div>
       <div class="block">
-        <span class="demonstration">Dates</span>
+        <span class="demonstration">多日</span>
         <el-date-picker
           v-model="value2"
           type="dates"
-          placeholder="Pick one or more dates"
+          placeholder="请选择一个或多个日期"
         />
       </div>
     </div>
     <div class="container">
       <div class="block">
-        <span class="demonstration">Year</span>
-        <el-date-picker
-          v-model="value3"
-          type="year"
-          placeholder="Pick a year"
-        />
+        <span class="demonstration">单年</span>
+        <el-date-picker v-model="value3" type="year" placeholder="请选择年份" />
       </div>
       <div class="block">
-        <span class="demonstration">Years</span>
+        <span class="demonstration">多年</span>
         <el-date-picker
           v-model="value4"
           type="years"
-          placeholder="Pick one or more years"
+          placeholder="请选择一个或多个年份"
         />
       </div>
     </div>
     <div class="container">
       <div class="block">
-        <span class="demonstration">Month</span>
+        <span class="demonstration">单月</span>
         <el-date-picker
           v-model="value5"
           type="month"
-          placeholder="Pick a month"
+          placeholder="请选择月份"
         />
       </div>
       <div class="block">
-        <span class="demonstration">Months</span>
+        <span class="demonstration">多月</span>
         <el-date-picker
           v-model="value6"
           type="months"
-          placeholder="Pick one or more months"
+          placeholder="请选择一个或多个月份"
         />
       </div>
     </div>

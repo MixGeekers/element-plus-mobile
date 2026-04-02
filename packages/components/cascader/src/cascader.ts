@@ -1,4 +1,3 @@
-import { placements } from '@popperjs/core'
 import { CommonProps } from '@element-plus/components/cascader-panel'
 import {
   CircleClose,
@@ -8,14 +7,12 @@ import {
   isBoolean,
 } from '@element-plus/utils'
 import { useEmptyValuesProps, useSizeProp } from '@element-plus/hooks'
-import { useTooltipContentProps } from '@element-plus/components/tooltip'
 import { tagProps } from '@element-plus/components/tag'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 
 import type { StyleValue } from 'vue'
 import type { UseEmptyValuesProps } from '@element-plus/hooks'
 import type { ComponentSize } from '@element-plus/constants'
-import type { Placement, PopperEffect } from '@element-plus/components/popper'
 import type {
   CascaderCommonProps,
   CascaderNode,
@@ -73,7 +70,7 @@ export interface CascaderComponentProps
    */
   maxCollapseTags?: number
   /**
-   * @description whether show all selected tags when mouse hover text of collapse-tags. To use this, collapse-tags must be true
+   * @description whether show all selected tags when tapping the collapsed summary. To use this, collapse-tags must be true
    */
   collapseTagsTooltip?: boolean
   /**
@@ -89,14 +86,6 @@ export interface CascaderComponentProps
    */
   beforeFilter?: (value: string) => boolean | Promise<any>
   /**
-   * @description position of dropdown
-   */
-  placement?: Placement
-  /**
-   * @description list of possible positions for dropdown
-   */
-  fallbackPlacements?: Placement[]
-  /**
    * @description custom class name for Cascader's dropdown
    */
   popperClass?: CascaderClassType
@@ -104,14 +93,6 @@ export interface CascaderComponentProps
    * @description custom style for Cascader's dropdown
    */
   popperStyle?: StyleValue
-  /**
-   * @description whether cascader popup is teleported
-   */
-  teleported?: boolean
-  /**
-   * @description tooltip theme, built-in theme: `dark` / `light`
-   */
-  effect?: PopperEffect
   /**
    * @description tag type
    */
@@ -214,7 +195,7 @@ export const cascaderProps = buildProps({
     default: 1,
   },
   /**
-   * @description whether show all selected tags when mouse hover text of collapse-tags. To use this, collapse-tags must be true
+   * @description whether show all selected tags when tapping the collapsed summary. To use this, collapse-tags must be true
    */
   collapseTagsTooltip: Boolean,
   /**
@@ -238,38 +219,18 @@ export const cascaderProps = buildProps({
     default: () => true,
   },
   /**
-   * @description position of dropdown
-   */
-  placement: {
-    type: definePropType<Placement>(String),
-    values: placements,
-    default: 'bottom-start',
-  },
-  /**
-   * @description list of possible positions for dropdown
-   */
-  fallbackPlacements: {
-    type: definePropType<Placement[]>(Array),
-    default: ['bottom-start', 'bottom', 'top-start', 'top', 'right', 'left'],
-  },
-  /**
    * @description custom class name for Cascader's dropdown
    */
-  popperClass: useTooltipContentProps.popperClass,
+  popperClass: {
+    type: definePropType<CascaderClassType>([String, Array, Object]),
+    default: '',
+  },
   /**
    * @description custom style for Cascader's dropdown
    */
-  popperStyle: useTooltipContentProps.popperStyle,
-  /**
-   * @description whether cascader popup is teleported
-   */
-  teleported: useTooltipContentProps.teleported,
-  /**
-   * @description tooltip theme, built-in theme: `dark` / `light`
-   */
-  effect: {
-    type: definePropType<PopperEffect>(String),
-    default: 'light',
+  popperStyle: {
+    type: definePropType<StyleValue>([String, Array, Object]),
+    default: undefined,
   },
   /**
    * @description tag type

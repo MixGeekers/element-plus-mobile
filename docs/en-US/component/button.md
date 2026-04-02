@@ -5,7 +5,7 @@ lang: en-US
 
 # Button
 
-Commonly used button.
+Use Button for primary, secondary, and lightweight actions on mobile pages.
 
 ## Basic usage
 
@@ -73,11 +73,9 @@ button/icon
 
 ## Button Group
 
-Displayed as a button group, can be used to group a series of similar operations.
+`ButtonGroup` now stacks buttons vertically by default, which is more suitable for mobile action lists. Use `direction="horizontal"` only for compact bottom bars or paired decisions.
 
-In ^(2.11.9) you can use the `direction` attribute.
-
-:::demo Use tag `<el-button-group>` to group your buttons.
+:::demo Use `<el-button-group>` to group related actions.
 
 button/group
 
@@ -183,11 +181,11 @@ button/custom
 
 ### ButtonGroup Attributes
 
-| Name                | Description                                      | Type                                                               | Default    |
-| ------------------- | ------------------------------------------------ | ------------------------------------------------------------------ | ---------- |
-| size                | control the size of buttons in this button-group | ^[enum]`'large' \| 'default' \| 'small'`                           | —          |
-| type                | control the type of buttons in this button-group | ^[enum]`'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | —          |
-| direction ^(2.11.9) | display direction                                | ^[enum]`'horizontal' \| 'vertical'`                                | horizontal |
+| Name                | Description                                      | Type                                                               | Default  |
+| ------------------- | ------------------------------------------------ | ------------------------------------------------------------------ | -------- |
+| size                | control the size of buttons in this button-group | ^[enum]`'large' \| 'default' \| 'small'`                           | —        |
+| type                | control the type of buttons in this button-group | ^[enum]`'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | —        |
+| direction ^(2.11.9) | display direction                                | ^[enum]`'horizontal' \| 'vertical'`                                | vertical |
 
 ### ButtonGroup Slots
 

@@ -9,7 +9,6 @@
     <el-tooltip
       ref="tooltipRef"
       :visible="dropdownMenuVisible"
-      placement="bottom"
       :teleported="true"
       :popper-class="[nsSelect.e('popper'), popperClass]"
       :popper-style="popperStyle"
@@ -20,7 +19,6 @@
       :stop-popper-mouse-event="false"
       :gpu-acceleration="false"
       :persistent="persistent"
-      :append-to="appendTo"
       :show-arrow="false"
       @before-show="handleMenuEnter"
       @hide="states.isBeforeHide = false"
@@ -92,26 +90,14 @@
                 v-if="collapseTags && states.selected.length > maxCollapseTags"
                 ref="tagTooltipRef"
                 :disabled="dropdownMenuVisible || !collapseTagsTooltip"
-                :fallback-placements="
-                  tagTooltip?.fallbackPlacements ?? [
-                    'bottom',
-                    'top',
-                    'right',
-                    'left',
-                  ]
-                "
+                trigger="click"
                 :effect="tagTooltip?.effect ?? effect"
-                :placement="tagTooltip?.placement ?? 'bottom'"
                 :popper-class="tagTooltip?.popperClass ?? popperClass"
                 :popper-style="tagTooltip?.popperStyle ?? popperStyle"
-                :teleported="tagTooltip?.teleported ?? true"
-                :append-to="tagTooltip?.appendTo ?? appendTo"
-                :popper-options="tagTooltip?.popperOptions"
                 :transition="tagTooltip?.transition"
                 :show-after="tagTooltip?.showAfter"
                 :hide-after="tagTooltip?.hideAfter"
                 :auto-close="tagTooltip?.autoClose"
-                :offset="tagTooltip?.offset"
               >
                 <template #default>
                   <div

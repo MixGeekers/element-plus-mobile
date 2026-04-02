@@ -1,12 +1,12 @@
 <template>
   <div class="demo-date-picker">
     <div class="block">
-      <p>Component value：{{ value }}</p>
+      <p>组件值：{{ value }}</p>
       <el-date-picker
         v-model="value"
         type="daterange"
-        start-placeholder="Start date"
-        end-placeholder="End date"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
         value-format="YYYY-MM-DD HH:mm:ss"
         :default-time="defaultTime"
       />

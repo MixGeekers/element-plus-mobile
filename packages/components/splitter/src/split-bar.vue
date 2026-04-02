@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import {
   ArrowDown,
   ArrowLeft,
@@ -23,7 +23,7 @@ const props = defineProps({
   layout: {
     type: String,
     values: ['horizontal', 'vertical'] as const,
-    default: 'horizontal',
+    default: 'vertical',
   },
   resizable: {
     type: Boolean,
@@ -47,13 +47,8 @@ const barWrapStyles = computed(() => {
 
 const draggerStyles = computed(() => {
   return {
-    width: isHorizontal.value ? pxToRem(24) : '100%',
-    height: isHorizontal.value ? '100%' : pxToRem(24),
-    cursor: !props.resizable
-      ? 'auto'
-      : isHorizontal.value
-        ? 'ew-resize'
-        : 'ns-resize',
+    width: isHorizontal.value ? pxToRem(28) : '100%',
+    height: isHorizontal.value ? '100%' : pxToRem(28),
     touchAction: 'none',
   }
 })
@@ -68,29 +63,34 @@ const draggerPseudoClass = computed(() => {
 })
 
 const startPos = ref<[x: number, y: number] | null>(null)
+const activePointerId = ref<number | null>(null)
 
-// Start dragging
-const onMousedown = (e: MouseEvent) => {
+const cleanupPointerListeners = () => {
+  window.removeEventListener('pointermove', onPointerMove)
+  window.removeEventListener('pointerup', onPointerUp)
+  window.removeEventListener('pointercancel', onPointerUp)
+}
+
+const onPointerDown = (e: PointerEvent) => {
   if (!props.resizable) return
+  if (e.pointerType === 'mouse' && (e.ctrlKey || [1, 2].includes(e.button)))
+    return
+
+  e.preventDefault()
   startPos.value = [e.pageX, e.pageY]
+  activePointerId.value = e.pointerId
+  ;(e.currentTarget as HTMLElement | null)?.setPointerCapture?.(e.pointerId)
   emit('moveStart', props.index)
-  window.addEventListener('mouseup', onMouseUp)
-  window.addEventListener('mousemove', onMouseMove)
+  window.addEventListener('pointermove', onPointerMove)
+  window.addEventListener('pointerup', onPointerUp)
+  window.addEventListener('pointercancel', onPointerUp)
 }
 
-const onTouchStart = (e: TouchEvent) => {
-  if (props.resizable && e.touches.length === 1) {
-    e.preventDefault()
-    const touch = e.touches[0]
-    startPos.value = [touch.pageX, touch.pageY]
-    emit('moveStart', props.index)
-    window.addEventListener('touchend', onTouchEnd)
-    window.addEventListener('touchmove', onTouchMove)
-  }
-}
+const onPointerMove = (e: PointerEvent) => {
+  if (activePointerId.value !== null && e.pointerId !== activePointerId.value)
+    return
+  if (!startPos.value) return
 
-// During dragging
-const onMouseMove = (e: MouseEvent) => {
   const { pageX, pageY } = e
   const offsetX = pageX - startPos.value![0]
   const offsetY = pageY - startPos.value![1]
@@ -98,51 +98,30 @@ const onMouseMove = (e: MouseEvent) => {
   emit('moving', props.index, offset)
 }
 
-const onTouchMove = (e: TouchEvent) => {
-  if (e.touches.length === 1) {
-    e.preventDefault()
-    const touch = e.touches[0]
-    const offsetX = touch.pageX - startPos.value![0]
-    const offsetY = touch.pageY - startPos.value![1]
-    const offset = isHorizontal.value ? offsetX : offsetY
-    emit('moving', props.index, offset)
-  }
-}
+const onPointerUp = (e?: PointerEvent) => {
+  if (
+    e &&
+    activePointerId.value !== null &&
+    e.pointerId !== activePointerId.value
+  )
+    return
 
-// End dragging
-const onMouseUp = () => {
   startPos.value = null
-  window.removeEventListener('mouseup', onMouseUp)
-  window.removeEventListener('mousemove', onMouseMove)
-  emit('moveEnd', props.index)
-}
-
-const onTouchEnd = () => {
-  startPos.value = null
-  window.removeEventListener('touchend', onTouchEnd)
-  window.removeEventListener('touchmove', onTouchMove)
+  activePointerId.value = null
+  cleanupPointerListeners()
   emit('moveEnd', props.index)
 }
 
 const StartIcon = computed(() => (isHorizontal.value ? ArrowLeft : ArrowUp))
 const EndIcon = computed(() => (isHorizontal.value ? ArrowRight : ArrowDown))
+
+onBeforeUnmount(() => {
+  cleanupPointerListeners()
+})
 </script>
 
 <template>
   <div :class="[ns.b()]" :style="barWrapStyles">
-    <div
-      v-if="startCollapsible"
-      :class="[ns.e('collapse-icon'), ns.e(`${layout}-collapse-icon-start`)]"
-      @click="emit('collapse', index, 'start')"
-    >
-      <slot name="start-collapsible">
-        <component
-          :is="StartIcon"
-          :style="{ width: pxToRem(14), height: pxToRem(14) }"
-        />
-      </slot>
-    </div>
-
     <div
       :class="[
         ns.e('dragger'),
@@ -151,20 +130,39 @@ const EndIcon = computed(() => (isHorizontal.value ? ArrowRight : ArrowDown))
         ns.is('lazy', resizable && lazy),
       ]"
       :style="draggerStyles"
-      @mousedown="onMousedown"
-      @touchstart="onTouchStart"
-    />
-    <div
-      v-if="endCollapsible"
-      :class="[ns.e('collapse-icon'), ns.e(`${layout}-collapse-icon-end`)]"
-      @click="emit('collapse', index, 'end')"
+      @pointerdown="onPointerDown"
     >
-      <slot name="end-collapsible">
-        <component
-          :is="EndIcon"
-          :style="{ width: pxToRem(14), height: pxToRem(14) }"
-        />
-      </slot>
+      <button
+        v-if="startCollapsible"
+        type="button"
+        :class="[ns.e('collapse-icon'), ns.is('start')]"
+        @pointerdown.stop.prevent
+        @click.stop="emit('collapse', index, 'start')"
+      >
+        <slot name="start-collapsible">
+          <component
+            :is="StartIcon"
+            :style="{ width: pxToRem(14), height: pxToRem(14) }"
+          />
+        </slot>
+      </button>
+
+      <span :class="[ns.e('handle'), ns.e(`handle-${layout}`)]" />
+
+      <button
+        v-if="endCollapsible"
+        type="button"
+        :class="[ns.e('collapse-icon'), ns.is('end')]"
+        @pointerdown.stop.prevent
+        @click.stop="emit('collapse', index, 'end')"
+      >
+        <slot name="end-collapsible">
+          <component
+            :is="EndIcon"
+            :style="{ width: pxToRem(14), height: pxToRem(14) }"
+          />
+        </slot>
+      </button>
     </div>
   </div>
 </template>

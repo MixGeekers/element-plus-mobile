@@ -209,7 +209,7 @@
     margin: 0 !important;
     border: none;
     border-radius: to-rem(20px) to-rem(20px) 0 0;
-    box-shadow: 0 #{to-rem(-12px)} #{to-rem(32px)} rgba(0, 0, 0, 0.18);
+    box-shadow: getCssVar('box-shadow', 'light');
     overflow: hidden;
     transform: none !important;
 

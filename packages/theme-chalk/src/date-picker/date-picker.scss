@@ -119,3 +119,78 @@
     }
   }
 }
+
+@include b(date-picker) {
+  width: 100%;
+  max-width: 100%;
+
+  &.has-sidebar,
+  &.has-sidebar.has-time {
+    width: 100%;
+  }
+
+  .#{$namespace}-picker-panel__content {
+    width: 100%;
+  }
+
+  @include e(editor-wrap) {
+    display: block;
+    width: 100%;
+    padding: 0;
+  }
+
+  @include e(time-header) {
+    display: grid;
+    gap: to-rem(12px);
+    width: 100%;
+    padding: 0 to-rem(16px) to-rem(12px);
+    border-bottom: none;
+    font-size: to-rem(14px);
+  }
+
+  @include e(header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: to-rem(8px);
+    padding: to-rem(16px) to-rem(16px) to-rem(12px);
+  }
+
+  @include e(header-label) {
+    min-width: 0;
+    font-size: to-rem(16px);
+    line-height: to-rem(24px);
+  }
+
+  @include e(prev-btn) {
+    display: flex;
+    align-items: center;
+    gap: to-rem(4px);
+    float: none;
+  }
+
+  @include e(next-btn) {
+    display: flex;
+    align-items: center;
+    gap: to-rem(4px);
+    float: none;
+  }
+
+  @include e(time-wrap) {
+    padding: 0 to-rem(16px) to-rem(16px);
+    text-align: left;
+  }
+
+  @include e(time-label) {
+    float: none;
+    display: block;
+    margin-left: 0;
+    margin-bottom: to-rem(8px);
+    line-height: to-rem(22px);
+  }
+
+  .#{$namespace}-time-panel {
+    position: static;
+    width: 100%;
+  }
+}

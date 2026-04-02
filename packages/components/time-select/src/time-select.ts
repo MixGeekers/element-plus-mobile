@@ -8,7 +8,6 @@ import {
 import { useEmptyValuesProps, useSizeProp } from '@element-plus/hooks'
 
 import type { UseEmptyValuesProps } from '@element-plus/hooks'
-import type { PopperEffect } from '@element-plus/components/popper'
 import type TimeSelect from './time-select.vue'
 import type { CSSProperties, ExtractPublicPropTypes } from 'vue'
 import type { ComponentSize } from '@element-plus/constants'
@@ -31,10 +30,6 @@ export interface TimeSelectProps extends UseEmptyValuesProps {
    * @description whether the input is editable
    */
   editable?: boolean
-  /**
-   * @description Tooltip theme, built-in theme: `dark` / `light`
-   */
-  effect?: PopperEffect
   /**
    * @description whether to show clear button
    */
@@ -125,13 +120,6 @@ export const timeSelectProps = buildProps({
   editable: {
     type: Boolean,
     default: true,
-  },
-  /**
-   * @description Tooltip theme, built-in theme: `dark` / `light`
-   */
-  effect: {
-    type: definePropType<PopperEffect>(String),
-    default: 'light',
   },
   /**
    * @description whether to show clear button

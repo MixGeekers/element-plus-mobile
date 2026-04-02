@@ -1,7 +1,7 @@
 <template>
-  <el-space :size="size" :spacer="spacer">
+  <el-space direction="horizontal" :size="size" :spacer="spacer">
     <div v-for="i in 2" :key="i">
-      <el-button> button {{ i }} </el-button>
+      <el-button>操作 {{ i }}</el-button>
     </div>
   </el-space>
 </template>

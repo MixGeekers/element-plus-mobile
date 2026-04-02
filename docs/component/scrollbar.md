@@ -5,11 +5,13 @@ lang: zh-CN
 
 # 滚动条
 
-用于替换浏览器原生的滚动条。
+用于替代浏览器原生滚动条。
+
+滚动条会在滚动或拖拽时显示，不再依赖桌面端的 hover 反馈。
 
 ## 基本用法
 
-:::demo 使用 `height` 属性设置滚动条的高度，如果未设置，则根据父容器高度进行调整。
+:::demo 为一个固定高度的内容区提供更清晰的滚动反馈。
 
 scrollbar/basic-usage
 
@@ -17,7 +19,7 @@ scrollbar/basic-usage
 
 ## 水平滚动
 
-:::demo 当元素宽度大于滚动条宽度时，显示水平滚动条。
+:::demo 当横向内容超出容器时，滚动条会自动出现在底部。
 
 scrollbar/horizontal-scroll
 
@@ -25,7 +27,7 @@ scrollbar/horizontal-scroll
 
 ## 最大高度
 
-:::demo 仅当元素高度超过最大高度时才显示滚动条。
+:::demo 内容较短时保持自然高度，超出后再进入滚动。
 
 scrollbar/max-height
 
@@ -33,7 +35,7 @@ scrollbar/max-height
 
 ## 手动滚动
 
-:::demo 使用 `setScrollTop` 和 `setScrollLeft` 方法可以手动控制滚动条。
+:::demo 使用 `setScrollTop` 或 `setScrollLeft` 主动控制滚动位置。
 
 scrollbar/manual-scroll
 
@@ -41,7 +43,7 @@ scrollbar/manual-scroll
 
 ## 无限滚动 ^(2.10.0)
 
-:::demo `end-reached` 当滚动条到达末尾时触发。它可以用作无限卷轴。
+:::demo 监听 `end-reached`，可用于推荐流、消息流等无限加载场景。
 
 scrollbar/infinite-scroll
 
@@ -51,46 +53,46 @@ scrollbar/infinite-scroll
 
 ### 属性
 
-| 名称                        | 描述                                                           | 类型                                                              | 默认 |
-| --------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------- | ---- |
-| 高度                        | 滚动条的高度                                                   | ^[字符串] / ^[数字]                                               | —    |
-| 最大高度                    | 滚动条的最大高度                                               | ^[字符串] / ^[数字]                                               | —    |
-| 本地                        | 是否使用原生滚动条样式                                         | ^[布尔值]                                                         | 假   |
-| 包裹式                      | 包装容器的样式                                                 | ^[字符串] / ^[对象]`CSSProperties \| CSSProperties[] \| string[]` | —    |
-| 包装类                      | 包装容器类别                                                   | ^[字符串]                                                         | —    |
-| 视图样式                    | 视图风格                                                       | ^[字符串] / ^[对象]`CSSProperties \| CSSProperties[] \| string[]` | —    |
-| 视图级                      | 视图类别                                                       | ^[字符串]                                                         | —    |
-| 尺寸                        | 不响应容器大小变化，如果容器大小不变化，最好设置一下以优化性能 | ^[布尔值]                                                         | 假   |
-| 标签                        | 视图的元素标签                                                 | ^[字符串]                                                         | 分区 |
-| 总是                        | 始终显示滚动条                                                 | ^[布尔值]                                                         | 假   |
-| 最小尺寸                    | 滚动条的最小尺寸                                               | ^[数字]                                                           | 20   |
-| id ^(2.4.0)                 | 视图 ID                                                        | ^[字符串]                                                         | —    |
-| 角色 ^(2.4.0) ^(a11y)       | 视图的作用                                                     | ^[字符串]                                                         | —    |
-| 咏叹调标签 ^(2.4.0) ^(a11y) | 视图的 aria-标签                                               | ^[字符串]                                                         | —    |
-| 咏叹调方向 ^(2.4.0) ^(a11y) | 咏叹调-视图方向                                                | ^[枚举]`'horizontal' \| 'vertical'`                               | —    |
-| 制表索引 ^(2.8.3)           | 包装容器的 tabindex                                            | ^[数字] / ^[字符串]                                               | —    |
-| 距离 ^(2.10.5)              | 触发到达事件距离(px)                                           | ^[数字]                                                           | 0    |
+| 属性名                            | 说明                                       | 类型                                                                | 默认值 |
+| --------------------------------- | ------------------------------------------ | ------------------------------------------------------------------- | ------ |
+| height                            | 滚动条高度                                 | ^[string] / ^[number]                                               | —      |
+| max-height                        | 滚动条最大高度                             | ^[string] / ^[number]                                               | —      |
+| native                            | 是否使用原生滚动条样式                     | ^[boolean]                                                          | false  |
+| wrap-style                        | 包装容器样式                               | ^[string] / ^[object]`CSSProperties \| CSSProperties[] \| string[]` | —      |
+| wrap-class                        | 包装容器类名                               | ^[string]                                                           | —      |
+| view-style                        | 视图样式                                   | ^[string] / ^[object]`CSSProperties \| CSSProperties[] \| string[]` | —      |
+| view-class                        | 视图类名                                   | ^[string]                                                           | —      |
+| noresize                          | 是否忽略容器尺寸变化，用于减少不必要的重算 | ^[boolean]                                                          | false  |
+| tag                               | 视图根元素标签                             | ^[string]                                                           | div    |
+| always                            | 是否始终显示滚动条                         | ^[boolean]                                                          | false  |
+| min-size                          | 滚动条最小尺寸                             | ^[number]                                                           | 20     |
+| id ^(2.4.0)                       | 视图 ID                                    | ^[string]                                                           | —      |
+| role ^(2.4.0) ^(a11y)             | 视图角色                                   | ^[string]                                                           | —      |
+| aria-label ^(2.4.0) ^(a11y)       | 视图 `aria-label`                          | ^[string]                                                           | —      |
+| aria-orientation ^(2.4.0) ^(a11y) | 视图 `aria-orientation`                    | ^[enum]`'horizontal' \| 'vertical'`                                 | —      |
+| tabindex ^(2.8.3)                 | 包装容器的 `tabindex`                      | ^[number] / ^[string]                                               | —      |
+| distance ^(2.10.5)                | 触发到达事件的距离，单位为 px              | ^[number]                                                           | 0      |
 
-### 活动
+### 事件
 
-| 名称                 | 描述                     | 类型                                                                 |
-| -------------------- | ------------------------ | -------------------------------------------------------------------- |
-| 滚动                 | 滚动时触发，返回滚动距离 | ^[功能]`({ scrollLeft: number, scrollTop: number }) => void`         |
-| 已达到终点 ^(2.10.0) | 当触发滚动结束时触发     | ^[功能]`(direction: 'top' \| 'bottom' \| 'left' \| 'right') => void` |
+| 事件名                | 说明                     | 类型                                                                     |
+| --------------------- | ------------------------ | ------------------------------------------------------------------------ |
+| scroll                | 滚动时触发，返回滚动距离 | ^[Function]`({ scrollLeft: number, scrollTop: number }) => void`         |
+| end-reached ^(2.10.0) | 滚动到边缘时触发         | ^[Function]`(direction: 'top' \| 'bottom' \| 'left' \| 'right') => void` |
 
-### 老虎机
+### 插槽
 
-| 名称 | 描述           |
-| ---- | -------------- |
-| 默认 | 自定义默认内容 |
+| 插槽名  | 说明           |
+| ------- | -------------- |
+| default | 自定义默认内容 |
 
-### 暴露
+### 暴露方法
 
-| 名称          | 描述                 | 类型                                                                   |
-| ------------- | -------------------- | ---------------------------------------------------------------------- | ------------------------------------- |
-| 处理滚动      | 处理滚动事件         | ^[功能]`() => void`                                                    |
-| 滚动至        | 滚动到一组特定的坐标 | ^[功能]`(options: ScrollToOptions \| number, yCoord?: number) => void` |
-| 设置ScrollTop | 设置滚动顶部的距离   | ^[功能]`(scrollTop: number) => void`                                   |
-| setScrollLeft | 设置ScrollLeft       | 设置向左滚动的距离                                                     | ^[功能]`(scrollLeft: number) => void` |
-| 更新          | 手动更新滚动条状态   | ^[功能]`() => void`                                                    |
-| 包装参考      | 滚动条换行参考       | ^[对象]`Ref<HTMLDivElement>`                                           |
+| 名称          | 说明               | 类型                                                                       |
+| ------------- | ------------------ | -------------------------------------------------------------------------- |
+| handleScroll  | 处理滚动事件       | ^[Function]`() => void`                                                    |
+| scrollTo      | 滚动到指定坐标     | ^[Function]`(options: ScrollToOptions \| number, yCoord?: number) => void` |
+| setScrollTop  | 设置纵向滚动距离   | ^[Function]`(scrollTop: number) => void`                                   |
+| setScrollLeft | 设置横向滚动距离   | ^[Function]`(scrollLeft: number) => void`                                  |
+| update        | 手动更新滚动条状态 | ^[Function]`() => void`                                                    |
+| wrapRef       | 滚动容器根元素引用 | ^[object]`Ref<HTMLDivElement>`                                             |

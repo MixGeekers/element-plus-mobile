@@ -7,7 +7,6 @@
     :clearable="clearable"
     :clear-icon="clearIcon"
     :size="size"
-    :effect="effect"
     :placeholder="placeholder"
     default-first-option
     :filterable="editable"
@@ -66,7 +65,6 @@ const props = withDefaults(defineProps<TimeSelectProps>(), {
   format: 'HH:mm',
   disabled: undefined,
   editable: true,
-  effect: 'light',
   clearable: true,
   start: '09:00',
   end: '18:00',

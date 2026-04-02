@@ -9,6 +9,7 @@ import {
   buildProps,
   definePropType,
   iconPropType,
+  isNumber,
 } from '@element-plus/utils'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { useTooltipContentProps } from '@element-plus/components/tooltip'
@@ -24,28 +25,18 @@ import type {
   ExtractPropTypes,
   ExtractPublicPropTypes,
 } from 'vue'
-import type {
-  Options,
-  Placement,
-  PopperEffect,
-} from '@element-plus/components/popper'
+import type { PopperEffect } from '@element-plus/components/popper'
 /**
  * @description Tag tooltip configuration interface
  */
 export interface TagTooltipProps {
-  appendTo?: string | HTMLElement
-  placement?: Placement
-  fallbackPlacements?: Placement[]
   effect?: PopperEffect
   popperClass?: string
   popperStyle?: string | CSSProperties
   transition?: string
-  teleported?: boolean
-  popperOptions?: Partial<Options>
   showAfter?: number
   hideAfter?: number
   autoClose?: number
-  offset?: number
 }
 
 export const selectV2Props = buildProps({
@@ -87,7 +78,7 @@ export const selectV2Props = buildProps({
    */
   collapseTags: Boolean,
   /**
-   * @description whether show all selected tags when mouse hover text of collapse-tags. To use this, `collapse-tags` must be true
+   * @description whether show all selected tags when tapping the collapsed summary. To use this, `collapse-tags` must be true
    */
   collapseTagsTooltip: Boolean,
   /**
@@ -290,10 +281,6 @@ export const selectV2Props = buildProps({
     type: [String, Number],
     default: 0,
   },
-  /**
-   * @description which element the select dropdown appends to
-   */
-  appendTo: useTooltipContentProps.appendTo,
   suffixIcon: {
     type: iconPropType,
     default: ArrowDown,

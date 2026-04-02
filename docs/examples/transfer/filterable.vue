@@ -1,11 +1,13 @@
 <template>
-  <el-transfer
-    v-model="value"
-    filterable
-    :filter-method="filterMethod"
-    filter-placeholder="State Abbreviations"
-    :data="data"
-  />
+  <div class="demo-transfer-shell">
+    <el-transfer
+      v-model="value"
+      filterable
+      :filter-method="filterMethod"
+      filter-placeholder="State Abbreviations"
+      :data="data"
+    />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -46,3 +48,10 @@ const filterMethod = (query, item) => {
   return item.initial.toLowerCase().includes(query.toLowerCase())
 }
 </script>
+
+<style scoped>
+.demo-transfer-shell {
+  max-width: 28rem;
+  margin: 0 auto;
+}
+</style>

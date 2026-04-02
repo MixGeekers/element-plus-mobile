@@ -6,7 +6,14 @@
 @use 'common/var' as *;
 
 $switch-height: () !default;
-$switch-height: map.merge($common-component-size, $switch-height);
+$switch-height: map.merge(
+  (
+    'large': to-rem(44px),
+    'default': to-rem(40px),
+    'small': to-rem(36px),
+  ),
+  $switch-height
+);
 
 $switch-font-size: () !default;
 $switch-font-size: map.merge(
@@ -21,9 +28,9 @@ $switch-font-size: map.merge(
 $switch-core-border-radius: () !default;
 $switch-core-border-radius: map.merge(
   (
-    'large': to-rem(12px),
-    'default': to-rem(10px),
-    'small': to-rem(8px),
+    'large': to-rem(18px),
+    'default': to-rem(16px),
+    'small': to-rem(14px),
   ),
   $switch-core-border-radius
 );
@@ -31,9 +38,9 @@ $switch-core-border-radius: map.merge(
 $switch-core-width: () !default;
 $switch-core-width: map.merge(
   (
-    'large': to-rem(50px),
-    'default': to-rem(40px),
-    'small': to-rem(30px),
+    'large': to-rem(60px),
+    'default': to-rem(52px),
+    'small': to-rem(44px),
   ),
   $switch-core-width
 );
@@ -41,9 +48,9 @@ $switch-core-width: map.merge(
 $switch-core-height: () !default;
 $switch-core-height: map.merge(
   (
-    'large': to-rem(24px),
-    'default': to-rem(20px),
-    'small': to-rem(16px),
+    'large': to-rem(36px),
+    'default': to-rem(32px),
+    'small': to-rem(28px),
   ),
   $switch-core-height
 );
@@ -51,9 +58,9 @@ $switch-core-height: map.merge(
 $switch-button-size: () !default;
 $switch-button-size: map.merge(
   (
-    'large': to-rem(20px),
-    'default': to-rem(16px),
-    'small': to-rem(12px),
+    'large': to-rem(32px),
+    'default': to-rem(28px),
+    'small': to-rem(24px),
   ),
   $switch-button-size
 );
@@ -61,9 +68,9 @@ $switch-button-size: map.merge(
 $switch-content-padding: () !default;
 $switch-content-padding: map.merge(
   (
-    'large': to-rem(6px),
-    'default': to-rem(4px),
-    'small': to-rem(2px),
+    'large': to-rem(8px),
+    'default': to-rem(8px),
+    'small': to-rem(6px),
   ),
   $switch-content-padding
 );
@@ -305,33 +312,5 @@ $switch-content-padding: map.merge(
     align-items: center;
     min-height: to-rem(32px);
     line-height: normal;
-  }
-
-  @include e(core) {
-    min-width: to-rem(52px);
-    height: to-rem(32px);
-    border-radius: to-rem(16px);
-
-    .#{$namespace}-switch__inner {
-      height: to-rem(28px);
-      padding: 0 to-rem(8px) 0 to-rem(30px);
-    }
-
-    .#{$namespace}-switch__action {
-      width: to-rem(28px);
-      height: to-rem(28px);
-    }
-  }
-
-  @include when(checked) {
-    .#{$namespace}-switch__core {
-      .#{$namespace}-switch__action {
-        left: calc(100% - #{to-rem(29px)});
-      }
-
-      .#{$namespace}-switch__inner {
-        padding: 0 to-rem(30px) 0 to-rem(8px);
-      }
-    }
   }
 }

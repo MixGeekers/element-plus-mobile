@@ -5,115 +5,80 @@ lang: zh-CN
 
 # 空间
 
-虽然我们有[Divider](./divider.md)，但有时我们需要多个[Divider](./divider.md)来分割元素，所以我们将每个元素堆叠在[Divider](./divider.md)上，但这样做不仅使我们的代码变得丑陋，而且难以维护。 **空间**就是这种组件为我们提供了生产力和优雅。
+`Space` 用来组织一组内容之间的统一留白。
 
-## 基本用法
+默认采用纵向堆叠，更适合表单分组、列表和操作区块。
+只有在明确需要横向排列时，才显式设置 `direction="horizontal"`。
 
-基本用例是使用该组件在每个组件之间提供统一的空间
+## 基础用法
 
-:::demo 使用空间提供空间
+:::demo 默认纵向堆叠，适合列表和信息分组。
 
 space/basic
 
 :::
 
-## 垂直布局
+## 横向紧凑排布
 
-使用`direction`属性来控制布局，我们使用`flex-direction`来实现这一点。
-
-:::demo 我们还提供垂直布局。
-
-space/vertical-layout
-
-:::
-
-## 控制空间的大小
-
-通过 `size` API 控制空间大小。
-
-您可以使用内置尺寸 `small`、`default`、`large` 来设置尺寸，这些尺寸对应于 `8px`、`12px`、`16px`。默认大小为 `small`，又名`8px`
-
-您还可以使用自定义尺寸来覆盖它。请参阅下一部分。
-
-:::demo
-
-space/control-size
-
-:::
-
-## 定制尺寸
-
-有时内置尺寸无法满足业务需求，我们可以使用自定义尺寸（数字类型）来控制项目之间的间距。
-
-:::demo
-
-space/customized-size
-
-:::
-
-:::tip
-
-不要将 `ElSpace` 与依赖于祖先宽度（高度）的组件一起使用，例如`ElSlider`，在这种情况下，当您拖动触发按钮时，条形图会变大，导致光标和触发按钮之间错位。
-
-:::
-
-## 自动换行
-
-当处于**水平**模式时，使用 `wrap`（**bool 类型**）来控制自动换行行为。
-
-:::demo 使用 `wrap` 控制换行
+:::demo 需要横向操作条或筛选项时，可显式启用 `direction="horizontal"`。
 
 space/auto-wrapping
 
 :::
 
-## 垫片
+## 控制间距
 
-有时我们想要的不仅仅是空白，所以我们有（spacer）来帮助我们。
+:::demo 通过内置尺寸控制内容之间的留白强度。
 
-## 文字类型间隔符
+space/control-size
 
-:::demo
+:::
+
+## 自定义间距
+
+:::demo 当内置尺寸不够用时，可以直接传入数字。
+
+space/customized-size
+
+:::
+
+## 分隔符
+
+:::demo 文字分隔符。
 
 space/literal-type-spacer
 
 :::
 
-## Spacer也可以是VNode
-
-:::demo
+:::demo VNode 分隔符。
 
 space/vnode-type-spacer
 
 :::
 
-## 对齐
+## 对齐方式
 
-设置该属性可以调整子节点的对齐方式，所需的值可以在[align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items)中找到。
-
-:::demo 使用 `alignment`
+:::demo 在横向排布下，可以通过 `alignment` 控制不同高度内容的对齐方式。
 
 space/alignment
 
 :::
 
-## 填充容器
+## 自动填充
 
-通过`fill`**（布尔类型）**参数，可以控制子节点是否自动填充容器。
+`fill` 主要用于横向排布，让每个子项按比例占据可用宽度。
 
-在下面的示例中，当设置为`fill`时，子节点的宽度将自动适应容器的宽度。
-
-:::demo 使用 fill 自动填充子节点的容器
+:::demo
 
 space/fill
 
 :::
 
-您还可以使用`fillRatio`参数来自定义填充比例。默认值为`100`，表示根据父容器`100%`的宽度进行填充。
+## 填充比例
 
-需要注意的是，水平布局和垂直布局的表达方式略有不同，具体效果可以看下面的例子。
+`fillRatio` 仅在 `fill + direction="horizontal"` 时生效。
 
-:::demo 使用 fillRatio 自定义填充比例
+:::demo
 
 space/fill-ratio
 
@@ -123,21 +88,21 @@ space/fill-ratio
 
 ### 属性
 
-| 名称     | 描述               | 类型                                                                                                                       | 默认 |
-| -------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------- | ---- | --- |
-| 对齐     | 控制项目的对齐方式 | ^[枚举]`'center' \| 'normal' \| 'stretch' \| ...` [对齐项目](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items) | 中心 |
-| 类       | 类名               | ^[字符串] / ^[对象] / ^[数组]                                                                                              | —    |
-| 方向     | 放置方向           | ^[枚举]`'vertical' \| 'horizontal'`                                                                                        | 水平 |
-| 前缀-cls | 空间项目的前缀     | ^[字符串]                                                                                                                  | —    |
-| 风格     | 额外的风格规则     | ^[字符串] / ^[对象]`CSSProperties \| CSSProperties[] \| string[]`                                                          | —    |
-| 垫片     | 垫片               | ^[字符串] / ^[数字] / ^[VNode]                                                                                             | —    |
-| 尺寸     | 间距尺寸           | ^[枚举]`'default' \| 'small' \| 'large'` / ^[数字] / ^[数组]`[number, number]`                                             | 小   |
-| 包裹     | 自动包装           | ^[布尔值]                                                                                                                  | 假   |
-| 填充     | 是否填充容器       | ^[布尔值]                                                                                                                  | 假   |
-| 填充率   | 填充率             | ^[数字]                                                                                                                    | 100  | 100 |
+| 属性名    | 说明                   | 类型                                                                                                                          | 默认值                                        |
+| --------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| direction | 排列方向               | ^[enum]`'vertical' \| 'horizontal'`                                                                                           | vertical                                      |
+| alignment | 子项对齐方式           | ^[enum]`'center' \| 'normal' \| 'stretch' \| ...` [align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items) | vertical 时为 stretch，horizontal 时为 center |
+| size      | 间距尺寸               | ^[enum]`'default' \| 'small' \| 'large'` / ^[number] / ^[array]`[number, number]`                                             | small                                         |
+| spacer    | 自定义分隔内容         | ^[string] / ^[number] / ^[VNode]                                                                                              | —                                             |
+| wrap      | 横向排布时是否自动换行 | ^[boolean]                                                                                                                    | false                                         |
+| fill      | 横向排布时是否填充容器 | ^[boolean]                                                                                                                    | false                                         |
+| fillRatio | 横向填充时的最小占比   | ^[number]                                                                                                                     | 100                                           |
+| class     | 自定义类名             | ^[string] / ^[object] / ^[array]                                                                                              | —                                             |
+| style     | 自定义样式             | ^[string] / ^[object]`CSSProperties \| CSSProperties[] \| string[]`                                                           | —                                             |
+| prefixCls | 自定义前缀             | ^[string]                                                                                                                     | —                                             |
 
-### 老虎机
+### 插槽
 
-| 名称 | 描述           |
-| ---- | -------------- |
-| 默认 | 需要间隔的项目 |
+| 插槽名  | 说明               |
+| ------- | ------------------ |
+| default | 需要统一留白的内容 |

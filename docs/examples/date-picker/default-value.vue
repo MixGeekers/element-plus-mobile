@@ -1,21 +1,21 @@
 <template>
   <div class="demo-date-picker">
     <div class="block">
-      <span class="demonstration">date</span>
+      <span class="demonstration">单日</span>
       <el-date-picker
         v-model="value1"
         type="date"
-        placeholder="Pick a date"
+        placeholder="请选择日期"
         :default-value="new Date(2010, 9, 1)"
       />
     </div>
     <div class="block">
-      <span class="demonstration">daterange</span>
+      <span class="demonstration">日期范围</span>
       <el-date-picker
         v-model="value2"
         type="daterange"
-        start-placeholder="Start Date"
-        end-placeholder="End Date"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
         :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]"
       />
     </div>

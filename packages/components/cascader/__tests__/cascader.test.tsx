@@ -466,7 +466,7 @@ describe('Cascader.vue', () => {
     })
     expect(collapseTags.length).toBe(1)
     const collapseTag = collapseTags[0]
-    await collapseTag.trigger('hover')
+    await collapseTag.trigger('click')
     const scrollbars = wrapper.findAllComponents(ElScrollbar).filter((item) => {
       return !hasClass(item.element, 'el-cascader-menu')
     })
@@ -474,9 +474,11 @@ describe('Cascader.vue', () => {
     const scrollbar = scrollbars[0]
     expect(scrollbar).toBeDefined()
     expect(scrollbar?.vm.maxHeight).toBe(200)
-    const tooltip = wrapper.findComponent(ElTooltip)
+    const tooltips = wrapper.findAllComponents(ElTooltip)
+    const tooltip = tooltips[tooltips.length - 1]
     expect(tooltip).toBeDefined()
-    await tooltip.trigger('hover')
+    expect(tooltip.props('trigger')).toBe('click')
+    await tooltip.trigger('click')
     expect(
       scrollbar?.find('.el-scrollbar__wrap').attributes('style')
     ).toContain('max-height: 200px;')
@@ -615,12 +617,7 @@ describe('Cascader.vue', () => {
   test('before-filter should be called when search keyword is cleared', async () => {
     const beforeFilter = vi.fn(() => true)
     const wrapper = _mount(() => (
-      <Cascader
-        filterable
-        options={OPTIONS}
-        beforeFilter={beforeFilter}
-        teleported={false}
-      />
+      <Cascader filterable options={OPTIONS} beforeFilter={beforeFilter} />
     ))
 
     const input = wrapper.find('input')
@@ -688,23 +685,6 @@ describe('Cascader.vue', () => {
       expect(document.body.querySelector(selector.value)!.innerHTML).not.toBe(
         ''
       )
-    })
-
-    it('should not mount on the popper container', async () => {
-      expect(document.body.innerHTML).toBe('')
-      const value = ref([])
-      _mount(() => (
-        <Cascader
-          v-model={value.value}
-          filterable
-          teleported={false}
-          options={OPTIONS}
-        />
-      ))
-
-      await nextTick()
-      const { selector } = usePopperContainerId()
-      expect(document.body.querySelector(selector.value)!.innerHTML).toBe('')
     })
   })
 
@@ -1105,29 +1085,24 @@ describe('Cascader.vue', () => {
           label: 'Development',
         },
       ])
-      const wrapper = _mount(() => (
-        <Cascader
-          v-model={value.value}
-          filterable
-          options={options.value}
-          teleported={false}
-        />
+      _mount(() => (
+        <Cascader v-model={value.value} filterable options={options.value} />
       ))
-      const cascaderNodes = wrapper.findAll('.el-cascader-node')
+      const cascaderNodes = document.querySelectorAll('.el-cascader-node')
 
       expect(cascaderNodes.length).toBe(3)
-      expect(cascaderNodes[0].text()).toBe('Guide')
-      expect(cascaderNodes[1].text()).toBe('Design')
-      expect(cascaderNodes[2].text()).toBe('Development')
+      expect(cascaderNodes[0].textContent).toBe('Guide')
+      expect(cascaderNodes[1].textContent).toBe('Design')
+      expect(cascaderNodes[2].textContent).toBe('Development')
 
       options.value.push({
         value: 'testing',
         label: 'Testing',
       })
       await nextTick()
-      const newCascaderNodes = wrapper.findAll('.el-cascader-node')
+      const newCascaderNodes = document.querySelectorAll('.el-cascader-node')
       expect(newCascaderNodes.length).toBe(4)
-      expect(newCascaderNodes[3].text()).toBe('Testing')
+      expect(newCascaderNodes[3].textContent).toBe('Testing')
     })
   })
 

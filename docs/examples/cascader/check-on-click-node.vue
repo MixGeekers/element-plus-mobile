@@ -2,12 +2,12 @@
   <div class="flex flex-col items-center">
     <el-switch
       v-model="showPrefix"
-      active-text="show prefix"
-      inactive-text="hide prefix"
+      active-text="显示前缀"
+      inactive-text="隐藏前缀"
     />
     <div class="flex flex-wrap">
       <div class="m-4">
-        <p>checkStrictly | Single mode</p>
+        <p>`checkStrictly` 单选模式</p>
         <el-cascader
           v-model="value"
           :options="options"
@@ -16,7 +16,7 @@
         />
       </div>
       <div class="m-4">
-        <p>Multiple mode</p>
+        <p>多选模式</p>
         <el-cascader
           v-model="value2"
           show-checked-strategy="parent"
@@ -31,6 +31,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+import { cascaderSubsetOptions as options } from './options'
 
 const value = ref()
 const value2 = ref()
@@ -46,69 +47,4 @@ const props2 = computed(() => ({
   multiple: true,
   checkOnClickNode: true,
 }))
-
-const options = [
-  {
-    value: 'guide',
-    label: 'Guide',
-    children: [
-      {
-        value: 'disciplines',
-        label: 'Disciplines',
-        children: [
-          {
-            value: 'consistency',
-            label: 'Consistency',
-          },
-        ],
-      },
-      {
-        value: 'navigation',
-        label: 'Navigation',
-        children: [
-          {
-            value: 'side nav',
-            label: 'Side Navigation',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'component',
-    label: 'Component',
-    children: [
-      {
-        value: 'basic',
-        label: 'Basic',
-        children: [
-          {
-            value: 'layout',
-            label: 'Layout',
-          },
-        ],
-      },
-      {
-        value: 'form',
-        label: 'Form',
-        children: [
-          {
-            value: 'radio',
-            label: 'Radio',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'resource',
-    label: 'Resource',
-    children: [
-      {
-        value: 'axure',
-        label: 'Axure Components',
-      },
-    ],
-  },
-]
 </script>

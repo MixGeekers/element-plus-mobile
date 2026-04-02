@@ -3,8 +3,6 @@
     ref="popper"
     :visible="showPicker"
     :show-arrow="false"
-    :fallback-placements="['bottom', 'top', 'right', 'left']"
-    :offset="0"
     :gpu-acceleration="false"
     :popper-class="[ns.be('picker', 'panel'), popperClass!]"
     :popper-style="popperStyle"
@@ -14,10 +12,9 @@
     role="dialog"
     effect="light"
     trigger="click"
-    :teleported="teleported"
-    :transition="`${ns.namespace.value}-zoom-in-top`"
+    teleported
+    :transition="`${ns.namespace.value}-fade-in-linear`"
     :persistent="persistent"
-    :append-to="appendTo"
     @show="handleShowTooltip"
     @hide="setShowPicker(false)"
   >

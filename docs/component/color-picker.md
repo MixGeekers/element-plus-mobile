@@ -7,6 +7,8 @@ lang: zh-CN
 
 ColorPicker是一个支持多种颜色格式的颜色选择器。
 
+触发器保持紧凑，颜色面板会以底部面板展开。
+
 ## 基本用法
 
 :::demo ColorPicker 需要将字符串类型变量绑定到 v-model。
@@ -60,10 +62,8 @@ color-picker/sizes
 |空值 ^(2.10.3) |组件的空值，[参见配置提供程序](./config-provider.md#empty-values-configurations) | ^[数组] | — |
 |清除值 ^(2.10.3) |清除返回值，[参见配置提供程序](./config-provider.md#empty-values-configurations) | ^[字符串] / ^[数字] / ^[布尔值] / ^[函数] | — |
 |编号 |颜色选择器 ID | ^[字符串] | — |
-|传送 ^(2.7.2) |颜色选择器 Popper 是否传送到身体 | ^[布尔值] |真实|
 |标签 ^(a11y) ^(已弃用) | ColorPicker 咏叹调标签 | ^[字符串] | — |
 |持久 ^(2.10.5) |当颜色选择器 inactive and persist 为 false 时，颜色面板将被破坏 | ^[布尔值] |真实|
-|追加到 ^(2.10.5) |颜色选择器面板附加到哪个元素 | ^[CSS选择器] / ^[HTMLElement] | - |
 
 ### 活动
 

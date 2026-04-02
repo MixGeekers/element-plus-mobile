@@ -30,10 +30,10 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
+    ElMessage.error('头像图片必须是 JPG 格式。')
     return false
   } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    ElMessage.error('头像图片大小不能超过 2MB。')
     return false
   }
   return true
@@ -64,7 +64,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
-  color: #8c939d;
+  color: var(--el-text-color-secondary);
   width: 178px;
   height: 178px;
   text-align: center;

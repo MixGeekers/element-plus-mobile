@@ -1,14 +1,15 @@
 <template>
-  <div>
-    <el-link>default</el-link>
-    <el-link underline="always">always</el-link>
-    <el-link underline="hover">hover</el-link>
-    <el-link underline="never">never</el-link>
+  <div class="link-example">
+    <el-link>默认常显</el-link>
+    <el-link underline="always">始终显示</el-link>
+    <el-link type="primary" underline="never">仅保留文字色</el-link>
   </div>
 </template>
 
 <style scoped>
-.el-link {
-  margin-right: 8px;
+.link-example {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 </style>

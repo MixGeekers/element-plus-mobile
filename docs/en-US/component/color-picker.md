@@ -7,6 +7,8 @@ lang: en-US
 
 ColorPicker is a color selector supporting multiple color formats.
 
+The trigger stays compact in forms and opens a bottom sheet color panel.
+
 ## Basic usage
 
 :::demo ColorPicker requires a string typed variable to be bound to v-model.
@@ -60,10 +62,8 @@ color-picker/sizes
 | empty-values ^(2.10.3)      | empty values of component, [see config-provider](./config-provider.md#empty-values-configurations) | ^[array]                                                                                              | —                                                                            |
 | value-on-clear ^(2.10.3)    | clear return value, [see config-provider](./config-provider.md#empty-values-configurations)        | ^[string] / ^[number] / ^[boolean] / ^[Function]                                                      | —                                                                            |
 | id                          | ColorPicker id                                                                                     | ^[string]                                                                                             | —                                                                            |
-| teleported ^(2.7.2)         | whether color-picker popper is teleported to the body                                              | ^[boolean]                                                                                            | true                                                                         |
 | label ^(a11y) ^(deprecated) | ColorPicker aria-label                                                                             | ^[string]                                                                                             | —                                                                            |
 | persistent ^(2.10.5)        | when color-picker inactive and persistent is false, the color panel will be destroyed              | ^[boolean]                                                                                            | true                                                                         |
-| append-to ^(2.10.5)         | which element the color-picker panel appends to                                                    | ^[CSSSelector] / ^[HTMLElement]                                                                       | -                                                                            |
 
 ### Events
 

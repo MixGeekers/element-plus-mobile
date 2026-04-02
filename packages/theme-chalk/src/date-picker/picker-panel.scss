@@ -58,7 +58,7 @@
     }
 
     &.active {
-      background-color: #e6f1fe;
+      background-color: getCssVar('color-primary-light-9');
       color: getCssVar('datepicker-active-color');
     }
   }
@@ -149,4 +149,98 @@
   + .#{$namespace}-picker-panel__body,
 .#{$namespace}-picker-panel__sidebar + .#{$namespace}-picker-panel__body {
   margin-left: 110px;
+}
+
+@include b(picker-panel) {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0;
+  line-height: normal;
+  box-sizing: border-box;
+  background: transparent;
+
+  .#{$namespace}-time-panel {
+    margin: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  @include e(body-wrapper) {
+    display: block;
+    width: 100%;
+  }
+
+  @include e(body) {
+    display: block;
+    width: 100%;
+    min-width: 0 !important;
+  }
+
+  @include e(content) {
+    width: 100%;
+    margin: 0;
+    padding: 0 to-rem(16px) to-rem(16px);
+    box-sizing: border-box;
+  }
+
+  @include e(footer) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: to-rem(12px);
+    align-items: stretch;
+    justify-content: space-between;
+    padding: to-rem(16px);
+    font-size: to-rem(14px);
+    background: transparent;
+  }
+
+  @include e(shortcut) {
+    min-height: to-rem(44px);
+    padding: to-rem(10px) to-rem(14px);
+    border-radius: getCssVar('border-radius-base');
+    background: getCssVar('fill-color', 'light');
+    line-height: 1.4;
+    font-size: to-rem(14px);
+  }
+
+  @include e(btn) {
+    min-height: to-rem(44px);
+    padding: 0 to-rem(18px);
+    border-radius: getCssVar('border-radius-base');
+    font-size: to-rem(14px);
+    font-weight: 600;
+  }
+
+  @include e(icon-btn) {
+    min-width: to-rem(40px);
+    min-height: to-rem(40px);
+    margin-top: 0;
+    padding: 0;
+    border-radius: getCssVar('border-radius-base');
+  }
+
+  @include e(link-btn) {
+    margin: 0;
+  }
+}
+
+.#{$namespace}-picker-panel *[slot='sidebar'],
+.#{$namespace}-picker-panel__sidebar {
+  position: static;
+  display: flex;
+  gap: to-rem(8px);
+  width: auto;
+  padding: to-rem(12px) to-rem(16px);
+  border-right: none;
+  border-bottom: 1px solid getCssVar('datepicker-inner-border-color');
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.#{$namespace}-picker-panel
+  *[slot='sidebar']
+  + .#{$namespace}-picker-panel__body,
+.#{$namespace}-picker-panel__sidebar + .#{$namespace}-picker-panel__body {
+  margin-left: 0;
 }

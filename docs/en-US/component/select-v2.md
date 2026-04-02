@@ -37,11 +37,11 @@ select-v2/multiple
 
 :::
 
-## Bottom-Sheet Flow
+## Confirm And Cancel
 
-`SelectV2` now keeps its virtualized list while using a touch-friendly bottom-sheet interaction by default.
+`SelectV2` keeps its virtualized list, and in multiple mode it stores changes as a draft until confirmation.
 
-:::demo This demo shows the current default interaction directly. Open the multi-select dropdown to inspect the bottom-sheet presentation, draft selection state, and confirm / cancel flow.
+:::demo This demo shows the default single and multiple selection behavior. Open the multi-select dropdown to inspect the confirm and cancel flow.
 
 select-v2/mobile-sheet
 
@@ -57,7 +57,7 @@ select-v2/size
 
 ## Hide extra tags when the selected items are too many
 
-You can collapse tags to a text by using `collapse-tags` attribute. You can check them when mouse hover collapse text by using `collapse-tags-tooltip` attribute.
+You can collapse tags to a text with `collapse-tags`, then tap the collapsed summary to inspect the full selection with `collapse-tags-tooltip`.
 
 :::demo
 
@@ -264,7 +264,6 @@ select-v2/custom-label
 | no-data-text                          | displayed text when there is no options, you can also use slot empty                                                                                                                             | ^[string]                                                   | No Data       |
 | popper-class                          | custom class name for Select's dropdown and tags' tooltip                                                                                                                                        | ^[string] / ^[object]                                       | ''            |
 | popper-style ^(2.11.0)                | custom style for Select's dropdown and tags' tooltip                                                                                                                                             | ^[string] / ^[object]                                       | —             |
-| append-to ^(2.8.8)                    | which element the select dropdown appends to                                                                                                                                                     | ^[CSSSelector] / ^[HTMLElement]                             | —             |
 | persistent                            | when select dropdown is inactive and `persistent` is `false`, select dropdown will be destroyed                                                                                                  | ^[boolean]                                                  | true          |
 | automatic-dropdown                    | for non-filterable Select, this prop decides if the option menu pops up when the input is focused                                                                                                | ^[boolean]                                                  | false         |
 | suffix-icon ^(2.9.8)                  | custom suffix icon component                                                                                                                                                                     | ^[string] / ^[object]`Component`                            | ArrowDown     |
@@ -277,7 +276,7 @@ select-v2/custom-label
 | remote-method                         | function that gets called when the input value changes. Its parameter is the current input value. To use this, `filterable` must be true                                                         | ^[Function]`(query: string) => void`                        | —             |
 | remote-show-suffix ^(2.11.9)          | in remote search method show suffix icon                                                                                                                                                         | ^[boolean]                                                  | false         |
 | validate-event                        | whether to trigger form validation                                                                                                                                                               | ^[boolean]                                                  | true          |
-| collapse-tags-tooltip ^(2.3.0)        | whether show all selected tags when mouse hover text of collapse-tags. To use this, `collapse-tags` must be true                                                                                 | ^[boolean]                                                  | false         |
+| collapse-tags-tooltip ^(2.3.0)        | whether show all selected tags when tapping the collapsed summary. To use this, `collapse-tags` must be true                                                                                     | ^[boolean]                                                  | false         |
 | [tag-tooltip](#tag-tooltip) ^(2.13.3) | configuration object for the collapse-tags tooltip. To use this, `collapse-tags` and `collapse-tags-tooltip` must be true                                                                        | ^[object]`TagTooltipProps`                                  | {}            |
 | max-collapse-tags ^(2.3.0)            | The max tags number to be shown. To use this, `collapse-tags` must be true                                                                                                                       | ^[number]                                                   | 1             |
 | tag-type ^(2.5.0)                     | tag type                                                                                                                                                                                         | ^[enum]`'' \| 'success' \| 'info' \| 'warning' \| 'danger'` | info          |
@@ -303,33 +302,21 @@ select-v2/custom-label
 Properties in tag-tooltip follow this priority order:
 
 1. Explicitly defined fields within the tag-tooltip object.
-2. Shared props inherited from el-select-v2 (e.g. effect, popper-class, popper-style, append-to).
+2. Shared props inherited from el-select-v2 (e.g. effect, popper-class, popper-style).
 3. Default values of the underlying el-tooltip component.
    This allows you to override specific tooltip behaviors for tags while maintaining consistency with the Select dropdown by default.
 
 :::
 
-:::tip Custom Container Positioning
-
-When appending the Tooltip to a custom container (via the `append-to` attribute), the container should be configured with `position: relative` or `position: absolute` to ensure accurate positioning. Additionally, you can apply `overflow: hidden` to the container if you need to prevent the Tooltip from overflowing its boundaries.
-
-:::
-
-| Attribute           | Description                                                                                                          | Type                                                                                                                                                                        | Default                            |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| append-to           | which element the tooltip CONTENT appends to                                                                         | ^[CSSSelector] / ^[HTMLElement]                                                                                                                                             | —                                  |
-| placement           | position of Tooltip                                                                                                  | ^[enum]`'top' \| 'top-start' \| 'top-end' \| 'bottom' \| 'bottom-start' \| 'bottom-end' \| 'left' \| 'left-start' \| 'left-end' \| 'right' \| 'right-start' \| 'right-end'` | bottom                             |
-| fallback-placements | list of possible positions for Tooltip [popper.js](https://popper.js.org/docs/v2/modifiers/flip/#fallbackplacements) | ^[array]`Placement[]`                                                                                                                                                       | ['bottom', 'top', 'right', 'left'] |
-| effect              | Tooltip theme, built-in theme: `dark` / `light`                                                                      | ^[enum]`'dark' \| 'light'` / ^[string]                                                                                                                                      | —                                  |
-| popper-class        | custom class name for Tooltip's popper                                                                               | ^[string]                                                                                                                                                                   | —                                  |
-| popper-style        | custom style for Tooltip's popper                                                                                    | ^[string] / ^[object]                                                                                                                                                       | —                                  |
-| transition          | animation name                                                                                                       | ^[string]                                                                                                                                                                   | —                                  |
-| teleported          | whether tooltip content is teleported, if `true` it will be teleported to where `append-to` sets                     | ^[boolean]                                                                                                                                                                  | —                                  |
-| popper-options      | [popper.js](https://popper.js.org/docs/v2/) parameters                                                               | ^[object]refer to [popper.js](https://popper.js.org/docs/v2/) doc                                                                                                           | —                                  |
-| show-after          | delay of appearance, in millisecond                                                                                  | ^[number]                                                                                                                                                                   | —                                  |
-| hide-after          | delay of disappear, in millisecond                                                                                   | ^[number]                                                                                                                                                                   | —                                  |
-| auto-close          | timeout in milliseconds to hide tooltip                                                                              | ^[number]                                                                                                                                                                   | —                                  |
-| offset              | offset of the Tooltip                                                                                                | ^[number]                                                                                                                                                                   | —                                  |
+| Attribute    | Description                                     | Type                                   | Default |
+| ------------ | ----------------------------------------------- | -------------------------------------- | ------- |
+| effect       | Tooltip theme, built-in theme: `dark` / `light` | ^[enum]`'dark' \| 'light'` / ^[string] | —       |
+| popper-class | custom class name for Tooltip's popper          | ^[string]                              | —       |
+| popper-style | custom style for Tooltip's popper               | ^[string] / ^[object]                  | —       |
+| transition   | animation name                                  | ^[string]                              | —       |
+| show-after   | delay of appearance, in millisecond             | ^[number]                              | —       |
+| hide-after   | delay of disappear, in millisecond              | ^[number]                              | —       |
+| auto-close   | timeout in milliseconds to hide tooltip         | ^[number]                              | —       |
 
 ### Events
 

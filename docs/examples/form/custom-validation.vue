@@ -1,16 +1,8 @@
 <template>
-  <MobileFormDemo
-    title="Custom Validation Rules"
-    description="This example keeps the validation flow mobile-friendly while showing password confirmation and async age checks."
-    header-title="Account Security"
-    header-description="Two-factor style validation with status icons and touch-sized fields."
-  >
-    <div class="mobile-form-demo__panel">
-      <strong>Validation flow</strong>
-      <p>
-        Password confirmation is checked immediately, while age is validated
-        asynchronously after blur.
-      </p>
+  <DemoBlock>
+    <div class="demo-block__section">
+      <strong>校验流程</strong>
+      <p>密码确认会立即校验，年龄则会在失焦后进行异步校验。</p>
     </div>
 
     <el-form
@@ -20,50 +12,50 @@
       status-icon
       @submit.prevent
     >
-      <el-form-item label="Password" prop="pass">
+      <el-form-item label="密码" prop="pass">
         <el-input
           v-model="ruleForm.pass"
           autocomplete="new-password"
-          placeholder="Enter a password"
+          placeholder="请输入密码"
           show-password
           type="password"
         />
       </el-form-item>
 
-      <el-form-item label="Confirm" prop="checkPass">
+      <el-form-item label="确认密码" prop="checkPass">
         <el-input
           v-model="ruleForm.checkPass"
           autocomplete="new-password"
-          placeholder="Repeat the password"
+          placeholder="请再次输入密码"
           show-password
           type="password"
         />
       </el-form-item>
 
-      <el-form-item label="Age" prop="age">
+      <el-form-item label="年龄" prop="age">
         <el-input
           v-model.number="ruleForm.age"
           autocomplete="off"
           inputmode="numeric"
-          placeholder="Must be 18 or above"
+          placeholder="请输入 18 岁及以上年龄"
         />
       </el-form-item>
 
       <el-form-item>
-        <div class="mobile-form-demo__actions">
+        <div class="demo-block__actions">
           <el-button type="primary" @click="submitForm(ruleFormRef)">
-            Submit
+            提交
           </el-button>
-          <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+          <el-button @click="resetForm(ruleFormRef)">重置</el-button>
         </div>
       </el-form-item>
     </el-form>
-  </MobileFormDemo>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import MobileFormDemo from './components/mobile-demo-shell.vue'
+import DemoBlock from '../components/demo-block.vue'
 
 import type { FormInstance, FormRules } from 'element-plus-mobile'
 
@@ -71,14 +63,14 @@ const ruleFormRef = ref<FormInstance>()
 
 const checkAge = (rule: any, value: any, callback: any) => {
   if (!value) {
-    return callback(new Error('Please input the age'))
+    return callback(new Error('请输入年龄'))
   }
   setTimeout(() => {
     if (!Number.isInteger(value)) {
-      callback(new Error('Please input digits'))
+      callback(new Error('请输入数字'))
     } else {
       if (value < 18) {
-        callback(new Error('Age must be greater than 18'))
+        callback(new Error('年龄必须大于等于 18 岁'))
       } else {
         callback()
       }
@@ -88,7 +80,7 @@ const checkAge = (rule: any, value: any, callback: any) => {
 
 const validatePass = (rule: any, value: any, callback: any) => {
   if (value === '') {
-    callback(new Error('Please input the password'))
+    callback(new Error('请输入密码'))
   } else {
     if (ruleForm.checkPass !== '') {
       if (!ruleFormRef.value) return
@@ -99,9 +91,9 @@ const validatePass = (rule: any, value: any, callback: any) => {
 }
 const validatePass2 = (rule: any, value: any, callback: any) => {
   if (value === '') {
-    callback(new Error('Please input the password again'))
+    callback(new Error('请再次输入密码'))
   } else if (value !== ruleForm.pass) {
-    callback(new Error("Two inputs don't match!"))
+    callback(new Error('两次输入的密码不一致'))
   } else {
     callback()
   }

@@ -1,15 +1,10 @@
 <template>
-  <MobileFormDemo
-    title="Number Validate"
-    description="The number modifier example is shown in the same mobile shell, so the field, hint, and actions can be checked in a realistic narrow layout."
-    header-title="Numeric Input"
-    header-description="Use the .number modifier so validation receives a numeric value instead of a string."
-  >
-    <div class="mobile-form-demo__panel">
-      <strong>Why it matters</strong>
+  <DemoBlock>
+    <div class="demo-block__section">
+      <strong>为什么重要</strong>
       <p>
-        Typing into a normal input returns a string first. The `.number`
-        modifier converts that value before the numeric rule runs.
+        普通输入框默认先返回字符串，`.number`
+        修饰符会在数字规则执行前先完成类型转换。
       </p>
     </div>
 
@@ -20,37 +15,37 @@
       @submit.prevent
     >
       <el-form-item
-        label="Age"
+        label="年龄"
         prop="age"
         :rules="[
-          { required: true, message: 'age is required' },
-          { type: 'number', message: 'age must be a number' },
+          { required: true, message: '年龄不能为空' },
+          { type: 'number', message: '年龄必须是数字' },
         ]"
       >
         <el-input
           v-model.number="numberValidateForm.age"
           autocomplete="off"
           inputmode="numeric"
-          placeholder="Enter your age"
+          placeholder="请输入年龄"
           type="text"
         />
       </el-form-item>
 
       <el-form-item>
-        <div class="mobile-form-demo__actions">
+        <div class="demo-block__actions">
           <el-button type="primary" @click="submitForm(formRef)">
-            Submit
+            提交
           </el-button>
-          <el-button @click="resetForm(formRef)">Reset</el-button>
+          <el-button @click="resetForm(formRef)">重置</el-button>
         </div>
       </el-form-item>
     </el-form>
-  </MobileFormDemo>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import MobileFormDemo from './components/mobile-demo-shell.vue'
+import DemoBlock from '../components/demo-block.vue'
 
 import type { FormInstance } from 'element-plus-mobile'
 

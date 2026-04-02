@@ -5,11 +5,13 @@ lang: en-US
 
 # Scrollbar
 
-Used to replace the browser's native scrollbar.
+Use Scrollbar as a mobile-friendly replacement for the browser's native scrollbar.
+
+The thumb appears while scrolling or dragging, instead of depending on hover-only desktop behavior.
 
 ## Basic usage
 
-:::demo Use `height` property to set the height of the scrollbar, or if not set, it adapts according to the parent container height.
+:::demo Use a fixed-height content area when the page needs a clearly bounded scroll region.
 
 scrollbar/basic-usage
 
@@ -17,7 +19,7 @@ scrollbar/basic-usage
 
 ## Horizontal scroll
 
-:::demo When the element width is greater than the scrollbar width, the horizontal scrollbar is displayed.
+:::demo Horizontal scrolling appears automatically when content is wider than the container.
 
 scrollbar/horizontal-scroll
 
@@ -25,7 +27,7 @@ scrollbar/horizontal-scroll
 
 ## Max height
 
-:::demo The scrollbar is displayed only when the element height exceeds the max height.
+:::demo Keep natural height for short content and switch to scrolling only after the limit is reached.
 
 scrollbar/max-height
 
@@ -33,7 +35,7 @@ scrollbar/max-height
 
 ## Manual scroll
 
-:::demo Use `setScrollTop` and `setScrollLeft` methods can control scrollbar manually.
+:::demo Control the scroll position with `setScrollTop` or `setScrollLeft`.
 
 scrollbar/manual-scroll
 
@@ -41,7 +43,7 @@ scrollbar/manual-scroll
 
 ## Infinite scroll ^(2.10.0)
 
-:::demo `end-reached` is triggered when the scrollbar reaches the end. It can be used as an infinite scroll.
+:::demo `end-reached` is useful for recommendation feeds and other infinite-loading lists.
 
 scrollbar/infinite-scroll
 

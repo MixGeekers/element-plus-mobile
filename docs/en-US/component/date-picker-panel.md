@@ -7,6 +7,8 @@ lang: en-US
 
 `DatePickerPanel` is the core component of `DatePicker`.
 
+It is especially useful for inline mobile screens where the calendar should stay visible instead of opening from an input field.
+
 ## Enter Date
 
 Basic date picker measured by 'day'.

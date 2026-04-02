@@ -137,3 +137,64 @@
     }
   }
 }
+
+@include b(cascader-panel) {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  border-radius: getCssVar('border-radius-base');
+
+  @include when(bordered) {
+    border: none;
+  }
+}
+
+@include b(cascader-menu) {
+  flex: 0 0 100%;
+  min-width: 100%;
+  border-right: none;
+  scroll-snap-align: start;
+
+  &:not(:last-child) {
+    border-bottom: getCssVar('cascader-menu', 'border');
+  }
+
+  &:last-child {
+    .#{$namespace}-cascader-node {
+      padding-right: to-rem(18px);
+    }
+  }
+
+  @include e(wrap) {
+    &.#{$namespace}-scrollbar__wrap {
+      height: min(45vh, #{to-rem(360px)});
+    }
+  }
+
+  @include e(list) {
+    padding: to-rem(8px) 0;
+  }
+}
+
+@include b(cascader-node) {
+  min-height: to-rem(48px);
+  height: auto;
+  padding: 0 to-rem(18px) 0 to-rem(48px);
+  line-height: to-rem(48px);
+  font-size: to-rem(16px);
+
+  @include e(prefix) {
+    left: to-rem(16px);
+  }
+
+  @include e(postfix) {
+    right: to-rem(16px);
+  }
+
+  @include e(label) {
+    padding: 0 to-rem(8px);
+  }
+}

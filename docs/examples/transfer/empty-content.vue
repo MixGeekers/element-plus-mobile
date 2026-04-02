@@ -1,12 +1,14 @@
 <template>
-  <el-transfer v-model="value" :data="data">
-    <template #left-empty>
-      <el-empty :image-size="60" description="No data" />
-    </template>
-    <template #right-empty>
-      <el-empty :image-size="60" description="No data" />
-    </template>
-  </el-transfer>
+  <div class="demo-transfer-shell">
+    <el-transfer v-model="value" :data="data">
+      <template #left-empty>
+        <el-empty :image-size="60" description="No data" />
+      </template>
+      <template #right-empty>
+        <el-empty :image-size="60" description="No data" />
+      </template>
+    </el-transfer>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -32,3 +34,10 @@ const generateData = (): DataItem[] => {
 const data = ref(generateData())
 const value = ref([])
 </script>
+
+<style scoped>
+.demo-transfer-shell {
+  max-width: 28rem;
+  margin: 0 auto;
+}
+</style>

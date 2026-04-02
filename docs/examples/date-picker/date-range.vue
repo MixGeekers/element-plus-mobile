@@ -1,48 +1,46 @@
 <template>
-  <el-radio-group v-model="size" aria-label="size control" class="mb-4">
-    <el-radio-button value="large">large</el-radio-button>
-    <el-radio-button value="default">default</el-radio-button>
-    <el-radio-button value="small">small</el-radio-button>
-  </el-radio-group>
-  <div class="demo-date-picker">
-    <div class="block">
-      <span class="demonstration">Default</span>
-      <el-date-picker
-        v-model="value1"
-        type="daterange"
-        range-separator="To"
-        start-placeholder="Start date"
-        end-placeholder="End date"
-        :size="size"
-      />
+  <DemoBlock>
+    <div class="demo-block__stack">
+      <div class="demo-block__section">
+        <span class="demo-block__caption">默认范围</span>
+        <strong>选择准确的出行时间段</strong>
+        <el-date-picker
+          v-model="value1"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        />
+        <p>输入框保持紧凑，日期面板则从底部展开。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">快捷预设</span>
+        <strong>一键切换到常用时间范围</strong>
+        <el-date-picker
+          v-model="value2"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :shortcuts="shortcuts"
+        />
+        <p>当用户经常选择相同范围时，快捷项会明显减少操作成本。</p>
+      </div>
     </div>
-    <div class="block">
-      <span class="demonstration">With quick options</span>
-      <el-date-picker
-        v-model="value2"
-        type="daterange"
-        unlink-panels
-        range-separator="To"
-        start-placeholder="Start date"
-        end-placeholder="End date"
-        :shortcuts="shortcuts"
-        :size="size"
-      />
-    </div>
-  </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-
-const size = ref<'default' | 'large' | 'small'>('default')
+import DemoBlock from '../components/demo-block.vue'
 
 const value1 = ref('')
 const value2 = ref('')
 
 const shortcuts = [
   {
-    text: 'Last week',
+    text: '最近一周',
     value: () => {
       const end = new Date()
       const start = new Date()
@@ -51,7 +49,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'Last month',
+    text: '最近一个月',
     value: () => {
       const end = new Date()
       const start = new Date()
@@ -60,7 +58,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'Last 3 months',
+    text: '最近三个月',
     value: () => {
       const end = new Date()
       const start = new Date()
@@ -70,48 +68,3 @@ const shortcuts = [
   },
 ]
 </script>
-
-<style scoped>
-.demo-date-picker {
-  display: flex;
-  width: 100%;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-.demo-date-picker .block {
-  padding: 1.5rem 0;
-  text-align: center;
-  border-right: solid 1px var(--el-border-color);
-  flex: 1;
-  min-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.demo-date-picker .block:last-child {
-  border-right: none;
-}
-
-.demo-date-picker .demonstration {
-  display: block;
-  color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-bottom: 1rem;
-}
-
-@media screen and (max-width: 1200px) {
-  .demo-date-picker .block {
-    flex: 0 0 100%;
-    padding: 1rem 0;
-    min-width: auto;
-    border-right: none;
-    border-bottom: solid 1px var(--el-border-color);
-  }
-
-  .demo-date-picker .block:last-child {
-    border-bottom: none;
-  }
-}
-</style>

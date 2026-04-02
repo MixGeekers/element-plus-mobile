@@ -1,35 +1,11 @@
 <template>
   <div :class="ns.b('panel')">
-    <p :class="ns.be('panel', 'header')">
-      <el-checkbox
-        v-model="allChecked"
-        :indeterminate="isIndeterminate"
-        :validate-event="false"
-        @change="handleAllCheckedChange"
-      >
-        <span :class="ns.be('panel', 'header-title')">{{ title }}</span>
-        <span :class="ns.be('panel', 'header-count')">
-          {{ checkedSummary }}
-        </span>
-      </el-checkbox>
-    </p>
-
     <div :class="[ns.be('panel', 'body'), ns.is('with-footer', hasFooter)]">
-      <el-input
-        v-if="filterable"
-        v-model="query"
-        :class="ns.be('panel', 'filter')"
-        size="default"
-        :placeholder="placeholder"
-        :prefix-icon="Search"
-        clearable
-        :validate-event="false"
-      />
       <el-checkbox-group
         v-show="!hasNoMatch && !isEmpty(data)"
         v-model="checked"
         :validate-event="false"
-        :class="[ns.is('filterable', filterable), ns.be('panel', 'list')]"
+        :class="ns.be('panel', 'list')"
       >
         <el-checkbox
           v-for="item in filteredData"
@@ -51,18 +27,17 @@
         </slot>
       </div>
     </div>
-    <p v-if="hasFooter" :class="ns.be('panel', 'footer')">
+    <div v-if="hasFooter" :class="ns.be('panel', 'footer')">
       <slot />
-    </p>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup generic="T extends TransferDataItem = TransferDataItem">
-import { computed, reactive, toRefs, useSlots } from 'vue'
-import { Search, isEmpty, mutable } from '@element-plus/utils'
+import { Comment, computed, reactive, toRefs, useSlots } from 'vue'
+import { isEmpty, mutable } from '@element-plus/utils'
 import { useLocale, useNamespace } from '@element-plus/hooks'
 import { ElCheckbox, ElCheckboxGroup } from '@element-plus/components/checkbox'
-import { ElInput } from '@element-plus/components/input'
 import { transferPanelEmits } from './transfer-panel'
 import { useCheck, usePropsAlias } from './composables'
 
@@ -104,6 +79,7 @@ const propsAlias = usePropsAlias(props)
 
 const {
   filteredData,
+  checkableData,
   checkedSummary,
   isIndeterminate,
   handleAllCheckedChange,
@@ -113,12 +89,29 @@ const hasNoMatch = computed(
   () => !isEmpty(panelState.query) && isEmpty(filteredData.value)
 )
 
-const hasFooter = computed(() => !isEmpty(slots.default!()[0].children))
+const hasFooter = computed(() => {
+  const footerNodes = slots.default?.() || []
+  return footerNodes.some((node) => node.type !== Comment)
+})
 
 const { checked, allChecked, query } = toRefs(panelState)
 
 defineExpose({
   /** @description filter keyword */
   query,
+  /** @description checked item keys in current panel */
+  checked,
+  /** @description whether all checkable items are checked */
+  allChecked,
+  /** @description checked summary text */
+  checkedSummary,
+  /** @description whether checked state is indeterminate */
+  isIndeterminate,
+  /** @description checkable items after filtering */
+  checkableData,
+  /** @description filtered data */
+  filteredData,
+  /** @description toggle all checkable items */
+  handleAllCheckedChange,
 })
 </script>

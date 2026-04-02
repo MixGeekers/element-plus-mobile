@@ -35,3 +35,20 @@
     font-weight: bold;
   }
 }
+
+.time-select {
+  margin: 0;
+
+  .#{$namespace}-picker-panel__content {
+    max-height: min(45vh, #{to-rem(360px)});
+    padding: to-rem(8px) 0;
+  }
+
+  &-item {
+    min-height: to-rem(48px);
+    padding: to-rem(12px) to-rem(16px);
+    font-size: to-rem(16px);
+    line-height: 1.5;
+    border-radius: to-rem(12px);
+  }
+}

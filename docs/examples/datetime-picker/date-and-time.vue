@@ -1,36 +1,47 @@
 <template>
-  <div class="demo-datetime-picker">
-    <div class="block">
-      <span class="demonstration">Default</span>
-      <el-date-picker
-        v-model="value1"
-        type="datetime"
-        placeholder="Select date and time"
-      />
+  <DemoBlock>
+    <div class="demo-block__stack">
+      <div class="demo-block__section">
+        <span class="demo-block__caption">会面时间</span>
+        <strong>在同一流程中选择日期和时间</strong>
+        <el-date-picker
+          v-model="value1"
+          type="datetime"
+          placeholder="请选择日期和时间"
+        />
+        <p>底部面板会将两个步骤整合在一条纵向流程中。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">快捷预约</span>
+        <strong>针对常见场景使用快捷项</strong>
+        <el-date-picker
+          v-model="value2"
+          type="datetime"
+          placeholder="请选择日期和时间"
+          :shortcuts="shortcuts"
+        />
+        <p>快捷项能帮助用户以更少点击完成高频预约。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">默认时段</span>
+        <strong>预填最常用的时间段</strong>
+        <el-date-picker
+          v-model="value3"
+          type="datetime"
+          placeholder="请选择日期和时间"
+          :default-time="defaultTime"
+        />
+        <p>当预约通常在中午附近开始时，预设时间会更加实用。</p>
+      </div>
     </div>
-    <div class="block">
-      <span class="demonstration">With shortcuts</span>
-      <el-date-picker
-        v-model="value2"
-        type="datetime"
-        placeholder="Select date and time"
-        :shortcuts="shortcuts"
-      />
-    </div>
-    <div class="block">
-      <span class="demonstration">With default time</span>
-      <el-date-picker
-        v-model="value3"
-        type="datetime"
-        placeholder="Select date and time"
-        :default-time="defaultTime"
-      />
-    </div>
-  </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import DemoBlock from '../components/demo-block.vue'
 
 const value1 = ref('')
 const value2 = ref('')
@@ -39,11 +50,11 @@ const defaultTime = new Date(2000, 1, 1, 12, 0, 0)
 
 const shortcuts = [
   {
-    text: 'Today',
+    text: '今天',
     value: new Date(),
   },
   {
-    text: 'Yesterday',
+    text: '昨天',
     value: () => {
       const date = new Date()
       date.setDate(date.getDate() - 1)
@@ -51,7 +62,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'A week ago',
+    text: '一周前',
     value: () => {
       const date = new Date()
       date.setDate(date.getDate() - 7)
@@ -60,49 +71,3 @@ const shortcuts = [
   },
 ]
 </script>
-
-<style scoped>
-.demo-datetime-picker {
-  display: flex;
-  width: 100%;
-  padding: 0;
-  flex-wrap: wrap;
-}
-.demo-datetime-picker .block {
-  padding: 30px 0;
-  text-align: center;
-  border-right: solid 1px var(--el-border-color);
-  flex: 1;
-  min-width: 300px;
-}
-.demo-datetime-picker .block:last-child {
-  border-right: none;
-}
-.demo-datetime-picker .demonstration {
-  display: block;
-  color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-@media (max-width: 768px) {
-  .demo-datetime-picker .block {
-    flex: 100%;
-    border-right: none;
-    border-bottom: solid 1px var(--el-border-color);
-  }
-
-  .demo-datetime-picker .block:last-child {
-    border-bottom: none;
-  }
-
-  :deep(.el-date-editor.el-input) {
-    width: 100%;
-  }
-
-  :deep(.el-date-editor.el-input__wrapper) {
-    width: 100%;
-    max-width: 300px;
-  }
-}
-</style>

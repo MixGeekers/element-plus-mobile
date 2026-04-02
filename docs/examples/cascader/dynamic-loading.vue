@@ -11,12 +11,12 @@ const props: CascaderProps = {
   lazyLoad(node, resolve) {
     const { level } = node
     setTimeout(() => {
-      const nodes = Array.from({ length: level + 1 }).map((item) => ({
+      const nodes = Array.from({ length: level + 1 }).map(() => ({
         value: ++id,
-        label: `Option - ${id}`,
+        label: `选项 ${id}`,
         leaf: level >= 2,
       }))
-      // Invoke `resolve` callback to return the child nodes data and indicate the loading is finished.
+      // 调用 `resolve` 返回子节点数据，并标记当前加载结束。
       resolve(nodes)
     }, 1000)
   },

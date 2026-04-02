@@ -15,7 +15,7 @@ export interface SplitterProps {
 export const splitterProps = buildProps({
   layout: {
     type: String,
-    default: 'horizontal',
+    default: 'vertical',
     values: ['horizontal', 'vertical'] as const,
   },
   lazy: Boolean,

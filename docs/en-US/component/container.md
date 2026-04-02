@@ -5,98 +5,39 @@ lang: en-US
 
 # Container
 
-Container components for scaffolding basic structure of the page:
+Use container components to build mobile page shells.
 
-`<el-container>`: wrapper container. It arranges children vertically by default for mobile layouts. Set `direction="horizontal"` when a side-by-side layout is needed.
-
-`<el-header>`: container for headers.
-
-`<el-aside>`: container for side sections (usually a side nav).
-
-`<el-main>`: container for main sections.
-
-`<el-footer>`: container for footers.
+`<el-container>` stacks children vertically by default, which matches the common `Header / Main / Footer` structure on mobile pages. Only set `direction="horizontal"` when you explicitly need side-by-side regions.
 
 :::tip
 
-These components use flex for layout, so please make sure your browser supports it. Besides, `<el-container>`'s direct child elements have to be one or more of the latter four components. And father element of the latter four components must be a `<el-container>`.
+These components use Flex layout. Direct children of `<el-container>` should be one or more of `Header / Aside / Main / Footer`.
 
 :::
 
-## Common layouts
+## Basic page shell
 
 <style lang="scss">
 @use '../../examples/container/common-layout.scss';
 </style>
 
-:::demo
-
-container/layout-hm
-
-:::
-
-:::demo
-
-container/layout-hmf
-
-:::
-
-:::demo
-
-container/layout-am
-
-:::
-
-:::demo
-
-container/layout-ham
-
-:::
-
-:::demo
-
-container/layout-hamf
-
-:::
-
-:::demo
-
-container/layout-ahm
-
-:::
-
-:::demo
-
-container/layout-ahmf
-
-:::
-
-## Example
-
-:::demo
-
-container/example
-
-:::
-
-## Mobile layouts
-
-These examples follow the same structural style as the layouts above and focus on the responsibilities of `Header`, `Main`, and `Footer` in mobile pages.
-If your page should fill the viewport, use `full-screen` on the page root. If you need page-level sticky bars, add `fixed` to `Header` or `Footer` when appropriate.
-
-:::demo The most basic mobile page shell: Header + Main + Footer.
+:::demo The most common mobile structure: top info, primary content, and bottom actions.
 
 container/layout-mobile-basic
 
 :::
 
-:::demo A bottom-navigation layout with a tab bar organized inside Footer.
+## Bottom navigation
+
+:::demo Use Footer as a tab bar when the page includes first-level navigation.
 
 container/layout-mobile-tabbar
 
 :::
 
-:::demo An immersive layout that keeps only Main for low-navigation scenarios.
+## Immersive page
+
+:::demo Keep only Main when the page should stay focused on content.
 
 container/layout-mobile-fullscreen
 

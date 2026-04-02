@@ -25,7 +25,7 @@ defineOptions({
 const emits = defineEmits(splitterEmits)
 
 const props = withDefaults(defineProps<SplitterProps>(), {
-  layout: 'horizontal',
+  layout: 'vertical',
 })
 const layout = toRef(props, 'layout')
 const lazy = toRef(props, 'lazy')

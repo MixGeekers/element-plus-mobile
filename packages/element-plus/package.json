@@ -1,7 +1,7 @@
 {
   "name": "element-plus-mobile",
   "version": "0.0.0-dev.1",
-  "description": "A mobile-first Vue 3 component library based on Element Plus.",
+  "description": "A Vue 3 component library for mobile interfaces based on Element Plus.",
   "keywords": [
     "element-plus-mobile",
     "element-plus",

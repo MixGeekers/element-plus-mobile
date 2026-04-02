@@ -1,24 +1,24 @@
 <template>
   <div class="demo-datetime-picker">
     <div class="block">
-      <span class="demonstration">Start and end date time 12:00:00</span>
+      <span class="demonstration">开始与结束时间统一默认到 12:00:00</span>
       <el-date-picker
         v-model="value1"
         type="datetimerange"
-        start-placeholder="Start Date"
-        end-placeholder="End Date"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
         :default-time="defaultTime1"
       />
     </div>
     <div class="block">
       <span class="demonstration">
-        Start date time 12:00:00, end date time 08:00:00
+        开始时间默认 12:00:00，结束时间默认 08:00:00
       </span>
       <el-date-picker
         v-model="value2"
         type="datetimerange"
-        start-placeholder="Start Date"
-        end-placeholder="End Date"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
         :default-time="defaultTime2"
       />
     </div>

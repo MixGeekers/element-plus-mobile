@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="panelRef"
     :class="[ns.b('panel'), ns.is('bordered', border)]"
     @keydown="handleKeyDown"
   >
@@ -85,6 +86,7 @@ let store: Store
 const initialLoaded = ref(true)
 const initialLoadedOnce = ref(false)
 const menuList = ref<CascaderMenuInstance[]>([])
+const panelRef = ref<HTMLDivElement>()
 const checkedValue = ref<CascaderValue>()
 const menus = ref<CascaderNode[][]>([])
 const expandingNode = ref<CascaderNode>()
@@ -298,6 +300,23 @@ const scrollToExpandingNode = () => {
     }
   })
 }
+
+watch(
+  () => menus.value.length,
+  async (length, previousLength = 0) => {
+    if (
+      !isClient ||
+      !panelRef.value ||
+      length <= 1 ||
+      length <= previousLength
+    ) {
+      return
+    }
+
+    await nextTick()
+    panelRef.value.scrollLeft = panelRef.value.scrollWidth
+  }
+)
 
 const handleKeyDown = (e: KeyboardEvent) => {
   const target = e.target as HTMLElement

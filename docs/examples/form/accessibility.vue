@@ -1,56 +1,52 @@
 <template>
-  <MobileFormDemo
-    title="Accessibility"
-    description="Single inputs inherit the form-item label automatically, while grouped fields still need their own accessible labels in a mobile layout."
-    header-title="Profile Details"
-    header-description="Compare one-input and grouped-input labeling patterns."
-  >
-    <div class="mobile-form-demo__panel">
-      <strong>Single input labels</strong>
+  <DemoBlock>
+    <div class="demo-block__section">
+      <strong>单个输入项标签</strong>
       <p>
-        When a form item contains one input, the <code>Full Name</code> label is
-        attached automatically.
+        当一个表单项只包含一个输入框时，<code>姓名</code>
+        标签会自动绑定到该输入框。
       </p>
     </div>
 
     <el-form @submit.prevent>
-      <el-form-item label="Full Name">
+      <el-form-item label="姓名">
         <el-input
           v-model="formAccessibility.fullName"
           clearable
-          placeholder="Full name"
+          placeholder="请输入姓名"
         />
       </el-form-item>
 
-      <div class="mobile-form-demo__panel">
-        <strong>Grouped inputs</strong>
+      <div class="demo-block__section">
+        <strong>分组输入项</strong>
         <p>
-          The <code>Your Information</code> label applies to the whole group, so
-          each individual input still needs its own <code>aria-label</code>.
+          <code>个人信息</code>
+          标签作用于整组内容，因此每个输入框仍然需要单独提供
+          <code>aria-label</code>。
         </p>
       </div>
 
-      <el-form-item label="Your Information">
-        <div class="mobile-form-demo__stack">
+      <el-form-item label="个人信息">
+        <div class="demo-block__stack">
           <el-input
             v-model="formAccessibility.firstName"
-            aria-label="First Name"
-            placeholder="First Name"
+            aria-label="名"
+            placeholder="请输入名"
           />
           <el-input
             v-model="formAccessibility.lastName"
-            aria-label="Last Name"
-            placeholder="Last Name"
+            aria-label="姓"
+            placeholder="请输入姓"
           />
         </div>
       </el-form-item>
     </el-form>
-  </MobileFormDemo>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import MobileFormDemo from './components/mobile-demo-shell.vue'
+import DemoBlock from '../components/demo-block.vue'
 
 const formAccessibility = reactive({
   fullName: '',

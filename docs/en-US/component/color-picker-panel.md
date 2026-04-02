@@ -7,6 +7,8 @@ lang: en-US
 
 `ColorPickerPanel` is the core component of `ColorPicker`.
 
+It works well for dedicated mobile settings screens where color editing should remain inline.
+
 ## Basic usage
 
 :::demo ColorPickerPanel requires a string typed variable to be bound to v-model.

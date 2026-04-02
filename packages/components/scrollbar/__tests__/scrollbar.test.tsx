@@ -6,6 +6,27 @@ import defineGetter from '@element-plus/test-utils/define-getter'
 import Scrollbar from '../src/scrollbar.vue'
 import Thumb from '../src/thumb.vue'
 
+const createPointerEvent = (
+  type: string,
+  values: Record<string, number | string | boolean> = {}
+) => {
+  const event = new MouseEvent(type, {
+    bubbles: true,
+    cancelable: true,
+  }) as PointerEvent
+
+  Object.entries({
+    pointerId: 1,
+    pointerType: 'touch',
+    button: 0,
+    ...values,
+  }).forEach(([key, value]) => {
+    Object.defineProperty(event, key, { value })
+  })
+
+  return event
+}
+
 describe('ScrollBar', () => {
   test('vertical', async () => {
     const outerHeight = 204
@@ -132,7 +153,7 @@ describe('ScrollBar', () => {
     scrollWidthRestore()
   })
 
-  test('should support touch dragging on thumb', async () => {
+  test('should support pointer dragging on thumb', async () => {
     const outerHeight = 204
     const innerHeight = 500
     const wrapper = mount(() => (
@@ -165,41 +186,29 @@ describe('ScrollBar', () => {
     wrapper.find('.el-scrollbar__wrap').trigger('scroll')
     await nextTick()
 
-    const touchStart = new Event('touchstart', {
-      bubbles: true,
-      cancelable: true,
-    })
-    Object.defineProperty(touchStart, 'touches', {
-      value: [{ pageY: 40, clientY: 40 }],
-    })
-    Object.defineProperty(touchStart, 'changedTouches', {
-      value: [{ pageY: 40, clientY: 40 }],
-    })
-    thumb.dispatchEvent(touchStart)
+    thumb.dispatchEvent(
+      createPointerEvent('pointerdown', {
+        pageY: 40,
+        clientY: 40,
+        pointerType: 'touch',
+      })
+    )
 
-    const touchMove = new Event('touchmove', {
-      bubbles: true,
-      cancelable: true,
-    })
-    Object.defineProperty(touchMove, 'touches', {
-      value: [{ pageY: 120, clientY: 120 }],
-    })
-    Object.defineProperty(touchMove, 'changedTouches', {
-      value: [{ pageY: 120, clientY: 120 }],
-    })
-    document.dispatchEvent(touchMove)
+    document.dispatchEvent(
+      createPointerEvent('pointermove', {
+        pageY: 120,
+        clientY: 120,
+        pointerType: 'touch',
+      })
+    )
 
-    const touchEnd = new Event('touchend', {
-      bubbles: true,
-      cancelable: true,
-    })
-    Object.defineProperty(touchEnd, 'touches', {
-      value: [],
-    })
-    Object.defineProperty(touchEnd, 'changedTouches', {
-      value: [{ pageY: 120, clientY: 120 }],
-    })
-    document.dispatchEvent(touchEnd)
+    document.dispatchEvent(
+      createPointerEvent('pointerup', {
+        pageY: 120,
+        clientY: 120,
+        pointerType: 'touch',
+      })
+    )
 
     expect(scrollDom.scrollTop).toBeGreaterThan(0)
 

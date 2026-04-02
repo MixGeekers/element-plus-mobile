@@ -1,19 +1,19 @@
 <template>
   <div class="flex flex-wrap items-center mb-4">
-    <el-button size="large">Large</el-button>
-    <el-button>Default</el-button>
-    <el-button size="small">Small</el-button>
-    <el-button size="large" :icon="Search">Search</el-button>
-    <el-button :icon="Search">Search</el-button>
-    <el-button size="small" :icon="Search">Search</el-button>
+    <el-button size="large">大号</el-button>
+    <el-button>默认</el-button>
+    <el-button size="small">小号</el-button>
+    <el-button size="large" :icon="Search">搜索</el-button>
+    <el-button :icon="Search">搜索</el-button>
+    <el-button size="small" :icon="Search">搜索</el-button>
   </div>
   <div class="flex flex-wrap items-center mb-4">
-    <el-button size="large" round>Large</el-button>
-    <el-button round>Default</el-button>
-    <el-button size="small" round>Small</el-button>
-    <el-button size="large" :icon="Search" round>Search</el-button>
-    <el-button :icon="Search" round>Search</el-button>
-    <el-button size="small" :icon="Search" round>Search</el-button>
+    <el-button size="large" round>大号</el-button>
+    <el-button round>默认</el-button>
+    <el-button size="small" round>小号</el-button>
+    <el-button size="large" :icon="Search" round>搜索</el-button>
+    <el-button :icon="Search" round>搜索</el-button>
+    <el-button size="small" :icon="Search" round>搜索</el-button>
   </div>
   <div class="flex flex-wrap items-center">
     <el-button :icon="Search" size="large" circle />

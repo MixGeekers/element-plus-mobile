@@ -1,7 +1,7 @@
 <template>
   <div class="cascader-custom-header-footer">
     <div>
-      <p>Custom header content</p>
+      <p>自定义头部内容</p>
       <el-cascader
         v-model="value"
         popper-class="cascader-custom-header"
@@ -15,16 +15,16 @@
             :indeterminate="indeterminate"
             @change="handleCheckAll"
           >
-            All
+            全选
           </el-checkbox>
         </template>
       </el-cascader>
     </div>
     <div>
-      <p>Custom footer content</p>
+      <p>自定义底部内容</p>
       <el-cascader v-model="value" :options="options" :props="props" clearable>
         <template #footer>
-          <el-button link size="small" @click="handleClear"> Clear </el-button>
+          <el-button link size="small" @click="handleClear"> 清空 </el-button>
         </template>
       </el-cascader>
     </div>
@@ -33,6 +33,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
+import { cascaderSubsetOptions } from './options'
 
 import type { CascaderOption, CheckboxValueType } from 'element-plus-mobile'
 
@@ -40,29 +41,12 @@ const props = { multiple: true }
 const checkAll = ref(false)
 const indeterminate = ref(false)
 const value = ref<string[][]>([])
-const options = ref([
-  {
-    value: 'guide',
-    label: 'Guide',
-    children: [
-      {
-        value: 'disciplines',
-        label: 'Disciplines',
-        children: [
-          { value: 'consistency', label: 'Consistency' },
-          { value: 'feedback', label: 'Feedback' },
-          { value: 'efficiency', label: 'Efficiency' },
-          { value: 'controllability', label: 'Controllability' },
-        ],
-      },
-    ],
-  },
-])
+const options = ref(cascaderSubsetOptions.slice(0, 1))
 
 const getAllValuePaths = computed(() => {
   const result: string[][] = []
   const queue: { node: CascaderOption; path: string[] }[] = options.value.map(
-    (node) => ({ node, path: [node.value] })
+    (node) => ({ node, path: [node.value as string] })
   )
 
   while (queue.length > 0) {

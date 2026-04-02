@@ -1,6 +1,6 @@
 <template>
   <div class="m-4">
-    <p>Strategy: child (default, show all selected child nodes)</p>
+    <p>策略：`child`，默认展示所有选中的子节点</p>
     <el-cascader
       v-model="value1"
       :options="options"
@@ -12,9 +12,7 @@
   </div>
 
   <div class="m-4">
-    <p>
-      Strategy: parent (show only parent nodes when all children are selected)
-    </p>
+    <p>策略：`parent`，当子节点全部选中时仅展示父节点</p>
     <el-cascader
       v-model="value2"
       :options="options"
@@ -28,6 +26,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { cascaderSubsetOptions as options } from './options'
 
 const value1 = ref([])
 const value2 = ref([])
@@ -36,75 +35,10 @@ const props = {
 }
 
 const handleChange1 = (value) => {
-  console.log('Child strategy:', value)
+  console.log('子节点策略：', value)
 }
 
 const handleChange2 = (value) => {
-  console.log('Parent strategy:', value)
+  console.log('父节点策略：', value)
 }
-
-const options = [
-  {
-    value: 'guide',
-    label: 'Guide',
-    children: [
-      {
-        value: 'disciplines',
-        label: 'Disciplines',
-        children: [
-          {
-            value: 'consistency',
-            label: 'Consistency',
-          },
-        ],
-      },
-      {
-        value: 'navigation',
-        label: 'Navigation',
-        children: [
-          {
-            value: 'side nav',
-            label: 'Side Navigation',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'component',
-    label: 'Component',
-    children: [
-      {
-        value: 'basic',
-        label: 'Basic',
-        children: [
-          {
-            value: 'layout',
-            label: 'Layout',
-          },
-        ],
-      },
-      {
-        value: 'form',
-        label: 'Form',
-        children: [
-          {
-            value: 'radio',
-            label: 'Radio',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'resource',
-    label: 'Resource',
-    children: [
-      {
-        value: 'axure',
-        label: 'Axure Components',
-      },
-    ],
-  },
-]
 </script>

@@ -1,7 +1,7 @@
 <template>
-  <el-scrollbar ref="scrollbarRef" height="400px" always @scroll="scroll">
+  <el-scrollbar ref="scrollbarRef" height="25rem" always @scroll="scroll">
     <div ref="innerRef">
-      <p v-for="item in 20" :key="item" class="scrollbar-demo-item">
+      <p v-for="item in steps" :key="item" class="scrollbar-demo-item">
         {{ item }}
       </p>
     </div>
@@ -28,7 +28,11 @@ const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<ScrollbarInstance>()
 
 onMounted(() => {
-  max.value = innerRef.value!.clientHeight - 380
+  max.value = Math.max(
+    (innerRef.value?.clientHeight ?? 0) -
+      (scrollbarRef.value?.wrapRef?.clientHeight ?? 0),
+    0
+  )
 })
 
 const inputSlider = (value: Arrayable<number>) => {
@@ -37,22 +41,26 @@ const inputSlider = (value: Arrayable<number>) => {
 const scroll = ({ scrollTop }: { scrollTop: number }) => {
   value.value = scrollTop
 }
-const formatTooltip = (value: number) => `${value} px`
+const formatTooltip = (value: number) => `滚动偏移 ${value}`
+
+const steps = Array.from(
+  { length: 18 },
+  (_, index) => `配送进度 ${index + 1}：等待仓库确认出库`
+)
 </script>
 
 <style scoped>
 .scrollbar-demo-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 50px;
-  margin: 10px;
-  text-align: center;
-  border-radius: 4px;
+  min-height: 3rem;
+  margin: 0.625rem;
+  padding: 0 1rem;
+  border-radius: 0.75rem;
   background: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
 .el-slider {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 </style>

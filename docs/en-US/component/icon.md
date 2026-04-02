@@ -75,9 +75,9 @@ With this setup, installed collections are resolved from local registered data f
 <template>
   <el-space wrap>
     <el-icon icon="ep:edit" />
-    <el-button icon="ep:search">Search</el-button>
-    <el-input prefix-icon="ep:search" placeholder="Search" />
-    <el-select suffix-icon="ep:arrow-down" placeholder="Select" />
+    <el-button icon="ep:search">搜索商品</el-button>
+    <el-input prefix-icon="ep:search" placeholder="输入关键词" />
+    <el-select suffix-icon="ep:arrow-down" placeholder="选择排序" />
   </el-space>
 </template>
 ```
@@ -138,18 +138,15 @@ import Share from '~icons/ep/share'
 
 ## Combined with el-icon
 
-`el-icon` provides extra attributes for raw SVG icon, for more detail, please read to the end.
+`el-icon` adds size, color, and state styling to raw SVG icons, which is especially useful for mobile buttons, status rows, and shortcut entries.
 
 ```vue
 <template>
-  <p>
-    with extra class <b>is-loading</b>, your icon is able to rotate 360 deg in 2
-    seconds, you can also override this
-  </p>
+  <p>Add the <b>is-loading</b> class to make the icon spin automatically.</p>
   <el-icon :size="20">
     <Edit />
   </el-icon>
-  <el-icon color="#409efc" class="no-inherit">
+  <el-icon class="icon-demo__accent">
     <Share />
   </el-icon>
   <el-icon>
@@ -159,24 +156,23 @@ import Share from '~icons/ep/share'
     <Loading />
   </el-icon>
   <el-button type="primary">
-    <el-icon style="vertical-align: middle">
+    <el-icon class="icon-demo__button-icon">
       <Search />
     </el-icon>
-    <span style="vertical-align: middle"> Search </span>
+    <span>搜索商品</span>
   </el-button>
 </template>
 ```
 
 <ElRow>
   <p>
-    with extra class <b>is-loading</b>, your icon is able to rotate 360 deg in 2
-    seconds, you can also override this
+    Add the <b>is-loading</b> class to make the icon spin automatically.
   </p>
-  <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+  <div class="icon-demo">
     <ElIcon :size="20">
       <Edit />
     </ElIcon>
-    <ElIcon color="#409efc" class="no-inherit">
+    <ElIcon class="icon-demo__accent">
       <Share />
     </ElIcon>
     <ElIcon>
@@ -186,10 +182,10 @@ import Share from '~icons/ep/share'
       <Loading />
     </ElIcon>
     <ElButton type="primary">
-      <ElIcon style="vertical-align: middle; color: #fff;">
+      <ElIcon class="icon-demo__button-icon">
         <Search />
       </ElIcon>
-      <span style="vertical-align: middle;"> Search </span>
+      <span>搜索商品</span>
     </ElButton>
   </div>
 </ElRow>
@@ -198,25 +194,25 @@ import Share from '~icons/ep/share'
 
 ```vue
 <template>
-  <div style="font-size: 20px">
+  <div class="icon-demo icon-demo--plain">
     <!-- Since svg icons do not carry any attributes by default -->
     <!-- You need to provide attributes directly -->
-    <Edit style="width: 1em; height: 1em; margin-right: 8px" />
-    <Share style="width: 1em; height: 1em; margin-right: 8px" />
-    <Delete style="width: 1em; height: 1em; margin-right: 8px" />
-    <Search style="width: 1em; height: 1em; margin-right: 8px" />
+    <Edit class="icon-demo__svg" />
+    <Share class="icon-demo__svg" />
+    <Delete class="icon-demo__svg" />
+    <Search class="icon-demo__svg" />
   </div>
 </template>
 ```
 
 <ElRow>
-  <div style="font-size: 20px;">
+  <div class="icon-demo icon-demo--plain">
     <!-- Since svg icons do not carry any attributes by default -->
     <!-- You need to provide attributes directly -->
-    <Edit style="width: 1em; height: 1em; margin-right: 8px;" />
-    <Share style="width: 1em; height: 1em; margin-right: 8px;" />
-    <Delete style="width: 1em; height: 1em; margin-right: 8px;" />
-    <Search style="width: 1em; height: 1em; margin-right: 8px;" />
+    <Edit class="icon-demo__svg" />
+    <Share class="icon-demo__svg" />
+    <Delete class="icon-demo__svg" />
+    <Search class="icon-demo__svg" />
   </div>
 </ElRow>
 
@@ -249,3 +245,31 @@ The following API belongs to `el-icon` itself. Other `icon`-like props across th
 | Name    | Description               |
 | ------- | ------------------------- |
 | default | Customize default content |
+
+<style scoped>
+.icon-demo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.icon-demo--plain {
+  font-size: 1.25rem;
+}
+
+.icon-demo__accent {
+  color: var(--el-color-primary);
+}
+
+.icon-demo__button-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-demo__svg {
+  width: 1em;
+  height: 1em;
+}
+</style>

@@ -7,7 +7,7 @@ lang: en-US
 
 Input numerical values with a customizable range.
 
-`InputNumber` now uses touch-friendly field and control sizing by default, including the `controls-position="right"` layout.
+`InputNumber` uses larger field and control sizing by default, including the `controls-position="right"` layout.
 
 ## Basic usage
 

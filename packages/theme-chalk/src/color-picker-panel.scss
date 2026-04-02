@@ -46,9 +46,9 @@
   width: 4px;
   height: 100%;
   border-radius: 1px;
-  background: #fff;
+  background: getCssVar('color-white');
   border: 1px solid getCssVar('border-color', 'lighter');
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 1px getCssVar('border-color');
   z-index: 1;
 
   &:focus-visible {
@@ -100,7 +100,7 @@
       @include b(input) {
         line-height: 26px;
         font-size: 12px;
-        color: $color-black;
+        color: getCssVar('text-color', 'primary');
         width: 160px;
       }
     }
@@ -175,7 +175,7 @@
   box-sizing: border-box;
   width: 280px;
   height: 12px;
-  background-color: #f00;
+  background-color: getCssVar('color-primary');
   padding: 0 2px;
   float: right;
 
@@ -212,8 +212,8 @@
   width: 280px;
   height: 180px;
   background-image:
-    linear-gradient(to top, #000, rgba(0, 0, 0, 0)),
-    linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+    linear-gradient(to top, getCssVar('color-black'), transparent),
+    linear-gradient(to right, getCssVar('color-white'), transparent);
 
   @include e(cursor) {
     position: absolute;
@@ -221,9 +221,9 @@
     width: 4px;
     height: 4px;
     box-shadow:
-      0 0 0 1.5px #fff,
-      inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
-      0 0 1px 2px rgba(0, 0, 0, 0.4);
+      0 0 0 1.5px getCssVar('color-white'),
+      inset 0 0 1px 1px getCssVar('overlay-color', 'lighter'),
+      0 0 1px 2px getCssVar('overlay-color', 'light');
     border-radius: 50%;
     transform: translate(-2px, -2px);
 
@@ -251,7 +251,7 @@
     position: relative;
     background: linear-gradient(
       to right,
-      rgba(255, 255, 255, 0) 0%,
+      transparent 0%,
       getCssVar('bg-color') 100%
     );
     height: 100%;
@@ -268,8 +268,8 @@
     .#{$namespace}-color-alpha-slider__bar {
       background: linear-gradient(
         to bottom,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 1) 100%
+        transparent 0%,
+        getCssVar('color-white') 100%
       );
     }
 
@@ -283,12 +283,87 @@
 }
 
 .#{bem('color-picker-panel')} {
-  @include set-css-var-value(('color-picker', 'alpha-bg-a'), '#ccc');
+  @include set-css-var-value(
+    ('color-picker', 'alpha-bg-a'),
+    getCssVar('fill-color', 'dark')
+  );
   @include set-css-var-value(('color-picker', 'alpha-bg-b'), 'transparent');
 }
 
-.dark {
-  .#{bem('color-picker-panel')} {
-    @include set-css-var-value(('color-picker', 'alpha-bg-a'), '#333333');
+@include b(color-picker-panel) {
+  width: 100%;
+  max-width: min(100%, #{to-rem(420px)});
+  padding: 0;
+  background: transparent;
+
+  @include e(wrapper) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) to-rem(20px);
+    gap: to-rem(12px);
+    margin-bottom: to-rem(12px);
+  }
+
+  @include e(footer) {
+    display: grid;
+    gap: to-rem(12px);
+    margin-top: to-rem(16px);
+
+    .#{$namespace}-input {
+      width: 100%;
+    }
+  }
+}
+
+@include b(color-predefine) {
+  width: 100%;
+  margin-top: to-rem(16px);
+
+  @include e(colors) {
+    gap: to-rem(10px);
+  }
+
+  @include e(color-selector) {
+    width: to-rem(32px);
+    height: to-rem(32px);
+    border-radius: getCssVar('border-radius-base');
+  }
+}
+
+@include b(color-hue-slider) {
+  width: to-rem(20px);
+  height: min(55vw, #{to-rem(240px)});
+  padding: to-rem(2px) 0;
+
+  @include e(thumb) {
+    height: to-rem(8px);
+    border-radius: getCssVar('border-radius-round');
+  }
+}
+
+@include b(color-svpanel) {
+  width: 100%;
+  height: min(55vw, #{to-rem(240px)});
+  border-radius: getCssVar('border-radius-base');
+  overflow: hidden;
+
+  @include e(cursor) {
+    width: to-rem(12px);
+    height: to-rem(12px);
+    transform: translate(
+      calc(#{to-rem(12px)} / -2),
+      calc(#{to-rem(12px)} / -2)
+    );
+  }
+}
+
+@include b(color-alpha-slider) {
+  width: 100%;
+  height: to-rem(16px);
+  border-radius: getCssVar('border-radius-base');
+  overflow: hidden;
+
+  @include e(thumb) {
+    width: to-rem(10px);
+    border-radius: getCssVar('border-radius-base');
   }
 }

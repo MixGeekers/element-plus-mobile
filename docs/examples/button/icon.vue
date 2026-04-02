@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="button-row">
     <el-button type="primary" :icon="Edit" />
     <el-button type="primary" :icon="Share" />
     <el-button type="primary" :icon="Delete" />
-    <el-button type="primary" :icon="Search">Search</el-button>
+    <el-button type="primary" :icon="Search">搜索</el-button>
     <el-button type="primary">
-      Upload<el-icon class="el-icon--right"><Upload /></el-icon>
+      上传资料<el-icon class="el-icon--right"><Upload /></el-icon>
     </el-button>
   </div>
 </template>
@@ -17,3 +17,11 @@ import Search from '~icons/ep/search'
 import Share from '~icons/ep/share'
 import Upload from '~icons/ep/upload'
 </script>
+
+<style scoped>
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+</style>

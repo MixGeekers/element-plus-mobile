@@ -1,17 +1,23 @@
 <template>
-  <div class="example-basic">
-    <el-time-picker
-      v-model="value1"
-      :disabled-hours="disabledHours"
-      :disabled-minutes="disabledMinutes"
-      :disabled-seconds="disabledSeconds"
-      placeholder="Arbitrary time"
-    />
-  </div>
+  <DemoBlock>
+    <div class="demo-block__section">
+      <span class="demo-block__caption">可选时段</span>
+      <strong>仅允许选择 17:30 至 18:30</strong>
+      <el-time-picker
+        v-model="value1"
+        :disabled-hours="disabledHours"
+        :disabled-minutes="disabledMinutes"
+        :disabled-seconds="disabledSeconds"
+        placeholder="请选择时间"
+      />
+      <p>超出范围的时间会在面板中直接禁用，避免提交无效值。</p>
+    </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import DemoBlock from '../components/demo-block.vue'
 
 const value1 = ref(new Date(2016, 9, 10, 18, 30))
 
@@ -41,9 +47,3 @@ const disabledSeconds = (hour: number, minute: number) => {
   return []
 }
 </script>
-
-<style>
-.example-basic .el-date-editor {
-  margin: 8px;
-}
-</style>

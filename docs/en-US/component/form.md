@@ -13,7 +13,7 @@ The component has been upgraded with a flex layout to replace the old float layo
 
 :::
 
-All demos below are rendered inside a mobile preview shell so you can inspect the default touch layout, action spacing, and validation flow directly.
+The demos below focus on the default layout, validation feedback, and action placement.
 
 ## Basic Form
 
@@ -25,11 +25,11 @@ form/basic-form
 
 :::
 
-## Touch Form Example
+## Default Layout
 
-`Form` now uses a stacked mobile-first layout by default, with top-aligned labels, in-flow validation messages, and touch-sized controls.
+`Form` uses a stacked layout by default, with top-aligned labels and in-flow validation messages.
 
-:::demo This demo shows the default form behavior directly. Open `Select` or `SelectV2` to continue checking the bottom-sheet flow and multi-select confirmation actions.
+:::demo This demo shows the default form layout. Open `Select` or `SelectV2` to inspect the confirm and cancel flow.
 
 form/mobile-adaptation
 

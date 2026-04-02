@@ -32,7 +32,7 @@
   </el-upload>
 
   <el-dialog v-model="dialogVisible">
-    <img w-full :src="dialogImageUrl" alt="Preview Image" />
+    <img w-full :src="dialogImageUrl" alt="预览图片" />
   </el-dialog>
 </template>
 

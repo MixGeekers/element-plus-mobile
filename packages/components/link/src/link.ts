@@ -12,7 +12,7 @@ export interface LinkProps {
   /**
    * @description when underlines should appear
    */
-  underline?: boolean | 'always' | 'never' | 'hover'
+  underline?: 'always' | 'never'
 
   /**
    * @description whether the component is disabled
@@ -54,9 +54,9 @@ export const linkProps = buildProps({
    * @description when underlines should appear
    */
   underline: {
-    type: [Boolean, String],
-    values: [true, false, 'always', 'never', 'hover'],
-    default: undefined,
+    type: String,
+    values: ['always', 'never'],
+    default: 'always',
   },
   /**
    * @description whether the component is disabled

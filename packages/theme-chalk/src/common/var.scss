@@ -1403,13 +1403,15 @@ $transfer: map.merge(
   (
     'border-color': getCssVar('border-color-lighter'),
     'border-radius': getCssVar('border-radius-base'),
-    'panel-width': 200px,
-    'panel-header-height': 40px,
+    'panel-header-height': to-rem(40px),
     'panel-header-bg-color': getCssVar('fill-color', 'light'),
-    'panel-footer-height': 40px,
-    'panel-body-height': 278px,
-    'item-height': 30px,
-    'filter-height': 32px,
+    'panel-footer-height': to-rem(40px),
+    'panel-body-height': to-rem(246px),
+    'item-height': to-rem(48px),
+    'filter-height': to-rem(32px),
+    'tab-height': to-rem(48px),
+    'tab-indicator-height': to-rem(2px),
+    'action-height': to-rem(36px),
   ),
   $transfer
 );
@@ -1687,15 +1689,10 @@ $aside: map.merge(
 // Break-point
 $sm: 480px !default;
 $md: 768px !default;
-$lg: 992px !default;
-$xl: 1200px !default;
-
 $breakpoints: (
   'xs': '(max-width: #{$sm - 1})',
   'sm': '(min-width: #{$sm})',
   'md': '(min-width: #{$md})',
-  'lg': '(min-width: #{$lg})',
-  'xl': '(min-width: #{$xl})',
 ) !default;
 
 $breakpoints-spec: (
@@ -1704,10 +1701,6 @@ $breakpoints-spec: (
   'sm-only': '(min-width: #{$sm}) and (max-width: #{$md - 1})',
   'sm-and-down': '(max-width: #{$md - 1})',
   'md-and-up': '(min-width: #{$md})',
-  'md-only': '(min-width: #{$md}) and (max-width: #{$lg - 1})',
-  'md-and-down': '(max-width: #{$lg - 1})',
-  'lg-and-up': '(min-width: #{$lg})',
-  'lg-only': '(min-width: #{$lg}) and (max-width: #{$xl - 1})',
-  'lg-and-down': '(max-width: #{$xl - 1})',
-  'xl-only': '(min-width: #{$xl})',
+  'md-only': '(min-width: #{$md})',
+  'md-and-down': '(max-width: #{$md})',
 ) !default;

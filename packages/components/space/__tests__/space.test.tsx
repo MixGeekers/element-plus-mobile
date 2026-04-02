@@ -10,13 +10,17 @@ describe('Space.vue', () => {
     const wrapper = mount(<Space>{AXIOM}</Space>)
 
     expect(wrapper.text()).toEqual(AXIOM)
+    expect(wrapper.find('.el-space--vertical').exists()).toBe(true)
+    expect(wrapper.find('.el-space').attributes('style')).toContain(
+      'align-items: stretch'
+    )
 
     await wrapper.setProps({
-      direction: 'vertical',
+      direction: 'horizontal',
       wrap: true,
     })
 
-    expect(wrapper.find('.el-space--vertical').exists()).toBe(true)
+    expect(wrapper.find('.el-space--horizontal').exists()).toBe(true)
     expect(wrapper.find('.el-space').attributes('style')).toContain(
       'flex-wrap: wrap'
     )
@@ -41,7 +45,7 @@ describe('Space.vue', () => {
 
     await nextTick()
     expect(wrapper.find('.el-space').attributes('style')).toContain(
-      'gap: 1.25rem'
+      'row-gap: 1.25rem'
     )
 
     await wrapper.setProps({
@@ -50,7 +54,7 @@ describe('Space.vue', () => {
 
     await nextTick()
     expect(wrapper.find('.el-space').attributes('style')).toContain(
-      'gap: 1.875rem'
+      'row-gap: 1.875rem'
     )
 
     await wrapper.setProps({
@@ -70,7 +74,7 @@ describe('Space.vue', () => {
     expect(warnHandler).toHaveBeenCalled()
 
     expect(wrapper.find('.el-space').attributes('style')).toContain(
-      'gap: 0.75rem'
+      'row-gap: 0.75rem'
     )
   })
 
@@ -112,22 +116,22 @@ describe('Space.vue', () => {
     )
 
     await nextTick()
+    expect(wrapper.find('.el-space__item').attributes('style')).toContain(
+      'width: 100%'
+    )
+
+    await wrapper.setProps({
+      direction: 'horizontal',
+      fillRatio: 50,
+    })
+
+    await nextTick()
     expect(wrapper.find('.el-space').attributes('style')).toContain(
       'flex-wrap: wrap'
     )
     expect(wrapper.find('.el-space__item').attributes('style')).toContain(
       'flex-grow: 1'
     )
-    expect(wrapper.find('.el-space__item').attributes('style')).toContain(
-      'min-width: 100%'
-    )
-
-    // custom fill ratio
-    await wrapper.setProps({
-      fillRatio: 50,
-    })
-
-    await nextTick()
     expect(wrapper.find('.el-space__item').attributes('style')).toContain(
       'min-width: 50%'
     )

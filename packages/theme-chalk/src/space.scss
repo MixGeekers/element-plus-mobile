@@ -2,20 +2,29 @@
 @use 'common/var' as *;
 
 @include b(space) {
-  display: inline-flex;
-  vertical-align: top;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   max-width: 100%;
+  width: 100%;
 
   @include e(item) {
-    display: flex;
-    flex-wrap: wrap;
-
-    & > * {
-      flex: 1;
-    }
+    min-width: 0;
   }
 
   @include m(vertical) {
     flex-direction: column;
+
+    > .#{$namespace}-space__item {
+      width: 100%;
+    }
+  }
+
+  @include m(horizontal) {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    vertical-align: top;
   }
 }

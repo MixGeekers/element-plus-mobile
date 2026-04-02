@@ -215,3 +215,96 @@
     }
   }
 }
+
+@include b(picker) {
+  @include e(popper) {
+    position: fixed !important;
+    inset: auto 0 0 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    border: none;
+    border-radius: to-rem(20px) to-rem(20px) 0 0;
+    box-shadow: getCssVar('box-shadow', 'light');
+    overflow: hidden;
+    transform: none !important;
+    padding: to-rem(12px) calc(env(safe-area-inset-right) + #{to-rem(16px)})
+      calc(env(safe-area-inset-bottom) + #{to-rem(16px)})
+      calc(env(safe-area-inset-left) + #{to-rem(16px)});
+    background: getCssVar('bg-color', 'overlay');
+
+    .#{$namespace}-popper__arrow {
+      display: none;
+    }
+  }
+}
+
+@include b(date-editor) {
+  display: block;
+  width: 100%;
+
+  &.#{$namespace}-input,
+  &.#{$namespace}-input__wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    min-height: to-rem(44px);
+  }
+
+  @include e(sheet) {
+    display: grid;
+    gap: to-rem(12px);
+    width: 100%;
+    max-height: min(75vh, #{to-rem(720px)});
+    border-radius: 0;
+    background: getCssVar('bg-color', 'overlay');
+    overflow: hidden;
+  }
+
+  @include e(sheet-handle) {
+    justify-self: center;
+    width: to-rem(40px);
+    height: to-rem(4px);
+    margin-top: to-rem(4px);
+    border-radius: getCssVar('border-radius-round');
+    background: getCssVar('fill-color', 'dark');
+  }
+
+  .close-icon,
+  .clear-icon,
+  .#{$namespace}-range__close-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: to-rem(28px);
+    height: to-rem(28px);
+  }
+
+  .#{$namespace}-range__icon {
+    font-size: to-rem(18px);
+  }
+
+  .#{$namespace}-range-input {
+    height: to-rem(40px);
+    line-height: to-rem(40px);
+    width: 42%;
+    font-size: to-rem(16px);
+  }
+
+  .#{$namespace}-range-separator {
+    padding: 0 to-rem(8px);
+    font-size: to-rem(14px);
+  }
+}
+
+@include b(range-editor) {
+  width: 100%;
+
+  &.#{$namespace}-input__wrapper {
+    width: 100%;
+    min-height: to-rem(44px);
+    padding: 0 to-rem(12px);
+    gap: to-rem(6px);
+  }
+}

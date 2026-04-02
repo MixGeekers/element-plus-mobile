@@ -139,3 +139,98 @@
     }
   }
 }
+
+@include b(date-range-picker) {
+  width: 100%;
+  max-width: 100%;
+
+  &.has-sidebar {
+    width: 100%;
+  }
+
+  .#{$namespace}-picker-panel__body {
+    display: block;
+    min-width: 0;
+  }
+
+  .#{$namespace}-picker-panel__content {
+    margin: 0;
+  }
+
+  @include e(header) {
+    display: flex;
+    align-items: center;
+    gap: to-rem(8px);
+    height: auto;
+    padding-bottom: to-rem(12px);
+
+    div {
+      margin: 0 auto;
+      min-width: 0;
+      text-align: center;
+    }
+  }
+
+  @include e(header-label) {
+    font-size: to-rem(16px);
+    line-height: to-rem(24px);
+  }
+
+  @include e(content) {
+    display: block;
+    width: 100%;
+    padding: to-rem(16px);
+
+    @include when(left) {
+      border-right: none;
+      border-bottom: 1px solid getCssVar('datepicker-inner-border-color');
+    }
+
+    .#{$namespace}-date-range-picker__header {
+      div {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+  @include e(editors-wrap) {
+    display: grid;
+    gap: to-rem(12px);
+    width: 100%;
+  }
+
+  @include e(time-header) {
+    display: grid;
+    gap: to-rem(12px);
+    width: 100%;
+    padding: 0 to-rem(16px) to-rem(12px);
+
+    > .#{$namespace}-icon-arrow-right {
+      justify-self: center;
+      font-size: to-rem(18px);
+      transform: rotate(90deg);
+    }
+  }
+
+  @include e(time-picker-wrap) {
+    display: block;
+    width: 100%;
+    padding: 0;
+
+    .#{$namespace}-picker-panel {
+      position: static;
+      top: auto;
+      right: auto;
+      width: 100%;
+      margin-top: to-rem(12px);
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .#{$namespace}-time-panel {
+      position: static;
+      width: 100%;
+    }
+  }
+}

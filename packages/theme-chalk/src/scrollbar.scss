@@ -30,7 +30,6 @@
     display: block;
     width: 0;
     height: 0;
-    cursor: grab;
     border-radius: inherit;
     @include touch-feedback(none);
     background-color: var(
@@ -44,7 +43,6 @@
     );
 
     &:active {
-      cursor: grabbing;
       background-color: var(
         #{getCssVarName('scrollbar-hover-bg-color')},
         map.get($scrollbar, 'hover-bg-color')

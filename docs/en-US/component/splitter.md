@@ -5,7 +5,9 @@ lang: en-US
 
 # Splitter ^(beta)
 
-Divide the area horizontally or vertically, and freely drag to adjust the size of each area.
+Split one content area into multiple resizable regions.
+
+`Splitter` now defaults to `layout="vertical"`, which fits mobile pages that are arranged from top to bottom.
 
 ## Basic usage
 
@@ -17,9 +19,7 @@ splitter/basic
 
 :::
 
-## Vertical
-
-Use vertical orientation.
+## Horizontal comparison
 
 :::demo
 
@@ -71,10 +71,10 @@ splitter/lazy
 
 ### Splitter Attributes
 
-| Name           | Description                      | Type                                | Default    |
-| -------------- | -------------------------------- | ----------------------------------- | ---------- |
-| layout         | Layout direction of the splitter | ^[enum]`'horizontal' \| 'vertical'` | horizontal |
-| lazy ^(2.11.0) | Whether to enable lazy mode      | ^[boolean]                          | false      |
+| Name           | Description                      | Type                                | Default  |
+| -------------- | -------------------------------- | ----------------------------------- | -------- |
+| layout         | Layout direction of the splitter | ^[enum]`'horizontal' \| 'vertical'` | vertical |
+| lazy ^(2.11.0) | Whether to enable lazy mode      | ^[boolean]                          | false    |
 
 ### Splitter Events
 

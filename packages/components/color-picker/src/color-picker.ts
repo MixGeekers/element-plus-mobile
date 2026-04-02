@@ -62,14 +62,6 @@ export interface ColorPickerProps
    */
   tabindex?: string | number
   /**
-   * @description whether color-picker popper is teleported to the body
-   */
-  teleported?: ElTooltipContentProps['teleported']
-  /**
-   * @description which color-picker panel appends to
-   */
-  appendTo?: ElTooltipContentProps['appendTo']
-  /**
    * @description predefined color options
    */
   predefine?: string[]
@@ -145,14 +137,6 @@ export const colorPickerProps = buildProps({
     default: 0,
   },
   /**
-   * @description whether color-picker popper is teleported to the body
-   */
-  teleported: useTooltipContentProps.teleported,
-  /**
-   * @description which color-picker panel appends to
-   */
-  appendTo: useTooltipContentProps.appendTo,
-  /**
    * @description predefined color options
    */
   predefine: {
@@ -196,7 +180,6 @@ export const colorPickerPropsDefaults = {
   clearable: true,
   popperStyle: undefined,
   tabindex: 0,
-  teleported: true,
   validateEvent: true,
   valueOnClear: undefined,
 } as const

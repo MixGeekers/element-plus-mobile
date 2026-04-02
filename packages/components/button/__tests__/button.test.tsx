@@ -246,6 +246,7 @@ describe('Button Group', () => {
       ),
     })
     expect(wrapper.classes()).toContain('el-button-group')
+    expect(wrapper.classes()).toContain(ns.bm('group', 'vertical'))
     expect(wrapper.findAll('button').length).toBe(2)
   })
 
@@ -403,7 +404,7 @@ describe('Button Group', () => {
   })
 
   it('direction prop', async () => {
-    const direction = ref<'horizontal' | 'vertical'>('horizontal')
+    const direction = ref<'horizontal' | 'vertical'>('vertical')
     const wrapper = mount({
       setup: () => () => (
         <ButtonGroup type="warning" direction={direction.value}>
@@ -413,13 +414,13 @@ describe('Button Group', () => {
       ),
     })
 
-    expect(wrapper.classes()).toContain(ns.bm('group', 'horizontal'))
-    expect(wrapper.classes()).not.toContain(ns.bm('group', 'vertical'))
-
-    direction.value = 'vertical'
-    await nextTick()
-
     expect(wrapper.classes()).toContain(ns.bm('group', 'vertical'))
     expect(wrapper.classes()).not.toContain(ns.bm('group', 'horizontal'))
+
+    direction.value = 'horizontal'
+    await nextTick()
+
+    expect(wrapper.classes()).toContain(ns.bm('group', 'horizontal'))
+    expect(wrapper.classes()).not.toContain(ns.bm('group', 'vertical'))
   })
 })

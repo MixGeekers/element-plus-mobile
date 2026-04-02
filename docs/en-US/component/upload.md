@@ -7,6 +7,8 @@ lang: en-US
 
 Upload files by clicking or drag-and-drop.
 
+In the mobile docs, upload examples use stacked triggers and full-width file lists so the action area stays easy to tap.
+
 ## Basic Usage
 
 :::demo Customize upload button type and text using `slot`. Set `limit` and `on-exceed` to limit the maximum number of uploads allowed and specify method when the limit is exceeded. Plus, you can abort removing a file in the `before-remove` hook.

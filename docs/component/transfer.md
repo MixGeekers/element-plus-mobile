@@ -1,112 +1,112 @@
 ---
-title: 转账
+title: 穿梭框
 lang: zh-CN
 ---
 
-# 转账
+# 穿梭框
 
 ## 基本用法
 
-:::demo 数据通过 `data` 属性传递到 Transfer。数据需要是一个对象数组，每个对象应具有以下属性：`key` 是数据项的标识，`label` 是显示的文本，`disabled` 指示数据项是否被禁用。目标列表内的项目与绑定到 `v-model` 的变量同步，并且该变量的值是目标项目键的数组。因此，如果您不希望目标列表最初为空，您可以使用数组初始化 `v-model`。
+::::demo 数据通过 `data` 属性传递到 Transfer。数据需要是一个对象数组，每个对象应具有以下属性：`key` 是数据项的标识，`label` 是显示文本，`disabled` 指示该项是否禁用。当前实现采用标签页切换、整屏列表和底部操作栏的布局，目标列表中的项目会与绑定到 `v-model` 的数组保持同步。如果不希望目标列表初始为空，可以直接用数组初始化 `v-model`。
 
 transfer/basic
 
-:::
+::::
 
 ## 可过滤
 
 您可以搜索和过滤数据项。
 
-:::demo 将 `filterable` 属性设置为 `true` 以启用过滤器模式。默认情况下，如果数据项`label`包含搜索关键字，则该数据项将包含在搜索结果中。此外，您还可以使用 `filter-method` 属性实现您自己的过滤器方法。它采用一个方法，并在关键字更改时将搜索关键字和每个数据项传递给它。对于某个数据项，如果该方法返回 true，则该数据项将包含在结果列表中。
+::::demo 将 `filterable` 设置为 `true` 后，当前标签页顶部会显示搜索框。默认情况下，如果数据项的 `label` 包含搜索关键字，则该数据项会包含在搜索结果中。您也可以通过 `filter-method` 自定义过滤逻辑；当关键字变化时，组件会把搜索关键字和当前数据项传给该方法，返回 `true` 的数据项会显示在结果列表中。
 
 transfer/filterable
 
-:::
+::::
 
 ## 可定制
 
-您可以自定义列表标题、按钮文本、数据项的呈现功能、检查列表页脚中的状态文本和列表页脚内容。
+您可以自定义标签标题、底部操作按钮文案、数据项渲染方式、状态摘要文本以及面板页脚内容。
 
-:::demo 使用 `titles`、`button-texts`、`render-content` 和 `format` 分别自定义列表标题、按钮文本、数据项的渲染功能、检查列表标题中的状态文本。另外，您还可以使用作用域槽来自定义数据项。对于列表页脚内容，提供了两个命名槽：`left-footer` 和 `right-footer`。另外，如果您想初步检查某些项目，可以使用 `left-default-checked` 和 `right-default-checked`。最后，此示例演示了 `change` 事件。请注意，此演示无法在 JSFiddle 中运行，因为它不支持 JSX 语法。在实际项目中，如果正确配置了相关依赖，`render-content` 就可以正常工作。
+::::demo 使用 `titles`、`button-texts`、`render-content` 和 `format` 分别自定义标签标题、底部操作按钮文案、数据项渲染函数和状态摘要文本。您也可以使用作用域插槽自定义数据项内容。面板页脚提供 `left-footer` 和 `right-footer` 两个命名插槽。如果希望初始就选中部分项目，可以使用 `left-default-checked` 和 `right-default-checked`。此示例同时演示了 `change` 事件。请注意，此示例无法在 JSFiddle 中运行，因为它不支持 JSX 语法。在实际项目中，只要正确配置相关依赖，`render-content` 就可以正常工作。
 
 transfer/customizable
 
-:::
+::::
 
-## 自定义空内容^(2.9.0)
+## 自定义空内容 ^(2.9.0)
 
 当列表为空或没有找到过滤结果时，您可以自定义内容。
 
-:::demo 使用 `left-empty` 和 `right-empty` 插槽自定义每个面板的空内容。
+::::demo 使用 `left-empty` 和 `right-empty` 插槽自定义每个面板的空内容。
 
 transfer/empty-content
 
-:::
+::::
 
-## 道具别名
+## 属性别名
 
-默认情况下，Transfer 在数据项中查找 `key`、`label` 和 `disabled`。如果您的数据项具有不同的键名称，您可以使用 `props` 属性来定义别名。
+默认情况下，Transfer 会在数据项中查找 `key`、`label` 和 `disabled`。如果您的数据项使用了不同的字段名，可以通过 `props` 属性定义别名。
 
-:::demo 此示例中的数据项没有 `key` 或 `label`，而是具有 `value` 和 `desc`。所以需要为`key`和`label`设置别名。
+::::demo 此示例中的数据项没有 `key` 或 `label`，而是使用 `value` 和 `desc`。因此需要为 `key` 和 `label` 设置别名。
 
 transfer/prop-alias
 
-:::
+::::
 
-## 转账接口
+## 穿梭框 API
 
-### 传输属性
+### 穿梭框属性
 
-|名称 |描述 |类型 |默认 |
-| ------------------------ | | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | -------- |
-|模型值 / v 模型 |绑定值| ^[数组]`Array<string \| number>` | []|
-|数据|数据来源| ^[数组]`Record<string, any>[]` | []|
-|可过滤|传输是否可过滤 | ^[布尔值] |假 |
-|过滤器占位符 |过滤器输入的占位符 | ^[字符串] | — |
-|过滤方法|自定义过滤方法| ^[功能]`(query: string, item: Record<string, any>) => boolean` | — |
-|目标顺序|目标列表中元素的排序策略。如果设置为 `original`，元素将保持与数据源相同的顺序。如果设置为`push`，则新添加的元素将被推到底部。如果设置为`unshift`，则新添加的元素将插入到顶部 | ^[枚举]`'original' \| 'push' \| 'unshift'` |原创|
-|标题|自定义列表标题 | ^[数组]`[string, string]` | []|
-|按钮文本|自定义按钮文本| ^[数组]`[string, string]` | []|
-|渲染内容 |数据项的自定义渲染函数| ^[对象]`renderContent` | — |
-|格式|用于检查列表标题中状态的文本 | ^[对象]`TransferFormat` | {} |
-| [道具](#type-declarations) |数据源的 prop 别名 | ^[对象]`TransferPropsAlias` | — |
-|左默认选中 |左侧列表初始检查数据项的键数组 | ^[数组]`Array<string \| number>` | []|
-|右默认检查 |右列表初始检查数据项的键数组 | ^[数组]`Array<string \| number>` | []|
-|验证事件 |是否触发表单验证 | ^[布尔值] |真实 |
+| 名称                  | 描述                                                                                                                                                                       | 类型                                                               | 默认     |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------- |
+| model-value / v-model | 绑定值                                                                                                                                                                     | ^[array]`Array<string \| number>`                                  | []       |
+| data                  | 数据源                                                                                                                                                                     | ^[array]`Record<string, any>[]`                                    | []       |
+| filterable            | 是否可过滤                                                                                                                                                                 | ^[boolean]                                                         | false    |
+| filter-placeholder    | 过滤输入框占位符                                                                                                                                                           | ^[string]                                                          | -        |
+| filter-method         | 自定义过滤方法                                                                                                                                                             | ^[Function]`(query: string, item: Record<string, any>) => boolean` | -        |
+| target-order          | 目标列表中元素的排序策略。如果设置为 `original`，元素将保持与数据源相同的顺序；如果设置为 `push`，新添加的元素会追加到底部；如果设置为 `unshift`，新添加的元素会插入到顶部 | ^[enum]`'original' \| 'push' \| 'unshift'`                         | original |
+| titles                | 自定义标签标题                                                                                                                                                             | ^[array]`[string, string]`                                         | []       |
+| button-texts          | 自定义底部操作栏按钮文本                                                                                                                                                   | ^[array]`[string, string]`                                         | []       |
+| render-content        | 数据项的自定义渲染函数                                                                                                                                                     | ^[object]`renderContent`                                           | -        |
+| format                | 标签页与工具栏中的状态摘要文本                                                                                                                                             | ^[object]`TransferFormat`                                          | {}       |
+| [props](#类型声明)    | 数据源的 prop 别名                                                                                                                                                         | ^[object]`TransferPropsAlias`                                      | -        |
+| left-default-checked  | 左侧列表初始选中的数据项 key 数组                                                                                                                                          | ^[array]`Array<string \| number>`                                  | []       |
+| right-default-checked | 右侧列表初始选中的数据项 key 数组                                                                                                                                          | ^[array]`Array<string \| number>`                                  | []       |
+| validate-event        | 是否触发表单校验                                                                                                                                                           | ^[boolean]                                                         | true     |
 
-### 转移事件
+### 穿梭框事件
 
-| 名称         | 描述                                               | 类型                                                                                            |
-| ------------ | -------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| 改变         | 右侧列表中数据项发生变化时触发                     | ^[功能]`(value: TransferKey[], direction: TransferDirection, movedKeys: TransferKey[]) => void` |
-| 左检查更改   | 当最终用户更改左侧列表中任何数据项的选中状态时触发 | ^[功能]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
-| 右键检查更改 | 当最终用户更改右侧列表中任何数据项的选中状态时触发 | ^[功能]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
+| 名称               | 描述                                         | 类型                                                                                                |
+| ------------------ | -------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| change             | 右侧列表中的数据项发生变化时触发             | ^[Function]`(value: TransferKey[], direction: TransferDirection, movedKeys: TransferKey[]) => void` |
+| left-check-change  | 最终用户更改左侧列表中数据项的选中状态时触发 | ^[Function]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
+| right-check-change | 最终用户更改右侧列表中数据项的选中状态时触发 | ^[Function]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
 
-### 传输槽位
+### 穿梭框插槽
 
-| 名称          | 描述                                       | 类型                                  |
-| ------------- | ------------------------------------------ | ------------------------------------- |
-| 默认          | 数据项的自定义内容。                       | ^[对象]`{ option: TransferDataItem }` |
-| 左页脚        | 左侧列表页脚的内容                         | —                                     |
-| 右页脚        | 右列表页脚的内容                           | —                                     |
-| 左空 ^(2.9.0) | 左侧面板为空或没有数据与过滤器匹配时的内容 | —                                     |
-| 右空 ^(2.9.0) | 右面板为空或没有数据与过滤器匹配时的内容   | —                                     |
+| 名称                 | 描述                                       | 类型                                    |
+| -------------------- | ------------------------------------------ | --------------------------------------- |
+| default              | 数据项的自定义内容                         | ^[object]`{ option: TransferDataItem }` |
+| left-footer          | 左侧面板页脚内容                           | -                                       |
+| right-footer         | 右侧面板页脚内容                           | -                                       |
+| left-empty ^(2.9.0)  | 左侧面板为空或没有匹配过滤结果时显示的内容 | -                                       |
+| right-empty ^(2.9.0) | 右侧面板为空或没有匹配过滤结果时显示的内容 | -                                       |
 
-### 转移暴露
+### 穿梭框暴露
 
-| 名称     | 描述                     | 类型                                        |
-| -------- | ------------------------ | ------------------------------------------- |
-| 清除查询 | 清除某个面板的过滤关键字 | ^[功能]`(which: TransferDirection) => void` |
-| 左面板   | 左面板参考               | ^[对象]`Ref<TransferPanelInstance>`         |
-| 右面板   | 右面板参考               | ^[对象]`Ref<TransferPanelInstance>`         |
+| 名称       | 描述                     | 类型                                            |
+| ---------- | ------------------------ | ----------------------------------------------- |
+| clearQuery | 清除指定面板的过滤关键字 | ^[Function]`(which: TransferDirection) => void` |
+| leftPanel  | 左侧面板实例             | ^[object]`Ref<TransferPanelInstance>`           |
+| rightPanel | 右侧面板实例             | ^[object]`Ref<TransferPanelInstance>`           |
 
-## 转账面板API
+## 穿梭面板 API
 
-### 传输面板暴露
+### 穿梭面板暴露
 
-| 名称 | 描述       | 类型      |
-| ---- | ---------- | --------- |
-| 查询 | 过滤关键字 | ^[字符串] |
+| 名称  | 描述       | 类型      |
+| ----- | ---------- | --------- |
+| query | 过滤关键字 | ^[string] |
 
 ## 类型声明
 

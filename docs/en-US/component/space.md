@@ -5,7 +5,9 @@ lang: en-US
 
 # Space
 
-Even though we have [Divider](./divider.md), but sometimes we need more than one [Divider](./divider.md) to split the elements apart, so we stack each elements upon [Divider](./divider.md), but doing so not only makes our code ugly but also makes it difficult to maintain. **Space** is this kind of component provides us both productivity and elegance.
+Use `Space` to keep consistent gaps between related content blocks.
+
+On mobile, `Space` stacks items vertically by default. Switch to `direction="horizontal"` only when you are building compact action rows or filter chips.
 
 ## Basic usage
 
@@ -17,13 +19,11 @@ space/basic
 
 :::
 
-## Vertical layout
+## Horizontal layout
 
-Using `direction` attribute to control the layout, we use `flex-direction` to implement this.
+:::demo Turn on `direction="horizontal"` when the content should stay in one row or wrap.
 
-:::demo We also provide vertical layout.
-
-space/vertical-layout
+space/auto-wrapping
 
 :::
 
@@ -31,7 +31,7 @@ space/vertical-layout
 
 Control the space size via `size` API.
 
-You can set the size with built-in sizes `small`, `default`, `large`, these size corresponds to `8px`, `12px`, `16px`. The default size is `small`, A.K.A. `8px`
+You can set the size with built-in sizes `small`, `default`, `large`, which map to approximately `0.5rem`, `0.75rem`, and `1rem`. The default size is `small`.
 
 You can also using customized size to override it. Refer to the next part.
 
@@ -123,18 +123,18 @@ space/fill-ratio
 
 ### Attributes
 
-| Name       | Description                     | Type                                                                                                                          | Default    |
-| ---------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| alignment  | Controls the alignment of items | ^[enum]`'center' \| 'normal' \| 'stretch' \| ...` [align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items) | center     |
-| class      | className                       | ^[string] / ^[object] / ^[array]                                                                                              | —          |
-| direction  | Placement direction             | ^[enum]`'vertical' \| 'horizontal'`                                                                                           | horizontal |
-| prefix-cls | Prefix for space-items          | ^[string]                                                                                                                     | —          |
-| style      | Extra style rules               | ^[string] / ^[object]`CSSProperties \| CSSProperties[] \| string[]`                                                           | —          |
-| spacer     | Spacer                          | ^[string] / ^[number] / ^[VNode]                                                                                              | —          |
-| size       | Spacing size                    | ^[enum]`'default' \| 'small' \| 'large'` / ^[number] / ^[array]`[number, number]`                                             | small      |
-| wrap       | Auto wrapping                   | ^[boolean]                                                                                                                    | false      |
-| fill       | Whether to fill the container   | ^[boolean]                                                                                                                    | false      |
-| fill-ratio | Ratio of fill                   | ^[number]                                                                                                                     | 100        |
+| Name       | Description                     | Type                                                                                                                          | Default                                                 |
+| ---------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| alignment  | Controls the alignment of items | ^[enum]`'center' \| 'normal' \| 'stretch' \| ...` [align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items) | `stretch` in vertical mode, `center` in horizontal mode |
+| class      | className                       | ^[string] / ^[object] / ^[array]                                                                                              | —                                                       |
+| direction  | Placement direction             | ^[enum]`'vertical' \| 'horizontal'`                                                                                           | vertical                                                |
+| prefix-cls | Prefix for space-items          | ^[string]                                                                                                                     | —                                                       |
+| style      | Extra style rules               | ^[string] / ^[object]`CSSProperties \| CSSProperties[] \| string[]`                                                           | —                                                       |
+| spacer     | Spacer                          | ^[string] / ^[number] / ^[VNode]                                                                                              | —                                                       |
+| size       | Spacing size                    | ^[enum]`'default' \| 'small' \| 'large'` / ^[number] / ^[array]`[number, number]`                                             | small                                                   |
+| wrap       | Auto wrapping                   | ^[boolean]                                                                                                                    | false                                                   |
+| fill       | Whether to fill the container   | ^[boolean]                                                                                                                    | false                                                   |
+| fill-ratio | Ratio of fill                   | ^[number]                                                                                                                     | 100                                                     |
 
 ### Slots
 

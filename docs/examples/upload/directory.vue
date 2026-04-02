@@ -8,9 +8,7 @@
     :on-change="handleChange"
   >
     <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-    <div class="el-upload__text">
-      Drop directory here or <em>click to upload</em>
-    </div>
+    <div class="el-upload__text">将文件夹拖到此处，或 <em>点击上传</em></div>
   </el-upload>
 </template>
 

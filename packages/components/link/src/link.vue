@@ -19,8 +19,7 @@ import { computed } from 'vue'
 import { ElIcon } from '@element-plus/components/icon'
 import ElIconContent from '@element-plus/components/icon/src/icon-content.vue'
 import { useGlobalConfig } from '@element-plus/components/config-provider'
-import { useDeprecated, useNamespace } from '@element-plus/hooks'
-import { isBoolean } from '@element-plus/utils'
+import { useNamespace } from '@element-plus/hooks'
 import { linkEmits } from './link'
 
 import type { LinkProps } from './link'
@@ -30,23 +29,12 @@ defineOptions({
 })
 const props = withDefaults(defineProps<LinkProps>(), {
   type: undefined,
-  underline: undefined,
+  underline: 'always',
   href: '',
   target: '_self',
 })
 const emit = defineEmits(linkEmits)
 const globalConfig = useGlobalConfig('link')
-
-useDeprecated(
-  {
-    scope: 'el-link',
-    from: 'The underline option (boolean)',
-    replacement: "'always' | 'hover' | 'never'",
-    version: '3.0.0',
-    ref: 'https://element-plus.org/en-US/component/link.html#underline',
-  },
-  computed(() => isBoolean(props.underline))
-)
 
 const ns = useNamespace('link')
 
@@ -55,14 +43,10 @@ const linkKls = computed(() => [
   ns.m(props.type ?? globalConfig.value?.type ?? 'default'),
   ns.is('disabled', props.disabled),
   ns.is('underline', underline.value === 'always'),
-  ns.is('hover-underline', underline.value === 'hover' && !props.disabled),
 ])
 
-// Boolean compatibility
 const underline = computed(() => {
-  if (isBoolean(props.underline)) {
-    return props.underline ? 'hover' : 'never'
-  } else return props.underline ?? globalConfig.value?.underline ?? 'hover'
+  return props.underline ?? globalConfig.value?.underline ?? 'always'
 })
 
 function handleClick(event: MouseEvent) {

@@ -1,6 +1,6 @@
 <template>
   <div ref="containerRef">
-    <div class="text-center">No border:</div>
+    <div class="text-center">无边框：</div>
     <el-divider />
     <div class="flex flex-wrap justify-center gap-4">
       <div class="p-5">

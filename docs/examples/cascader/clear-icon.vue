@@ -3,23 +3,11 @@
     :options="options"
     clearable
     :clear-icon="CloseBold"
-    placeholder="Custom clear icon"
+    placeholder="使用自定义清空图标"
   />
 </template>
 
 <script lang="ts" setup>
+import { cascaderSubsetOptions as options } from './options'
 import CloseBold from '~icons/ep/close-bold'
-
-const options = [
-  {
-    value: 'guide',
-    label: 'Guide',
-    children: [
-      {
-        value: 'disciplines',
-        label: 'Disciplines',
-      },
-    ],
-  },
-]
 </script>

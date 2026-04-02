@@ -6,13 +6,9 @@
     multiple
   >
     <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-    <div class="el-upload__text">
-      Drop file here or <em>click to upload</em>
-    </div>
+    <div class="el-upload__text">将文件拖到此处，或 <em>点击上传</em></div>
     <template #tip>
-      <div class="el-upload__tip">
-        jpg/png files with a size less than 500kb
-      </div>
+      <div class="el-upload__tip">支持上传 500KB 以内的 JPG 或 PNG 文件</div>
     </template>
   </el-upload>
 </template>

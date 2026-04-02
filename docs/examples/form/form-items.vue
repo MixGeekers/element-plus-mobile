@@ -1,15 +1,9 @@
 <template>
-  <MobileFormDemo
-    title="Add / Delete Form Items"
-    description="Dynamic fields are stacked for mobile, so added rows and actions stay readable without horizontal squeezing."
-    header-title="Domain Whitelist"
-    header-description="Add or remove validated domains from a compact touch-first form."
-  >
-    <div class="mobile-form-demo__panel">
-      <strong>Dynamic validation</strong>
+  <DemoBlock>
+    <div class="demo-block__section">
+      <strong>动态校验</strong>
       <p>
-        Each added domain keeps its own validation rule, and destructive actions
-        stay separated from the final submit buttons.
+        每个新增域名都会保留自己的校验规则，删除操作也与最终提交按钮保持分离。
       </p>
     </div>
 
@@ -21,16 +15,16 @@
     >
       <el-form-item
         prop="email"
-        label="Email"
+        label="邮箱"
         :rules="[
           {
             required: true,
-            message: 'Please input email address',
+            message: '请输入邮箱地址',
             trigger: 'blur',
           },
           {
             type: 'email',
-            message: 'Please input correct email address',
+            message: '请输入正确的邮箱地址',
             trigger: ['blur', 'change'],
           },
         ]"
@@ -38,47 +32,50 @@
         <el-input
           v-model="dynamicValidateForm.email"
           clearable
-          placeholder="owner@example.com"
+          placeholder="请输入邮箱，例如 owner@example.com"
         />
       </el-form-item>
 
       <el-form-item
         v-for="(domain, index) in dynamicValidateForm.domains"
         :key="domain.key"
-        :label="`Domain ${index + 1}`"
+        :label="`域名 ${index + 1}`"
         :prop="'domains.' + index + '.value'"
         :rules="{
           required: true,
-          message: 'domain can not be null',
+          message: '域名不能为空',
           trigger: 'blur',
         }"
       >
-        <div class="mobile-form-demo__stack">
-          <el-input v-model="domain.value" placeholder="campaign.example.com" />
+        <div class="demo-block__stack">
+          <el-input
+            v-model="domain.value"
+            placeholder="请输入域名，例如 campaign.example.com"
+          />
           <el-button plain @click.prevent="removeDomain(domain)">
-            Delete domain
+            删除域名
           </el-button>
         </div>
       </el-form-item>
 
       <el-form-item>
-        <div class="mobile-form-demo__stack">
-          <el-button @click="addDomain">New domain</el-button>
-          <div class="mobile-form-demo__actions">
+        <div class="demo-block__stack">
+          <el-button @click="addDomain">新增域名</el-button>
+          <div class="demo-block__actions">
             <el-button type="primary" @click="submitForm(formRef)">
-              Submit
+              提交
             </el-button>
-            <el-button @click="resetForm(formRef)">Reset</el-button>
+            <el-button @click="resetForm(formRef)">重置</el-button>
           </div>
         </div>
       </el-form-item>
     </el-form>
-  </MobileFormDemo>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import MobileFormDemo from './components/mobile-demo-shell.vue'
+import DemoBlock from '../components/demo-block.vue'
 
 import type { FormInstance } from 'element-plus-mobile'
 

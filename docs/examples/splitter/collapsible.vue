@@ -1,36 +1,22 @@
 <template>
-  <el-switch
-    v-model="isCollapsible"
-    active-text="enable"
-    inactive-text="disable"
-    inline-prompt
-    class="mb-2"
-  />
-  <div
-    style="height: 250px; box-shadow: var(--el-border-color-light) 0px 0px 10px"
-  >
-    <el-splitter>
-      <el-splitter-panel :collapsible="isCollapsible" min="50">
-        <div class="demo-panel">1</div>
-      </el-splitter-panel>
-      <el-splitter-panel :collapsible="isCollapsible">
-        <div class="demo-panel">2</div>
-      </el-splitter-panel>
-      <el-splitter-panel>
-        <div class="demo-panel">3</div>
-      </el-splitter-panel>
-      <el-splitter-panel :collapsible="isCollapsible">
-        <el-splitter layout="vertical">
-          <el-splitter-panel :collapsible="isCollapsible">
-            <div class="demo-panel">4</div>
-          </el-splitter-panel>
-          <el-splitter-panel :collapsible="isCollapsible">
-            <div class="demo-panel">5</div>
-          </el-splitter-panel>
-        </el-splitter>
-      </el-splitter-panel>
-    </el-splitter>
-  </div>
+  <el-space alignment="start">
+    <div class="splitter-control">
+      允许折叠：<el-switch v-model="isCollapsible" />
+    </div>
+    <div class="splitter-demo">
+      <el-splitter>
+        <el-splitter-panel :collapsible="isCollapsible" min="50">
+          <div class="demo-panel panel-primary">收货信息</div>
+        </el-splitter-panel>
+        <el-splitter-panel :collapsible="isCollapsible">
+          <div class="demo-panel panel-secondary">配送方式</div>
+        </el-splitter-panel>
+        <el-splitter-panel>
+          <div class="demo-panel panel-neutral">订单备注</div>
+        </el-splitter-panel>
+      </el-splitter>
+    </div>
+  </el-space>
 </template>
 
 <script setup lang="ts">
@@ -40,10 +26,37 @@ const isCollapsible = ref(true)
 </script>
 
 <style scoped>
+.splitter-control {
+  margin-bottom: 0.25rem;
+}
+
+.splitter-demo {
+  height: min(70vh, 30rem);
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--el-border-color-lighter);
+  background: var(--el-bg-color);
+}
+
 .demo-panel {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+.panel-primary {
+  background: var(--el-fill-color-light);
+}
+
+.panel-secondary {
+  background: var(--el-color-primary-light-9);
+}
+
+.panel-neutral {
+  background: var(--el-fill-color);
 }
 </style>

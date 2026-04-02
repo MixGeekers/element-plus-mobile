@@ -1,33 +1,33 @@
 <template>
   <div class="demo-date-picker">
     <div class="block">
-      <span class="demonstration">Emits Date object</span>
-      <div class="demonstration">Value: {{ value1 }}</div>
+      <span class="demonstration">输出日期对象</span>
+      <div class="demonstration">当前值：{{ value1 }}</div>
       <el-date-picker
         v-model="value1"
         type="date"
-        placeholder="Pick a Date"
+        placeholder="请选择日期"
         format="YYYY/MM/DD"
       />
     </div>
     <div class="block">
-      <span class="demonstration">Use value-format</span>
-      <div class="demonstration">Value：{{ value2 }}</div>
+      <span class="demonstration">使用值格式</span>
+      <div class="demonstration">当前值：{{ value2 }}</div>
       <el-date-picker
         v-model="value2"
         type="date"
-        placeholder="Pick a Date"
+        placeholder="请选择日期"
         format="YYYY/MM/DD"
         value-format="YYYY-MM-DD"
       />
     </div>
     <div class="block">
-      <span class="demonstration">Timestamp</span>
-      <div class="demonstration">Value：{{ value3 }}</div>
+      <span class="demonstration">时间戳</span>
+      <div class="demonstration">当前值：{{ value3 }}</div>
       <el-date-picker
         v-model="value3"
         type="date"
-        placeholder="Pick a Date"
+        placeholder="请选择日期"
         format="YYYY/MM/DD"
         value-format="x"
       />

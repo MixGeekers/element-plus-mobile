@@ -1,43 +1,42 @@
 <template>
-  <p style="text-align: center; margin: 0 0 20px">
-    Customize data items using render-content
-  </p>
-  <div style="text-align: center">
-    <el-transfer
-      v-model="leftValue"
-      style="text-align: left; display: inline-block"
-      filterable
-      :left-default-checked="[2, 3]"
-      :right-default-checked="[1]"
-      :render-content="renderFunc"
-      :titles="['Source', 'Target']"
-      :button-texts="['To left', 'To right']"
-      :format="{
-        noChecked: '${total}',
-        hasChecked: '${checked}/${total}',
-      }"
-      :data="data"
-      @change="handleChange"
-    >
-      <template #left-footer>
-        <el-button class="transfer-footer" size="small">Operation</el-button>
-      </template>
-      <template #right-footer>
-        <el-button class="transfer-footer" size="small">Operation</el-button>
-      </template>
-    </el-transfer>
-    <p style="text-align: center; margin: 50px 0 20px">
-      Customize data items using scoped slot
-    </p>
-    <div style="text-align: center">
+  <div class="demo-transfer-stack">
+    <section class="demo-transfer-section">
+      <p class="demo-transfer-title">
+        Customize data items using render-content
+      </p>
+      <el-transfer
+        v-model="leftValue"
+        filterable
+        :left-default-checked="[2, 3]"
+        :right-default-checked="[1]"
+        :render-content="renderFunc"
+        :titles="['Source', 'Target']"
+        :button-texts="['Back to source', 'Add to target']"
+        :format="{
+          noChecked: '${total}',
+          hasChecked: '${checked}/${total}',
+        }"
+        :data="data"
+        @change="handleChange"
+      >
+        <template #left-footer>
+          <el-button class="transfer-footer" size="small">Operation</el-button>
+        </template>
+        <template #right-footer>
+          <el-button class="transfer-footer" size="small">Operation</el-button>
+        </template>
+      </el-transfer>
+    </section>
+
+    <section class="demo-transfer-section">
+      <p class="demo-transfer-title">Customize data items using scoped slot</p>
       <el-transfer
         v-model="rightValue"
-        style="text-align: left; display: inline-block"
         filterable
         :left-default-checked="[2, 3]"
         :right-default-checked="[1]"
         :titles="['Source', 'Target']"
-        :button-texts="['To left', 'To right']"
+        :button-texts="['Back to source', 'Add to target']"
         :format="{
           noChecked: '${total}',
           hasChecked: '${checked}/${total}',
@@ -55,7 +54,7 @@
           <el-button class="transfer-footer" size="small">Operation</el-button>
         </template>
       </el-transfer>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -101,9 +100,24 @@ const handleChange = (
 }
 </script>
 
-<style>
+<style scoped>
+.demo-transfer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.demo-transfer-section {
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.demo-transfer-title {
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
 .transfer-footer {
-  margin-left: 15px;
-  padding: 6px 5px;
+  width: 100%;
 }
 </style>

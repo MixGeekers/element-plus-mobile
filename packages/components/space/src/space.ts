@@ -37,7 +37,7 @@ export const spaceProps = buildProps({
   direction: {
     type: String,
     values: ['horizontal', 'vertical'],
-    default: 'horizontal',
+    default: 'vertical',
   },
   /**
    * @description Classname
@@ -62,7 +62,6 @@ export const spaceProps = buildProps({
    */
   alignment: {
     type: definePropType<AlignItems>(String),
-    default: 'center',
   },
   /**
    * @description Prefix for space-items

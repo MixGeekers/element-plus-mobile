@@ -8,13 +8,11 @@
     v-bind="$attrs"
     role="dialog"
     teleported
-    :transition="`${nsDate.namespace.value}-zoom-in-top`"
+    :show-arrow="false"
+    :transition="`${nsDate.namespace.value}-fade-in-linear`"
     :popper-class="[`${nsDate.namespace.value}-picker__popper`, popperClass!]"
     :popper-style="popperStyle"
-    :popper-options="elPopperOptions"
-    :fallback-placements="fallbackPlacements"
     :gpu-acceleration="false"
-    :placement="placement"
     :stop-popper-mouse-event="false"
     :hide-after="0"
     persistent
@@ -153,28 +151,30 @@
       </picker-range-trigger>
     </template>
     <template #content>
-      <slot
-        :visible="pickerVisible"
-        :actual-visible="pickerActualVisible"
-        :parsed-value="parsedValue"
-        :format="format"
-        :date-format="dateFormat"
-        :time-format="timeFormat"
-        :unlink-panels="unlinkPanels"
-        :type="type"
-        :default-value="defaultValue"
-        :show-now="showNow"
-        :show-confirm="showConfirm"
-        :show-footer="showFooter"
-        :show-week-number="showWeekNumber"
-        @pick="onPick"
-        @select-range="setSelectionRange"
-        @set-picker-option="onSetPickerOption"
-        @calendar-change="onCalendarChange"
-        @clear="onClear"
-        @panel-change="onPanelChange"
-        @mousedown.stop
-      />
+      <div :class="nsDate.be('editor', 'sheet')">
+        <div :class="nsDate.be('editor', 'sheet-handle')" />
+        <slot
+          :visible="pickerVisible"
+          :actual-visible="pickerActualVisible"
+          :parsed-value="parsedValue"
+          :format="format"
+          :date-format="dateFormat"
+          :time-format="timeFormat"
+          :type="type"
+          :default-value="defaultValue"
+          :show-now="showNow"
+          :show-confirm="showConfirm"
+          :show-footer="showFooter"
+          :show-week-number="showWeekNumber"
+          @pick="onPick"
+          @select-range="setSelectionRange"
+          @set-picker-option="onSetPickerOption"
+          @calendar-change="onCalendarChange"
+          @clear="onClear"
+          @panel-change="onPanelChange"
+          @mousedown.stop
+        />
+      </div>
     </template>
   </el-tooltip>
 </template>
@@ -182,7 +182,6 @@
 <script lang="ts" setup>
 import {
   computed,
-  inject,
   nextTick,
   onBeforeUnmount,
   provide,
@@ -222,7 +221,6 @@ import {
 import { dayOrDaysToDate, valueEquals } from '../utils'
 import {
   PICKER_BASE_INJECTION_KEY,
-  PICKER_POPPER_OPTIONS_INJECTION_KEY,
   ROOT_COMMON_PICKER_INJECTION_KEY,
 } from '../constants'
 import { useCommonPicker } from '../composables/use-common-picker'
@@ -232,7 +230,6 @@ import PickerRangeTrigger from './picker-range-trigger.vue'
 import type { InputInstance } from '@element-plus/components/input'
 import type { Dayjs } from 'dayjs'
 import type { ComponentPublicInstance, Ref } from 'vue'
-import type { Options } from '@popperjs/core'
 import type { DayOrDays, TimePickerDefaultProps, UserInput } from './props'
 import type { TooltipInstance } from '@element-plus/components/tooltip'
 
@@ -259,10 +256,6 @@ const nsInput = useNamespace('input')
 const nsRange = useNamespace('range')
 
 const { formItem } = useFormItem()
-const elPopperOptions = inject(
-  PICKER_POPPER_OPTIONS_INJECTION_KEY,
-  {} as Options
-)
 const emptyValues = useEmptyValues(props, null)
 
 const refPopper = ref<TooltipInstance>()

@@ -1719,19 +1719,15 @@ describe('Select', () => {
 
     wrapper = _mount(
       `
-      <div>
-        <div class="append-target"></div>
-        <el-select
-          v-model="selectedList"
-          multiple
-          collapseTags
-          collapse-tags-tooltip
-          :tag-tooltip="{ appendTo: '.append-target' }"
-          placeholder="请选择"
-        >
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </div>
+      <el-select
+        v-model="selectedList"
+        multiple
+        collapseTags
+        collapse-tags-tooltip
+        placeholder="请选择"
+      >
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
     `,
       () => ({
         options: [
@@ -1771,7 +1767,7 @@ describe('Select', () => {
 
     const select = wrapper.findComponent(Select)
     const tagTooltip = select.findComponent({ ref: 'tagTooltipRef' })
-    expect(tagTooltip.props('appendTo')).toBe('.append-target')
+    expect(tagTooltip.props('trigger')).toBe('click')
 
     const triggerWrappers = wrapper.findAll('.el-tooltip__trigger')
     expect(triggerWrappers[0]).toBeDefined()

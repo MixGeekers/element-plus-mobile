@@ -1,95 +1,78 @@
 <template>
-  <MobileFormDemo
-    title="Basic Mobile Form"
-    description="A compact activity setup example that uses the default touch-first spacing, top-aligned labels, and balanced actions."
-    header-title="Weekend Workshop"
-    header-description="Fill out a complete form from a phone-sized viewport."
-  >
+  <DemoBlock>
     <el-form :model="form" @submit.prevent>
-      <el-form-item label="Activity name">
-        <el-input
-          v-model="form.name"
-          clearable
-          placeholder="Name the activity"
-        />
+      <el-form-item label="活动名称">
+        <el-input v-model="form.name" clearable placeholder="请输入活动名称" />
       </el-form-item>
 
-      <el-form-item label="Activity zone">
+      <el-form-item label="活动区域">
         <el-select
           v-model="form.region"
           clearable
           filterable
-          placeholder="Choose one zone"
+          placeholder="请选择一个区域"
         >
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+          <el-option label="区域一" value="shanghai" />
+          <el-option label="区域二" value="beijing" />
         </el-select>
       </el-form-item>
 
-      <el-form-item label="Launch date">
+      <el-form-item label="上线日期">
         <el-date-picker
           v-model="form.date1"
           type="date"
-          placeholder="Pick a date"
+          placeholder="请选择日期"
         />
       </el-form-item>
 
-      <el-form-item label="Launch time">
-        <el-time-picker v-model="form.date2" placeholder="Pick a time" />
+      <el-form-item label="上线时间">
+        <el-time-picker v-model="form.date2" placeholder="请选择时间" />
       </el-form-item>
 
-      <el-form-item label="Instant delivery">
+      <el-form-item label="立即配送">
         <el-switch v-model="form.delivery" />
       </el-form-item>
 
-      <el-form-item label="Activity type">
+      <el-form-item label="活动类型">
         <el-checkbox-group v-model="form.type">
-          <el-checkbox value="Online activities" name="type">
-            Online activities
-          </el-checkbox>
-          <el-checkbox value="Promotion activities" name="type">
-            Promotion activities
-          </el-checkbox>
-          <el-checkbox value="Offline activities" name="type">
-            Offline activities
-          </el-checkbox>
-          <el-checkbox value="Simple brand exposure" name="type">
-            Simple brand exposure
-          </el-checkbox>
+          <el-checkbox value="线上活动" name="type"> 线上活动 </el-checkbox>
+          <el-checkbox value="促销活动" name="type"> 促销活动 </el-checkbox>
+          <el-checkbox value="线下活动" name="type"> 线下活动 </el-checkbox>
+          <el-checkbox value="品牌曝光" name="type"> 品牌曝光 </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
 
-      <el-form-item label="Resources">
+      <el-form-item label="资源类型">
         <el-radio-group v-model="form.resource">
-          <el-radio value="Sponsor">Sponsor</el-radio>
-          <el-radio value="Venue">Venue</el-radio>
+          <el-radio value="赞助">赞助</el-radio>
+          <el-radio value="场地">场地</el-radio>
         </el-radio-group>
       </el-form-item>
 
-      <el-form-item label="Activity brief">
+      <el-form-item label="活动简介">
         <el-input
           v-model="form.desc"
           :rows="4"
           maxlength="120"
-          placeholder="Describe what participants should expect"
+          placeholder="请描述参与者将获得什么体验"
           show-word-limit
           type="textarea"
         />
       </el-form-item>
 
       <el-form-item>
-        <div class="mobile-form-demo__actions">
-          <el-button type="primary" @click="onSubmit">Create</el-button>
-          <el-button>Cancel</el-button>
+        <div class="demo-block__actions">
+          <el-button type="primary" @click="onSubmit">创建</el-button>
+          <el-button>取消</el-button>
         </div>
       </el-form-item>
     </el-form>
-  </MobileFormDemo>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import MobileFormDemo from './components/mobile-demo-shell.vue'
+import DemoBlock from '../components/demo-block.vue'
 
 // do not use same name with ref
 const form = reactive({

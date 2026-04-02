@@ -1,39 +1,39 @@
 <template>
   <div class="button-example">
     <div class="button-row">
-      <el-button>Default</el-button>
-      <el-button type="primary">Primary</el-button>
-      <el-button type="success">Success</el-button>
-      <el-button type="info">Info</el-button>
-      <el-button type="warning">Warning</el-button>
-      <el-button type="danger">Danger</el-button>
+      <el-button>默认按钮</el-button>
+      <el-button type="primary">主要操作</el-button>
+      <el-button type="success">提交成功</el-button>
+      <el-button type="info">补充信息</el-button>
+      <el-button type="warning">提醒用户</el-button>
+      <el-button type="danger">删除内容</el-button>
     </div>
 
     <div class="button-row">
-      <el-button plain>Plain</el-button>
-      <el-button type="primary" plain>Primary</el-button>
-      <el-button type="success" plain>Success</el-button>
-      <el-button type="info" plain>Info</el-button>
-      <el-button type="warning" plain>Warning</el-button>
-      <el-button type="danger" plain>Danger</el-button>
+      <el-button plain>朴素按钮</el-button>
+      <el-button type="primary" plain>主要操作</el-button>
+      <el-button type="success" plain>提交成功</el-button>
+      <el-button type="info" plain>补充信息</el-button>
+      <el-button type="warning" plain>提醒用户</el-button>
+      <el-button type="danger" plain>删除内容</el-button>
     </div>
 
     <div class="button-row">
-      <el-button round>Round</el-button>
-      <el-button type="primary" round>Primary</el-button>
-      <el-button type="success" round>Success</el-button>
-      <el-button type="info" round>Info</el-button>
-      <el-button type="warning" round>Warning</el-button>
-      <el-button type="danger" round>Danger</el-button>
+      <el-button round>圆角按钮</el-button>
+      <el-button type="primary" round>主要操作</el-button>
+      <el-button type="success" round>提交成功</el-button>
+      <el-button type="info" round>补充信息</el-button>
+      <el-button type="warning" round>提醒用户</el-button>
+      <el-button type="danger" round>删除内容</el-button>
     </div>
 
     <div class="button-row">
-      <el-button dashed>Dashed</el-button>
-      <el-button type="primary" dashed>Primary</el-button>
-      <el-button type="success" dashed>Success</el-button>
-      <el-button type="info" dashed>Info</el-button>
-      <el-button type="warning" dashed>Warning</el-button>
-      <el-button type="danger" dashed>Danger</el-button>
+      <el-button dashed>虚线按钮</el-button>
+      <el-button type="primary" dashed>主要操作</el-button>
+      <el-button type="success" dashed>提交成功</el-button>
+      <el-button type="info" dashed>补充信息</el-button>
+      <el-button type="warning" dashed>提醒用户</el-button>
+      <el-button type="danger" dashed>删除内容</el-button>
     </div>
 
     <div class="button-row">

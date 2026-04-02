@@ -1,10 +1,5 @@
 <template>
-  <MobileFormDemo
-    title="Validation"
-    description="This form keeps validation states readable in a narrow viewport and scrolls to the first error after submit."
-    header-title="Launch Checklist"
-    header-description="Required fields, grouped choices, and inline error messages."
-  >
+  <DemoBlock>
     <el-form
       ref="ruleFormRef"
       :model="ruleForm"
@@ -12,56 +7,56 @@
       scroll-to-error
       @submit.prevent
     >
-      <el-form-item label="Activity name" prop="name">
+      <el-form-item label="活动名称" prop="name">
         <el-input
           v-model="ruleForm.name"
           clearable
-          placeholder="Name the launch"
+          placeholder="请输入活动名称"
         />
       </el-form-item>
 
-      <el-form-item label="Activity zone" prop="region">
+      <el-form-item label="活动区域" prop="region">
         <el-select
           v-model="ruleForm.region"
           clearable
           filterable
-          placeholder="Choose a zone"
+          placeholder="请选择区域"
         >
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
+          <el-option label="区域一" value="shanghai" />
+          <el-option label="区域二" value="beijing" />
         </el-select>
       </el-form-item>
 
-      <el-form-item label="Activity count" prop="count">
+      <el-form-item label="参与人数" prop="count">
         <el-select-v2
           v-model="ruleForm.count"
           :options="options"
-          placeholder="Pick the expected attendance"
+          placeholder="请选择预期人数"
         />
       </el-form-item>
 
-      <el-form-item label="Launch date" prop="date1">
+      <el-form-item label="上线日期" prop="date1">
         <el-date-picker
           v-model="ruleForm.date1"
-          aria-label="Pick a date"
-          placeholder="Pick a date"
+          aria-label="选择日期"
+          placeholder="请选择日期"
           type="date"
         />
       </el-form-item>
 
-      <el-form-item label="Launch time" prop="date2">
+      <el-form-item label="上线时间" prop="date2">
         <el-time-picker
           v-model="ruleForm.date2"
-          aria-label="Pick a time"
-          placeholder="Pick a time"
+          aria-label="选择时间"
+          placeholder="请选择时间"
         />
       </el-form-item>
 
-      <el-form-item label="Instant delivery" prop="delivery">
+      <el-form-item label="立即配送" prop="delivery">
         <el-switch v-model="ruleForm.delivery" />
       </el-form-item>
 
-      <el-form-item label="Activity location" prop="location">
+      <el-form-item label="活动地点" prop="location">
         <el-segmented
           v-model="ruleForm.location"
           :options="locationOptions"
@@ -69,56 +64,48 @@
         />
       </el-form-item>
 
-      <el-form-item label="Activity type" prop="type">
+      <el-form-item label="活动类型" prop="type">
         <el-checkbox-group v-model="ruleForm.type">
-          <el-checkbox value="Online activities" name="type">
-            Online activities
-          </el-checkbox>
-          <el-checkbox value="Promotion activities" name="type">
-            Promotion activities
-          </el-checkbox>
-          <el-checkbox value="Offline activities" name="type">
-            Offline activities
-          </el-checkbox>
-          <el-checkbox value="Simple brand exposure" name="type">
-            Simple brand exposure
-          </el-checkbox>
+          <el-checkbox value="线上活动" name="type"> 线上活动 </el-checkbox>
+          <el-checkbox value="促销活动" name="type"> 促销活动 </el-checkbox>
+          <el-checkbox value="线下活动" name="type"> 线下活动 </el-checkbox>
+          <el-checkbox value="品牌曝光" name="type"> 品牌曝光 </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
 
-      <el-form-item label="Resources" prop="resource">
+      <el-form-item label="资源类型" prop="resource">
         <el-radio-group v-model="ruleForm.resource">
-          <el-radio value="Sponsorship">Sponsorship</el-radio>
-          <el-radio value="Venue">Venue</el-radio>
+          <el-radio value="赞助">赞助</el-radio>
+          <el-radio value="场地">场地</el-radio>
         </el-radio-group>
       </el-form-item>
 
-      <el-form-item label="Activity brief" prop="desc">
+      <el-form-item label="活动简介" prop="desc">
         <el-input
           v-model="ruleForm.desc"
           :rows="4"
           maxlength="140"
-          placeholder="Describe the activity format"
+          placeholder="请描述活动形式"
           show-word-limit
           type="textarea"
         />
       </el-form-item>
 
       <el-form-item>
-        <div class="mobile-form-demo__actions">
+        <div class="demo-block__actions">
           <el-button type="primary" @click="submitForm(ruleFormRef)">
-            Create
+            创建
           </el-button>
-          <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+          <el-button @click="resetForm(ruleFormRef)">重置</el-button>
         </div>
       </el-form-item>
     </el-form>
-  </MobileFormDemo>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import MobileFormDemo from './components/mobile-demo-shell.vue'
+import DemoBlock from '../components/demo-block.vue'
 
 import type { FormInstance, FormRules } from 'element-plus-mobile'
 
@@ -137,7 +124,7 @@ interface RuleForm {
 
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<RuleForm>({
-  name: 'Hello',
+  name: '活动示例',
   region: '',
   count: '',
   date1: '',
@@ -149,24 +136,24 @@ const ruleForm = reactive<RuleForm>({
   desc: '',
 })
 
-const locationOptions = ['Home', 'Company', 'School']
+const locationOptions = ['家里', '公司', '学校']
 
 const rules = reactive<FormRules<RuleForm>>({
   name: [
-    { required: true, message: 'Please input Activity name', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+    { required: true, message: '请输入活动名称', trigger: 'blur' },
+    { min: 3, max: 5, message: '长度应为 3 到 5 个字符', trigger: 'blur' },
   ],
   region: [
     {
       required: true,
-      message: 'Please select Activity zone',
+      message: '请选择活动区域',
       trigger: 'change',
     },
   ],
   count: [
     {
       required: true,
-      message: 'Please select Activity count',
+      message: '请选择参与人数',
       trigger: 'change',
     },
   ],
@@ -174,7 +161,7 @@ const rules = reactive<FormRules<RuleForm>>({
     {
       type: 'date',
       required: true,
-      message: 'Please pick a date',
+      message: '请选择日期',
       trigger: 'change',
     },
   ],
@@ -182,14 +169,14 @@ const rules = reactive<FormRules<RuleForm>>({
     {
       type: 'date',
       required: true,
-      message: 'Please pick a time',
+      message: '请选择时间',
       trigger: 'change',
     },
   ],
   location: [
     {
       required: true,
-      message: 'Please select a location',
+      message: '请选择活动地点',
       trigger: 'change',
     },
   ],
@@ -197,20 +184,18 @@ const rules = reactive<FormRules<RuleForm>>({
     {
       type: 'array',
       required: true,
-      message: 'Please select at least one activity type',
+      message: '请至少选择一种活动类型',
       trigger: 'change',
     },
   ],
   resource: [
     {
       required: true,
-      message: 'Please select activity resource',
+      message: '请选择资源类型',
       trigger: 'change',
     },
   ],
-  desc: [
-    { required: true, message: 'Please input activity form', trigger: 'blur' },
-  ],
+  desc: [{ required: true, message: '请输入活动简介', trigger: 'blur' }],
 })
 
 const submitForm = async (formEl: FormInstance | undefined) => {

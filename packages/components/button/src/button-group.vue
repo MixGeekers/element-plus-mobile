@@ -15,7 +15,7 @@ defineOptions({
   name: 'ElButtonGroup',
 })
 const props = withDefaults(defineProps<ButtonGroupProps>(), {
-  direction: 'horizontal',
+  direction: 'vertical',
   type: '',
 })
 provide(

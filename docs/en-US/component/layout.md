@@ -5,16 +5,12 @@ lang: en-US
 
 # Layout
 
-Quickly and easily create layouts with the basic 24-column.
+Use the 24-column grid to organize mobile content blocks.
 
 :::tip
 
-The component uses flex layout by default, no need to set `type="flex"` manually.
-
-Please note that the parent container should avoid using `inline` related styles,
-which will cause the component to not fill up its width.
-
-The basic unit of a column is 1, with a maximum of 24 and a minimum of 0.
+`Row / Col` already use Flex layout. You do not need to set `type="flex"`.
+Mobile-first breakpoints are simplified to `xs / sm / md`, so start from narrow screens and scale up only when needed.
 
 :::
 
@@ -70,7 +66,7 @@ layout/alignment
 
 ## Responsive Layout
 
-For the mobile-first grid, three breakpoints are preset:
+Three breakpoints are preset:
 `xs`, `sm`, and `md`.
 
 - `xs`: `<480px`
@@ -85,27 +81,21 @@ layout/responsive-layout
 
 ## Utility classes for hiding elements
 
-Additionally, Element Plus provides a series of classes for hiding elements under
-certain conditions. These classes can be added to any DOM elements or custom components.
-You need to import the following CSS file to use these classes:
+To hide elements by breakpoint, import:
 
 ```js
 import 'element-plus-mobile/theme-chalk/display.css'
 ```
 
-The classes are:
+Available classes:
 
-- `hidden-xs-only` - hide when on extra small viewports only
-- `hidden-sm-only` - hide when on small viewports only
-- `hidden-sm-and-down` - hide when on small viewports and down
-- `hidden-sm-and-up` - hide when on small viewports and up
-- `hidden-md-only` - hide when on medium viewports only
-- `hidden-md-and-down` - hide when on medium viewports and down
-- `hidden-md-and-up` - hide when on medium viewports and up
-- `hidden-lg-only` - hide when on large viewports only
-- `hidden-lg-and-down` - hide when on large viewports and down
-- `hidden-lg-and-up` - hide when on large viewports and up
-- `hidden-xl-only` - hide when on extra large viewports only
+- `hidden-xs-only` - hide only on `xs`
+- `hidden-sm-only` - hide only on `sm`
+- `hidden-sm-and-down` - hide on `sm` and narrower screens
+- `hidden-sm-and-up` - hide on `sm` and wider screens
+- `hidden-md-only` - hide only on `md`
+- `hidden-md-and-down` - hide on `md` and narrower screens
+- `hidden-md-and-up` - hide on `md` and wider screens
 
 ## Row API
 

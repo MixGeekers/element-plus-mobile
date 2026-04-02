@@ -7,90 +7,90 @@ lang: en-US
 
 ## Basic usage
 
-:::demo Data is passed to Transfer via the `data` attribute. The data needs to be an object array, and each object should have these attributes: `key` being the identification of the data item, `label` being the displayed text, and `disabled` indicating if the data item is disabled. Items inside the target list are in sync with the variable binding to `v-model`, and the value of that variable is an array of target item keys. So, if you don't want the target list be initially empty, you can initialize the `v-model` with an array.
+::::demo Data is passed to Transfer via the `data` attribute. The data should be an array of objects, and each object should provide `key`, `label`, and `disabled` fields. The mobile version uses a tabbed layout, full-width lists, and a bottom action bar. Items in the target list stay in sync with the array bound to `v-model`. If you do not want the target list to be empty initially, initialize `v-model` with an array of keys.
 
 transfer/basic
 
-:::
+::::
 
 ## Filterable
 
 You can search and filter data items.
 
-:::demo Set the `filterable` attribute to `true` to enable filter mode. By default, if the data item `label` contains the search keyword, it will be included in the search result. Also, you can implement you own filter method with the `filter-method` attribute. It takes a method and passes search keyword and each data item to it whenever the keyword changes. For a certain data item, if the method returns true, it will be included in the result list.
+::::demo Set `filterable` to `true` to show the search input for the current tab. By default, an item is included in the result when its `label` contains the search keyword. You can also provide a custom `filter-method`; it receives the search keyword and the current item whenever the keyword changes, and items that return `true` are displayed in the filtered list.
 
 transfer/filterable
 
-:::
+::::
 
 ## Customizable
 
-You can customize list titles, button texts, render function for data items, checking status texts in list footer and list footer contents.
+You can customize tab titles, bottom action button texts, item rendering, summary text, and panel footers.
 
-:::demo Use `titles`, `button-texts`, `render-content` and `format` to respectively customize list titles, button texts, render function for data items, checking status texts in list header. Plus, you can also use scoped slot to customize data items. For list footer contents, two named slots are provided: `left-footer` and `right-footer`. Plus, if you want some items initially checked, you can use `left-default-checked` and `right-default-checked`. Finally, this example demonstrate the `change` event. Note that this demo can't run in JSFiddle because it doesn't support JSX syntax. In a real project, `render-content` will work if relevant dependencies are correctly configured.
+::::demo Use `titles`, `button-texts`, `render-content`, and `format` to customize tab titles, the bottom action button text, item rendering, and the summary text shown in tabs and the toolbar. You can also use the scoped slot to customize item content. Two named slots are available for panel footers: `left-footer` and `right-footer`. If you want some items to be checked initially, use `left-default-checked` and `right-default-checked`. This example also demonstrates the `change` event. Note that this demo cannot run in JSFiddle because it does not support JSX syntax. In a real project, `render-content` works as long as the related dependencies are configured correctly.
 
 transfer/customizable
 
-:::
+::::
 
 ## Custom empty content ^(2.9.0)
 
 You can customize the content when the list is empty or when no filtering results are found.
 
-:::demo Use `left-empty` and `right-empty` slots to customize the empty content for each panel.
+::::demo Use `left-empty` and `right-empty` slots to customize the empty content for each panel.
 
 transfer/empty-content
 
-:::
+::::
 
 ## Prop aliases
 
-By default, Transfer looks for `key`, `label` and `disabled` in a data item. If your data items have different key names, you can use the `props` attribute to define aliases.
+By default, Transfer looks for `key`, `label`, and `disabled` in each data item. If your data uses different field names, use the `props` attribute to define aliases.
 
-:::demo The data items in this example do not have `key`s or `label`s, instead they have `value`s and `desc`s. So you need to set aliases for `key` and `label`.
+::::demo In this example, the data items do not have `key` or `label` fields. They use `value` and `desc` instead, so aliases are provided for `key` and `label`.
 
 transfer/prop-alias
 
-:::
+::::
 
 ## Transfer API
 
 ### Transfer Attributes
 
-| Name                        | Description                                                                                                                                                                                                                                                                        | Type                                                               | Default  |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------- |
-| model-value / v-model       | binding value                                                                                                                                                                                                                                                                      | ^[array]`Array<string \| number>`                                  | []       |
-| data                        | data source                                                                                                                                                                                                                                                                        | ^[array]`Record<string, any>[]`                                    | []       |
-| filterable                  | whether Transfer is filterable                                                                                                                                                                                                                                                     | ^[boolean]                                                         | false    |
-| filter-placeholder          | placeholder for the filter input                                                                                                                                                                                                                                                   | ^[string]                                                          | —        |
-| filter-method               | custom filter method                                                                                                                                                                                                                                                               | ^[Function]`(query: string, item: Record<string, any>) => boolean` | —        |
-| target-order                | order strategy for elements in the target list. If set to `original`, the elements will keep the same order as the data source. If set to `push`, the newly added elements will be pushed to the bottom. If set to `unshift`, the newly added elements will be inserted on the top | ^[enum]`'original' \| 'push' \| 'unshift'`                         | original |
-| titles                      | custom list titles                                                                                                                                                                                                                                                                 | ^[array]`[string, string]`                                         | []       |
-| button-texts                | custom button texts                                                                                                                                                                                                                                                                | ^[array]`[string, string]`                                         | []       |
-| render-content              | custom render function for data items                                                                                                                                                                                                                                              | ^[object]`renderContent`                                           | —        |
-| format                      | texts for checking status in list header                                                                                                                                                                                                                                           | ^[object]`TransferFormat`                                          | {}       |
-| [props](#type-declarations) | prop aliases for data source                                                                                                                                                                                                                                                       | ^[object]`TransferPropsAlias`                                      | —        |
-| left-default-checked        | key array of initially checked data items of the left list                                                                                                                                                                                                                         | ^[array]`Array<string \| number>`                                  | []       |
-| right-default-checked       | key array of initially checked data items of the right list                                                                                                                                                                                                                        | ^[array]`Array<string \| number>`                                  | []       |
-| validate-event              | whether to trigger form validation                                                                                                                                                                                                                                                 | ^[boolean]                                                         | true     |
+| Name                        | Description                                                                                                                                                                                                                                                 | Type                                                               | Default  |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------- |
+| model-value / v-model       | binding value                                                                                                                                                                                                                                               | ^[array]`Array<string \| number>`                                  | []       |
+| data                        | data source                                                                                                                                                                                                                                                 | ^[array]`Record<string, any>[]`                                    | []       |
+| filterable                  | whether Transfer is filterable                                                                                                                                                                                                                              | ^[boolean]                                                         | false    |
+| filter-placeholder          | placeholder for the filter input                                                                                                                                                                                                                            | ^[string]                                                          | -        |
+| filter-method               | custom filter method                                                                                                                                                                                                                                        | ^[Function]`(query: string, item: Record<string, any>) => boolean` | -        |
+| target-order                | order strategy for elements in the target list. If set to `original`, elements keep the same order as the data source. If set to `push`, newly added elements are appended to the bottom. If set to `unshift`, newly added elements are inserted at the top | ^[enum]`'original' \| 'push' \| 'unshift'`                         | original |
+| titles                      | custom tab titles                                                                                                                                                                                                                                           | ^[array]`[string, string]`                                         | []       |
+| button-texts                | custom texts for the bottom action buttons                                                                                                                                                                                                                  | ^[array]`[string, string]`                                         | []       |
+| render-content              | custom render function for data items                                                                                                                                                                                                                       | ^[object]`renderContent`                                           | -        |
+| format                      | summary text shown in tabs and the toolbar                                                                                                                                                                                                                  | ^[object]`TransferFormat`                                          | {}       |
+| [props](#type-declarations) | prop aliases for the data source                                                                                                                                                                                                                            | ^[object]`TransferPropsAlias`                                      | -        |
+| left-default-checked        | key array of initially checked data items in the left list                                                                                                                                                                                                  | ^[array]`Array<string \| number>`                                  | []       |
+| right-default-checked       | key array of initially checked data items in the right list                                                                                                                                                                                                 | ^[array]`Array<string \| number>`                                  | []       |
+| validate-event              | whether to trigger form validation                                                                                                                                                                                                                          | ^[boolean]                                                         | true     |
 
 ### Transfer Events
 
-| Name               | Description                                                                         | Type                                                                                                |
-| ------------------ | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| change             | triggers when data items change in the right list                                   | ^[Function]`(value: TransferKey[], direction: TransferDirection, movedKeys: TransferKey[]) => void` |
-| left-check-change  | triggers when end user changes the checked state of any data item in the left list  | ^[Function]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
-| right-check-change | triggers when end user changes the checked state of any data item in the right list | ^[Function]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
+| Name               | Description                                                                        | Type                                                                                                |
+| ------------------ | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| change             | triggers when data items change in the right list                                  | ^[Function]`(value: TransferKey[], direction: TransferDirection, movedKeys: TransferKey[]) => void` |
+| left-check-change  | triggers when the end user changes the checked state of any item in the left list  | ^[Function]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
+| right-check-change | triggers when the end user changes the checked state of any item in the right list | ^[Function]`(value: TransferKey[], movedKeys?: TransferKey[]) => void`                              |
 
 ### Transfer Slots
 
-| Name                 | Description                                                          | Type                                    |
-| -------------------- | -------------------------------------------------------------------- | --------------------------------------- |
-| default              | Custom content for data items.                                       | ^[object]`{ option: TransferDataItem }` |
-| left-footer          | content of left list footer                                          | —                                       |
-| right-footer         | content of right list footer                                         | —                                       |
-| left-empty ^(2.9.0)  | content when left panel is empty or when no data matches the filter  | —                                       |
-| right-empty ^(2.9.0) | content when right panel is empty or when no data matches the filter | —                                       |
+| Name                 | Description                                                               | Type                                    |
+| -------------------- | ------------------------------------------------------------------------- | --------------------------------------- |
+| default              | custom content for data items                                             | ^[object]`{ option: TransferDataItem }` |
+| left-footer          | content of the left panel footer                                          | -                                       |
+| right-footer         | content of the right panel footer                                         | -                                       |
+| left-empty ^(2.9.0)  | content shown when the left panel is empty or no data matches the filter  | -                                       |
+| right-empty ^(2.9.0) | content shown when the right panel is empty or no data matches the filter | -                                       |
 
 ### Transfer Exposes
 

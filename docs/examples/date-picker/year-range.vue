@@ -1,43 +1,50 @@
 <template>
-  <div class="demo-date-picker">
-    <div class="block">
-      <span class="demonstration">Default</span>
-      <el-date-picker
-        v-model="value1"
-        type="yearrange"
-        range-separator="To"
-        start-placeholder="Start Year"
-        end-placeholder="End Year"
-      />
+  <DemoBlock>
+    <div class="demo-block__stack">
+      <div class="demo-block__section">
+        <span class="demo-block__caption">规划区间</span>
+        <strong>选择起始年份与结束年份</strong>
+        <el-date-picker
+          v-model="value1"
+          type="yearrange"
+          range-separator="至"
+          start-placeholder="开始年份"
+          end-placeholder="结束年份"
+        />
+        <p>年份范围选择会始终保持在单列堆叠布局中。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">快捷切换</span>
+        <strong>通过常用规划周期快速选择</strong>
+        <el-date-picker
+          v-model="value2"
+          type="yearrange"
+          range-separator="至"
+          start-placeholder="开始年份"
+          end-placeholder="结束年份"
+          :shortcuts="shortcuts"
+        />
+        <p>这类预设区间适用于年度规划或归档筛选。</p>
+      </div>
     </div>
-    <div class="block">
-      <span class="demonstration">With quick options</span>
-      <el-date-picker
-        v-model="value2"
-        type="yearrange"
-        unlink-panels
-        range-separator="To"
-        start-placeholder="Start Year"
-        end-placeholder="End Year"
-        :shortcuts="shortcuts"
-      />
-    </div>
-  </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import DemoBlock from '../components/demo-block.vue'
 
 const value1 = ref()
 const value2 = ref()
 
 const shortcuts = [
   {
-    text: 'This Year',
+    text: '今年',
     value: [new Date(), new Date()],
   },
   {
-    text: 'Last 10 years',
+    text: '最近十年',
     value: () => {
       const end = new Date()
       const start = new Date(
@@ -47,7 +54,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'Next 50 years',
+    text: '未来五十年',
     value: () => {
       const start = new Date()
       const end = new Date(
@@ -58,45 +65,3 @@ const shortcuts = [
   },
 ]
 </script>
-
-<style scoped>
-.demo-date-picker {
-  display: flex;
-  width: 100%;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-.demo-date-picker .block {
-  padding: 1.5rem 0;
-  text-align: center;
-  border-right: solid 1px var(--el-border-color);
-  flex: 1;
-  min-width: 300px;
-}
-
-.demo-date-picker .block:last-child {
-  border-right: none;
-}
-
-.demo-date-picker .demonstration {
-  display: block;
-  color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-bottom: 1rem;
-}
-
-@media screen and (max-width: 768px) {
-  .demo-date-picker .block {
-    flex: 0 0 100%;
-    padding: 1rem 0;
-    min-width: auto;
-    border-right: none;
-    border-bottom: solid 1px var(--el-border-color);
-  }
-
-  .demo-date-picker .block:last-child {
-    border-bottom: none;
-  }
-}
-</style>

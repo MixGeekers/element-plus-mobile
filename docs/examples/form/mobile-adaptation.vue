@@ -1,10 +1,5 @@
 <template>
-  <MobileFormDemo
-    title="Touch Form Example"
-    description="This preview renders the current default form behavior directly, including stacked fields, touch-sized controls, and the bottom-sheet Select / SelectV2 flow."
-    header-title="Campaign Brief"
-    header-description="Form fields from the current touch-first batch."
-  >
+  <DemoBlock>
     <el-form
       ref="formRef"
       :model="form"
@@ -12,20 +7,16 @@
       scroll-to-error
       @submit.prevent
     >
-      <el-form-item label="Campaign name" prop="name">
-        <el-input
-          v-model="form.name"
-          clearable
-          placeholder="Name your campaign"
-        />
+      <el-form-item label="投放名称" prop="name">
+        <el-input v-model="form.name" clearable placeholder="请输入投放名称" />
       </el-form-item>
 
-      <el-form-item label="Region" prop="region">
+      <el-form-item label="地区" prop="region">
         <el-select
           v-model="form.region"
           clearable
           filterable
-          placeholder="Pick one region"
+          placeholder="请选择一个地区"
         >
           <el-option
             v-for="item in regionOptions"
@@ -36,18 +27,18 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="Audience" prop="audience">
+      <el-form-item label="受众" prop="audience">
         <el-select-v2
           v-model="form.audience"
           :options="audienceOptions"
           collapse-tags
           filterable
           multiple
-          placeholder="Choose audience segments"
+          placeholder="请选择受众分组"
         />
       </el-form-item>
 
-      <el-form-item label="Budget" prop="budget">
+      <el-form-item label="预算" prop="budget">
         <el-input-number
           v-model="form.budget"
           :min="50"
@@ -57,67 +48,34 @@
         />
       </el-form-item>
 
-      <el-form-item label="Launch now">
+      <el-form-item label="立即上线">
         <el-switch v-model="form.launchNow" />
       </el-form-item>
 
-      <el-form-item label="Primary channel" prop="channel">
-        <el-segmented v-model="form.channel" :options="channelOptions" block />
-      </el-form-item>
-
-      <el-form-item label="Placement tags" prop="tags">
-        <el-checkbox-group v-model="form.tags">
-          <el-checkbox
-            v-for="item in tagOptions"
-            :key="item"
-            :value="item"
-            name="placement-tags"
-          >
-            {{ item }}
-          </el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-
-      <el-form-item label="Traffic source" prop="source">
-        <el-radio-group v-model="form.source">
-          <el-radio v-for="item in sourceOptions" :key="item" :value="item">
-            {{ item }}
-          </el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-      <el-form-item label="Confidence">
-        <el-slider v-model="form.confidence" show-input />
-      </el-form-item>
-
-      <el-form-item label="Priority">
-        <el-rate v-model="form.priority" allow-half />
-      </el-form-item>
-
-      <el-form-item label="Summary" prop="summary">
+      <el-form-item label="摘要" prop="summary">
         <el-input
           v-model="form.summary"
           :rows="4"
           maxlength="140"
-          placeholder="What should this campaign accomplish?"
+          placeholder="请填写本次投放的目标"
           show-word-limit
           type="textarea"
         />
       </el-form-item>
 
       <el-form-item>
-        <div class="mobile-form-demo__actions">
-          <el-button type="primary" @click="submitForm">Submit</el-button>
-          <el-button @click="resetForm">Reset</el-button>
+        <div class="demo-block__actions">
+          <el-button type="primary" @click="submitForm">提交</el-button>
+          <el-button @click="resetForm">重置</el-button>
         </div>
       </el-form-item>
     </el-form>
-  </MobileFormDemo>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import MobileFormDemo from './components/mobile-demo-shell.vue'
+import DemoBlock from '../components/demo-block.vue'
 
 import type { FormInstance, FormRules } from 'element-plus-mobile'
 
@@ -127,11 +85,6 @@ interface CampaignForm {
   audience: string[]
   budget: number
   launchNow: boolean
-  channel: string
-  tags: string[]
-  source: string
-  confidence: number
-  priority: number
   summary: string
 }
 
@@ -142,42 +95,33 @@ const form = reactive<CampaignForm>({
   audience: [],
   budget: 600,
   launchNow: true,
-  channel: 'Search',
-  tags: [],
-  source: '',
-  confidence: 45,
-  priority: 3.5,
   summary: '',
 })
 
 const regionOptions = [
-  { label: 'North America', value: 'north-america' },
-  { label: 'Europe', value: 'europe' },
-  { label: 'Japan', value: 'japan' },
-  { label: 'South East Asia', value: 'sea' },
+  { label: '北美', value: 'north-america' },
+  { label: '欧洲', value: 'europe' },
+  { label: '日本', value: 'japan' },
+  { label: '东南亚', value: 'sea' },
 ]
 
 const audienceOptions = Array.from({ length: 120 }).map((_, index) => ({
-  value: `Segment ${index + 1}`,
-  label: `Segment ${index + 1}`,
+  value: `受众分组 ${index + 1}`,
+  label: `受众分组 ${index + 1}`,
 }))
-
-const channelOptions = ['Search', 'Feed', 'Live']
-const tagOptions = ['Retargeting', 'Launch', 'Seasonal', 'Brand lift']
-const sourceOptions = ['Sponsored', 'Organic']
 
 const rules = reactive<FormRules<CampaignForm>>({
   name: [
     {
       required: true,
-      message: 'Please enter a campaign name',
+      message: '请输入投放名称',
       trigger: 'blur',
     },
   ],
   region: [
     {
       required: true,
-      message: 'Please select one region',
+      message: '请选择一个地区',
       trigger: 'change',
     },
   ],
@@ -185,7 +129,7 @@ const rules = reactive<FormRules<CampaignForm>>({
     {
       type: 'array',
       required: true,
-      message: 'Please choose at least one audience segment',
+      message: '请至少选择一个受众分组',
       trigger: 'change',
     },
   ],
@@ -193,36 +137,14 @@ const rules = reactive<FormRules<CampaignForm>>({
     {
       type: 'number',
       required: true,
-      message: 'Please set a budget',
-      trigger: 'change',
-    },
-  ],
-  channel: [
-    {
-      required: true,
-      message: 'Please choose a primary channel',
-      trigger: 'change',
-    },
-  ],
-  tags: [
-    {
-      type: 'array',
-      required: true,
-      message: 'Select at least one placement tag',
-      trigger: 'change',
-    },
-  ],
-  source: [
-    {
-      required: true,
-      message: 'Please choose a traffic source',
+      message: '请设置预算',
       trigger: 'change',
     },
   ],
   summary: [
     {
       required: true,
-      message: 'Please add a short summary',
+      message: '请填写摘要',
       trigger: 'blur',
     },
   ],

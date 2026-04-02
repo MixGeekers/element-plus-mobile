@@ -1,24 +1,24 @@
 <template>
   <div class="demo-datetime-picker">
     <div class="block">
-      <span class="demonstration">Default</span>
+      <span class="demonstration">基础范围</span>
       <el-date-picker
         v-model="value1"
         type="datetimerange"
-        range-separator="To"
-        start-placeholder="Start date"
-        end-placeholder="End date"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
       />
     </div>
     <div class="block">
-      <span class="demonstration">With shortcuts</span>
+      <span class="demonstration">快捷范围</span>
       <el-date-picker
         v-model="value2"
         type="datetimerange"
         :shortcuts="shortcuts"
-        range-separator="To"
-        start-placeholder="Start date"
-        end-placeholder="End date"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
       />
     </div>
   </div>
@@ -35,7 +35,7 @@ const value2 = ref('')
 
 const shortcuts = [
   {
-    text: 'Last week',
+    text: '最近一周',
     value: () => {
       const end = new Date()
       const start = new Date()
@@ -44,7 +44,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'Last month',
+    text: '最近一个月',
     value: () => {
       const end = new Date()
       const start = new Date()
@@ -53,7 +53,7 @@ const shortcuts = [
     },
   },
   {
-    text: 'Last 3 months',
+    text: '最近三个月',
     value: () => {
       const end = new Date()
       const start = new Date()

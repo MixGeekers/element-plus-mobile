@@ -17,12 +17,6 @@
     top: 0;
     bottom: 0;
   }
-  @include e(mask-horizontal) {
-    cursor: ew-resize;
-  }
-  @include e(mask-vertical) {
-    cursor: ns-resize;
-  }
 
   @include e(horizontal) {
     flex-direction: row;
@@ -42,105 +36,79 @@
   @include e(dragger) {
     z-index: 1;
     position: absolute;
-    background: transparent;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: to-rem(4px);
+    padding: to-rem(4px);
+    border-radius: to-rem(14px);
+    background: getCssVar('bg-color', 'overlay');
+    box-shadow: 0 0 0 1px getCssVar('border-color-light');
     @include touch-feedback(none);
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: getCssVar('border-color-light');
-    }
-
-    &:not(.is-lazy)::after {
-      display: none;
-    }
-
-    &::after {
-      opacity: 0.4;
-    }
 
     &:active {
-      &:not(.is-disabled)::before {
-        background-color: getCssVar('color-primary-light-5');
+      &:not(.is-disabled) {
+        box-shadow: 0 0 0 1px getCssVar('color-primary-light-5');
       }
     }
   }
   @include e(dragger-horizontal) {
-    &::before,
-    &::after {
-      height: 100%;
-      width: to-rem(2px);
-    }
+    flex-direction: column;
   }
   @include e(dragger-vertical) {
-    &::before,
-    &::after {
-      height: to-rem(2px);
-      width: 100%;
-    }
+    flex-direction: row;
   }
   @include e(dragger-active) {
-    &::before,
-    &::after {
+    .#{$namespace}-splitter-bar__handle {
       background-color: getCssVar('color-primary-light-3');
     }
-
-    &.#{$namespace}-splitter-bar__dragger-horizontal::after {
-      transform: translate(calc(-50% + getCssVar('splitter-bar-offset')), -50%);
-    }
-
-    &.#{$namespace}-splitter-bar__dragger-vertical::after {
-      transform: translate(-50%, calc(-50% + getCssVar('splitter-bar-offset')));
-    }
+  }
+  @include e(handle) {
+    flex: none;
+    display: block;
+    border-radius: getCssVar('border-radius-round');
+    background-color: getCssVar('border-color-light');
+    transition: background-color getCssVar('transition-duration-fast');
+  }
+  @include e(handle-horizontal) {
+    width: to-rem(2px);
+    min-height: to-rem(32px);
+    height: 100%;
+  }
+  @include e(handle-vertical) {
+    width: 100%;
+    min-width: to-rem(32px);
+    height: to-rem(2px);
   }
   @include e(collapse-icon) {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    background: getCssVar('border-color-light');
-    border-radius: to-rem(6px);
-    cursor: pointer;
-    opacity: 0.92;
-    z-index: 9;
+    padding: 0;
+    width: to-rem(20px);
+    height: to-rem(20px);
+    border: none;
+    background: getCssVar('fill-color', 'light');
+    border-radius: to-rem(10px);
+    color: getCssVar('text-color', 'regular');
     @include touch-feedback;
+
     &:active {
-      opacity: 1;
-      background-color: getCssVar('color-primary-light-5');
+      background-color: getCssVar('color-primary-light-8');
+      color: getCssVar('color-primary');
     }
   }
-  @include e(horizontal-collapse-icon-start) {
-    left: to-rem(-16px);
-    top: 50%;
-    height: to-rem(32px);
-    width: to-rem(24px);
-    transform: translate(-50%, -50%);
-  }
-  @include e(horizontal-collapse-icon-end) {
-    left: to-rem(16px);
-    top: 50%;
-    height: to-rem(32px);
-    width: to-rem(24px);
-    transform: translate(-50%, -50%);
-  }
-  @include e(vertical-collapse-icon-start) {
-    top: to-rem(-16px);
-    right: 50%;
-    height: to-rem(24px);
-    width: to-rem(32px);
-    transform: translate(50%, -50%);
-  }
-  @include e(vertical-collapse-icon-end) {
-    top: to-rem(16px);
-    right: 50%;
-    height: to-rem(24px);
-    width: to-rem(32px);
-    transform: translate(50%, -50%);
+
+  .#{$namespace}-splitter-bar__dragger.is-disabled {
+    background: getCssVar('fill-color', 'light');
+    box-shadow: 0 0 0 1px getCssVar('border-color-lighter');
+
+    .#{$namespace}-splitter-bar__handle,
+    .#{$namespace}-splitter-bar__collapse-icon {
+      opacity: 0.6;
+    }
   }
 }

@@ -1,34 +1,17 @@
 <template>
-  <div class="common-layout mobile-layout-demo">
-    <div class="mobile-frame">
-      <el-container>
-        <el-main>
-          <div class="mobile-note-card">
-            <div class="mobile-note-card__title">Main Only</div>
-            <div class="mobile-note-card__desc">
-              沉浸式页面可以只保留 Main，不使用 Header 和 Footer。
-            </div>
-          </div>
-
-          <div class="mobile-note-card">
-            <div class="mobile-note-card__title">Container</div>
-            <div class="mobile-note-card__desc">
-              在页面根节点上使用
-              <code class="mobile-region__code"
-                >&lt;el-container full-screen&gt;</code
-              >
-              让内容占满整个视口。
-            </div>
-          </div>
-
-          <div class="mobile-note-card">
-            <div class="mobile-note-card__title">Use case</div>
-            <div class="mobile-note-card__desc">
-              适合欢迎页、图片浏览、视频播放或阅读页等弱导航场景。
-            </div>
-          </div>
-        </el-main>
-      </el-container>
-    </div>
+  <div class="container-demo">
+    <el-container class="container-demo__frame" full-screen>
+      <el-main>
+        <span class="container-demo__label">
+          &lt;el-container full-screen&gt;
+        </span>
+        <p class="container-demo__title">仅保留主内容区</p>
+        <p class="container-demo__text">
+          当页面不需要固定头部或底部时，可以只使用
+          <code>&lt;el-main&gt;</code> 承载内容。
+        </p>
+        <el-button type="primary" plain>进入内容</el-button>
+      </el-main>
+    </el-container>
   </div>
 </template>

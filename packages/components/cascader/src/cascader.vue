@@ -2,17 +2,14 @@
   <el-tooltip
     ref="tooltipRef"
     :visible="popperVisible"
-    :teleported="teleported"
     :popper-class="[nsCascader.e('dropdown'), popperClass!]"
     :popper-style="popperStyle"
-    :popper-options="popperOptions"
-    :fallback-placements="fallbackPlacements"
     :stop-popper-mouse-event="false"
     :gpu-acceleration="false"
-    :placement="placement"
-    :transition="`${nsCascader.namespace.value}-zoom-in-top`"
-    :effect="effect"
+    :show-arrow="false"
+    :transition="`${nsCascader.namespace.value}-fade-in-linear`"
     pure
+    teleported
     :persistent="persistent"
     @hide="hideSuggestionPanel"
   >
@@ -92,11 +89,10 @@
             v-if="collapseTags && tags.length > maxCollapseTags"
             ref="tagTooltipRef"
             :disabled="popperVisible || !collapseTagsTooltip"
-            :fallback-placements="['bottom', 'top', 'right', 'left']"
-            placement="bottom"
+            trigger="click"
             :popper-class="popperClass"
             :popper-style="popperStyle"
-            :effect="effect"
+            effect="light"
             :persistent="persistent"
           >
             <template #default>
@@ -164,7 +160,7 @@
         ref="cascaderPanelRef"
         v-model="checkedValue"
         :options="options"
-        :props="props.props"
+        :props="panelProps"
         :border="false"
         :render-label="$slots.default"
         @expand-change="handleExpandChange"
@@ -265,7 +261,6 @@ import {
 } from '@element-plus/constants'
 import { cascaderEmits } from './cascader'
 
-import type { Options } from '@element-plus/components/popper'
 import type { ComputedRef, StyleValue } from 'vue'
 import type { TooltipInstance } from '@element-plus/components/tooltip'
 import type { InputInstance } from '@element-plus/components/input'
@@ -273,28 +268,11 @@ import type { ScrollbarInstance } from '@element-plus/components/scrollbar'
 import type {
   CascaderNode,
   CascaderPanelInstance,
+  CascaderProps as CascaderPanelProps,
   CascaderValue,
   Tag,
 } from '@element-plus/components/cascader-panel'
 import type { CascaderComponentProps } from './cascader'
-
-const popperOptions: Partial<Options> = {
-  modifiers: [
-    {
-      name: 'arrowPosition',
-      enabled: true,
-      phase: 'main',
-      fn: ({ state }) => {
-        const { modifiersData, placement } = state
-        if (['right', 'left', 'bottom', 'top'].includes(placement)) return
-        if (modifiersData.arrow) {
-          modifiersData.arrow.x = 35
-        }
-      },
-      requires: ['arrow'],
-    },
-  ],
-}
 
 defineOptions({
   name: 'ElCascader',
@@ -311,17 +289,6 @@ const props = withDefaults(defineProps<CascaderComponentProps>(), {
   maxCollapseTags: 1,
   debounce: 300,
   beforeFilter: () => true,
-  placement: 'bottom-start',
-  fallbackPlacements: () => [
-    'bottom-start',
-    'bottom',
-    'top-start',
-    'top',
-    'right',
-    'left',
-  ],
-  teleported: true,
-  effect: 'light',
   tagType: 'info',
   tagEffect: 'light',
   validateEvent: true,
@@ -405,6 +372,11 @@ const tagSize = computed(() =>
 )
 const multiple = computed(() => !!props.props.multiple)
 const readonly = computed(() => !props.filterable || multiple.value)
+const panelProps = computed<CascaderPanelProps>(() => ({
+  ...props.props,
+  expandTrigger: 'click',
+  hoverThreshold: 0,
+}))
 const searchKeyword = computed(() =>
   multiple.value ? searchInputValue.value : inputValue.value
 )

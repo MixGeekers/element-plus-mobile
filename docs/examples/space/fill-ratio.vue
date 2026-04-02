@@ -1,40 +1,52 @@
 <template>
-  <div>
-    <div style="margin-bottom: 15px">
-      direction:
-      <el-radio v-model="direction" value="horizontal">horizontal</el-radio>
-      <el-radio v-model="direction" value="vertical">vertical</el-radio>
-    </div>
-    <div style="margin-bottom: 15px">
-      fillRatio:<el-slider v-model="fillRatio" />
-    </div>
+  <el-space alignment="start">
+    <div class="space-control">填充比例：<el-slider v-model="fillRatio" /></div>
     <el-space
       fill
       wrap
+      direction="horizontal"
       :fill-ratio="fillRatio"
-      :direction="direction"
-      style="width: 100%"
+      class="fill-ratio-demo"
     >
-      <el-card v-for="i in 5" :key="i" class="box-card">
-        <template #header>
-          <div class="card-header">
-            <span>Card name</span>
-            <el-button class="button" text>Operation button</el-button>
-          </div>
-        </template>
-        <div v-for="o in 4" :key="o" class="text item">
-          {{ 'List item ' + o }}
-        </div>
-      </el-card>
+      <div v-for="item in items" :key="item.title" class="ratio-card">
+        <div class="ratio-card__title">{{ item.title }}</div>
+        <div class="ratio-card__desc">{{ item.desc }}</div>
+      </div>
     </el-space>
-  </div>
+  </el-space>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import type { SpaceInstance } from 'element-plus-mobile'
-
-const direction = ref<SpaceInstance['direction']>('horizontal')
 const fillRatio = ref(30)
+const items = [
+  { title: '地址确认', desc: '先确认配送信息。' },
+  { title: '支付方式', desc: '再确认支付渠道。' },
+  { title: '订单提交', desc: '最后完成提交。' },
+] as const
 </script>
+
+<style scoped>
+.space-control,
+.fill-ratio-demo {
+  width: 100%;
+}
+
+.ratio-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--el-border-color-lighter);
+  background: var(--el-fill-color-light);
+}
+
+.ratio-card__title {
+  font-weight: 600;
+  color: var(--el-text-color-primary);
+}
+
+.ratio-card__desc {
+  margin-top: 0.5rem;
+  color: var(--el-text-color-regular);
+}
+</style>

@@ -31,3 +31,32 @@
     border: 1px solid getCssVar('datepicker-border-color');
   }
 }
+
+@include b(time-range-picker) {
+  width: 100%;
+  max-width: 100%;
+
+  @include e(content) {
+    display: grid;
+    gap: to-rem(12px);
+    padding: 0 to-rem(16px) to-rem(16px);
+  }
+
+  @include e(cell) {
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+
+  @include e(header) {
+    margin-bottom: to-rem(8px);
+    text-align: left;
+    font-size: to-rem(14px);
+    color: getCssVar('text-color', 'secondary');
+  }
+
+  @include e(body) {
+    border-radius: getCssVar('border-radius-base');
+    overflow: hidden;
+  }
+}

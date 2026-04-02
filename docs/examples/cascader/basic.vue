@@ -1,296 +1,134 @@
 <template>
-  <div class="m-4">
-    <p>Child options expand when clicked (default)</p>
-    <el-cascader v-model="value" :options="options" @change="handleChange" />
-  </div>
-  <div class="m-4">
-    <p>Child options expand when hovered</p>
-    <el-cascader
-      v-model="value"
-      :options="options"
-      :props="props"
-      @change="handleChange"
-    />
-  </div>
+  <DemoBlock>
+    <div class="demo-block__stack">
+      <div class="demo-block__section">
+        <span class="demo-block__caption">服务路径</span>
+        <strong>逐级轻触展开选项</strong>
+        <el-cascader
+          v-model="value"
+          clearable
+          filterable
+          :options="options"
+          placeholder="请选择服务类型"
+        />
+        <p>{{ selectionText }}</p>
+      </div>
+    </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import DemoBlock from '../components/demo-block.vue'
 
-const value = ref([])
+const value = ref<string[]>([])
 
-const props = {
-  expandTrigger: 'hover' as const,
-}
-
-const handleChange = (value) => {
-  console.log(value)
-}
+const selectionText = computed(() =>
+  value.value.length
+    ? `已选择：${value.value.join(' / ')}`
+    : '展开后会自动滚动到当前的最新一列。'
+)
 
 const options = [
   {
-    value: 'guide',
-    label: 'Guide',
+    value: '到家服务',
+    label: '到家服务',
     children: [
       {
-        value: 'disciplines',
-        label: 'Disciplines',
+        value: '即时配送',
+        label: '即时配送',
         children: [
           {
-            value: 'consistency',
-            label: 'Consistency',
+            value: '当日送达',
+            label: '当日送达',
           },
           {
-            value: 'feedback',
-            label: 'Feedback',
-          },
-          {
-            value: 'efficiency',
-            label: 'Efficiency',
-          },
-          {
-            value: 'controllability',
-            label: 'Controllability',
+            value: '预约送达',
+            label: '预约送达',
           },
         ],
       },
       {
-        value: 'navigation',
-        label: 'Navigation',
+        value: '到店服务',
+        label: '到店服务',
         children: [
           {
-            value: 'side nav',
-            label: 'Side Navigation',
+            value: '预订餐位',
+            label: '预订餐位',
           },
           {
-            value: 'top nav',
-            label: 'Top Navigation',
+            value: '现场排队',
+            label: '现场排队',
           },
         ],
       },
     ],
   },
   {
-    value: 'component',
-    label: 'Component',
+    value: '居家养护',
+    label: '居家养护',
     children: [
       {
-        value: 'basic',
-        label: 'Basic',
+        value: '清洁保养',
+        label: '清洁保养',
         children: [
           {
-            value: 'layout',
-            label: 'Layout',
+            value: '每周上门',
+            label: '每周上门',
           },
           {
-            value: 'color',
-            label: 'Color',
-          },
-          {
-            value: 'typography',
-            label: 'Typography',
-          },
-          {
-            value: 'icon',
-            label: 'Icon',
-          },
-          {
-            value: 'button',
-            label: 'Button',
+            value: '深度清洁',
+            label: '深度清洁',
           },
         ],
       },
       {
-        value: 'form',
-        label: 'Form',
+        value: '维修支持',
+        label: '维修支持',
         children: [
           {
-            value: 'radio',
-            label: 'Radio',
+            value: '水管维修',
+            label: '水管维修',
           },
           {
-            value: 'checkbox',
-            label: 'Checkbox',
-          },
-          {
-            value: 'input',
-            label: 'Input',
-          },
-          {
-            value: 'input-number',
-            label: 'InputNumber',
-          },
-          {
-            value: 'select',
-            label: 'Select',
-          },
-          {
-            value: 'cascader',
-            label: 'Cascader',
-          },
-          {
-            value: 'switch',
-            label: 'Switch',
-          },
-          {
-            value: 'slider',
-            label: 'Slider',
-          },
-          {
-            value: 'time-picker',
-            label: 'TimePicker',
-          },
-          {
-            value: 'date-picker',
-            label: 'DatePicker',
-          },
-          {
-            value: 'datetime-picker',
-            label: 'DateTimePicker',
-          },
-          {
-            value: 'upload',
-            label: 'Upload',
-          },
-          {
-            value: 'rate',
-            label: 'Rate',
-          },
-          {
-            value: 'form',
-            label: 'Form',
-          },
-        ],
-      },
-      {
-        value: 'data',
-        label: 'Data',
-        children: [
-          {
-            value: 'table',
-            label: 'Table',
-          },
-          {
-            value: 'tag',
-            label: 'Tag',
-          },
-          {
-            value: 'progress',
-            label: 'Progress',
-          },
-          {
-            value: 'tree',
-            label: 'Tree',
-          },
-          {
-            value: 'pagination',
-            label: 'Pagination',
-          },
-          {
-            value: 'badge',
-            label: 'Badge',
-          },
-        ],
-      },
-      {
-        value: 'notice',
-        label: 'Notice',
-        children: [
-          {
-            value: 'alert',
-            label: 'Alert',
-          },
-          {
-            value: 'loading',
-            label: 'Loading',
-          },
-          {
-            value: 'message',
-            label: 'Message',
-          },
-          {
-            value: 'message-box',
-            label: 'MessageBox',
-          },
-          {
-            value: 'notification',
-            label: 'Notification',
-          },
-        ],
-      },
-      {
-        value: 'navigation',
-        label: 'Navigation',
-        children: [
-          {
-            value: 'menu',
-            label: 'Menu',
-          },
-          {
-            value: 'tabs',
-            label: 'Tabs',
-          },
-          {
-            value: 'breadcrumb',
-            label: 'Breadcrumb',
-          },
-          {
-            value: 'dropdown',
-            label: 'Dropdown',
-          },
-          {
-            value: 'steps',
-            label: 'Steps',
-          },
-        ],
-      },
-      {
-        value: 'others',
-        label: 'Others',
-        children: [
-          {
-            value: 'dialog',
-            label: 'Dialog',
-          },
-          {
-            value: 'tooltip',
-            label: 'Tooltip',
-          },
-          {
-            value: 'popover',
-            label: 'Popover',
-          },
-          {
-            value: 'card',
-            label: 'Card',
-          },
-          {
-            value: 'carousel',
-            label: 'Carousel',
-          },
-          {
-            value: 'collapse',
-            label: 'Collapse',
+            value: '电路检修',
+            label: '电路检修',
           },
         ],
       },
     ],
   },
   {
-    value: 'resource',
-    label: 'Resource',
+    value: '健康管理',
+    label: '健康管理',
     children: [
       {
-        value: 'axure',
-        label: 'Axure Components',
+        value: '运动课程',
+        label: '运动课程',
+        children: [
+          {
+            value: '私教指导',
+            label: '私教指导',
+          },
+          {
+            value: '团课预约',
+            label: '团课预约',
+          },
+        ],
       },
       {
-        value: 'sketch',
-        label: 'Sketch Templates',
-      },
-      {
-        value: 'docs',
-        label: 'Design Documentation',
+        value: '咨询服务',
+        label: '咨询服务',
+        children: [
+          {
+            value: '到店咨询',
+            label: '到店咨询',
+          },
+          {
+            value: '远程咨询',
+            label: '远程咨询',
+          },
+        ],
       },
     ],
   },

@@ -1057,16 +1057,12 @@ describe('Select', () => {
     })
 
     it('use tag-tooltip', async () => {
-      const appendTarget = document.createElement('div')
-      appendTarget.className = 'append-target'
-      document.body.appendChild(appendTarget)
       const wrapper = createSelect({
         data: () => {
           return {
             multiple: true,
             collapseTags: true,
             collapseTagsTooltip: true,
-            tagTooltip: { appendTo: '.append-target' },
             value: [],
           }
         },
@@ -1082,7 +1078,7 @@ describe('Select', () => {
 
       const select = wrapper.findComponent(Select)
       const tagTooltip = select.findComponent({ ref: 'tagTooltipRef' })
-      expect(tagTooltip.props('appendTo')).toBe('.append-target')
+      expect(tagTooltip.props('trigger')).toBe('click')
 
       const triggerWrappers = wrapper.findAll('.el-tooltip__trigger')
       expect(triggerWrappers[0]).toBeDefined()

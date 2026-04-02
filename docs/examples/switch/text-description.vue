@@ -1,58 +1,54 @@
 <template>
-  <el-switch
-    v-model="value1"
-    class="mb-2"
-    active-text="Pay by month"
-    inactive-text="Pay by year"
-  />
-  <br />
-  <el-switch
-    v-model="value2"
-    class="mb-2"
-    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-    active-text="Pay by month"
-    inactive-text="Pay by year"
-  />
-  <br />
-  <el-switch
-    v-model="value3"
-    inline-prompt
-    active-text="是"
-    inactive-text="否"
-  />
-  <el-switch
-    v-model="value4"
-    class="ml-2"
-    inline-prompt
-    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-    active-text="Y"
-    inactive-text="N"
-  />
-  <el-switch
-    v-model="value6"
-    class="ml-2"
-    width="60"
-    inline-prompt
-    active-text="超出省略"
-    inactive-text="超出省略"
-  />
-  <el-switch
-    v-model="value5"
-    class="ml-2"
-    inline-prompt
-    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-    active-text="完整展示多个内容"
-    inactive-text="多个内容"
-  />
+  <DemoBlock>
+    <div class="demo-block__stack">
+      <div class="demo-block__section">
+        <span class="demo-block__caption">外侧文字</span>
+        <strong>将状态含义放在开关两侧，更适合较长文案</strong>
+        <el-switch
+          v-model="billingCycle"
+          active-text="按月订阅"
+          inactive-text="按年订阅"
+        />
+        <p>当需要完整描述状态时，优先把文字放在开关外侧，避免挤压主体。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">行内提示</span>
+        <strong>开关内部仅保留简短提示词</strong>
+        <el-switch
+          v-model="autoRenew"
+          inline-prompt
+          active-text="是"
+          inactive-text="否"
+        />
+        <p>`inline-prompt` 适合一到两个字的简短状态，不建议塞入完整句子。</p>
+      </div>
+
+      <div class="demo-block__section">
+        <span class="demo-block__caption">自定义宽度</span>
+        <strong>需要更宽触控目标时可自定义宽度</strong>
+        <el-switch
+          v-model="wideControl"
+          width="72"
+          inline-prompt
+          style="
+            --el-switch-on-color: var(--el-color-success);
+            --el-switch-off-color: var(--el-color-danger);
+          "
+          active-text="开"
+          inactive-text="关"
+        />
+        <p>自定义宽度适合无障碍或高频操作场景，但文案仍应保持简短。</p>
+      </div>
+    </div>
+  </DemoBlock>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import DemoBlock from '../components/demo-block.vue'
 
-const value1 = ref(true)
-const value2 = ref(true)
-const value3 = ref(true)
-const value4 = ref(true)
-const value5 = ref(true)
-const value6 = ref(true)
+const billingCycle = ref(true)
+const autoRenew = ref(true)
+const wideControl = ref(true)
 </script>

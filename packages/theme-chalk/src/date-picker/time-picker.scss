@@ -88,3 +88,52 @@
     }
   }
 }
+
+@include b(time-panel) {
+  width: 100%;
+  max-width: 100%;
+  left: auto;
+  border-radius: 0;
+  box-sizing: border-box;
+
+  @include e(content) {
+    display: flex;
+    padding: 0 to-rem(8px);
+
+    &::after,
+    &::before {
+      margin-top: calc(#{to-rem(44px)} / -2);
+      height: to-rem(44px);
+      border-radius: getCssVar('border-radius-base');
+    }
+
+    &::after {
+      background: getCssVar('color-primary-light-9');
+    }
+  }
+
+  @include e(footer) {
+    display: flex;
+    gap: to-rem(12px);
+    padding: to-rem(16px);
+    height: auto;
+    line-height: normal;
+  }
+
+  @include e(btn) {
+    flex: 1 1 0;
+    min-height: to-rem(44px);
+    margin: 0;
+    padding: 0 to-rem(14px);
+    border-radius: getCssVar('border-radius-base');
+    font-size: to-rem(14px);
+    font-weight: 600;
+    background: getCssVar('fill-color', 'light');
+    color: getCssVar('text-color', 'secondary');
+
+    &.confirm {
+      color: getCssVar('color-white');
+      background: getCssVar('color-primary');
+    }
+  }
+}

@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <el-link :icon="Edit">Edit</el-link>
+  <div class="link-example">
+    <el-link :icon="Edit">编辑资料</el-link>
     <el-link>
-      Check<el-icon class="el-icon--right"><icon-view /></el-icon>
+      查看详情<el-icon class="el-icon--right"><icon-view /></el-icon>
     </el-link>
   </div>
 </template>
@@ -13,7 +13,9 @@ import IconView from '~icons/ep/view'
 </script>
 
 <style scoped>
-.el-link {
-  margin-right: 8px;
+.link-example {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 </style>

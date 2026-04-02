@@ -7,6 +7,8 @@ lang: zh-CN
 
 `ColorPickerPanel`是`ColorPicker`的核心部件。
 
+它很适合直接放在设置页中，让颜色编辑保持在同一屏幕内完成。
+
 ## 基本用法
 
 :::demo ColorPickerPanel 需要将字符串类型变量绑定到 v-model。

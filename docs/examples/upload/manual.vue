@@ -6,17 +6,15 @@
     :auto-upload="false"
   >
     <template #trigger>
-      <el-button type="primary">select file</el-button>
+      <el-button type="primary">选择文件</el-button>
     </template>
 
     <el-button class="ml-3" type="success" @click="submitUpload">
-      upload to server
+      上传到服务器
     </el-button>
 
     <template #tip>
-      <div class="el-upload__tip">
-        jpg/png files with a size less than 500kb
-      </div>
+      <div class="el-upload__tip">支持上传 500KB 以内的 JPG 或 PNG 文件</div>
     </template>
   </el-upload>
 </template>

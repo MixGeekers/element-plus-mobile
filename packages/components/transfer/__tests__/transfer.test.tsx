@@ -18,9 +18,20 @@ describe('Transfer', () => {
     return data
   }
 
+  const getTransfer = (wrapper: ReturnType<typeof mount>) =>
+    wrapper.findComponent({ name: 'ElTransfer' })
+
+  const getPanelLabels = (
+    wrapper: ReturnType<typeof mount>,
+    direction: 'left' | 'right' = 'left'
+  ) =>
+    wrapper.findAll(
+      `.el-transfer__panel[data-direction="${direction}"] .el-transfer-panel__body .el-checkbox__label`
+    )
+
   it('create', () => {
     const wrapper = mount(() => <Transfer data={getTestData()} />)
-    expect(wrapper.findComponent({ name: 'ElTransfer' })).toBeTruthy()
+    expect(getTransfer(wrapper).exists()).toBe(true)
   })
 
   it('default target list', () => {
@@ -28,8 +39,8 @@ describe('Transfer', () => {
     const wrapper = mount(() => (
       <Transfer v-model={value.value} data={getTestData()} />
     ))
-    const ElTransfer: any = wrapper.findComponent({ name: 'ElTransfer' })
-    expect(ElTransfer.vm.sourceData.length).toBe(13)
+    const transferVm: any = getTransfer(wrapper).vm
+    expect(transferVm.sourceData.length).toBe(13)
   })
 
   it('filterable', async () => {
@@ -46,9 +57,9 @@ describe('Transfer', () => {
         filter-method={method}
       />
     ))
+
+    await wrapper.find('.el-transfer__filter input').setValue('1')
     const leftList: any = wrapper.findComponent({ name: 'ElTransferPanel' })
-    leftList.vm.query = '1'
-    await leftList.find('input').setValue('1')
     expect(leftList.vm.filteredData.length).toBe(1)
   })
 
@@ -63,14 +74,15 @@ describe('Transfer', () => {
       />
     ))
 
-    const ElTransfer: any = wrapper.findComponent({ name: 'ElTransfer' })
+    const transferVm: any = getTransfer(wrapper).vm
 
-    ElTransfer.vm.addToLeft()
+    transferVm.addToLeft()
     await nextTick()
-    expect(ElTransfer.vm.sourceData.length).toBe(14)
-    ElTransfer.vm.addToRight()
+    expect(transferVm.sourceData.length).toBe(14)
+
+    transferVm.addToRight()
     await nextTick()
-    expect(ElTransfer.vm.sourceData.length).toBe(12)
+    expect(transferVm.sourceData.length).toBe(12)
   })
 
   it('customize', () => {
@@ -92,23 +104,63 @@ describe('Transfer', () => {
       />
     ))
 
-    const label = wrapper.find('.el-transfer-panel__header .el-checkbox__label')
-    expect(label.text().includes('表1')).toBeTruthy()
+    const transfer = getTransfer(wrapper)
     expect(
-      wrapper.find('.el-transfer-panel__list .el-checkbox__label span').text()
+      transfer
+        .find('.el-transfer__tab.is-active .el-transfer__tab-title')
+        .text()
+    ).toBe('表1')
+    expect(
+      wrapper
+        .find(
+          '.el-transfer__panel[data-direction="left"] .el-transfer-panel__list .el-checkbox__label span'
+        )
+        .text()
     ).toBe('1 - 备选项 1')
-    expect(label.find('.el-transfer-panel__header-count').text()).toBe('no')
+    expect(transfer.find('.el-transfer__toolbar-summary').text()).toBe('no')
   })
 
-  it('check', () => {
+  it('check', async () => {
     const value = ref([])
     const wrapper = mount(() => (
       <Transfer v-model={value.value} data={getTestData()} />
     ))
 
     const leftList: any = wrapper.findComponent({ name: 'ElTransferPanel' })
-    leftList.vm.handleAllCheckedChange({ target: { checked: true } })
+    leftList.vm.handleAllCheckedChange(true)
+    await nextTick()
+
     expect(leftList.vm.checked.length).toBe(12)
+    expect(
+      getTransfer(wrapper).find('.el-transfer__action-bar').isVisible()
+    ).toBe(true)
+  })
+
+  it('switches tabs and moves checked items through action bar', async () => {
+    const value = ref([1])
+    const wrapper = mount(() => (
+      <Transfer
+        v-model={value.value}
+        leftDefaultChecked={[2, 3]}
+        data={getTestData()}
+      />
+    ))
+
+    const transfer = getTransfer(wrapper)
+    expect(transfer.attributes('data-active-panel')).toBe('left')
+
+    await transfer.findAll('.el-transfer__tab')[1].trigger('click')
+    await nextTick()
+    expect(transfer.attributes('data-active-panel')).toBe('right')
+
+    await transfer.findAll('.el-transfer__tab')[0].trigger('click')
+    await nextTick()
+    await transfer.find('.el-transfer__action-bar .el-button').trigger('click')
+    await nextTick()
+    await nextTick()
+
+    expect(value.value).toStrictEqual([1, 2, 3])
+    expect(transfer.attributes('data-active-panel')).toBe('right')
   })
 
   describe('target order', () => {
@@ -122,12 +174,10 @@ describe('Transfer', () => {
         />
       ))
 
-      const ElTransfer: any = wrapper.findComponent({ name: 'ElTransfer' })
-      ElTransfer.vm.addToRight()
+      const transferVm: any = getTransfer(wrapper).vm
+      transferVm.addToRight()
       await nextTick()
-      const targetItems = wrapper.findAll(
-        '.el-transfer__buttons + .el-transfer-panel .el-transfer-panel__body .el-checkbox__label span'
-      )
+      const targetItems = getPanelLabels(wrapper, 'right')
       expect(targetItems.map((item) => item.text())).toStrictEqual([
         '备选项 1',
         '备选项 2',
@@ -147,12 +197,10 @@ describe('Transfer', () => {
         />
       ))
 
-      const ElTransfer: any = wrapper.findComponent({ name: 'ElTransfer' })
-      ElTransfer.vm.addToRight()
+      const transferVm: any = getTransfer(wrapper).vm
+      transferVm.addToRight()
       await nextTick()
-      const targetItems = wrapper.findAll(
-        '.el-transfer__buttons + .el-transfer-panel .el-transfer-panel__body .el-checkbox__label span'
-      )
+      const targetItems = getPanelLabels(wrapper, 'right')
       expect(targetItems.map((item) => item.text())).toStrictEqual([
         '备选项 1',
         '备选项 4',
@@ -172,12 +220,10 @@ describe('Transfer', () => {
         />
       ))
 
-      const ElTransfer: any = wrapper.findComponent({ name: 'ElTransfer' })
-      ElTransfer.vm.addToRight()
+      const transferVm: any = getTransfer(wrapper).vm
+      transferVm.addToRight()
       await nextTick()
-      const targetItems = wrapper.findAll(
-        '.el-transfer__buttons + .el-transfer-panel .el-transfer-panel__body .el-checkbox__label span'
-      )
+      const targetItems = getPanelLabels(wrapper, 'right')
       expect(targetItems.map((item) => item.text())).toStrictEqual([
         '备选项 2',
         '备选项 3',
@@ -198,21 +244,20 @@ describe('Transfer', () => {
         />
       ))
 
-      const ElTransfer: any = wrapper.findComponent({ name: 'ElTransfer' })
-      const app = ElTransfer.vm
-      app.leftPanel.query = '11'
-      app.rightPanel.query = '22'
+      const transferVm: any = getTransfer(wrapper).vm
+      transferVm.leftPanel.query = '11'
+      transferVm.rightPanel.query = '22'
       await nextTick()
-      expect(app.leftPanel.query).toBe('11')
-      expect(app.rightPanel.query).toBe('22')
+      expect(transferVm.leftPanel.query).toBe('11')
+      expect(transferVm.rightPanel.query).toBe('22')
 
-      app.clearQuery('left')
+      transferVm.clearQuery('left')
       await nextTick()
-      expect(app.leftPanel.query).toBeFalsy()
+      expect(transferVm.leftPanel.query).toBeFalsy()
 
-      app.clearQuery('right')
+      transferVm.clearQuery('right')
       await nextTick()
-      expect(app.rightPanel.query).toBeFalsy()
+      expect(transferVm.rightPanel.query).toBeFalsy()
     })
   })
 
@@ -227,11 +272,7 @@ describe('Transfer', () => {
         },
       })
 
-      const leftPanel = wrapper.find('.el-transfer-panel')
-      const labels = leftPanel.findAll(
-        '.el-transfer-panel__body .el-checkbox__label'
-      )
-
+      const labels = getPanelLabels(wrapper)
       expect(labels.map((l) => l.text())).toMatchInlineSnapshot(`
         [
           "备选项 1",
@@ -266,11 +307,7 @@ describe('Transfer', () => {
         },
       })
 
-      const leftPanel = wrapper.find('.el-transfer-panel')
-      const labels = leftPanel.findAll(
-        '.el-transfer-panel__body .el-checkbox__label'
-      )
-
+      const labels = getPanelLabels(wrapper)
       expect(labels.map((l) => l.text())).toMatchInlineSnapshot(`
         [
           "备选项 1",
@@ -307,11 +344,7 @@ describe('Transfer', () => {
         },
       })
 
-      const leftPanel = wrapper.find('.el-transfer-panel')
-      const labels = leftPanel.findAll(
-        '.el-transfer-panel__body .el-checkbox__label'
-      )
-
+      const labels = getPanelLabels(wrapper)
       expect(labels.map((l) => l.text())).toMatchInlineSnapshot(`
         [
           "1  2",
