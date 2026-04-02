@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { computed, nextTick, toRefs, watch } from 'vue'
-import { isEqual, isNil, pick } from 'lodash-unified'
+import { get, isEqual, isNil, pick } from 'lodash-unified'
 import { CHANGE_EVENT, UPDATE_MODEL_EVENT } from '@element-plus/constants'
 import { escapeStringRegexp, isEmpty, isFunction } from '@element-plus/utils'
 import ElTree from '@element-plus/components/tree'
@@ -127,6 +127,17 @@ export const useTree = (
     }
   }
 
+  const isSameValue = (left: unknown, right: unknown) => {
+    const leftIsObject = left !== null && typeof left === 'object'
+    const rightIsObject = right !== null && typeof right === 'object'
+
+    if (leftIsObject || rightIsObject) {
+      return isEqual(get(left, props.valueKey), get(right, props.valueKey))
+    }
+
+    return isEqual(left, right)
+  }
+
   function update(val) {
     emit(UPDATE_MODEL_EVENT, val)
     emitChange(val)
@@ -182,10 +193,22 @@ export const useTree = (
       // now `checkOnClickNode` is false, only no checkbox and `checkStrictly` or `isLeaf`
       if (!props.showCheckbox && (props.checkStrictly || node.isLeaf)) {
         if (!getNodeValByProp('disabled', data)) {
-          const option = select.value?.states.options.get(
-            getNodeValByProp('value', data)
-          )
-          select.value?.handleOptionSelect(option)
+          const value = getNodeValByProp('value', data)
+
+          if (props.multiple) {
+            const values = toValidArray(props.modelValue)
+            const nextValue = values.some((item) => isSameValue(item, value))
+              ? values.filter((item) => !isSameValue(item, value))
+              : values.concat(value)
+
+            update(nextValue)
+            nextTick(() => {
+              select.value?.focus()
+            })
+          } else {
+            const option = select.value?.states.options.get(value)
+            select.value?.handleOptionSelect(option)
+          }
         }
       } else if (props.expandOnClickNode) {
         e.proxy.handleExpandIconClick()
